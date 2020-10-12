@@ -1,0 +1,134 @@
+@import "../../../styles/Mixins.scss";
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: #f8f9fa;
+  border-radius: 10px;
+
+  .top-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--gray-color);
+    padding: var(--header-padding);
+    border-left: 1px solid lightgray;
+
+    .left-side {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      .user-picture {
+        margin-right: 15px;
+      }
+
+      .text-wrapper {
+        display: flex;
+        flex-direction: column;
+
+        .fullname {
+          max-width: 265px;
+          @include overflow-handler;
+        }
+      }
+    }
+  }
+
+  .middle-section {
+    background: url("../../../images/chat-background.png");
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    flex: 1;
+    padding: 20px 70px 100px;
+    gap: 5px;
+
+    .message {
+      position: relative;
+      width: fit-content;
+      min-width: 23px;
+      max-width: 50%;
+      min-height: 25px;
+      padding: 5px 80px 5px 10px;
+      border-radius: 5px;
+
+      span {
+        display: inline-block;
+        overflow: hidden;
+        word-break: break-all;
+        -webkit-line-clamp: 7;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+      }
+
+      small {
+        position: absolute;
+        right: 10px;
+        bottom: 2px;
+      }
+
+      &.sent-message {
+        align-self: flex-end;
+        background: #dcf8c6;
+
+        &.first-of-series {
+          &::before {
+            border-top: 12px solid #dcf8c6;
+            right: -12px;
+          }
+        }
+      }
+
+      &:not(.sent-message) {
+        background: white;
+
+        &.first-of-series {
+          &::before {
+            border-top: 12px solid #fff;
+            left: -12px;
+          }
+        }
+      }
+
+      &.first-of-series {
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          width: 0;
+          height: 0;
+          border-left: 12px solid transparent;
+          border-right: 12px solid transparent;
+        }
+      }
+    }
+  }
+
+  .bottom-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--gray-color);
+    position: absolute;
+    box-sizing: border-box;
+    bottom: 0;
+    width: 100%;
+    padding: 10px 15px;
+
+    form {
+      @include search-input;
+      padding: 0 10px;
+
+      .input-wrapper {
+        padding: 5px 0 5px 20px;
+      }
+    }
+
+    svg {
+      font-size: 1.7rem;
+    }
+  }
+}

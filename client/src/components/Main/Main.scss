@@ -1,0 +1,24 @@
+.main {
+  display: flex;
+  height: 96vh;
+  width: 85vw;
+
+  .left-sidebar {
+    flex: 0.3;
+  }
+
+  .welcome-screen,
+  .chat {
+    flex: 0.7;
+  }
+
+  svg {
+    color: #919191;
+    font-size: 1.4rem;
+  }
+
+  @media only screen and (max-width: 1200px) {
+    height: 100vh;
+    width: 100vw;
+  }
+}

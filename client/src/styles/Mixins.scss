@@ -1,0 +1,18 @@
+@mixin overflow-handler {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin search-input {
+  flex: 1;
+
+  .input-wrapper {
+    background: white;
+    border-radius: 30px;
+
+    .input-base {
+      width: 100%;
+    }
+  }
+}

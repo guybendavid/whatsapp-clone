@@ -1,0 +1,141 @@
+@import "../../../styles/Mixins.scss";
+
+.left-sidebar {
+  display: flex;
+  flex-direction: column;
+  background: white;
+
+  .actions {
+    background: var(--gray-color);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
+    .avatar {
+      cursor: pointer;
+    }
+
+    .icons {
+      padding: var(--header-padding);
+    }
+
+    .icons,
+    .form-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .form-wrapper {
+      transition: 0.3s ease;
+      padding: 10px;
+
+      &.white {
+        background: #fff;
+        box-shadow: 0 2px 3px rgba(0, 0, 0, 0.08);
+      }
+
+      &:not(.white) {
+        background: #f6f6f6;
+      }
+
+      form {
+        @include search-input;
+
+        .search-wrapper {
+          position: relative;
+          width: 100%;
+
+          .icon-wrapper {
+            margin-left: 17px;
+            height: 100%;
+            position: absolute;
+            display: flex;
+            align-items: center;
+            color: #919191;
+
+            .is-arrow {
+              color: #33b7f6 !important;
+              animation: flip-90 0.3s forwards;
+
+              @keyframes flip-90 {
+                100% {
+                  transform: rotate(90deg);
+                }
+              }
+            }
+          }
+
+          .input-base {
+            padding-left: 65px;
+            padding-right: 20px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+
+  .users {
+    width: 100% !important;
+    overflow-y: auto;
+    padding: 0;
+
+    .list-item {
+      padding-top: 10px;
+      padding-bottom: 10px;
+
+      hr {
+        background-color: rgba(0, 0, 0, 0.05);
+        position: relative;
+        height: 0.5px;
+
+        &.is-chatted {
+          bottom: 10px;
+        }
+
+        &:not(.is-chatted) {
+          bottom: 18px;
+        }
+      }
+
+      .text-wrapper {
+        flex: 1;
+
+        .first-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .fullname {
+            max-width: 162px;
+          }
+        }
+
+        .second-row {
+          display: flex;
+
+          .last-message {
+            max-width: 260px;
+            font-size: 0.9rem;
+            color: var(--text-secondary-color);
+          }
+        }
+
+        .fullname,
+        .last-message {
+          @include overflow-handler;
+        }
+      }
+    }
+  }
+}
+
+#logout-menu {
+  ul {
+    padding: 0;
+
+    li {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+  }
+}
