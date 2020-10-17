@@ -10,7 +10,7 @@ const App = () => {
 
   return isMobile ?
     (<div style={{ height: "100vh", background: "#dddbd1" }}>
-      <h1>Mobile view did not implemented yet :)</h1>
+      <h1>Mobile view is not implemented yet :)</h1>
     </div>)
     : (
       <AppContextProvider>
