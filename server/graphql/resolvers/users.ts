@@ -5,6 +5,7 @@ import { QueryTypes } from "sequelize";
 import { sequelize, User } from "../../db/models";
 import { validateRegisterObj, validateLoginObj } from "../../utils/validatons";
 import { User as UserInterface } from "../../db/interfaces/interfaces";
+import { imageGenerator } from "../../utils/imageGenerator";
 
 export = {
   Query: {
@@ -52,7 +53,7 @@ export = {
           }
 
           const hasedPassword = await bcrypt.hash(password, 6);
-          const image = `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 100)}.jpg`;
+          const image = imageGenerator();
           const user = await User.create({ firstName, lastName, username, password: hasedPassword, image });
           const { password: userPassword, ...safeUserData } = user.toJSON();
           return { ...safeUserData, token: generateToken({ id: user.id, firstName, lastName }) };
