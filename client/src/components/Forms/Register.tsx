@@ -10,8 +10,8 @@ import "./Forms.scss";
 const REGISTER_USER = gql`
 mutation RegisterUser($firstName: String! $lastName: String! $username: String! $password: String!) {
   register(firstName: $firstName lastName: $lastName username: $username password: $password) {
-    id,
-    image,
+    id
+    image
     token
   }
 }
