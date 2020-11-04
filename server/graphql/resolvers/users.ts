@@ -5,7 +5,8 @@ import { QueryTypes } from "sequelize";
 import { sequelize, User } from "../../db/models";
 import { validateRegisterObj, validateLoginObj } from "../../utils/validatons";
 import { User as UserInterface } from "../../db/interfaces/interfaces";
-import { imageGenerator } from "../../utils/imageGenerator";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const imageGenerator = require("../../utils/imageGenerator");
 
 export = {
   Query: {

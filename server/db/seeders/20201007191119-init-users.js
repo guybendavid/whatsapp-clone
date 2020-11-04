@@ -1,10 +1,9 @@
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
-const imageGenerator = require("../../utils/imageGenerator");
 const bcrypt = require("bcrypt");
+const imageGenerator = require("../../utils/imageGenerator");
 require("dotenv").config();
 
-// eslint-disable-next-line no-undef
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const hasedPassword = await bcrypt.hash(process.env.SEEDERS_PASSWORD, 6);
@@ -90,6 +89,69 @@ module.exports = {
         first_name: "Mike",
         last_name: "Lee",
         username: "mike",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Mike",
+        last_name: "Lee",
+        username: "mike2",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Mike",
+        last_name: "Lee",
+        username: "mike3",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Mike",
+        last_name: "Lee",
+        username: "mike5",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Mike",
+        last_name: "Lee",
+        username: "mike6",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Mike",
+        last_name: "Lee",
+        username: "mike7",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Mike",
+        last_name: "Lee",
+        username: "mike8",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Mike",
+        last_name: "Lee",
+        username: "mike9",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Mike",
+        last_name: "Lee",
+        username: "mike10",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Mike",
+        last_name: "Lee",
+        username: "mike11",
         password: hasedPassword,
         image: imageGenerator()
       }
