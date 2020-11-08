@@ -65,7 +65,6 @@ const LeftSidebar: React.FC<Props> = ({ users, isMoreUsersToFetch, setUsersOffse
 
     observer.current?.disconnect();
 
-    // To do: handle edge cases with network requests
     observer.current = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting && isMoreUsersToFetch) {
         setUsersOffset(users.length - 1);

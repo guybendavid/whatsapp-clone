@@ -8,9 +8,12 @@ import WelcomeScreen from "./WelcomeScreen/WelcomeScreen";
 import Chat from "./Chat/Chat";
 import "./Main.scss";
 
+// to do: check different users limit (21 causing duplicate last user)
+const usersLimit = 21;
+
 const GET_All_USERS_EXCEPT_LOGGED = gql`
-  query GetAllUsersExceptLogged($loggedInUserId: ID! $offset: String!) {
-    getAllUsersExceptLogged(id: $loggedInUserId offset: $offset) {
+  query GetAllUsersExceptLogged($loggedInUserId: ID! $offset: String! $limit: String!) {
+    getAllUsersExceptLogged(id: $loggedInUserId offset: $offset limit: $limit) {
       users {
         id
         firstName
@@ -48,19 +51,21 @@ const Main = () => {
   const { data: usersData, client } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
     variables: {
       loggedInUserId: loggedInUser.id,
-      offset: `${usersOffset}`
+      offset: `${usersOffset}`,
+      limit: `${usersLimit}`
     },
     onError: (error) => handleErrors(error, history),
     onCompleted: () => handleCompleted()
   });
 
-  const { data: newMessageData } = useSubscription(NEW_MESSAGE);
   const sidebarData = usersData?.getAllUsersExceptLogged;
 
   const handleCompleted = () => {
     clearError();
     setUsers(prevUsers => [...prevUsers, ...sidebarData?.users]);
   };
+
+  const { data: newMessageData } = useSubscription(NEW_MESSAGE);
 
   useEffect(() => {
     if (newMessageData?.newMessage) {
@@ -87,9 +92,11 @@ const Main = () => {
     // eslint-disable-next-line
   }, [newMessageData]);
 
+  console.log(usersOffset);
+
   return (
     <div className="main">
-      <LeftSidebar users={users} isMoreUsersToFetch={usersOffset < sidebarData?.totalUsersCount}
+      <LeftSidebar users={users} isMoreUsersToFetch={usersOffset < sidebarData?.totalUsersCount - usersLimit}
         setUsersOffset={setUsersOffset} setSelectedUser={setSelectedUser}
       />
       {selectedUser ? <Chat selectedUser={selectedUser} newMessage={newMessageData?.newMessage} /> : <WelcomeScreen />}

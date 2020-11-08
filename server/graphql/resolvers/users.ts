@@ -10,21 +10,20 @@ const imageGenerator = require("../../utils/imageGenerator");
 
 export = {
   Query: {
-    getAllUsersExceptLogged: async (parent: any, args: { id: string; offset: string; }, context: { user: UserInterface; }) => {
-      const { id, offset } = args;
+    getAllUsersExceptLogged: async (parent: any, args: { id: string; offset: string; limit: string; }, context: { user: UserInterface; }) => {
+      const { id, offset, limit } = args;
       const { user } = context;
 
       if (!user) {
         throw new AuthenticationError("Unauthenticated");
       }
 
-      // To do: check client with different limit values here;
       const getUsersWithLatestMessage = `select distinct on (u.id) u.id, u.first_name as "firstName",
       u.last_name as "lastName", u.image, m.content, m.created_at as "createdAt" from
       (select m.*, case when sender_id = ? then recipient_id else sender_id end as other_user_id
           from messages m where ? in (m.sender_id, m.recipient_id)) m 
           right join users u on u.id = m.other_user_id where u.id != ?
-          order by u.id, m.created_at desc limit 10 ${offset ? "offset " + offset : ""}`;
+          order by u.id, m.created_at desc ${limit ? "limit " + limit : ""} ${offset ? "offset " + offset : ""}`;
 
       const getTotalUsersCount = "select count(id) from users";
 
