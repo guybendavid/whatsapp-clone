@@ -1,6 +1,10 @@
 import { gql } from "apollo-server";
 
 export = gql`
+  type SideBarUsers {
+    users: [User]!
+    totalUsersCount: String!
+  }
   type User {
     id: ID!
     firstName: String!
@@ -18,8 +22,7 @@ export = gql`
     createdAt: String
   }
   type Query {
-    getTotalUsersCount(id: ID!): String!
-    getAllUsersExceptLogged(id: ID! offset: String!): [User]!
+    getAllUsersExceptLogged(id: ID! offset: String!): SideBarUsers!
     getMessages(otherUserId: ID!): [Message]!
   }
   type Mutation {

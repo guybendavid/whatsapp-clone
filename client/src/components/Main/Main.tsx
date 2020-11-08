@@ -11,21 +11,18 @@ import "./Main.scss";
 const GET_All_USERS_EXCEPT_LOGGED = gql`
   query GetAllUsersExceptLogged($loggedInUserId: ID! $offset: String!) {
     getAllUsersExceptLogged(id: $loggedInUserId offset: $offset) {
-      id
-      firstName
-      lastName
-      image
-      latestMessage {
-        content
-        createdAt
+      users {
+        id
+        firstName
+        lastName
+        image
+        latestMessage {
+          content
+          createdAt
+        }
       }
+      totalUsersCount
     }
-  }
-`;
-
-const GET_TOTAL_USERS_COUNT = gql`
-  query GetTotalUsersCount($loggedInUserId: ID!) {
-    getTotalUsersCount(id: $loggedInUserId)
   }
 `;
 
@@ -46,14 +43,6 @@ const Main = () => {
   const { handleErrors, clearError } = useContext(AppContext);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [usersOffset, setUsersOffset] = useState(0);
-
-  const { data: totalUsersCount } = useQuery(GET_TOTAL_USERS_COUNT, {
-    variables: {
-      loggedInUserId: loggedInUser.id
-    },
-    onError: (error) => handleErrors(error, history),
-    onCompleted: () => clearError()
-  });
 
   const { data: usersData, client, refetch } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
     variables: {
@@ -93,7 +82,7 @@ const Main = () => {
 
   return (
     <div className="main">
-      <LeftSidebar users={usersData?.getAllUsersExceptLogged} setSelectedUser={setSelectedUser} />
+      <LeftSidebar users={usersData?.getAllUsersExceptLogged?.users} setSelectedUser={setSelectedUser} />
       {selectedUser ? <Chat selectedUser={selectedUser} newMessage={newMessageData?.newMessage} /> : <WelcomeScreen />}
     </div>
   );

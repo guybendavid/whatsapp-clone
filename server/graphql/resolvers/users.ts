@@ -10,22 +10,6 @@ const imageGenerator = require("../../utils/imageGenerator");
 
 export = {
   Query: {
-    getTotalUsersCount: async (parent: any, args: any, context: { user: UserInterface; }) => {
-      const { user } = context;
-
-      if (!user) {
-        throw new AuthenticationError("Unauthenticated");
-      }
-
-      const getTotalUsersCount = "select count(id) from users";
-
-      try {
-        const data = await sequelize.query(getTotalUsersCount, { type: QueryTypes.SELECT });
-        return data[0]?.count;
-      } catch (err) {
-        throw new ApolloError(err);
-      }
-    },
     getAllUsersExceptLogged: async (parent: any, args: { id: string; offset: string; }, context: { user: UserInterface; }) => {
       const { id, offset } = args;
       const { user } = context;
@@ -41,6 +25,8 @@ export = {
           right join users u on u.id = m.other_user_id where u.id != ?
           order by u.id, m.created_at desc limit 10 ${offset ? "offset " + offset : ""}`;
 
+      const getTotalUsersCount = "select count(id) from users";
+
       try {
         const otherUsers = await sequelize.query(getUsersWithLatestMessage, { type: QueryTypes.SELECT, replacements: [id, id, id] });
 
@@ -50,7 +36,8 @@ export = {
           delete user.createdAt;
         });
 
-        return otherUsers;
+        const totalUsers = await sequelize.query(getTotalUsersCount, { type: QueryTypes.SELECT });
+        return { users: otherUsers, totalUsersCount: totalUsers[0]?.count };
       } catch (err) {
         throw new ApolloError(err);
       }
