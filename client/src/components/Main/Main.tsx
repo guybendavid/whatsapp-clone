@@ -70,9 +70,11 @@ const Main = () => {
   useEffect(() => {
     if (newMessageData?.newMessage) {
       const { cache } = client;
+
+      // To do: change the destruct, use apollo pagination
       const { newMessage } = newMessageData.newMessage;
       const { senderId, recipientId } = newMessageData.newMessage;
-      const otherUser = usersData.getAllUsersExceptLogged?.find((user: User) => user.id === senderId || user.id === recipientId);
+      const otherUser = usersData.getAllUsersExceptLogged?.users.find((user: User) => user.id === senderId || user.id === recipientId);
 
       if (otherUser) {
         cache.modify({
@@ -91,8 +93,6 @@ const Main = () => {
 
     // eslint-disable-next-line
   }, [newMessageData]);
-
-  console.log(usersOffset);
 
   return (
     <div className="main">
