@@ -45,6 +45,8 @@ const Main = () => {
   const loggedInUser = JSON.parse(localStorage.loggedInUser);
   const { handleErrors, clearError } = useContext(AppContext);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [usersOffset, setUsersOffset] = useState(0);
+
   const { data: totalUsersCount } = useQuery(GET_TOTAL_USERS_COUNT, {
     variables: {
       loggedInUserId: loggedInUser.id
@@ -56,7 +58,7 @@ const Main = () => {
   const { data: usersData, client, refetch } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
     variables: {
       loggedInUserId: loggedInUser.id,
-      offset: "0"
+      offset: `${usersOffset}`
     },
     onError: (error) => handleErrors(error, history),
     onCompleted: () => clearError()
