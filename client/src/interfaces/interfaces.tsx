@@ -10,6 +10,11 @@ interface User {
   };
 }
 
+interface SideBarData {
+  users: User[];
+  totalUsersCount: number;
+}
+
 interface Message {
   senderId: string;
   recipientId: string;
@@ -17,4 +22,4 @@ interface Message {
   createdAt: string;
 }
 
-export type { User, Message };
+export type { User, SideBarData, Message };

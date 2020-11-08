@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "../../contexts/AppContext";
 import { useHistory } from "react-router-dom";
-import { User } from "../../interfaces/interfaces";
+import { User, SideBarData } from "../../interfaces/interfaces";
 import { gql, useQuery, useSubscription } from "@apollo/client";
 import LeftSidebar from "./LeftSidebar/LeftSidebar";
 import WelcomeScreen from "./WelcomeScreen/WelcomeScreen";
@@ -44,7 +44,7 @@ const Main = () => {
   const history = useHistory();
   const loggedInUser = JSON.parse(localStorage.loggedInUser);
   const { handleErrors, clearError } = useContext(AppContext);
-  const [sidebarData, setSidebarData] = useState<any>({ users: [], totalUsersCount: 0 });
+  const [sidebarData, setSidebarData] = useState<SideBarData>({ users: [], totalUsersCount: 0 });
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [usersOffset, setUsersOffset] = useState(0);
 
