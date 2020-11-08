@@ -12,6 +12,9 @@ import "./LeftSidebar.scss";
 
 interface Props {
   users: User[];
+  isMoreUsersToFetch: boolean;
+  setUsersOffset: (offset: number) => void;
+  refetchUsers: () => void;
   setSelectedUser: (user: User) => void;
 }
 
@@ -50,7 +53,7 @@ const DotsIcon = () => {
   );
 };
 
-const LeftSidebar: React.FC<Props> = ({ users, setSelectedUser }) => {
+const LeftSidebar: React.FC<Props> = ({ users, isMoreUsersToFetch, setUsersOffset, refetchUsers, setSelectedUser }) => {
   const { loggedInUser, displayMessageTime } = useContext(AppContext);
   const [searchBarIsOpened, setSearchBarIsOpened] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -64,16 +67,18 @@ const LeftSidebar: React.FC<Props> = ({ users, setSelectedUser }) => {
     observer.current?.disconnect();
 
     observer.current = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        // To do: fetch here for more *if there are more*
-        console.log("visible");
+      if (entries[0].isIntersecting && isMoreUsersToFetch) {
+        // setUsersOffset(users.length - 1);
+        // refetchUsers();
       }
     });
 
     if (node) {
       observer.current.observe(node);
     }
-  }, [users]);
+
+    // eslint-disable-next-line
+  }, [users, isMoreUsersToFetch]);
 
   return (
     <div className="left-sidebar">

@@ -41,6 +41,7 @@ const Main = () => {
   const history = useHistory();
   const loggedInUser = JSON.parse(localStorage.loggedInUser);
   const { handleErrors, clearError } = useContext(AppContext);
+  const [users, setUsers] = useState<User[]>([]);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [usersOffset, setUsersOffset] = useState(0);
 
@@ -50,10 +51,16 @@ const Main = () => {
       offset: `${usersOffset}`
     },
     onError: (error) => handleErrors(error, history),
-    onCompleted: () => clearError()
+    onCompleted: () => handleCompleted()
   });
 
   const { data: newMessageData } = useSubscription(NEW_MESSAGE);
+  const sidebarData = usersData?.getAllUsersExceptLogged;
+
+  const handleCompleted = () => {
+    clearError();
+    setUsers(prevUsers => [...prevUsers, ...sidebarData?.users]);
+  };
 
   useEffect(() => {
     if (newMessageData?.newMessage) {
@@ -72,7 +79,6 @@ const Main = () => {
           }
         });
       } else {
-        // To do: fetch with offset
         refetch();
       }
     }
@@ -82,7 +88,9 @@ const Main = () => {
 
   return (
     <div className="main">
-      <LeftSidebar users={usersData?.getAllUsersExceptLogged?.users} setSelectedUser={setSelectedUser} />
+      <LeftSidebar users={users} isMoreUsersToFetch={usersOffset < sidebarData?.totalUsersCount}
+        setUsersOffset={setUsersOffset} refetchUsers={refetch} setSelectedUser={setSelectedUser}
+      />
       {selectedUser ? <Chat selectedUser={selectedUser} newMessage={newMessageData?.newMessage} /> : <WelcomeScreen />}
     </div>
   );
