@@ -44,7 +44,7 @@ const Main = () => {
   const history = useHistory();
   const loggedInUser = JSON.parse(localStorage.loggedInUser);
   const { handleErrors, clearError } = useContext(AppContext);
-  const [users, setUsers] = useState<User[]>([]);
+  const [sidebarData, setSidebarData] = useState<any>({ users: [], totalUsersCount: 0 });
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [usersOffset, setUsersOffset] = useState(0);
 
@@ -58,11 +58,13 @@ const Main = () => {
     onCompleted: () => handleCompleted()
   });
 
-  const sidebarData = usersData?.getAllUsersExceptLogged;
-
   const handleCompleted = () => {
     clearError();
-    setUsers(prevUsers => [...prevUsers, ...sidebarData?.users]);
+
+    setSidebarData({
+      users: [...sidebarData.users, ...usersData?.getAllUsersExceptLogged.users],
+      totalUsersCount: usersData?.getAllUsersExceptLogged.totalUsersCount
+    });
   };
 
   const { data: newMessageData } = useSubscription(NEW_MESSAGE);
@@ -92,11 +94,9 @@ const Main = () => {
     // eslint-disable-next-line
   }, [newMessageData]);
 
-  console.log(usersOffset);
-
   return (
     <div className="main">
-      <LeftSidebar users={users} isMoreUsersToFetch={usersOffset < sidebarData?.totalUsersCount - usersLimit}
+      <LeftSidebar users={sidebarData.users} isMoreUsersToFetch={usersOffset < sidebarData.totalUsersCount - usersLimit}
         setUsersOffset={setUsersOffset} setSelectedUser={setSelectedUser}
       />
       {selectedUser ? <Chat selectedUser={selectedUser} newMessage={newMessageData?.newMessage} /> : <WelcomeScreen />}
