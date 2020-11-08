@@ -45,7 +45,7 @@ const Main = () => {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [usersOffset, setUsersOffset] = useState(0);
 
-  const { data: usersData, client, refetch } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
+  const { data: usersData, client } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
     variables: {
       loggedInUserId: loggedInUser.id,
       offset: `${usersOffset}`
@@ -79,7 +79,8 @@ const Main = () => {
           }
         });
       } else {
-        refetch();
+        // To do: check
+        setUsersOffset(users.length - 1);
       }
     }
 
@@ -89,7 +90,7 @@ const Main = () => {
   return (
     <div className="main">
       <LeftSidebar users={users} isMoreUsersToFetch={usersOffset < sidebarData?.totalUsersCount}
-        setUsersOffset={setUsersOffset} refetchUsers={refetch} setSelectedUser={setSelectedUser}
+        setUsersOffset={setUsersOffset} setSelectedUser={setSelectedUser}
       />
       {selectedUser ? <Chat selectedUser={selectedUser} newMessage={newMessageData?.newMessage} /> : <WelcomeScreen />}
     </div>

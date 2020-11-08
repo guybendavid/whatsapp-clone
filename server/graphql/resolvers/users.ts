@@ -18,6 +18,7 @@ export = {
         throw new AuthenticationError("Unauthenticated");
       }
 
+      // To do: check client with different limit values here;
       const getUsersWithLatestMessage = `select distinct on (u.id) u.id, u.first_name as "firstName",
       u.last_name as "lastName", u.image, m.content, m.created_at as "createdAt" from
       (select m.*, case when sender_id = ? then recipient_id else sender_id end as other_user_id
