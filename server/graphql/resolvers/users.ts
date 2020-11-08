@@ -23,12 +23,12 @@ export = {
       (select m.*, case when sender_id = ? then recipient_id else sender_id end as other_user_id
           from messages m where ? in (m.sender_id, m.recipient_id)) m 
           right join users u on u.id = m.other_user_id where u.id != ?
-          order by u.id, m.created_at desc ${limit ? "limit " + limit : ""} ${offset ? "offset " + offset : ""}`;
+          order by u.id, m.created_at desc ${limit ? "limit ?" : ""} ${offset ? "offset ?" : ""}`;
 
       const getTotalUsersCount = "select count(id) from users";
 
       try {
-        const otherUsers = await sequelize.query(getUsersWithLatestMessage, { type: QueryTypes.SELECT, replacements: [id, id, id] });
+        const otherUsers = await sequelize.query(getUsersWithLatestMessage, { type: QueryTypes.SELECT, replacements: [id, id, id, limit, offset] });
 
         otherUsers.map((user: any) => {
           user.latestMessage = { content: user.content, createdAt: user.createdAt };
