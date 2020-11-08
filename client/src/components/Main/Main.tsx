@@ -8,8 +8,8 @@ import WelcomeScreen from "./WelcomeScreen/WelcomeScreen";
 import Chat from "./Chat/Chat";
 import "./Main.scss";
 
-// to do: check different users limit (21 causing duplicate last user)
-const usersLimit = 21;
+// to do: check different users limit (21 causing duplicate last user, 11 causing another third unnecessary request)
+const usersLimit = 11;
 
 const GET_All_USERS_EXCEPT_LOGGED = gql`
   query GetAllUsersExceptLogged($loggedInUserId: ID! $offset: String! $limit: String!) {
