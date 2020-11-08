@@ -85,7 +85,7 @@ const Main = () => {
         });
       } else {
         // To do: check
-        setUsersOffset(users.length - 1);
+        setUsersOffset(usersOffset + 1);
       }
     }
 
