@@ -9,8 +9,8 @@ import Chat from "./Chat/Chat";
 import "./Main.scss";
 
 const GET_All_USERS_EXCEPT_LOGGED = gql`
-  query GetAllUsersExceptLogged($loggedInUserId: ID!) {
-    getAllUsersExceptLogged(id: $loggedInUserId) {
+  query GetAllUsersExceptLogged($loggedInUserId: ID! $offset: String!) {
+    getAllUsersExceptLogged(id: $loggedInUserId offset: $offset) {
       id
       firstName
       lastName
@@ -20,6 +20,12 @@ const GET_All_USERS_EXCEPT_LOGGED = gql`
         createdAt
       }
     }
+  }
+`;
+
+const GET_TOTAL_USERS_COUNT = gql`
+  query GetTotalUsersCount($loggedInUserId: ID!) {
+    getTotalUsersCount(id: $loggedInUserId)
   }
 `;
 
@@ -39,9 +45,18 @@ const Main = () => {
   const loggedInUser = JSON.parse(localStorage.loggedInUser);
   const { handleErrors, clearError } = useContext(AppContext);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const { data: usersData, client, refetch } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
+  const { data: totalUsersCount } = useQuery(GET_TOTAL_USERS_COUNT, {
     variables: {
       loggedInUserId: loggedInUser.id
+    },
+    onError: (error) => handleErrors(error, history),
+    onCompleted: () => clearError()
+  });
+
+  const { data: usersData, client, refetch } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
+    variables: {
+      loggedInUserId: loggedInUser.id,
+      offset: "0"
     },
     onError: (error) => handleErrors(error, history),
     onCompleted: () => clearError()

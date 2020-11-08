@@ -10,8 +10,24 @@ const imageGenerator = require("../../utils/imageGenerator");
 
 export = {
   Query: {
-    getAllUsersExceptLogged: async (parent: any, args: { id: string; }, context: { user: UserInterface; }) => {
-      const { id } = args;
+    getTotalUsersCount: async (parent: any, args: any, context: { user: UserInterface; }) => {
+      const { user } = context;
+
+      if (!user) {
+        throw new AuthenticationError("Unauthenticated");
+      }
+
+      const getTotalUsersCount = "select count(id) from users";
+
+      try {
+        const data = await sequelize.query(getTotalUsersCount, { type: QueryTypes.SELECT });
+        return data[0]?.count;
+      } catch (err) {
+        throw new ApolloError(err);
+      }
+    },
+    getAllUsersExceptLogged: async (parent: any, args: { id: string; offset: string; }, context: { user: UserInterface; }) => {
+      const { id, offset } = args;
       const { user } = context;
 
       if (!user) {
@@ -23,7 +39,7 @@ export = {
       (select m.*, case when sender_id = ? then recipient_id else sender_id end as other_user_id
           from messages m where ? in (m.sender_id, m.recipient_id)) m 
           right join users u on u.id = m.other_user_id where u.id != ?
-          order by u.id, m.created_at desc`;
+          order by u.id, m.created_at desc limit 10 ${offset ? "offset " + offset : ""}`;
 
       try {
         const otherUsers = await sequelize.query(getUsersWithLatestMessage, { type: QueryTypes.SELECT, replacements: [id, id, id] });

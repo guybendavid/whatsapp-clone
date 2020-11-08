@@ -18,7 +18,8 @@ export = gql`
     createdAt: String
   }
   type Query {
-    getAllUsersExceptLogged(id: ID!): [User]!
+    getTotalUsersCount(id: ID!): String!
+    getAllUsersExceptLogged(id: ID! offset: String!): [User]!
     getMessages(otherUserId: ID!): [Message]!
   }
   type Mutation {
