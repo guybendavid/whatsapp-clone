@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef, useCallback } from "react";
 import { AppContext } from "../../../contexts/AppContext";
 import { useHistory } from "react-router-dom";
 import { User } from "../../../interfaces/interfaces";
@@ -54,6 +54,26 @@ const LeftSidebar: React.FC<Props> = ({ users, setSelectedUser }) => {
   const { loggedInUser, displayMessageTime } = useContext(AppContext);
   const [searchBarIsOpened, setSearchBarIsOpened] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+  const observer: any = useRef();
+
+  const lastUserRef = useCallback(node => {
+    if (users.length < 1) {
+      return;
+    }
+
+    observer.current?.disconnect();
+
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        // To do: fetch here for more *if there are more*
+        console.log("visible");
+      }
+    });
+
+    if (node) {
+      observer.current.observe(node);
+    }
+  }, [users]);
 
   return (
     <div className="left-sidebar">
@@ -99,7 +119,8 @@ const LeftSidebar: React.FC<Props> = ({ users, setSelectedUser }) => {
       <List className="users">
         {users?.filter(user => `${user.firstName} ${user.lastName}`.toUpperCase().includes(searchValue.toUpperCase())).map((user, index) => (
           <React.Fragment key={index}>
-            <ListItem button className="list-item" onClick={() => setSelectedUser({ ...user })}>
+            <ListItem button className="list-item" onClick={() => setSelectedUser({ ...user })}
+              ref={users.length === index + 1 ? lastUserRef : null}>
               <ListItemAvatar className="avatar-wrapper">
                 <Avatar className="avatar" alt="avatar" src={user?.image} />
               </ListItemAvatar>
@@ -117,7 +138,7 @@ const LeftSidebar: React.FC<Props> = ({ users, setSelectedUser }) => {
           </React.Fragment>
         ))}
       </List>
-    </div>
+    </div >
   );
 };
 

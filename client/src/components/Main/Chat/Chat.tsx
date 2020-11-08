@@ -26,6 +26,7 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
   const chatBottomRef = useRef<HTMLHeadingElement>(null);
   const { loggedInUser, handleErrors, clearError } = useContext(AppContext);
   const [messages, setMessages] = useState<Message[]>([]);
+
   const { data } = useQuery(GET_MESSAGES, {
     variables: {
       otherUserId: selectedUser.id

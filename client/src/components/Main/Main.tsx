@@ -66,6 +66,7 @@ const Main = () => {
           }
         });
       } else {
+        // To do: fetch with offset
         refetch();
       }
     }
