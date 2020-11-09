@@ -44,7 +44,7 @@ const Main = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
-  // To do: check different users limit with different count of users
+  // To do: check different values with different count of users
   const [sqlClauses, setSqlClauses] = useState({ offset: 0, limit: 10 });
   const { offset, limit } = sqlClauses;
 
@@ -55,16 +55,13 @@ const Main = () => {
       limit: `${limit}`
     },
     onError: (error) => handleErrors(error, history),
-    onCompleted: () => handleCompleted()
+    onCompleted: () => {
+      clearError();
+      setUsers(prevUsers => [...prevUsers, ...sidebarData?.users]);
+    }
   });
 
   const sidebarData = usersData?.getAllUsersExceptLogged;
-
-  const handleCompleted = () => {
-    clearError();
-    setUsers(prevUsers => [...prevUsers, ...sidebarData?.users]);
-  };
-
   const { data: newMessageData } = useSubscription(NEW_MESSAGE);
 
   useEffect(() => {
@@ -72,8 +69,7 @@ const Main = () => {
       const { cache } = client;
       const { newMessage } = newMessageData;
       const { senderId, recipientId } = newMessage;
-      const otherUserOnSidebar = usersData.getAllUsersExceptLogged?.users.find((user: User) =>
-        user.id === senderId || user.id === recipientId);
+      const otherUserOnSidebar = sidebarData?.users.find((user: User) => user.id === senderId || user.id === recipientId);
 
       if (otherUserOnSidebar) {
         // To do: cache.modify

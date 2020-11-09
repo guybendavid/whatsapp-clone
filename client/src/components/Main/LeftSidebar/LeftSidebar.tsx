@@ -62,21 +62,18 @@ const LeftSidebar: React.FC<Props> = ({ users, isMoreUsersToFetch, setSqlClauses
 
   const lastUserRef = useCallback(node => {
     // To do: check fast scrolling behavior
+    if (users.length > 0) {
+      observer.current?.disconnect();
 
-    if (users.length < 1) {
-      return;
-    }
+      observer.current = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting && isMoreUsersToFetch) {
+          setSqlClauses((prevClauses: any) => ({ offset: users.length - 1, limit: prevClauses.limit }));
+        }
+      });
 
-    observer.current?.disconnect();
-
-    observer.current = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting && isMoreUsersToFetch) {
-        setSqlClauses((prevClauses: any) => ({ offset: users.length - 1, limit: prevClauses.limit }));
+      if (node) {
+        observer.current.observe(node);
       }
-    });
-
-    if (node) {
-      observer.current.observe(node);
     }
 
     // eslint-disable-next-line
