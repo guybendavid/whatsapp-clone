@@ -55,10 +55,7 @@ const Main = () => {
       limit: `${limit}`
     },
     onError: (error) => handleErrors(error, history),
-    onCompleted: () => {
-      clearError();
-      setUsers(prevUsers => [...prevUsers, ...sidebarData?.users]);
-    }
+    onCompleted: () => clearError()
   });
 
   const sidebarData = usersData?.getAllUsersExceptLogged;
@@ -96,7 +93,8 @@ const Main = () => {
 
   return (
     <div className="main">
-      <LeftSidebar users={users} isMoreUsersToFetch={users.length < sidebarData?.totalUsersCount}
+      {/* To do: isMoreUsersToFetch fix */}
+      <LeftSidebar users={sidebarData?.users} isMoreUsersToFetch={users.length < sidebarData?.totalUsersCount}
         limit={sqlClauses.limit} setSqlClauses={setSqlClauses} fetchMore={fetchMore} setSelectedUser={setSelectedUser} setUsers={setUsers}
       />
       {selectedUser ? <Chat selectedUser={selectedUser} newMessage={newMessageData?.newMessage} /> : <WelcomeScreen />}

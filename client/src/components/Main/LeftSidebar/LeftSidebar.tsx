@@ -66,7 +66,6 @@ const LeftSidebar: React.FC<Props> = ({ users, isMoreUsersToFetch, limit, fetchM
 
   const lastUserRef = useCallback(node => {
     // To do: check fast scrolling behavior
-    // check why there is another request on each scroll to bottom
 
     if (users.length > 0) {
       observer.current?.disconnect();
@@ -81,15 +80,15 @@ const LeftSidebar: React.FC<Props> = ({ users, isMoreUsersToFetch, limit, fetchM
             },
             // To do: any
             updateQuery: (prevResult: any, { fetchMoreResult }: any) => {
+              const { users: prevUsers } = prevResult.getAllUsersExceptLogged;
               let { users: newUsers } = fetchMoreResult.getAllUsersExceptLogged;
 
               if (newUsers) {
                 newUsers = [...prevResult.getAllUsersExceptLogged.users, ...newUsers];
+                fetchMoreResult.getAllUsersExceptLogged.users = newUsers;
 
-                if (users[users.length - 1].id !== newUsers[newUsers.length - 1].id) {
-                  // To do: without rendering twice
-                  // setSqlClauses({ offset: newUsers.length - 1, limit });
-                  setUsers(newUsers);
+                if (prevUsers[prevUsers.length - 1].id !== newUsers[newUsers.length - 1].id) {
+                  setSqlClauses({ offset: newUsers.length - 1, limit });
                 }
               }
 
