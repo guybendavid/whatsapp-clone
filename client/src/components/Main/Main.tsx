@@ -44,7 +44,7 @@ const Main = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
-  // To do: check different users limit (21 causing duplicate last user, 11 causing another third unnecessary request)
+  // To do: check different users limit with different count of users
   const [sqlClauses, setSqlClauses] = useState({ offset: 0, limit: 10 });
   const { offset, limit } = sqlClauses;
 
@@ -78,8 +78,7 @@ const Main = () => {
       if (otherUserOnSidebar) {
         // To do: cache.modify
       } else if (senderId !== loggedInUser.id) {
-        // To do: compute offset + limit to cover all users from last user to the index of the sender.
-        // think about the intersection observer at edge cases like this, and fast scrolling
+        // To do: compute offset + limit to cover all users from last user displayed on sidebar to the index of the newMessage sender.
         setSqlClauses({ offset: users.length - 1, limit });
       }
     }

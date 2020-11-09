@@ -61,6 +61,8 @@ const LeftSidebar: React.FC<Props> = ({ users, isMoreUsersToFetch, setSqlClauses
   const observer: any = useRef();
 
   const lastUserRef = useCallback(node => {
+    // To do: check fast scrolling behavior
+
     if (users.length < 1) {
       return;
     }
