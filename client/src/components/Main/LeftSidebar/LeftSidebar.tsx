@@ -67,7 +67,8 @@ const LeftSidebar: React.FC<Props> = ({ users, isMoreUsersToFetch, setSqlClauses
 
       observer.current = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting && isMoreUsersToFetch) {
-          setSqlClauses((prevClauses: any) => ({ offset: users.length - 1, limit: prevClauses.limit }));
+          // To do: Fetch More
+          // setSqlClauses((prevClauses: any) => ({ offset: users.length - 1, limit: prevClauses.limit }));
         }
       });
 
