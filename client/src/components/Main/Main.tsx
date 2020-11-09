@@ -8,9 +8,6 @@ import WelcomeScreen from "./WelcomeScreen/WelcomeScreen";
 import Chat from "./Chat/Chat";
 import "./Main.scss";
 
-// to do: check different users limit (21 causing duplicate last user, 11 causing another third unnecessary request)
-const usersLimit = 10;
-
 const GET_All_USERS_EXCEPT_LOGGED = gql`
   query GetAllUsersExceptLogged($loggedInUserId: ID! $offset: String! $limit: String!) {
     getAllUsersExceptLogged(id: $loggedInUserId offset: $offset limit: $limit) {
@@ -46,13 +43,16 @@ const Main = () => {
   const { handleErrors, clearError } = useContext(AppContext);
   const [users, setUsers] = useState<User[]>([]);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [usersOffset, setUsersOffset] = useState(0);
 
-  const { data: usersData, client, fetchMore } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
+  // To do: check different users limit (21 causing duplicate last user, 11 causing another third unnecessary request)
+  const [sqlClauses, setSqlClauses] = useState({ offset: 0, limit: 10 });
+  const { offset, limit } = sqlClauses;
+
+  const { data: usersData, client } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
     variables: {
       loggedInUserId: loggedInUser.id,
-      offset: `${usersOffset}`,
-      limit: `${usersLimit}`
+      offset: `${offset}`,
+      limit: `${limit}`
     },
     onError: (error) => handleErrors(error, history),
     onCompleted: () => handleCompleted()
@@ -77,10 +77,10 @@ const Main = () => {
 
       if (otherUserOnSidebar) {
         // To do: cache.modify
-      } else {
+      } else if (senderId !== loggedInUser.id) {
         // To do: compute offset + limit to cover all users from last user to the index of the sender.
-        // think about the intersection observer at edge cases like this
-        setUsersOffset(users.length - 1);
+        // think about the intersection observer at edge cases like this, and fast scrolling
+        setSqlClauses({ offset: users.length - 1, limit });
       }
     }
 
@@ -89,8 +89,8 @@ const Main = () => {
 
   return (
     <div className="main">
-      <LeftSidebar users={users} isMoreUsersToFetch={usersOffset < sidebarData?.totalUsersCount - usersLimit}
-        setUsersOffset={setUsersOffset} setSelectedUser={setSelectedUser}
+      <LeftSidebar users={users} isMoreUsersToFetch={offset < sidebarData?.totalUsersCount - limit}
+        setSqlClauses={setSqlClauses} setSelectedUser={setSelectedUser}
       />
       {selectedUser ? <Chat selectedUser={selectedUser} newMessage={newMessageData?.newMessage} /> : <WelcomeScreen />}
     </div>
