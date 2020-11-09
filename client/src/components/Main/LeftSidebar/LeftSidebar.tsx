@@ -15,9 +15,10 @@ interface Props {
   isMoreUsersToFetch: boolean;
   limit: number;
 
-  // To do:
+  // To do * 3:
   fetchMore: (object: any) => void;
   setUsers: (users: User[]) => void;
+  setSqlClauses: (object: any) => void;
 
   setSelectedUser: (user: User) => void;
 }
@@ -57,7 +58,7 @@ const DotsIcon = () => {
   );
 };
 
-const LeftSidebar: React.FC<Props> = ({ users, isMoreUsersToFetch, limit, fetchMore, setUsers, setSelectedUser }) => {
+const LeftSidebar: React.FC<Props> = ({ users, isMoreUsersToFetch, limit, fetchMore, setUsers, setSqlClauses, setSelectedUser }) => {
   const { loggedInUser, displayMessageTime } = useContext(AppContext);
   const [searchBarIsOpened, setSearchBarIsOpened] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -66,7 +67,7 @@ const LeftSidebar: React.FC<Props> = ({ users, isMoreUsersToFetch, limit, fetchM
   const lastUserRef = useCallback(node => {
     // To do: check fast scrolling behavior
     // check why there is another request on each scroll to bottom
-    
+
     if (users.length > 0) {
       observer.current?.disconnect();
 
@@ -86,6 +87,8 @@ const LeftSidebar: React.FC<Props> = ({ users, isMoreUsersToFetch, limit, fetchM
                 newUsers = [...prevResult.getAllUsersExceptLogged.users, ...newUsers];
 
                 if (users[users.length - 1].id !== newUsers[newUsers.length - 1].id) {
+                  // To do: without rendering twice
+                  // setSqlClauses({ offset: newUsers.length - 1, limit });
                   setUsers(newUsers);
                 }
               }

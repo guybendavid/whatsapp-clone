@@ -96,8 +96,8 @@ const Main = () => {
 
   return (
     <div className="main">
-      <LeftSidebar users={users} isMoreUsersToFetch={offset < sidebarData?.totalUsersCount - limit}
-        limit={sqlClauses.limit} fetchMore={fetchMore} setSelectedUser={setSelectedUser} setUsers={setUsers}
+      <LeftSidebar users={users} isMoreUsersToFetch={users.length < sidebarData?.totalUsersCount}
+        limit={sqlClauses.limit} setSqlClauses={setSqlClauses} fetchMore={fetchMore} setSelectedUser={setSelectedUser} setUsers={setUsers}
       />
       {selectedUser ? <Chat selectedUser={selectedUser} newMessage={newMessageData?.newMessage} /> : <WelcomeScreen />}
     </div>
