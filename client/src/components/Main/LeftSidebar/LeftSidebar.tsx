@@ -75,7 +75,7 @@ const LeftSidebar: React.FC<Props> = ({ users, isMoreUsersToFetch, limit, fetchM
           fetchMore({
             variables: {
               loggedInUserId: loggedInUser.id,
-              offset: `${users.length - 1}`,
+              offset: `${users.length}`,
               limit: `${limit}`
             },
             // To do: any
@@ -88,7 +88,7 @@ const LeftSidebar: React.FC<Props> = ({ users, isMoreUsersToFetch, limit, fetchM
                 fetchMoreResult.getAllUsersExceptLogged.users = newUsers;
 
                 if (prevUsers[prevUsers.length - 1].id !== newUsers[newUsers.length - 1].id) {
-                  setSqlClauses({ offset: newUsers.length - 1, limit });
+                  setSqlClauses({ offset: newUsers.length, limit });
                 }
               }
 
