@@ -12,12 +12,10 @@ import "./LeftSidebar.scss";
 
 interface Props {
   users: User[];
-  isMoreUsersToFetch: boolean;
   limit: number;
 
-  // To do * 3:
+  // To do * 2:
   fetchMore: (object: any) => void;
-  setUsers: (users: User[]) => void;
   setSqlClauses: (object: any) => void;
 
   setSelectedUser: (user: User) => void;
@@ -58,20 +56,23 @@ const DotsIcon = () => {
   );
 };
 
-const LeftSidebar: React.FC<Props> = ({ users, isMoreUsersToFetch, limit, fetchMore, setUsers, setSqlClauses, setSelectedUser }) => {
+const LeftSidebar: React.FC<Props> = ({ users, limit, fetchMore, setSqlClauses, setSelectedUser }) => {
   const { loggedInUser, displayMessageTime } = useContext(AppContext);
   const [searchBarIsOpened, setSearchBarIsOpened] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const observer: any = useRef();
+
+  // To do: fix
+  const toggleFetchMore = false;
 
   const lastUserRef = useCallback(node => {
     // To do: check fast scrolling behavior
 
     if (users.length > 0) {
       observer.current?.disconnect();
-
       observer.current = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting && isMoreUsersToFetch) {
+
+        if (entries[0].isIntersecting && toggleFetchMore) {
           fetchMore({
             variables: {
               loggedInUserId: loggedInUser.id,
@@ -104,7 +105,7 @@ const LeftSidebar: React.FC<Props> = ({ users, isMoreUsersToFetch, limit, fetchM
     }
 
     // eslint-disable-next-line
-  }, [users, isMoreUsersToFetch]);
+  }, [users, toggleFetchMore]);
 
   return (
     <div className="left-sidebar">

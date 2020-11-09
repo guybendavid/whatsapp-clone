@@ -41,7 +41,6 @@ const Main = () => {
   const history = useHistory();
   const loggedInUser = JSON.parse(localStorage.loggedInUser);
   const { handleErrors, clearError } = useContext(AppContext);
-  const [users, setUsers] = useState<User[]>([]);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   // To do: check different values with different count of users
@@ -71,20 +70,9 @@ const Main = () => {
       if (otherUserOnSidebar) {
         // To do: cache.modify
       } else if (senderId !== loggedInUser.id) {
-        // To do: compute offset + limit to cover all users from last user displayed on sidebar to the index of the newMessage sender.
-        // setSqlClauses({ offset: users.length - 1, limit });
-
-        // fetchMore({
-        //   variables: {
-        //     loggedInUserId: loggedInUser.id,
-        //     offset: `${users.length - 1}`,
-        //     limit: `${limit}`
-        //   },
-        //   updateQuery: (prevResult, { fetchMoreResult }) => {
-        //     console.log(prevResult);
-        //     console.log(fetchMoreResult);
-        //   }
-        // });
+        // To do: fetchMore
+        // compute offset + limit to cover all users from last user displayed on sidebar to the index of the newMessage sender.
+        // setSqlClauses({ offset: users.length, limit });
       }
     }
 
@@ -93,9 +81,8 @@ const Main = () => {
 
   return (
     <div className="main">
-      {/* To do: isMoreUsersToFetch fix */}
-      <LeftSidebar users={sidebarData?.users} isMoreUsersToFetch={users.length < sidebarData?.totalUsersCount}
-        limit={sqlClauses.limit} setSqlClauses={setSqlClauses} fetchMore={fetchMore} setSelectedUser={setSelectedUser} setUsers={setUsers}
+      <LeftSidebar users={sidebarData?.users} limit={sqlClauses.limit}
+        fetchMore={fetchMore} setSqlClauses={setSqlClauses} setSelectedUser={setSelectedUser}
       />
       {selectedUser ? <Chat selectedUser={selectedUser} newMessage={newMessageData?.newMessage} /> : <WelcomeScreen />}
     </div>
