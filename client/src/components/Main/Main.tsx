@@ -54,7 +54,6 @@ const Main = () => {
       offset: `${usersOffset}`,
       limit: `${usersLimit}`
     },
-    // fetchPolicy: "cache-and-network",
     onError: (error) => handleErrors(error, history),
     onCompleted: () => handleCompleted()
   });
@@ -71,38 +70,17 @@ const Main = () => {
   useEffect(() => {
     if (newMessageData?.newMessage) {
       const { cache } = client;
-
-      // To do: change the destruct
       const { newMessage } = newMessageData;
       const { senderId, recipientId } = newMessage;
-      const otherUser = usersData.getAllUsersExceptLogged?.users.find((user: User) => user.id === senderId || user.id === recipientId);
+      const otherUserOnSidebar = usersData.getAllUsersExceptLogged?.users.find((user: User) =>
+        user.id === senderId || user.id === recipientId);
 
-      if (otherUser) {
-        // console.log(otherUser);
-        // console.log(newMessage);
-
-        cache.modify({
-          id: cache.identify(otherUser),
-          fields: {
-            firstName() {
-              return newMessage;
-            }
-          }
-        });
-
-        console.log(cache.identify(otherUser));
-
+      if (otherUserOnSidebar) {
+        // To do: cache.modify
       } else {
         // To do: compute offset + limit to cover all users from last user to the index of the sender.
         // think about the intersection observer at edge cases like this
-
-        fetchMore({
-          variables: {
-            loggedInUserId: loggedInUser.id,
-            offset: `${usersOffset + 1}`,
-            limit: `${usersLimit}`
-          }
-        });
+        setUsersOffset(users.length - 1);
       }
     }
 
