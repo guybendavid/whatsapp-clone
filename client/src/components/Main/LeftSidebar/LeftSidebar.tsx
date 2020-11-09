@@ -124,7 +124,7 @@ const LeftSidebar: React.FC<Props> = ({ users, isMoreUsersToFetch, setSqlClauses
       <List className="users">
         {users?.filter(user => `${user.firstName} ${user.lastName}`.toUpperCase().includes(searchValue.toUpperCase())).map((user, index) => (
           <React.Fragment key={index}>
-            <ListItem button className="list-item" onClick={() => setSelectedUser({ ...user })}
+            <ListItem button className="list-item" onClick={() => setSelectedUser(user)}
               ref={users.length === index + 1 ? lastUserRef : null}>
               <ListItemAvatar className="avatar-wrapper">
                 <Avatar className="avatar" alt="avatar" src={user?.image} />
