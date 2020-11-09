@@ -48,7 +48,7 @@ const Main = () => {
   const [sqlClauses, setSqlClauses] = useState({ offset: 0, limit: 10 });
   const { offset, limit } = sqlClauses;
 
-  const { data: usersData, client } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
+  const { data: usersData, fetchMore, client } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
     variables: {
       loggedInUserId: loggedInUser.id,
       offset: `${offset}`,
@@ -75,7 +75,19 @@ const Main = () => {
         // To do: cache.modify
       } else if (senderId !== loggedInUser.id) {
         // To do: compute offset + limit to cover all users from last user displayed on sidebar to the index of the newMessage sender.
-        setSqlClauses({ offset: users.length - 1, limit });
+        // setSqlClauses({ offset: users.length - 1, limit });
+
+        // fetchMore({
+        //   variables: {
+        //     loggedInUserId: loggedInUser.id,
+        //     offset: `${users.length - 1}`,
+        //     limit: `${limit}`
+        //   },
+        //   updateQuery: (prevResult, { fetchMoreResult }) => {
+        //     console.log(prevResult);
+        //     console.log(fetchMoreResult);
+        //   }
+        // });
       }
     }
 
@@ -85,7 +97,7 @@ const Main = () => {
   return (
     <div className="main">
       <LeftSidebar users={users} isMoreUsersToFetch={offset < sidebarData?.totalUsersCount - limit}
-        setSqlClauses={setSqlClauses} setSelectedUser={setSelectedUser}
+        limit={sqlClauses.limit} fetchMore={fetchMore} setSelectedUser={setSelectedUser} setUsers={setUsers}
       />
       {selectedUser ? <Chat selectedUser={selectedUser} newMessage={newMessageData?.newMessage} /> : <WelcomeScreen />}
     </div>

@@ -13,9 +13,12 @@ import "./LeftSidebar.scss";
 interface Props {
   users: User[];
   isMoreUsersToFetch: boolean;
+  limit: number;
 
-  // To do: interface
-  setSqlClauses: ({ offset, limit }: any) => void;
+  // To do:
+  fetchMore: (object: any) => void;
+  setUsers: (users: User[]) => void;
+
   setSelectedUser: (user: User) => void;
 }
 
@@ -54,7 +57,7 @@ const DotsIcon = () => {
   );
 };
 
-const LeftSidebar: React.FC<Props> = ({ users, isMoreUsersToFetch, setSqlClauses, setSelectedUser }) => {
+const LeftSidebar: React.FC<Props> = ({ users, isMoreUsersToFetch, limit, fetchMore, setUsers, setSelectedUser }) => {
   const { loggedInUser, displayMessageTime } = useContext(AppContext);
   const [searchBarIsOpened, setSearchBarIsOpened] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -62,13 +65,34 @@ const LeftSidebar: React.FC<Props> = ({ users, isMoreUsersToFetch, setSqlClauses
 
   const lastUserRef = useCallback(node => {
     // To do: check fast scrolling behavior
+    // check why there is another request on each scroll to bottom
+    
     if (users.length > 0) {
       observer.current?.disconnect();
 
       observer.current = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting && isMoreUsersToFetch) {
-          // To do: Fetch More
-          // setSqlClauses((prevClauses: any) => ({ offset: users.length - 1, limit: prevClauses.limit }));
+          fetchMore({
+            variables: {
+              loggedInUserId: loggedInUser.id,
+              offset: `${users.length - 1}`,
+              limit: `${limit}`
+            },
+            // To do: any
+            updateQuery: (prevResult: any, { fetchMoreResult }: any) => {
+              let { users: newUsers } = fetchMoreResult.getAllUsersExceptLogged;
+
+              if (newUsers) {
+                newUsers = [...prevResult.getAllUsersExceptLogged.users, ...newUsers];
+
+                if (users[users.length - 1].id !== newUsers[newUsers.length - 1].id) {
+                  setUsers(newUsers);
+                }
+              }
+
+              return fetchMoreResult;
+            }
+          });
         }
       });
 
