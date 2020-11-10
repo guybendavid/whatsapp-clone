@@ -79,6 +79,7 @@ const LeftSidebar: React.FC<Props> = ({ users, limit, isFetchMoreUsers, fetchMor
               offset: `${users.length}`,
               limit: `${limit}`
             },
+            // To do: replace with the new approach
             updateQuery: (prevResult: SidebarData, { fetchMoreResult }: any) => {
               const { users: prevUsers } = prevResult.getAllUsersExceptLogged;
               let { users: newUsers } = fetchMoreResult.getAllUsersExceptLogged;
