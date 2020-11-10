@@ -62,8 +62,6 @@ const LeftSidebar: React.FC<Props> = ({ users, limit, isFetchMoreUsers, fetchMor
   const observer: any = useRef();
 
   const lastUserRef = useCallback(node => {
-    // To do: check fast scrolling behavior
-
     if (users.length > 0) {
       observer.current?.disconnect();
       observer.current = new IntersectionObserver(entries => {

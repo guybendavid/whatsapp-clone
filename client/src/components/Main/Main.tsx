@@ -8,10 +8,6 @@ import WelcomeScreen from "./WelcomeScreen/WelcomeScreen";
 import Chat from "./Chat/Chat";
 import "./Main.scss";
 
-// To do: check different values with different count of users with different loggedIn user
-const offset = 0;
-const limit = 15;
-
 const GET_All_USERS_EXCEPT_LOGGED = gql`
   query GetAllUsersExceptLogged($loggedInUserId: ID! $offset: String! $limit: String!) {
     getAllUsersExceptLogged(id: $loggedInUserId offset: $offset limit: $limit) {
@@ -46,12 +42,13 @@ const Main = () => {
   const loggedInUser = JSON.parse(localStorage.loggedInUser);
   const { handleErrors, clearError } = useContext(AppContext);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const sqlClauses = { offset: 0, limit: 15 };
 
   const { data: usersData, client, fetchMore } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
     variables: {
       loggedInUserId: loggedInUser.id,
-      offset: `${offset}`,
-      limit: `${limit}`
+      offset: `${sqlClauses.offset}`,
+      limit: `${sqlClauses.limit}`
     },
     onError: (error) => handleErrors(error, history),
     onCompleted: () => clearError()
@@ -80,7 +77,7 @@ const Main = () => {
 
   return (
     <div className="main">
-      <LeftSidebar users={sidebarData?.users} limit={limit}
+      <LeftSidebar users={sidebarData?.users} limit={sqlClauses.limit}
         isFetchMoreUsers={sidebarData?.users.length < sidebarData?.totalUsersCountExceptLoggedUser}
         fetchMore={fetchMore} setSelectedUser={setSelectedUser}
       />
