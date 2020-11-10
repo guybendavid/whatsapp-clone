@@ -17,8 +17,6 @@ interface Props {
 
   // To do: any:
   fetchMore: (object: any) => void;
-  setSqlClauses: (object: any) => void;
-
   setSelectedUser: (user: User) => void;
 }
 
@@ -57,7 +55,7 @@ const DotsIcon = () => {
   );
 };
 
-const LeftSidebar: React.FC<Props> = ({ users, limit, isFetchMoreUsers, fetchMore, setSqlClauses, setSelectedUser }) => {
+const LeftSidebar: React.FC<Props> = ({ users, limit, isFetchMoreUsers, fetchMore, setSelectedUser }) => {
   const { loggedInUser, displayMessageTime } = useContext(AppContext);
   const [searchBarIsOpened, setSearchBarIsOpened] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -85,7 +83,6 @@ const LeftSidebar: React.FC<Props> = ({ users, limit, isFetchMoreUsers, fetchMor
               if (newUsers.length > 0) {
                 newUsers = [...prevUsers, ...newUsers];
                 fetchMoreResult.getAllUsersExceptLogged.users = newUsers;
-                // To do: without re render setSqlClauses({ offset: newUsers.length, limit });
               }
 
               return fetchMoreResult;

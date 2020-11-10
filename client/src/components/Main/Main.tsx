@@ -8,6 +8,10 @@ import WelcomeScreen from "./WelcomeScreen/WelcomeScreen";
 import Chat from "./Chat/Chat";
 import "./Main.scss";
 
+// To do: check different values with different count of users with different loggedIn user
+const offset = 0;
+const limit = 15;
+
 const GET_All_USERS_EXCEPT_LOGGED = gql`
   query GetAllUsersExceptLogged($loggedInUserId: ID! $offset: String! $limit: String!) {
     getAllUsersExceptLogged(id: $loggedInUserId offset: $offset limit: $limit) {
@@ -43,10 +47,6 @@ const Main = () => {
   const { handleErrors, clearError } = useContext(AppContext);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
-  // To do: check different values with different count of users with different loggedIn user
-  const [sqlClauses, setSqlClauses] = useState({ offset: 0, limit: 15 });
-  const { offset, limit } = sqlClauses;
-
   const { data: usersData, client, fetchMore } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
     variables: {
       loggedInUserId: loggedInUser.id,
@@ -72,7 +72,6 @@ const Main = () => {
       } else if (senderId !== loggedInUser.id) {
         // To do: fetchMore
         // compute offset + limit to cover all users from last user displayed on sidebar to the index of the newMessage sender.
-        // setSqlClauses({ offset: users.length, limit });
       }
     }
 
@@ -81,9 +80,9 @@ const Main = () => {
 
   return (
     <div className="main">
-      <LeftSidebar users={sidebarData?.users} limit={sqlClauses.limit}
+      <LeftSidebar users={sidebarData?.users} limit={limit}
         isFetchMoreUsers={sidebarData?.users.length < sidebarData?.totalUsersCountExceptLoggedUser}
-        fetchMore={fetchMore} setSqlClauses={setSqlClauses} setSelectedUser={setSelectedUser}
+        fetchMore={fetchMore} setSelectedUser={setSelectedUser}
       />
       {selectedUser ? <Chat selectedUser={selectedUser} newMessage={newMessageData?.newMessage} /> : <WelcomeScreen />}
     </div>
