@@ -47,7 +47,7 @@ const Main = () => {
   const [sqlClauses, setSqlClauses] = useState({ offset: 0, limit: 15 });
   const { offset, limit } = sqlClauses;
 
-  const { data: usersData, fetchMore, client } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
+  const { data: usersData, client, fetchMore } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
     variables: {
       loggedInUserId: loggedInUser.id,
       offset: `${offset}`,
@@ -81,7 +81,8 @@ const Main = () => {
 
   return (
     <div className="main">
-      <LeftSidebar users={sidebarData?.users} limit={sqlClauses.limit} isFetchMoreUsers={sidebarData?.users.length < sidebarData?.totalUsersCountExceptLoggedUser}
+      <LeftSidebar users={sidebarData?.users} limit={sqlClauses.limit}
+        isFetchMoreUsers={sidebarData?.users.length < sidebarData?.totalUsersCountExceptLoggedUser}
         fetchMore={fetchMore} setSqlClauses={setSqlClauses} setSelectedUser={setSelectedUser}
       />
       {selectedUser ? <Chat selectedUser={selectedUser} newMessage={newMessageData?.newMessage} /> : <WelcomeScreen />}

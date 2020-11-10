@@ -15,7 +15,7 @@ interface Props {
   limit: number;
   isFetchMoreUsers: boolean;
 
-  // To do * 2:
+  // To do: any:
   fetchMore: (object: any) => void;
   setSqlClauses: (object: any) => void;
 
@@ -64,7 +64,7 @@ const LeftSidebar: React.FC<Props> = ({ users, limit, isFetchMoreUsers, fetchMor
   const observer: any = useRef();
 
   const lastUserRef = useCallback(node => {
-    // To do: check fast scrolling behavior, why there is another network request
+    // To do: check fast scrolling behavior
 
     if (users.length > 0) {
       observer.current?.disconnect();
@@ -85,7 +85,7 @@ const LeftSidebar: React.FC<Props> = ({ users, limit, isFetchMoreUsers, fetchMor
               if (newUsers.length > 0) {
                 newUsers = [...prevUsers, ...newUsers];
                 fetchMoreResult.getAllUsersExceptLogged.users = newUsers;
-                setSqlClauses({ offset: newUsers.length, limit });
+                // To do: without re render setSqlClauses({ offset: newUsers.length, limit });
               }
 
               return fetchMoreResult;

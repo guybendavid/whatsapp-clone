@@ -16,142 +16,142 @@ module.exports = {
         image: imageGenerator()
       },
       {
-        first_name: "James",
-        last_name: "Green",
-        username: "james",
-        password: hasedPassword,
-        image: imageGenerator()
-      },
-      {
-        first_name: "John",
-        last_name: "Smith",
-        username: "john",
-        password: hasedPassword,
-        image: imageGenerator()
-      },
-      {
         first_name: "David",
-        last_name: "Johnson",
+        last_name: "De Gea",
         username: "david",
         password: hasedPassword,
         image: imageGenerator()
       },
       {
-        first_name: "Joe",
-        last_name: "Stevens",
-        username: "Joe",
+        first_name: "Aaron",
+        last_name: "Wan Bissaka",
+        username: "aaron",
         password: hasedPassword,
         image: imageGenerator()
       },
       {
-        first_name: "Matthew",
-        last_name: "Thomas",
-        username: "matthew",
+        first_name: "Harry",
+        last_name: "Maguire",
+        username: "harry",
         password: hasedPassword,
         image: imageGenerator()
       },
       {
-        first_name: "Andrew",
-        last_name: "Brian",
-        username: "andrew",
+        first_name: "Victor",
+        last_name: "Lindelof",
+        username: "victor",
         password: hasedPassword,
         image: imageGenerator()
       },
       {
-        first_name: "Ronald",
-        last_name: "Nielsen",
-        username: "ronald",
+        first_name: "Luke",
+        last_name: "Shaw",
+        username: "luke",
         password: hasedPassword,
         image: imageGenerator()
       },
       {
-        first_name: "Alexander",
+        first_name: "Fred",
+        last_name: "Rodrigues",
+        username: "fred",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Scott",
+        last_name: "Mctominay",
+        username: "scott",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Nemanja",
+        last_name: "Matic",
+        username: "nemanja",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Donny",
+        last_name: "Van De Beek",
+        username: "donny",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Paul",
+        last_name: "Pogba",
+        username: "paul",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Bruno",
+        last_name: "Fernandes",
+        username: "bruno",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Marcus",
+        last_name: "Rashford",
+        username: "marcus",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Mason",
+        last_name: "Greenwood",
+        username: "mason",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Anthony",
+        last_name: "Martial",
+        username: "anthony",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Edinson",
+        last_name: "Cavani",
+        username: "edinson",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Eric",
+        last_name: "Bailly",
+        username: "eric",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Axel",
+        last_name: "Tuanzebe",
+        username: "axel",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Brandon",
         last_name: "Williams",
-        username: "alexander",
-        password: hasedPassword,
-        image: imageGenerator()
-      },
-      {
-        first_name: "Chris",
-        last_name: "Lopez",
-        username: "chris",
+        username: "brandon",
         password: hasedPassword,
         image: imageGenerator()
       },
       {
         first_name: "Daniel",
-        last_name: "Jones",
+        last_name: "James",
         username: "daniel",
         password: hasedPassword,
         image: imageGenerator()
       },
       {
-        first_name: "Mike",
-        last_name: "Lee",
-        username: "mike",
-        password: hasedPassword,
-        image: imageGenerator()
-      },
-      {
-        first_name: "Mike",
-        last_name: "Lee",
-        username: "mike2",
-        password: hasedPassword,
-        image: imageGenerator()
-      },
-      {
-        first_name: "Mike",
-        last_name: "Lee",
-        username: "mike3",
-        password: hasedPassword,
-        image: imageGenerator()
-      },
-      {
-        first_name: "Mike",
-        last_name: "Lee",
-        username: "mike5",
-        password: hasedPassword,
-        image: imageGenerator()
-      },
-      {
-        first_name: "Mike",
-        last_name: "Lee",
-        username: "mike6",
-        password: hasedPassword,
-        image: imageGenerator()
-      },
-      {
-        first_name: "Mike",
-        last_name: "Lee",
-        username: "mike7",
-        password: hasedPassword,
-        image: imageGenerator()
-      },
-      {
-        first_name: "Mike",
-        last_name: "Lee",
-        username: "mike8",
-        password: hasedPassword,
-        image: imageGenerator()
-      },
-      {
-        first_name: "Mike",
-        last_name: "Lee",
-        username: "mike9",
-        password: hasedPassword,
-        image: imageGenerator()
-      },
-      {
-        first_name: "Mike",
-        last_name: "Lee",
-        username: "mike10",
-        password: hasedPassword,
-        image: imageGenerator()
-      },
-      {
-        first_name: "Mike",
-        last_name: "Lee",
-        username: "mike11",
+        first_name: "Juan",
+        last_name: "Mata",
+        username: "juan",
         password: hasedPassword,
         image: imageGenerator()
       }
