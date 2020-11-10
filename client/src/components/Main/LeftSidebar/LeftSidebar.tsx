@@ -14,10 +14,16 @@ interface Props {
   users: User[];
   limit: number;
   isFetchMoreUsers: boolean;
-
-  // To do: any:
   fetchMore: (object: any) => void;
   setSelectedUser: (user: User) => void;
+}
+
+interface SidebarData {
+  getAllUsersExceptLogged: {
+    users: User[];
+    totalUsersCountExceptLoggedUser: string;
+    __typename: string;
+  };
 }
 
 const DotsIcon = () => {
@@ -73,8 +79,7 @@ const LeftSidebar: React.FC<Props> = ({ users, limit, isFetchMoreUsers, fetchMor
               offset: `${users.length}`,
               limit: `${limit}`
             },
-            // To do: any
-            updateQuery: (prevResult: any, { fetchMoreResult }: any) => {
+            updateQuery: (prevResult: SidebarData, { fetchMoreResult }: any) => {
               const { users: prevUsers } = prevResult.getAllUsersExceptLogged;
               let { users: newUsers } = fetchMoreResult.getAllUsersExceptLogged;
 
