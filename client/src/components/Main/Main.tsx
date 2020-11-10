@@ -21,7 +21,7 @@ const GET_All_USERS_EXCEPT_LOGGED = gql`
           createdAt
         }
       }
-      totalUsersCount
+      totalUsersCountExceptLoggedUser
     }
   }
 `;
@@ -43,8 +43,8 @@ const Main = () => {
   const { handleErrors, clearError } = useContext(AppContext);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
-  // To do: check different values with different count of users
-  const [sqlClauses, setSqlClauses] = useState({ offset: 0, limit: 10 });
+  // To do: check different values with different count of users with different loggedIn user
+  const [sqlClauses, setSqlClauses] = useState({ offset: 0, limit: 15 });
   const { offset, limit } = sqlClauses;
 
   const { data: usersData, fetchMore, client } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
@@ -81,7 +81,7 @@ const Main = () => {
 
   return (
     <div className="main">
-      <LeftSidebar users={sidebarData?.users} limit={sqlClauses.limit}
+      <LeftSidebar users={sidebarData?.users} limit={sqlClauses.limit} isFetchMoreUsers={sidebarData?.users.length < sidebarData?.totalUsersCountExceptLoggedUser}
         fetchMore={fetchMore} setSqlClauses={setSqlClauses} setSelectedUser={setSelectedUser}
       />
       {selectedUser ? <Chat selectedUser={selectedUser} newMessage={newMessageData?.newMessage} /> : <WelcomeScreen />}

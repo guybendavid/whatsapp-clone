@@ -36,8 +36,13 @@ export = {
           delete user.createdAt;
         });
 
-        const totalUsers = await sequelize.query(getTotalUsersCount, { type: QueryTypes.SELECT });
-        return { users: otherUsers, totalUsersCount: totalUsers[0]?.count };
+        let usersCount = await sequelize.query(getTotalUsersCount, { type: QueryTypes.SELECT });
+
+        if (usersCount[0]?.count > 0) {
+          usersCount = usersCount[0].count - 1;
+        }
+
+        return { users: otherUsers, totalUsersCountExceptLoggedUser: usersCount };
       } catch (err) {
         throw new ApolloError(err);
       }

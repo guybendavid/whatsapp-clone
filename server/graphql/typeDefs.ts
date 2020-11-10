@@ -3,7 +3,7 @@ import { gql } from "apollo-server";
 export = gql`
   type SideBarUsers {
     users: [User]!
-    totalUsersCount: String!
+    totalUsersCountExceptLoggedUser: String!
   }
   type User {
     id: ID!
