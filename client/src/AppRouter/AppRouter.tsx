@@ -30,5 +30,4 @@ const AppRouter: React.FC = () => {
   );
 };
 
-// To do: consider wrapping inside memo
 export default withRouter(AppRouter);

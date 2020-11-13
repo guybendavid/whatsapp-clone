@@ -37,12 +37,13 @@ const NEW_MESSAGE = gql`
   }
 `;
 
+const sqlClauses = { offset: 0, limit: 15 };
+
 const Main = () => {
   const history = useHistory();
   const loggedInUser = JSON.parse(localStorage.loggedInUser);
   const { handleErrors, clearError } = useContext(AppContext);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const sqlClauses = { offset: 0, limit: 15 };
 
   const { data: usersData, client, fetchMore } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
     variables: {
@@ -65,7 +66,14 @@ const Main = () => {
       const otherUserOnSidebar = sidebarData?.users.find((user: User) => user.id === senderId || user.id === recipientId);
 
       if (otherUserOnSidebar) {
-        // To do: cache.modify
+        cache.modify({
+          id: cache.identify(otherUserOnSidebar),
+          fields: {
+            latestMessage() {
+              return newMessage;
+            }
+          }
+        });
       } else if (senderId !== loggedInUser.id) {
         // To do: fetchMore
         // compute offset + limit to cover all users from last user displayed on sidebar to the index of the newMessage sender.
