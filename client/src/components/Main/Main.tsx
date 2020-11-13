@@ -65,6 +65,7 @@ const Main = () => {
       const { senderId, recipientId } = newMessage;
       const otherUserOnSidebar = sidebarData?.users.find((user: User) => user.id === senderId || user.id === recipientId);
 
+      // To do: order users by latestMessage desc
       if (otherUserOnSidebar) {
         cache.modify({
           id: cache.identify(otherUserOnSidebar),
@@ -75,8 +76,7 @@ const Main = () => {
           }
         });
       } else if (senderId !== loggedInUser.id) {
-        // To do: fetchMore
-        // compute offset + limit to cover all users from last user displayed on sidebar to the index of the newMessage sender.
+        // To do: Copy what What'sApp is doing in such a situation
       }
     }
 
