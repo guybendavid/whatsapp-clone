@@ -70,6 +70,7 @@ const Main = () => {
       const { senderId, recipientId } = newMessage;
       const otherUserOnSidebar = sidebarData?.users.find((user: User) => user.id === senderId || user.id === recipientId);
 
+      // To do: fix after the object that will be received will changed
       if (otherUserOnSidebar) {
         cache.modify({
           id: cache.identify(otherUserOnSidebar),
