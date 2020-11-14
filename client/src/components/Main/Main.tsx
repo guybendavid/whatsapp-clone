@@ -58,6 +58,9 @@ const Main = () => {
   });
 
   const sidebarData = usersData?.getAllUsersExceptLogged;
+  const isFetchMoreUsers = sidebarData?.users.length < sidebarData?.totalUsersCountExceptLoggedUser;
+  const isSidebarScrolledToBottom = !isFetchMoreUsers;
+
   const { data: newMessageData } = useSubscription(NEW_MESSAGE);
 
   useEffect(() => {
@@ -76,16 +79,18 @@ const Main = () => {
             }
           }
         });
-        // To do: && isScrolledToBottom
-      } else if (senderId !== loggedInUser.id) {
+      } else if (senderId !== loggedInUser.id && isSidebarScrolledToBottom) {
         try {
-          // To do: any
           const { getAllUsersExceptLogged }: any = client.readQuery({
             query: GET_All_USERS_EXCEPT_LOGGED,
             variables
           });
 
-          console.log(getAllUsersExceptLogged);
+          // To do: fetch the entire user object with the message he sent and then => 
+          // 1. merge the users object that in the cache with this new user
+          // 2. if inside a conversation: 
+          // distruct the message object from the user object and merge it with the messages object of the conversation that in the cache
+
         } catch (err) {
           // To do: check on error, and that the error get cleared
           handleErrors(err);
@@ -98,8 +103,7 @@ const Main = () => {
 
   return (
     <div className="main">
-      <LeftSidebar users={sidebarData?.users} limit={sqlClauses.limit}
-        isFetchMoreUsers={sidebarData?.users.length < sidebarData?.totalUsersCountExceptLoggedUser}
+      <LeftSidebar users={sidebarData?.users} limit={sqlClauses.limit} isFetchMoreUsers={isFetchMoreUsers}
         fetchMore={fetchMore} setSelectedUser={setSelectedUser}
       />
       {selectedUser ? <Chat selectedUser={selectedUser} newMessage={newMessageData?.newMessage} /> : <WelcomeScreen />}
