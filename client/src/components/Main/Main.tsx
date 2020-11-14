@@ -41,16 +41,18 @@ const sqlClauses = { offset: 0, limit: 15 };
 
 const Main = () => {
   const history = useHistory();
-  const loggedInUser = JSON.parse(localStorage.loggedInUser);
   const { handleErrors, clearError } = useContext(AppContext);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const loggedInUser = JSON.parse(localStorage.loggedInUser);
+
+  const variables = {
+    loggedInUserId: loggedInUser.id,
+    offset: `${sqlClauses.offset}`,
+    limit: `${sqlClauses.limit}`
+  };
 
   const { data: usersData, client, fetchMore } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
-    variables: {
-      loggedInUserId: loggedInUser.id,
-      offset: `${sqlClauses.offset}`,
-      limit: `${sqlClauses.limit}`
-    },
+    variables,
     onError: (error) => handleErrors(error, history),
     onCompleted: () => clearError()
   });
@@ -65,7 +67,6 @@ const Main = () => {
       const { senderId, recipientId } = newMessage;
       const otherUserOnSidebar = sidebarData?.users.find((user: User) => user.id === senderId || user.id === recipientId);
 
-      // To do: order users by latestMessage desc
       if (otherUserOnSidebar) {
         cache.modify({
           id: cache.identify(otherUserOnSidebar),
@@ -75,8 +76,20 @@ const Main = () => {
             }
           }
         });
+        // To do: && isScrolledToBottom
       } else if (senderId !== loggedInUser.id) {
-        // To do: Copy what What'sApp is doing in such a situation
+        try {
+          // To do: any
+          const { getAllUsersExceptLogged }: any = client.readQuery({
+            query: GET_All_USERS_EXCEPT_LOGGED,
+            variables
+          });
+
+          console.log(getAllUsersExceptLogged);
+        } catch (err) {
+          // To do: check on error, and that the error get cleared
+          handleErrors(err);
+        }
       }
     }
 
