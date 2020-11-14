@@ -70,8 +70,8 @@ const LeftSidebar: React.FC<Props> = ({ users, limit, isFetchMoreUsers, fetchMor
   const lastUserRef = useCallback(node => {
     if (users.length > 0) {
       observer.current?.disconnect();
+      
       observer.current = new IntersectionObserver(entries => {
-
         if (entries[0].isIntersecting && isFetchMoreUsers) {
           fetchMore({
             variables: {
@@ -84,6 +84,7 @@ const LeftSidebar: React.FC<Props> = ({ users, limit, isFetchMoreUsers, fetchMor
               const { users: prevUsers } = prevResult.getAllUsersExceptLogged;
               let { users: newUsers } = fetchMoreResult.getAllUsersExceptLogged;
 
+              // To do: make sure that alwayes newUsers returned and then remove the if statement
               if (newUsers.length > 0) {
                 newUsers = [...prevUsers, ...newUsers];
                 fetchMoreResult.getAllUsersExceptLogged.users = newUsers;
