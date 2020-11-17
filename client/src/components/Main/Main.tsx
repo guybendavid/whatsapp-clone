@@ -13,11 +13,11 @@ const Main = () => {
   const history = useHistory();
   const loggedInUser = JSON.parse(localStorage.loggedInUser);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const { handleErrors, clearError } = useContext(AppContext);
+  const { handleAuthErrors, clearError } = useContext(AppContext);
 
   const { data: usersData, client, fetchMore } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
     variables: variables(loggedInUser.id),
-    onError: (error) => handleErrors(error, history),
+    onError: (error) => handleAuthErrors(error, history),
     onCompleted: () => clearError()
   });
 
@@ -47,10 +47,7 @@ const Main = () => {
       } else if (senderId !== loggedInUser.id && isSidebarScrolledToBottom) {
         try {
           getUser({ variables: { id: senderId } });
-        } catch (err) {
-          // To do: check on error, and that the error get cleared
-          handleErrors(err);
-        }
+        } catch (err) { }
       }
     }
 
