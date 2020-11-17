@@ -40,7 +40,7 @@ const NEW_MESSAGE = gql`
   }
 `;
 
-const sqlClauses = { offset: 0, limit: 15 };
+const sqlClauses = { offset: 0, limit: 50 };
 
 const variables = (loggedInUserId: string) => {
   return {
