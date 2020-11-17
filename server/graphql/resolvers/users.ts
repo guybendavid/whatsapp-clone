@@ -46,6 +46,21 @@ export = {
       } catch (err) {
         throw new ApolloError(err);
       }
+    },
+    getUser: async (parent: any, args: { id: string; }, context: { user: UserInterface; }) => {
+      const { id } = args;
+      const { user } = context;
+
+      if (!user) {
+        throw new AuthenticationError("Unauthenticated");
+      }
+
+      try {
+        const user = await User.findOne({ where: { id } });
+        return user;
+      } catch (err) {
+        throw new ApolloError(err);
+      }
     }
   },
   Mutation: {

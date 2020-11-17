@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "../../contexts/AppContext";
 import { useHistory } from "react-router-dom";
 import { User } from "../../interfaces/interfaces";
-import { gql, useQuery, useSubscription } from "@apollo/client";
+import { gql, useQuery, useLazyQuery, useSubscription } from "@apollo/client";
 import LeftSidebar from "./LeftSidebar/LeftSidebar";
 import WelcomeScreen from "./WelcomeScreen/WelcomeScreen";
 import Chat from "./Chat/Chat";
@@ -26,8 +26,19 @@ const GET_All_USERS_EXCEPT_LOGGED = gql`
   }
 `;
 
+const GET_USER = gql`
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
+      id
+      firstName
+      lastName
+      image
+    }
+  }
+`;
+
 const NEW_MESSAGE = gql`
-  subscription newMessage {
+  subscription NewMessage {
     newMessage {
       senderId
       recipientId
@@ -62,6 +73,7 @@ const Main = () => {
   const isSidebarScrolledToBottom = !isFetchMoreUsers;
 
   const { data: newMessageData } = useSubscription(NEW_MESSAGE);
+  const [getUser, { data: newUserData }] = useLazyQuery(GET_USER);
 
   useEffect(() => {
     if (newMessageData?.newMessage) {
@@ -70,7 +82,6 @@ const Main = () => {
       const { senderId, recipientId } = newMessage;
       const otherUserOnSidebar = sidebarData?.users.find((user: User) => user.id === senderId || user.id === recipientId);
 
-      // To do: fix after the object that will be received will changed
       if (otherUserOnSidebar) {
         cache.modify({
           id: cache.identify(otherUserOnSidebar),
@@ -82,16 +93,7 @@ const Main = () => {
         });
       } else if (senderId !== loggedInUser.id && isSidebarScrolledToBottom) {
         try {
-          const { getAllUsersExceptLogged }: any = client.readQuery({
-            query: GET_All_USERS_EXCEPT_LOGGED,
-            variables
-          });
-
-          // To do: fetch the entire user object with the message he sent and then => 
-          // 1. merge the users object that in the cache with this new user
-          // 2. if inside a conversation: 
-          // distruct the message object from the user object and merge it with the messages object of the conversation that in the cache
-
+          getUser({ variables: { id: senderId } });
         } catch (err) {
           // To do: check on error, and that the error get cleared
           handleErrors(err);
@@ -101,6 +103,20 @@ const Main = () => {
 
     // eslint-disable-next-line
   }, [newMessageData]);
+
+  useEffect(() => {
+    if (newUserData) {
+      const sidebarNewUser = { ...newUserData.getUser };
+      sidebarNewUser.latestMessage = newMessageData.newMessage;
+
+      // To do: add user to sidebar cache
+
+      // const { getAllUsersExceptLogged }: any = client.readQuery({
+      //   query: GET_All_USERS_EXCEPT_LOGGED,
+      //   variables
+      // });
+    }
+  }, [newUserData]);
 
   return (
     <div className="main">
