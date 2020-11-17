@@ -2,53 +2,12 @@ import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "../../contexts/AppContext";
 import { useHistory } from "react-router-dom";
 import { User } from "../../interfaces/interfaces";
-import { gql, useQuery, useLazyQuery, useSubscription } from "@apollo/client";
+import { useQuery, useLazyQuery, useSubscription } from "@apollo/client";
+import { GET_All_USERS_EXCEPT_LOGGED, GET_USER, NEW_MESSAGE, sqlClauses, variables } from "./MainAssets";
 import LeftSidebar from "./LeftSidebar/LeftSidebar";
 import WelcomeScreen from "./WelcomeScreen/WelcomeScreen";
 import Chat from "./Chat/Chat";
 import "./Main.scss";
-
-const GET_All_USERS_EXCEPT_LOGGED = gql`
-  query GetAllUsersExceptLogged($loggedInUserId: ID! $offset: String! $limit: String!) {
-    getAllUsersExceptLogged(id: $loggedInUserId offset: $offset limit: $limit) {
-      users {
-        id
-        firstName
-        lastName
-        image
-        latestMessage {
-          content
-          createdAt
-        }
-      }
-      totalUsersCountExceptLoggedUser
-    }
-  }
-`;
-
-const GET_USER = gql`
-  query GetUser($id: ID!) {
-    getUser(id: $id) {
-      id
-      firstName
-      lastName
-      image
-    }
-  }
-`;
-
-const NEW_MESSAGE = gql`
-  subscription NewMessage {
-    newMessage {
-      senderId
-      recipientId
-      content
-      createdAt
-    }
-  }
-`;
-
-const sqlClauses = { offset: 0, limit: 15 };
 
 const Main = () => {
   const history = useHistory();
@@ -56,14 +15,8 @@ const Main = () => {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const { handleErrors, clearError } = useContext(AppContext);
 
-  const variables = {
-    loggedInUserId: loggedInUser.id,
-    offset: `${sqlClauses.offset}`,
-    limit: `${sqlClauses.limit}`
-  };
-
   const { data: usersData, client, fetchMore } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
-    variables,
+    variables: variables(loggedInUser.id),
     onError: (error) => handleErrors(error, history),
     onCompleted: () => clearError()
   });
@@ -112,7 +65,7 @@ const Main = () => {
 
       const { getAllUsersExceptLogged }: any = client.readQuery({
         query: GET_All_USERS_EXCEPT_LOGGED,
-        variables
+        variables: variables(loggedInUser.id)
       });
 
       // To do: check a senario that after a newUser like this sends his first message, he sends another one very quick
@@ -122,7 +75,7 @@ const Main = () => {
 
       client.writeQuery({
         query: GET_All_USERS_EXCEPT_LOGGED,
-        variables,
+        variables: variables(loggedInUser.id),
         data: {
           getAllUsersExceptLogged: updatedSidebar
         }

@@ -15,10 +15,15 @@ const TopSection: React.FC<Props> = ({ selectedUser, newMessage }) => {
 
   useEffect(() => {
     if (newMessage) {
-      const { senderId, recipientId } = newMessage;
+      const { senderId, recipientId, content, createdAt } = newMessage;
 
-      if (selectedUser.id === senderId || selectedUser.id === recipientId) {
-        // To do: selectedUser.latestMessage = newMessage;
+      if (senderId && recipientId && (selectedUser.id === senderId || selectedUser.id === recipientId)) {
+        if (selectedUser.latestMessage) {
+          // To do:
+          
+          // selectedUser.latestMessage.content = content;
+          // selectedUser.latestMessage.createdAt = createdAt;
+        }
       };
     }
 
@@ -28,8 +33,7 @@ const TopSection: React.FC<Props> = ({ selectedUser, newMessage }) => {
   return (
     <div className="top-section">
       <div className="left-side">
-        <Avatar className="user-picture" alt="avatar"
-          src={selectedUser.image} />
+        <Avatar className="user-picture" alt="avatar" src={selectedUser.image} />
         <div className="text-wrapper">
           <Typography className="fullname" component="span">{`${selectedUser.firstName} ${selectedUser.lastName}`}</Typography>
           <Typography component="small">{displayMessageTime(selectedUser.latestMessage?.createdAt)}</Typography>
