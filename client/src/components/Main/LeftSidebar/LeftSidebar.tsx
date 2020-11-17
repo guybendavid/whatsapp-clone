@@ -3,6 +3,7 @@ import { AppContext } from "../../../contexts/AppContext";
 import { useHistory } from "react-router-dom";
 import { User } from "../../../interfaces/interfaces";
 import { List, ListItem, Avatar, ListItemAvatar, IconButton, InputBase, Typography, Divider, Menu, MenuItem, ClickAwayListener } from "@material-ui/core";
+import { sqlClauses } from "../MainAssets";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";
 import ChatIcon from "@material-ui/icons/Chat";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
@@ -12,7 +13,6 @@ import "./LeftSidebar.scss";
 
 interface Props {
   users: User[];
-  limit: number;
   isFetchMoreUsers: boolean;
   fetchMore: (object: any) => void;
   setSelectedUser: (user: User) => void;
@@ -61,7 +61,7 @@ const DotsIcon = () => {
   );
 };
 
-const LeftSidebar: React.FC<Props> = ({ users, limit, isFetchMoreUsers, fetchMore, setSelectedUser }) => {
+const LeftSidebar: React.FC<Props> = ({ users, isFetchMoreUsers, fetchMore, setSelectedUser }) => {
   const { loggedInUser, displayMessageTime } = useContext(AppContext);
   const [searchBarIsOpened, setSearchBarIsOpened] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -70,20 +70,19 @@ const LeftSidebar: React.FC<Props> = ({ users, limit, isFetchMoreUsers, fetchMor
   const lastUserRef = useCallback(node => {
     if (users.length > 0) {
       observer.current?.disconnect();
-      
+
       observer.current = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting && isFetchMoreUsers) {
           fetchMore({
             variables: {
               loggedInUserId: loggedInUser.id,
               offset: `${users.length}`,
-              limit: `${limit}`
+              limit: `${sqlClauses.limit}`
             },
             updateQuery: (prevResult: SidebarData, { fetchMoreResult }: any) => {
               const { users: prevUsers } = prevResult.getAllUsersExceptLogged;
               let { users: newUsers } = fetchMoreResult.getAllUsersExceptLogged;
 
-              // To do: make sure that alwayes newUsers returned and then remove the if statement
               if (newUsers.length > 0) {
                 newUsers = [...prevUsers, ...newUsers];
                 fetchMoreResult.getAllUsersExceptLogged.users = newUsers;

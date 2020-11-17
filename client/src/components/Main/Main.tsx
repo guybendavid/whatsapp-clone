@@ -85,7 +85,7 @@ const Main = () => {
 
   return (
     <div className="main">
-      <LeftSidebar users={sidebarData?.users} limit={sqlClauses.limit} isFetchMoreUsers={isFetchMoreUsers}
+      <LeftSidebar users={sidebarData?.users} isFetchMoreUsers={isFetchMoreUsers}
         fetchMore={fetchMore} setSelectedUser={setSelectedUser}
       />
       {selectedUser ? <Chat selectedUser={selectedUser} newMessage={newMessageData?.newMessage} /> : <WelcomeScreen />}
