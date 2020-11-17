@@ -42,7 +42,6 @@ const NEW_MESSAGE = gql`
 
 const sqlClauses = { offset: 0, limit: 15 };
 
-// To do:
 const variables = (loggedInUserId: string) => {
   return {
     loggedInUserId,

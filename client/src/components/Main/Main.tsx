@@ -68,7 +68,6 @@ const Main = () => {
         variables: variables(loggedInUser.id)
       });
 
-      // To do: check a senario that after a newUser like this sends his first message, he sends another one very quick
       const updatedSidebar = { ...getAllUsersExceptLogged };
       updatedSidebar.users = [...updatedSidebar.users, sidebarNewUser];
       updatedSidebar.totalUsersCountExceptLoggedUser = `${Number(updatedSidebar.totalUsersCountExceptLoggedUser) + 1}`;
