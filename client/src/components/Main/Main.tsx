@@ -52,9 +52,9 @@ const sqlClauses = { offset: 0, limit: 15 };
 
 const Main = () => {
   const history = useHistory();
-  const { handleErrors, clearError } = useContext(AppContext);
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const loggedInUser = JSON.parse(localStorage.loggedInUser);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const { handleErrors, clearError } = useContext(AppContext);
 
   const variables = {
     loggedInUserId: loggedInUser.id,
@@ -107,15 +107,28 @@ const Main = () => {
   useEffect(() => {
     if (newUserData) {
       const sidebarNewUser = { ...newUserData.getUser };
-      sidebarNewUser.latestMessage = newMessageData.newMessage;
+      const { recipientId, senderId, ...neededMessageProperties } = newMessageData.newMessage;
+      sidebarNewUser.latestMessage = neededMessageProperties;
 
-      // To do: add user to sidebar cache
+      const { getAllUsersExceptLogged }: any = client.readQuery({
+        query: GET_All_USERS_EXCEPT_LOGGED,
+        variables
+      });
 
-      // const { getAllUsersExceptLogged }: any = client.readQuery({
-      //   query: GET_All_USERS_EXCEPT_LOGGED,
-      //   variables
-      // });
+      // To do: check a senario that after a newUser like this sends his first message, he sends another one very quick
+      const updatedSidebar = { ...getAllUsersExceptLogged };
+      updatedSidebar.users = [...updatedSidebar.users, sidebarNewUser];
+      updatedSidebar.totalUsersCountExceptLoggedUser = `${Number(updatedSidebar.totalUsersCountExceptLoggedUser) + 1}`;
+
+      client.writeQuery({
+        query: GET_All_USERS_EXCEPT_LOGGED,
+        variables,
+        data: {
+          getAllUsersExceptLogged: updatedSidebar
+        }
+      });
     }
+    // eslint-disable-next-line
   }, [newUserData]);
 
   return (
