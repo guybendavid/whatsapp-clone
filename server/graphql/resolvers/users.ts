@@ -5,11 +5,13 @@ import { QueryTypes } from "sequelize";
 import { sequelize, User } from "../../db/models";
 import { validateRegisterObj, validateLoginObj } from "../../utils/validatons";
 import { User as UserInterface } from "../../db/interfaces/interfaces";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const imageGenerator = require("../../utils/imageGenerator");
 
 export = {
   Query: {
-    getAllUsersExceptLogged: async (parent: any, args: { id: string; }, context: { user: UserInterface; }) => {
-      const { id } = args;
+    getAllUsersExceptLogged: async (parent: any, args: { id: string; offset: string; limit: string; }, context: { user: UserInterface; }) => {
+      const { id, offset, limit } = args;
       const { user } = context;
 
       if (!user) {
@@ -21,10 +23,12 @@ export = {
       (select m.*, case when sender_id = ? then recipient_id else sender_id end as other_user_id
           from messages m where ? in (m.sender_id, m.recipient_id)) m 
           right join users u on u.id = m.other_user_id where u.id != ?
-          order by u.id, m.created_at desc`;
+          order by u.id, m.created_at desc ${limit ? "limit ?" : ""} ${offset ? "offset ?" : ""}`;
+
+      const getTotalUsersCount = "select count(id) from users";
 
       try {
-        const otherUsers = await sequelize.query(getUsersWithLatestMessage, { type: QueryTypes.SELECT, replacements: [id, id, id] });
+        const otherUsers = await sequelize.query(getUsersWithLatestMessage, { type: QueryTypes.SELECT, replacements: [id, id, id, limit, offset] });
 
         otherUsers.map((user: any) => {
           user.latestMessage = { content: user.content, createdAt: user.createdAt };
@@ -32,7 +36,28 @@ export = {
           delete user.createdAt;
         });
 
-        return otherUsers;
+        let usersCount = await sequelize.query(getTotalUsersCount, { type: QueryTypes.SELECT });
+
+        if (usersCount[0]?.count > 0) {
+          usersCount = usersCount[0].count - 1;
+        }
+
+        return { users: otherUsers, totalUsersCountExceptLoggedUser: usersCount };
+      } catch (err) {
+        throw new ApolloError(err);
+      }
+    },
+    getUser: async (parent: any, args: { id: string; }, context: { user: UserInterface; }) => {
+      const { id } = args;
+      const { user } = context;
+
+      if (!user) {
+        throw new AuthenticationError("Unauthenticated");
+      }
+
+      try {
+        const user = await User.findOne({ where: { id } });
+        return user;
       } catch (err) {
         throw new ApolloError(err);
       }
@@ -52,7 +77,7 @@ export = {
           }
 
           const hasedPassword = await bcrypt.hash(password, 6);
-          const image = `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 100)}.jpg`;
+          const image = imageGenerator();
           const user = await User.create({ firstName, lastName, username, password: hasedPassword, image });
           const { password: userPassword, ...safeUserData } = user.toJSON();
           return { ...safeUserData, token: generateToken({ id: user.id, firstName, lastName }) };

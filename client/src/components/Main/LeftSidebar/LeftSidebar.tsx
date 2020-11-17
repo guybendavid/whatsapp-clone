@@ -1,8 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef, useCallback } from "react";
 import { AppContext } from "../../../contexts/AppContext";
 import { useHistory } from "react-router-dom";
 import { User } from "../../../interfaces/interfaces";
 import { List, ListItem, Avatar, ListItemAvatar, IconButton, InputBase, Typography, Divider, Menu, MenuItem, ClickAwayListener } from "@material-ui/core";
+import { sqlClauses } from "../MainAssets/MainAssets";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";
 import ChatIcon from "@material-ui/icons/Chat";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
@@ -12,7 +13,16 @@ import "./LeftSidebar.scss";
 
 interface Props {
   users: User[];
+  isFetchMoreUsers: boolean;
+  fetchMore: (object: any) => void;
   setSelectedUser: (user: User) => void;
+}
+
+interface SidebarData {
+  getAllUsersExceptLogged: {
+    users: User[];
+    totalUsersCountExceptLoggedUser: string;
+  };
 }
 
 const DotsIcon = () => {
@@ -50,10 +60,46 @@ const DotsIcon = () => {
   );
 };
 
-const LeftSidebar: React.FC<Props> = ({ users, setSelectedUser }) => {
+const LeftSidebar: React.FC<Props> = ({ users, isFetchMoreUsers, fetchMore, setSelectedUser }) => {
   const { loggedInUser, displayMessageTime } = useContext(AppContext);
   const [searchBarIsOpened, setSearchBarIsOpened] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+  const observer: any = useRef();
+
+  const lastUserRef = useCallback(node => {
+    if (users.length > 0) {
+      observer.current?.disconnect();
+
+      observer.current = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting && isFetchMoreUsers) {
+          fetchMore({
+            variables: {
+              loggedInUserId: loggedInUser.id,
+              offset: `${users.length}`,
+              limit: `${sqlClauses.limit}`
+            },
+            updateQuery: (prevResult: SidebarData, { fetchMoreResult }: any) => {
+              const { users: prevUsers } = prevResult.getAllUsersExceptLogged;
+              let { users: newUsers } = fetchMoreResult.getAllUsersExceptLogged;
+
+              if (newUsers.length > 0) {
+                newUsers = [...prevUsers, ...newUsers];
+                fetchMoreResult.getAllUsersExceptLogged.users = newUsers;
+              }
+
+              return fetchMoreResult;
+            }
+          });
+        }
+      });
+
+      if (node) {
+        observer.current.observe(node);
+      }
+    }
+
+    // eslint-disable-next-line
+  }, [users, isFetchMoreUsers]);
 
   return (
     <div className="left-sidebar">
@@ -99,7 +145,8 @@ const LeftSidebar: React.FC<Props> = ({ users, setSelectedUser }) => {
       <List className="users">
         {users?.filter(user => `${user.firstName} ${user.lastName}`.toUpperCase().includes(searchValue.toUpperCase())).map((user, index) => (
           <React.Fragment key={index}>
-            <ListItem button className="list-item" onClick={() => setSelectedUser({ ...user })}>
+            <ListItem button className="list-item" onClick={() => setSelectedUser({ ...user })}
+              ref={users.length === index + 1 ? lastUserRef : null}>
               <ListItemAvatar className="avatar-wrapper">
                 <Avatar className="avatar" alt="avatar" src={user?.image} />
               </ListItemAvatar>

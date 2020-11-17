@@ -28,8 +28,7 @@ const TopSection: React.FC<Props> = ({ selectedUser, newMessage }) => {
   return (
     <div className="top-section">
       <div className="left-side">
-        <Avatar className="user-picture" alt="avatar"
-          src={selectedUser.image} />
+        <Avatar className="user-picture" alt="avatar" src={selectedUser.image} />
         <div className="text-wrapper">
           <Typography className="fullname" component="span">{`${selectedUser.firstName} ${selectedUser.lastName}`}</Typography>
           <Typography component="small">{displayMessageTime(selectedUser.latestMessage?.createdAt)}</Typography>

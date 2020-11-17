@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const bcrypt = require("bcrypt");
+const imageGenerator = require("../../utils/imageGenerator");
 require("dotenv").config();
 
-// eslint-disable-next-line no-undef
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const hasedPassword = await bcrypt.hash(process.env.SEEDERS_PASSWORD, 6);
@@ -13,84 +13,147 @@ module.exports = {
         last_name: "Ben David",
         username: "guy",
         password: hasedPassword,
-        image: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 100)}.jpg`
-      },
-      {
-        first_name: "James",
-        last_name: "Green",
-        username: "james",
-        password: hasedPassword,
-        image: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 100)}.jpg`
-      },
-      {
-        first_name: "John",
-        last_name: "Smith",
-        username: "john",
-        password: hasedPassword,
-        image: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 100)}.jpg`
+        image: imageGenerator()
       },
       {
         first_name: "David",
-        last_name: "Johnson",
+        last_name: "De Gea",
         username: "david",
         password: hasedPassword,
-        image: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 100)}.jpg`
+        image: imageGenerator()
       },
       {
-        first_name: "Joe",
-        last_name: "Stevens",
-        username: "Joe",
+        first_name: "Aaron",
+        last_name: "Wan Bissaka",
+        username: "aaron",
         password: hasedPassword,
-        image: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 100)}.jpg`
+        image: imageGenerator()
       },
       {
-        first_name: "Matthew",
-        last_name: "Thomas",
-        username: "matthew",
+        first_name: "Harry",
+        last_name: "Maguire",
+        username: "harry",
         password: hasedPassword,
-        image: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 100)}.jpg`
+        image: imageGenerator()
       },
       {
-        first_name: "Andrew",
-        last_name: "Brian",
-        username: "andrew",
+        first_name: "Victor",
+        last_name: "Lindelof",
+        username: "victor",
         password: hasedPassword,
-        image: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 100)}.jpg`
+        image: imageGenerator()
       },
       {
-        first_name: "Ronald",
-        last_name: "Nielsen",
-        username: "ronald",
+        first_name: "Luke",
+        last_name: "Shaw",
+        username: "luke",
         password: hasedPassword,
-        image: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 100)}.jpg`
+        image: imageGenerator()
       },
       {
-        first_name: "Alexander",
+        first_name: "Fred",
+        last_name: "Rodrigues",
+        username: "fred",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Scott",
+        last_name: "Mctominay",
+        username: "scott",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Nemanja",
+        last_name: "Matic",
+        username: "nemanja",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Donny",
+        last_name: "Van De Beek",
+        username: "donny",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Paul",
+        last_name: "Pogba",
+        username: "paul",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Bruno",
+        last_name: "Fernandes",
+        username: "bruno",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Marcus",
+        last_name: "Rashford",
+        username: "marcus",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Mason",
+        last_name: "Greenwood",
+        username: "mason",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Anthony",
+        last_name: "Martial",
+        username: "anthony",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Edinson",
+        last_name: "Cavani",
+        username: "edinson",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Eric",
+        last_name: "Bailly",
+        username: "eric",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Axel",
+        last_name: "Tuanzebe",
+        username: "axel",
+        password: hasedPassword,
+        image: imageGenerator()
+      },
+      {
+        first_name: "Brandon",
         last_name: "Williams",
-        username: "alexander",
+        username: "brandon",
         password: hasedPassword,
-        image: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 100)}.jpg`
-      },
-      {
-        first_name: "Chris",
-        last_name: "Lopez",
-        username: "chris",
-        password: hasedPassword,
-        image: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 100)}.jpg`
+        image: imageGenerator()
       },
       {
         first_name: "Daniel",
-        last_name: "Jones",
+        last_name: "James",
         username: "daniel",
         password: hasedPassword,
-        image: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 100)}.jpg`
+        image: imageGenerator()
       },
       {
-        first_name: "Mike",
-        last_name: "Lee",
-        username: "mike",
+        first_name: "Juan",
+        last_name: "Mata",
+        username: "juan",
         password: hasedPassword,
-        image: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 100)}.jpg`
+        image: imageGenerator()
       }
     ], {});
   },

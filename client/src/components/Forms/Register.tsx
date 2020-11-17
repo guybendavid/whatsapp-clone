@@ -10,8 +10,8 @@ import "./Forms.scss";
 const REGISTER_USER = gql`
 mutation RegisterUser($firstName: String! $lastName: String! $username: String! $password: String!) {
   register(firstName: $firstName lastName: $lastName username: $username password: $password) {
-    id,
-    image,
+    id
+    image
     token
   }
 }
@@ -22,7 +22,7 @@ interface Props {
 }
 
 const Register: React.FC<Props> = ({ history }) => {
-  const { handleErrors } = useContext(AppContext);
+  const { handleAuthErrors } = useContext(AppContext);
   const [register] = useMutation(REGISTER_USER);
   const [formValues, setFormValues] = useState({ firstName: "", lastName: "", username: "", password: "" });
 
@@ -40,7 +40,7 @@ const Register: React.FC<Props> = ({ history }) => {
 
         handleAuth(user.data?.register, history);
       } catch (err) {
-        handleErrors(err);
+        handleAuthErrors(err);
       }
     }
   };

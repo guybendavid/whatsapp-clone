@@ -29,7 +29,7 @@ const AppContextProvider: React.FC<Props> = ({ children }) => {
   const [loggedInUser, setLoggedInUser] = useState<User | {}>({});
   const [error, setError] = useState("");
 
-  const handleErrors = (error: any, history?: any) => {
+  const handleAuthErrors = (error: any, history?: any) => {
     if (error.message === "Unauthenticated") {
       localStorage.clear();
       history.push("/login");
@@ -50,7 +50,7 @@ const AppContextProvider: React.FC<Props> = ({ children }) => {
   }, []);
 
   return (
-    <AppContext.Provider value={{ loggedInUser, displayMessageTime, error, handleErrors, clearError }}>
+    <AppContext.Provider value={{ loggedInUser, displayMessageTime, error, handleAuthErrors, clearError }}>
       {children}
     </AppContext.Provider>
   );
