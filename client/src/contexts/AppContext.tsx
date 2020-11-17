@@ -29,7 +29,6 @@ const AppContextProvider: React.FC<Props> = ({ children }) => {
   const [loggedInUser, setLoggedInUser] = useState<User | {}>({});
   const [error, setError] = useState("");
 
-  // To do: export to Forms functions file
   const handleAuthErrors = (error: any, history?: any) => {
     if (error.message === "Unauthenticated") {
       localStorage.clear();
