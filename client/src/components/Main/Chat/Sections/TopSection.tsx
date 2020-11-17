@@ -19,8 +19,9 @@ const TopSection: React.FC<Props> = ({ selectedUser, newMessage }) => {
 
       if (senderId && recipientId && (selectedUser.id === senderId || selectedUser.id === recipientId)) {
         if (selectedUser.latestMessage) {
-          selectedUser.latestMessage.content = content;
-          selectedUser.latestMessage.createdAt = createdAt;
+          // To do:
+          // selectedUser.latestMessage.content = content;
+          // selectedUser.latestMessage.createdAt = createdAt;
         }
       };
     }
