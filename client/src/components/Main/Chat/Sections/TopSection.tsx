@@ -15,14 +15,10 @@ const TopSection: React.FC<Props> = ({ selectedUser, newMessage }) => {
 
   useEffect(() => {
     if (newMessage) {
-      const { senderId, recipientId, content, createdAt } = newMessage;
+      const { senderId, recipientId } = newMessage;
 
-      if (senderId && recipientId && (selectedUser.id === senderId || selectedUser.id === recipientId)) {
-        if (selectedUser.latestMessage) {
-          // To do:
-          // selectedUser.latestMessage.content = content;
-          // selectedUser.latestMessage.createdAt = createdAt;
-        }
+      if (selectedUser.id === senderId || selectedUser.id === recipientId) {
+        selectedUser.latestMessage = newMessage;
       };
     }
 
