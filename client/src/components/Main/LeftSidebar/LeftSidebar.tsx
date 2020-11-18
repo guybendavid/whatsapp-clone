@@ -71,7 +71,7 @@ const LeftSidebar: React.FC<Props> = ({ users, isFetchMoreUsers, fetchMore, setS
       observer.current?.disconnect();
 
       observer.current = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting && isFetchMoreUsers) {
+        if (entries[0].isIntersecting && isFetchMoreUsers && loggedInUser.id) {
           fetchMore({
             variables: {
               loggedInUserId: loggedInUser.id,
@@ -99,7 +99,7 @@ const LeftSidebar: React.FC<Props> = ({ users, isFetchMoreUsers, fetchMore, setS
     }
 
     // eslint-disable-next-line
-  }, [users, isFetchMoreUsers]);
+  }, [loggedInUser, users, isFetchMoreUsers]);
 
   return (
     <div className="left-sidebar">
