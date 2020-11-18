@@ -23,7 +23,7 @@ interface Props {
 }
 
 const Login: React.FC<Props> = ({ history }) => {
-  const { handleAuthErrors } = useContext(AppContext);
+  const { handleErrors } = useContext(AppContext);
   const [login] = useMutation(LOGIN_USER);
   const [formValues, setFormValues] = useState({ username: "", password: "" });
 
@@ -36,7 +36,7 @@ const Login: React.FC<Props> = ({ history }) => {
         const user = await login({ variables: { username, password } });
         handleAuth(user.data?.login, history);
       } catch (err) {
-        handleAuthErrors(err);
+        handleErrors(err);
       }
     }
   };

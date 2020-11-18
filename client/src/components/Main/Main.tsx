@@ -13,11 +13,11 @@ const Main = () => {
   const history = useHistory();
   const loggedInUser = JSON.parse(localStorage.loggedInUser);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const { handleAuthErrors, clearError } = useContext(AppContext);
+  const { handleErrors, clearError } = useContext(AppContext);
 
   const { data: usersData, client, fetchMore } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
     variables: variables(loggedInUser.id),
-    onError: (error) => handleAuthErrors(error, history),
+    onError: (error) => handleErrors(error, history),
     onCompleted: () => clearError()
   });
 

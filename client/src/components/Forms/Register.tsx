@@ -22,7 +22,7 @@ interface Props {
 }
 
 const Register: React.FC<Props> = ({ history }) => {
-  const { handleAuthErrors } = useContext(AppContext);
+  const { handleErrors } = useContext(AppContext);
   const [register] = useMutation(REGISTER_USER);
   const [formValues, setFormValues] = useState({ firstName: "", lastName: "", username: "", password: "" });
 
@@ -40,7 +40,7 @@ const Register: React.FC<Props> = ({ history }) => {
 
         handleAuth(user.data?.register, history);
       } catch (err) {
-        handleAuthErrors(err);
+        handleErrors(err);
       }
     }
   };
