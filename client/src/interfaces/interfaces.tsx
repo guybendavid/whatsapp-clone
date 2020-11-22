@@ -1,3 +1,4 @@
+// To do: questions marks, add id, password
 interface User {
   id: string;
   firstName: string;

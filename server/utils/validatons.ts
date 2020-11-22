@@ -16,7 +16,7 @@ const validateRegisterObj = ({ firstName, lastName, username, password }: User) 
   }
 
   if (!password) {
-    errors.push("Password must not empty");
+    errors.push("Password must not be empty");
   }
 
   return { errors, isValid: errors.length === 0 };
@@ -30,7 +30,7 @@ const validateLoginObj = ({ username, password }: User) => {
   }
 
   if (!password) {
-    errors.push("Password must not empty");
+    errors.push("Password must not be empty");
   }
 
   return { errors, isValid: errors.length === 0 };
@@ -44,7 +44,7 @@ const validateMessageObj = ({ recipientId, content }: Message) => {
   }
 
   if (!content) {
-    errors.push("Content must not empty");
+    errors.push("Content must not be empty");
   }
 
   return { errors, isValid: errors.length === 0 };
