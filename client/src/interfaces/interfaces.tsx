@@ -1,4 +1,4 @@
-// To do: questions marks, add id, password
+// To do: organize both files => this and the server file
 interface User {
   id: string;
   firstName: string;
