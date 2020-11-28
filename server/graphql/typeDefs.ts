@@ -1,7 +1,5 @@
 import { gql } from "apollo-server";
 
-// To do: check changes
-
 export = gql`
   type SideBarUsers {
     users: [User]!
@@ -20,8 +18,8 @@ export = gql`
     id: ID!
     senderId: ID!
     recipientId: ID!
-    content: String!
-    createdAt: String!
+    content: String
+    createdAt: String
   }
   type Query {
     getAllUsersExceptLogged(id: ID! offset: String! limit: String!): SideBarUsers!

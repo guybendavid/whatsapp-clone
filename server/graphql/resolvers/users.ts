@@ -5,6 +5,7 @@ import { QueryTypes } from "sequelize";
 import { sequelize, User } from "../../db/models";
 import { validateRegisterObj, validateLoginObj } from "../../utils/validatons";
 import { User as UserInterface } from "../../db/interfaces/interfaces";
+import { getUsersWithLatestMessage } from "../../utils/rawQueries";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const imageGenerator = require("../../utils/imageGenerator");
 
@@ -18,31 +19,27 @@ export = {
         throw new AuthenticationError("Unauthenticated");
       }
 
-      const getUsersWithLatestMessage = `select distinct on (u.id) u.id, u.first_name as "firstName",
-      u.last_name as "lastName", u.image, m.content, m.created_at as "createdAt" from
-      (select m.*, case when sender_id = ? then recipient_id else sender_id end as other_user_id
-          from messages m where ? in (m.sender_id, m.recipient_id)) m 
-          right join users u on u.id = m.other_user_id where u.id != ?
-          order by u.id, m.created_at desc ${limit ? "limit ?" : ""} ${offset ? "offset ?" : ""}`;
-
+      const query = getUsersWithLatestMessage(limit, offset);
       const getTotalUsersCount = "select count(id) from users";
 
       try {
-        const otherUsers = await sequelize.query(getUsersWithLatestMessage, { type: QueryTypes.SELECT, replacements: [id, id, id, limit, offset] });
-
-        otherUsers.map((user: any) => {
-          user.latestMessage = { content: user.content, createdAt: user.createdAt };
-          delete user.content;
-          delete user.createdAt;
-        });
-
         let usersCount = await sequelize.query(getTotalUsersCount, { type: QueryTypes.SELECT });
 
         if (usersCount[0]?.count > 0) {
           usersCount = usersCount[0].count - 1;
-        }
 
-        return { users: otherUsers, totalUsersCountExceptLoggedUser: usersCount };
+          const otherUsers = await sequelize.query(query, { type: QueryTypes.SELECT, replacements: [id, id, id, limit, offset] });
+
+          otherUsers.map((user: any) => {
+            user.latestMessage = { content: user.content, createdAt: user.createdAt };
+            delete user.content;
+            delete user.createdAt;
+          });
+
+          return { users: otherUsers, totalUsersCountExceptLoggedUser: usersCount };
+        } else {
+          return { users: [], totalUsersCountExceptLoggedUser: 0 };
+        }
       } catch (err) {
         throw new ApolloError(err);
       }
