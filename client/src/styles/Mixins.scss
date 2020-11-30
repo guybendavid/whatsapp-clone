@@ -4,6 +4,14 @@
   white-space: nowrap;
 }
 
+@mixin vertical-overflow-handler {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+}
+
 @mixin search-input {
   flex: 1;
 

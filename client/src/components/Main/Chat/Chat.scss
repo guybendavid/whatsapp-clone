@@ -54,11 +54,7 @@
       border-radius: 5px;
 
       span {
-        display: -webkit-box;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        word-break: break-all;
-        -webkit-box-orient: vertical;
+        @include vertical-overflow-handler;
         -webkit-line-clamp: 7;
         min-height: 25px;
       }
