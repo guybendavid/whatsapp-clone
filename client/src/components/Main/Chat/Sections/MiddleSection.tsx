@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../../../contexts/AppContext";
 import { Message } from "../../../../interfaces/interfaces";
 import { Typography } from "@material-ui/core";
+import timeDisplayer from "../../../../services/timeDisplayer";
 
 interface Props {
   messages: Message[];
@@ -9,7 +10,7 @@ interface Props {
 }
 
 const MiddleSection: React.FC<Props> = ({ messages, chatBottomRef }) => {
-  const { loggedInUser, displayMessageTime } = useContext(AppContext);
+  const { loggedInUser } = useContext(AppContext);
   const [firstIndexOfSeries, setFirstIndexOfSeries] = useState<(number | undefined)[]>([]);
 
   const generateClasses = (senderId: string, index: number) => {
@@ -55,7 +56,7 @@ const MiddleSection: React.FC<Props> = ({ messages, chatBottomRef }) => {
       {messages?.map((message, index) => (
         <div key={index} className={generateClasses(message.senderId, index)}>
           <Typography component="span" className="title">{message.content}</Typography>
-          <Typography component="small">{displayMessageTime(message.createdAt)}</Typography>
+          <Typography component="small">{timeDisplayer(message.createdAt)}</Typography>
         </div>
       ))}
       <div className="chat-bottom" ref={chatBottomRef}></div>

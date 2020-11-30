@@ -7,36 +7,24 @@ interface Props {
 
 const AppContext: Context<any> = createContext(undefined);
 
-const displayMessageTime = (date?: string) => {
-  let time = "";
-
-  const handleEdgeCases = (timePart: string | number) => {
-    return timePart = timePart < 10 ? `0${timePart}` : timePart;
-  };
-
-  if (date) {
-    let hours: string | number = new Date(date).getHours();
-    let minutes: string | number = new Date(date).getMinutes();
-    hours = handleEdgeCases(hours);
-    minutes = handleEdgeCases(minutes);
-    time = `${hours}:${minutes}`;
-  }
-
-  return time;
-};
-
 const AppContextProvider: React.FC<Props> = ({ children }) => {
   const [loggedInUser, setLoggedInUser] = useState<User | {}>({});
   const [error, setError] = useState("");
 
   const handleErrors = (error: any, history?: any) => {
+    const isGraphQLErrorsIncludesError = (errorMessage: string) => {
+      return error.graphQLErrors && error.graphQLErrors[0]?.message?.includes(errorMessage);
+    };
+
     if (error.message === "Unauthenticated") {
       localStorage.clear();
-      history.push("/login");
+      history?.push("/login");
+    } else if (isGraphQLErrorsIncludesError("UserInputError")) {
+      setError(error.graphQLErrors[0].message.split(": ")[1]);
+    } else if (isGraphQLErrorsIncludesError("SequelizeValidationError")) {
+      setError(error.graphQLErrors[0].message.split(": ")[2]);
     } else {
-      error.graphQLErrors[0]?.message.includes("SequelizeValidationError") ?
-        setError(error.graphQLErrors[0]?.message?.split(": ")[2]) :
-        setError(error.graphQLErrors[0]?.message?.split(": ")[1]);
+      setError(error.message);
     }
   };
 
@@ -50,7 +38,7 @@ const AppContextProvider: React.FC<Props> = ({ children }) => {
   }, []);
 
   return (
-    <AppContext.Provider value={{ loggedInUser, displayMessageTime, error, handleErrors, clearError }}>
+    <AppContext.Provider value={{ loggedInUser, error, handleErrors, clearError }}>
       {children}
     </AppContext.Provider>
   );

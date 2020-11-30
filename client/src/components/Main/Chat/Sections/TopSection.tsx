@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from "react";
-import { AppContext } from "../../../../contexts/AppContext";
+import React, { useEffect } from "react";
 import { User, Message } from "../../../../interfaces/interfaces";
 import { Avatar, Typography, IconButton } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import timeDisplayer from "../../../../services/timeDisplayer";
 
 interface Props {
   selectedUser: User;
@@ -11,8 +11,6 @@ interface Props {
 }
 
 const TopSection: React.FC<Props> = ({ selectedUser, newMessage }) => {
-  const { displayMessageTime } = useContext(AppContext);
-
   useEffect(() => {
     if (newMessage) {
       const { senderId, recipientId } = newMessage;
@@ -31,7 +29,7 @@ const TopSection: React.FC<Props> = ({ selectedUser, newMessage }) => {
         <Avatar className="user-picture" alt="avatar" src={selectedUser.image} />
         <div className="text-wrapper">
           <Typography className="fullname" component="span">{`${selectedUser.firstName} ${selectedUser.lastName}`}</Typography>
-          <Typography component="small">{displayMessageTime(selectedUser.latestMessage?.createdAt)}</Typography>
+          <Typography component="small">{timeDisplayer(selectedUser.latestMessage?.createdAt)}</Typography>
         </div>
       </div>
       <div className="right-side">

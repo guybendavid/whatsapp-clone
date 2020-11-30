@@ -9,6 +9,7 @@ import ChatIcon from "@material-ui/icons/Chat";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import SearchIcon from "@material-ui/icons/Search";
 import ArrowDownWardIcon from "@material-ui/icons/ArrowDownward";
+import timeDisplayer from "../../../services/timeDisplayer";
 import "./LeftSidebar.scss";
 
 interface Props {
@@ -61,7 +62,7 @@ const DotsIcon = () => {
 };
 
 const LeftSidebar: React.FC<Props> = ({ users, isFetchMoreUsers, fetchMore, setSelectedUser }) => {
-  const { loggedInUser, displayMessageTime } = useContext(AppContext);
+  const { loggedInUser } = useContext(AppContext);
   const [searchBarIsOpened, setSearchBarIsOpened] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const observer: any = useRef();
@@ -154,7 +155,7 @@ const LeftSidebar: React.FC<Props> = ({ users, isFetchMoreUsers, fetchMore, setS
                 {index > 0 && <Divider className={user.latestMessage?.createdAt ? "is-chatted" : ""} />}
                 <div className="first-row">
                   <Typography component="span" className="fullname">{`${user.firstName} ${user.lastName}`}</Typography>
-                  <Typography component="small">{displayMessageTime(user.latestMessage?.createdAt)}</Typography>
+                  <Typography component="small">{timeDisplayer(user.latestMessage?.createdAt)}</Typography>
                 </div>
                 <div className="second-row">
                   <Typography className="last-message" component="span">{user.latestMessage?.content}</Typography>
