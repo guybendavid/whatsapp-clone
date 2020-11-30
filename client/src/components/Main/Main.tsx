@@ -3,7 +3,7 @@ import { AppContext } from "../../contexts/AppContext";
 import { useHistory } from "react-router-dom";
 import { User } from "../../interfaces/interfaces";
 import { useQuery, useLazyQuery, useSubscription } from "@apollo/client";
-import { GET_All_USERS_EXCEPT_LOGGED, GET_USER, NEW_MESSAGE, variables } from "./MainAssets/MainAssets";
+import { GET_All_USERS_EXCEPT_LOGGED, GET_USER, NEW_MESSAGE, variables } from "../../services/graphql";
 import LeftSidebar from "./LeftSidebar/LeftSidebar";
 import WelcomeScreen from "./WelcomeScreen/WelcomeScreen";
 import Chat from "./Chat/Chat";

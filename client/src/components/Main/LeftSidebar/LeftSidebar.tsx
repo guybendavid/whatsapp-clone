@@ -3,7 +3,7 @@ import { AppContext } from "../../../contexts/AppContext";
 import { useHistory } from "react-router-dom";
 import { User } from "../../../interfaces/interfaces";
 import { List, ListItem, Avatar, ListItemAvatar, IconButton, InputBase, Typography, Divider, Menu, MenuItem, ClickAwayListener } from "@material-ui/core";
-import { sqlClauses } from "../MainAssets/MainAssets";
+import { sqlClauses } from "../../../services/graphql";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";
 import ChatIcon from "@material-ui/icons/Chat";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
