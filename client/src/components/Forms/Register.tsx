@@ -3,19 +3,10 @@ import { AppContext } from "../../contexts/AppContext";
 import { Link } from "react-router-dom";
 import { handleAuth } from "../../services/auth";
 import { Avatar, Button, TextField, Typography } from "@material-ui/core";
+import { useMutation } from "@apollo/client";
+import { REGISTER_USER } from "../../services/graphql";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import { gql, useMutation } from "@apollo/client";
 import "./Forms.scss";
-
-const REGISTER_USER = gql`
-mutation RegisterUser($firstName: String! $lastName: String! $username: String! $password: String!) {
-  register(firstName: $firstName lastName: $lastName username: $username password: $password) {
-    id
-    image
-    token
-  }
-}
-`;
 
 interface Props {
   history: any;

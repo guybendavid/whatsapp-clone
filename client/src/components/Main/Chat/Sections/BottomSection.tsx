@@ -1,19 +1,14 @@
 import React, { useState, useEffect, SyntheticEvent, useContext } from "react";
 import { AppContext } from "../../../../contexts/AppContext";
 import { User } from "../../../../interfaces/interfaces";
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
+import { SEND_MESSAGE } from "../../../../services/graphql";
 import { IconButton, InputBase } from "@material-ui/core";
 import MoodIcon from "@material-ui/icons/Mood";
 import AttachmentIcon from "@material-ui/icons/Attachment";
 import MicIcon from "@material-ui/icons/Mic";
 
-const SEND_MESSAGE = gql`
-mutation SendMessage($recipientId: ID! $content: String!) {
-  sendMessage(recipientId: $recipientId content: $content) {
-    id
-  }
-}
-`;
+
 
 interface Props {
   selectedUser: User;

@@ -1,21 +1,12 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { AppContext } from "../../../contexts/AppContext";
 import { User, Message } from "../../../interfaces/interfaces";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
+import { GET_MESSAGES } from "../../../services/graphql";
 import TopSection from "./Sections/TopSection";
 import MiddleSection from "./Sections/MiddleSection";
 import BottomSection from "./Sections/BottomSection";
 import "./Chat.scss";
-
-const GET_MESSAGES = gql`
-query GetMessages($otherUserId: ID!) {
-  getMessages(otherUserId: $otherUserId) {
-    senderId
-    content
-    createdAt
-  }
-}
-`;
 
 interface Props {
   selectedUser: User;
