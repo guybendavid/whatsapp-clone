@@ -14,10 +14,10 @@ const MiddleSection: React.FC<Props> = ({ messages, chatBottomRef }) => {
   const [firstIndexOfSeries, setFirstIndexOfSeries] = useState<(number | undefined)[]>([]);
 
   const generateClasses = (senderId: string, index: number) => {
-    let classes = "message ";
+    let classes = "message";
 
     if (senderId === loggedInUser.id) {
-      classes += "sent-message";
+      classes += " sent-message";
     }
 
     if (firstIndexOfSeries.includes(index)) {

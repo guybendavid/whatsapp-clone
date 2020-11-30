@@ -50,18 +50,17 @@
       width: fit-content;
       min-width: 23px;
       max-width: 50%;
-      min-height: 25px;
       padding: 5px 80px 5px 10px;
       border-radius: 5px;
 
       span {
-        display: inline-block;
-        overflow: hidden;
-        word-break: break-all;
-        -webkit-line-clamp: 7;
-        -webkit-box-orient: vertical;
-        text-overflow: ellipsis;
         display: -webkit-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-all;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 7;
+        min-height: 25px;
       }
 
       small {
