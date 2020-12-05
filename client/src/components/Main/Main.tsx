@@ -24,7 +24,7 @@ const Main = () => {
   const sidebarData = usersData?.getAllUsersExceptLogged;
   const isFetchMoreUsers = sidebarData?.users.length < sidebarData?.totalUsersCountExceptLoggedUser;
   const isSidebarScrolledToBottom = !isFetchMoreUsers;
-
+  
   const { data: newMessageData } = useSubscription(NEW_MESSAGE);
   const [getUser, { data: newUserData }] = useLazyQuery(GET_USER);
 

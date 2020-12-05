@@ -54,22 +54,20 @@ const cache = new InMemoryCache({
       fields: {
         getAllUsersExceptLogged: {
           keyArgs: false,
-          merge: (existing, incoming) => {
-            if (existing) {
-              const newUsersAddedToArr = incoming.totalUsersCountExceptLoggedUser > existing.totalUsersCountExceptLoggedUser;
+          merge: (prevResult, incomingResult = {}) => {
+            const newObj = { ...incomingResult };
 
-              if (!newUsersAddedToArr) {
-                const { users: prevUsers } = existing;
-                let { users: newUsers } = incoming;
+            if (prevResult && incomingResult) {
+              const { totalUsersCountExceptLoggedUser: prevTotalUsersCount, users: prevUsers } = prevResult;
+              const { totalUsersCountExceptLoggedUser: incomingTotalUsersCount, users: newUsers } = incomingResult;
+              const newUsersAlreadyAdded = incomingTotalUsersCount > prevTotalUsersCount;
 
-                if (newUsers.length > 0) {
-                  newUsers = [...prevUsers, ...newUsers];
-                  incoming.users = newUsers;
-                }
+              if (newUsers.length > 0 && !newUsersAlreadyAdded) {
+                newObj.users = [...prevUsers, ...newUsers];
               }
             }
 
-            return incoming;
+            return newObj;
           }
         }
       }
