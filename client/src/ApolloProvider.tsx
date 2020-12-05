@@ -48,6 +48,8 @@ const splitLink = split(
   httpLink
 );
 
+// To do: finish chat pagination
+
 const cache = new InMemoryCache({
   typePolicies: {
     Query: {
