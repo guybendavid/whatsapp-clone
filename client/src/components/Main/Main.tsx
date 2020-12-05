@@ -57,8 +57,8 @@ const Main = () => {
   useEffect(() => {
     if (newUserData) {
       const sidebarNewUser = { ...newUserData.getUser };
-      const { recipientId, senderId, ...neededMessageProperties } = newMessageData.newMessage;
-      sidebarNewUser.latestMessage = neededMessageProperties;
+      const { recipientId, senderId, ...latestMessageProperties } = newMessageData.newMessage;
+      sidebarNewUser.latestMessage = latestMessageProperties;
 
       const { getAllUsersExceptLogged }: any = client.readQuery({
         query: GET_All_USERS_EXCEPT_LOGGED,
