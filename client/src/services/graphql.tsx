@@ -81,7 +81,7 @@ const NEW_MESSAGE = gql`
 
 const sqlClauses = { offset: 0, limit: 25 };
 
-const variables = (loggedInUserId: string) => {
+const getUsersQueryVariables = (loggedInUserId: string) => {
   return {
     loggedInUserId,
     offset: `${sqlClauses.offset}`,
@@ -91,5 +91,5 @@ const variables = (loggedInUserId: string) => {
 
 export {
   LOGIN_USER, REGISTER_USER, GET_All_USERS_EXCEPT_LOGGED, GET_USER, GET_MESSAGES, SEND_MESSAGE,
-  NEW_MESSAGE, sqlClauses, variables
+  NEW_MESSAGE, sqlClauses, getUsersQueryVariables
 };

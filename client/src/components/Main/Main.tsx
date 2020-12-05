@@ -3,7 +3,7 @@ import { AppContext } from "../../contexts/AppContext";
 import { useHistory } from "react-router-dom";
 import { User } from "../../interfaces/interfaces";
 import { useQuery, useLazyQuery, useSubscription } from "@apollo/client";
-import { GET_All_USERS_EXCEPT_LOGGED, GET_USER, NEW_MESSAGE, variables } from "../../services/graphql";
+import { GET_All_USERS_EXCEPT_LOGGED, GET_USER, NEW_MESSAGE, getUsersQueryVariables } from "../../services/graphql";
 import LeftSidebar from "./LeftSidebar/LeftSidebar";
 import WelcomeScreen from "./WelcomeScreen/WelcomeScreen";
 import Chat from "./Chat/Chat";
@@ -16,7 +16,7 @@ const Main = () => {
   const { handleErrors, clearError } = useContext(AppContext);
 
   const { data: usersData, client, fetchMore } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
-    variables: variables(loggedInUser.id),
+    variables: getUsersQueryVariables(loggedInUser.id),
     onError: (error) => handleErrors(error, history),
     onCompleted: () => clearError()
   });
@@ -24,7 +24,7 @@ const Main = () => {
   const sidebarData = usersData?.getAllUsersExceptLogged;
   const isFetchMoreUsers = sidebarData?.users.length < sidebarData?.totalUsersCountExceptLoggedUser;
   const isSidebarScrolledToBottom = !isFetchMoreUsers;
-  
+
   const { data: newMessageData } = useSubscription(NEW_MESSAGE);
   const [getUser, { data: newUserData }] = useLazyQuery(GET_USER);
 
@@ -62,7 +62,7 @@ const Main = () => {
 
       const { getAllUsersExceptLogged }: any = client.readQuery({
         query: GET_All_USERS_EXCEPT_LOGGED,
-        variables: variables(loggedInUser.id)
+        variables: getUsersQueryVariables(loggedInUser.id)
       });
 
       const updatedSidebar = { ...getAllUsersExceptLogged };
@@ -71,7 +71,7 @@ const Main = () => {
 
       client.writeQuery({
         query: GET_All_USERS_EXCEPT_LOGGED,
-        variables: variables(loggedInUser.id),
+        variables: getUsersQueryVariables(loggedInUser.id),
         data: {
           getAllUsersExceptLogged: updatedSidebar
         }
