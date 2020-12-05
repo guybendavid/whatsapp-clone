@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import { AppContext } from "../../../contexts/AppContext";
 import { User, Message } from "../../../interfaces/interfaces";
 import { useQuery } from "@apollo/client";
-import { GET_MESSAGES } from "../../../services/graphql";
+import { GET_MESSAGES, getMessagesQueryVariables } from "../../../services/graphql";
 import TopSection from "./Sections/TopSection";
 import MiddleSection from "./Sections/MiddleSection";
 import BottomSection from "./Sections/BottomSection";
@@ -19,9 +19,7 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
   const [messages, setMessages] = useState<Message[]>([]);
 
   const { data } = useQuery(GET_MESSAGES, {
-    variables: {
-      otherUserId: selectedUser.id
-    },
+    variables: getMessagesQueryVariables(selectedUser.id),
     fetchPolicy: "cache-and-network",
     onError: (error) => handleErrors(error),
     onCompleted: () => clearError()

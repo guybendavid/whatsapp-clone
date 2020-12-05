@@ -6,8 +6,8 @@ import { validateMessageObj } from "../../utils/validatons";
 
 export = {
   Query: {
-    getMessages: async (parent: any, args: { otherUserId: string; }, { user }: any) => {
-      const { otherUserId } = args;
+    getMessages: async (parent: any, args: { otherUserId: string; limit: string; offset: string; }, { user }: any) => {
+      const { otherUserId, limit, offset } = args;
 
       if (!user) {
         throw new AuthenticationError("Unauthenticated");
@@ -27,10 +27,12 @@ export = {
             senderId: { [Op.in]: ids },
             recipientId: { [Op.in]: ids }
           },
-          order: [["createdAt", "ASC"]]
+          order: [["createdAt", "DESC"]],
+          limit,
+          offset
         });
 
-        return messages;
+        return messages.reverse();
       } catch (err) {
         throw new ApolloError(err);
       }

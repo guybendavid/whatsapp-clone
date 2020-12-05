@@ -3,7 +3,7 @@ import { AppContext } from "../../../contexts/AppContext";
 import { useHistory } from "react-router-dom";
 import { User } from "../../../interfaces/interfaces";
 import { List, ListItem, Avatar, ListItemAvatar, IconButton, InputBase, Typography, Divider, Menu, MenuItem, ClickAwayListener } from "@material-ui/core";
-import { sqlClauses } from "../../../services/graphql";
+import { getUsersSqlClauses } from "../../../services/graphql";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";
 import ChatIcon from "@material-ui/icons/Chat";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
@@ -70,7 +70,7 @@ const LeftSidebar: React.FC<Props> = ({ users, isFetchMoreUsers, fetchMore, setS
             variables: {
               loggedInUserId: loggedInUser.id,
               offset: `${users.length}`,
-              limit: `${sqlClauses.limit}`
+              limit: `${getUsersSqlClauses.limit}`
             }
           });
         }

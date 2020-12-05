@@ -11,8 +11,8 @@ const imageGenerator = require("../../utils/imageGenerator");
 
 export = {
   Query: {
-    getAllUsersExceptLogged: async (parent: any, args: { id: string; offset: string; limit: string; }, context: { user: UserInterface; }) => {
-      const { id, offset, limit } = args;
+    getAllUsersExceptLogged: async (parent: any, args: { id: string; limit: string; offset: string; }, context: { user: UserInterface; }) => {
+      const { id, limit, offset } = args;
       const { user } = context;
 
       if (!user) {

@@ -22,8 +22,8 @@ mutation RegisterUser($firstName: String! $lastName: String! $username: String! 
 `;
 
 const GET_All_USERS_EXCEPT_LOGGED = gql`
-  query GetAllUsersExceptLogged($loggedInUserId: ID! $offset: String! $limit: String!) {
-    getAllUsersExceptLogged(id: $loggedInUserId offset: $offset limit: $limit) {
+  query GetAllUsersExceptLogged($loggedInUserId: ID! $limit: String! $offset: String!) {
+    getAllUsersExceptLogged(id: $loggedInUserId limit: $limit offset: $offset) {
       users {
         id
         firstName
@@ -51,8 +51,8 @@ const GET_USER = gql`
 `;
 
 const GET_MESSAGES = gql`
-query GetMessages($otherUserId: ID!) {
-  getMessages(otherUserId: $otherUserId) {
+query GetMessages($otherUserId: ID! $limit: String! $offset: String!) {
+  getMessages(otherUserId: $otherUserId limit: $limit offset: $offset) {
     senderId
     content
     createdAt
@@ -79,17 +79,26 @@ const NEW_MESSAGE = gql`
   }
 `;
 
-const sqlClauses = { offset: 0, limit: 25 };
+const getUsersSqlClauses = { limit: 25, offset: 0 };
+const geMessagesSqlClauses = { limit: 25, offset: 0 };
 
 const getUsersQueryVariables = (loggedInUserId: string) => {
   return {
     loggedInUserId,
-    offset: `${sqlClauses.offset}`,
-    limit: `${sqlClauses.limit}`
+    limit: `${getUsersSqlClauses.limit}`,
+    offset: `${getUsersSqlClauses.offset}`
+  };
+};
+
+const getMessagesQueryVariables = (otherUserId: string) => {
+  return {
+    otherUserId,
+    limit: `${geMessagesSqlClauses.limit}`,
+    offset: `${geMessagesSqlClauses.offset}`
   };
 };
 
 export {
   LOGIN_USER, REGISTER_USER, GET_All_USERS_EXCEPT_LOGGED, GET_USER, GET_MESSAGES, SEND_MESSAGE,
-  NEW_MESSAGE, sqlClauses, getUsersQueryVariables
+  NEW_MESSAGE, getUsersSqlClauses, getUsersQueryVariables, getMessagesQueryVariables
 };
