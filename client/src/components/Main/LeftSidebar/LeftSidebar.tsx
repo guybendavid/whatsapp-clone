@@ -19,13 +19,6 @@ interface Props {
   setSelectedUser: (user: User) => void;
 }
 
-interface SidebarData {
-  getAllUsersExceptLogged: {
-    users: User[];
-    totalUsersCountExceptLoggedUser: string;
-  };
-}
-
 const DotsIcon = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const history: any = useHistory();
@@ -78,17 +71,6 @@ const LeftSidebar: React.FC<Props> = ({ users, isFetchMoreUsers, fetchMore, setS
               loggedInUserId: loggedInUser.id,
               offset: `${users.length}`,
               limit: `${sqlClauses.limit}`
-            },
-            updateQuery: (prevResult: SidebarData, { fetchMoreResult }: any) => {
-              const { users: prevUsers } = prevResult.getAllUsersExceptLogged;
-              let { users: newUsers } = fetchMoreResult.getAllUsersExceptLogged;
-
-              if (newUsers.length > 0) {
-                newUsers = [...prevUsers, ...newUsers];
-                fetchMoreResult.getAllUsersExceptLogged.users = newUsers;
-              }
-
-              return fetchMoreResult;
             }
           });
         }
