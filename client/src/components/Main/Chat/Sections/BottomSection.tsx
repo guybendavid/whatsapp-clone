@@ -8,7 +8,7 @@ import MoodIcon from "@material-ui/icons/Mood";
 import AttachmentIcon from "@material-ui/icons/Attachment";
 import MicIcon from "@material-ui/icons/Mic";
 
-
+// To do: rename section parts
 
 interface Props {
   selectedUser: User;
