@@ -34,7 +34,7 @@ const GET_All_USERS_EXCEPT_LOGGED = gql`
           createdAt
         }
       }
-      totalUsersCountExceptLoggedUser
+      totalUsersExceptLoggedUser
     }
   }
 `;
@@ -53,10 +53,13 @@ const GET_USER = gql`
 const GET_MESSAGES = gql`
 query GetMessages($otherUserId: ID! $offset: String! $limit: String!) {
   getMessages(otherUserId: $otherUserId offset: $offset limit: $limit) {
-    id
-    senderId
-    content
-    createdAt
+    messages {
+      id
+      senderId
+      content
+      createdAt
+    }
+    totalMessages
   }
 }
 `;
@@ -82,7 +85,7 @@ const NEW_MESSAGE = gql`
 `;
 
 const getUsersSqlClauses = { offset: 0, limit: 25 };
-const geMessagesSqlClauses = { offset: 0, limit: 25 };
+const getMessagesSqlClauses = { offset: 0, limit: 25 };
 
 const getUsersQueryVariables = (loggedInUserId: string) => {
   return {
@@ -95,12 +98,12 @@ const getUsersQueryVariables = (loggedInUserId: string) => {
 const getMessagesQueryVariables = (otherUserId: string) => {
   return {
     otherUserId,
-    offset: `${geMessagesSqlClauses.offset}`,
-    limit: `${geMessagesSqlClauses.limit}`
+    offset: `${getMessagesSqlClauses.offset}`,
+    limit: `${getMessagesSqlClauses.limit}`
   };
 };
 
 export {
   LOGIN_USER, REGISTER_USER, GET_All_USERS_EXCEPT_LOGGED, GET_USER, GET_MESSAGES, SEND_MESSAGE,
-  NEW_MESSAGE, getUsersSqlClauses, getUsersQueryVariables, getMessagesQueryVariables
+  NEW_MESSAGE, getUsersSqlClauses, getMessagesSqlClauses, getUsersQueryVariables, getMessagesQueryVariables
 };

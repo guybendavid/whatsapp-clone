@@ -60,8 +60,8 @@ const cache = new InMemoryCache({
             const newObj = { ...incomingResult };
 
             if (prevResult && incomingResult) {
-              const { totalUsersCountExceptLoggedUser: prevTotalUsersCount, users: prevUsers } = prevResult;
-              const { totalUsersCountExceptLoggedUser: incomingTotalUsersCount, users: incomingUsers } = incomingResult;
+              const { totalUsersExceptLoggedUser: prevTotalUsersCount, users: prevUsers } = prevResult;
+              const { totalUsersExceptLoggedUser: incomingTotalUsersCount, users: incomingUsers } = incomingResult;
               const newRegisteredUsersAddedAlready = incomingTotalUsersCount > prevTotalUsersCount;
 
               if (incomingUsers.length > 0 && !newRegisteredUsersAddedAlready) {

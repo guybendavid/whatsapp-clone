@@ -27,7 +27,7 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
 
   useEffect(() => {
     if (data?.getMessages) {
-      setMessages(data.getMessages);
+      setMessages(data.getMessages.messages);
     }
   }, [data]);
 

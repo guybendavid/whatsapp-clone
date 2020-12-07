@@ -20,13 +20,13 @@ export = {
       }
 
       const query = getUsersWithLatestMessage(offset, limit);
-      const getTotalUsersCount = "select count(id) from users";
+      const getTotalUsers = "select count(id) from users";
 
       try {
-        let usersCount = await sequelize.query(getTotalUsersCount, { type: QueryTypes.SELECT });
+        let totalUsers = await sequelize.query(getTotalUsers, { type: QueryTypes.SELECT });
 
-        if (usersCount[0]?.count > 0) {
-          usersCount = usersCount[0].count - 1;
+        if (totalUsers[0]?.count > 0) {
+          totalUsers = totalUsers[0].count - 1;
 
           const otherUsers = await sequelize.query(query, { type: QueryTypes.SELECT, replacements: [id, id, id, offset, limit] });
 
@@ -36,9 +36,9 @@ export = {
             delete user.createdAt;
           });
 
-          return { users: otherUsers, totalUsersCountExceptLoggedUser: usersCount };
+          return { users: otherUsers, totalUsersExceptLoggedUser: totalUsers };
         } else {
-          return { users: [], totalUsersCountExceptLoggedUser: 0 };
+          return { users: [], totalUsersExceptLoggedUser: 0 };
         }
       } catch (err) {
         throw new ApolloError(err);

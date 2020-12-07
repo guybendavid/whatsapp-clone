@@ -22,7 +22,7 @@ const Main = () => {
   });
 
   const sidebarData = usersData?.getAllUsersExceptLogged;
-  const isMoreUsersToFetch = sidebarData?.users.length < sidebarData?.totalUsersCountExceptLoggedUser;
+  const isMoreUsersToFetch = sidebarData?.users.length < sidebarData?.totalUsersExceptLoggedUser;
   const { data: newMessageData } = useSubscription(NEW_MESSAGE);
   const [getUser, { data: newUserData }] = useLazyQuery(GET_USER);
 
@@ -65,7 +65,7 @@ const Main = () => {
 
       const updatedSidebar = { ...getAllUsersExceptLogged };
       updatedSidebar.users = [...updatedSidebar.users, sidebarNewUser];
-      updatedSidebar.totalUsersCountExceptLoggedUser = `${Number(updatedSidebar.totalUsersCountExceptLoggedUser) + 1}`;
+      updatedSidebar.totalUsersExceptLoggedUser = `${Number(updatedSidebar.totalUsersExceptLoggedUser) + 1}`;
 
       client.writeQuery({
         query: GET_All_USERS_EXCEPT_LOGGED,

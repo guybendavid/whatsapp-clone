@@ -1,6 +1,6 @@
 import { UserInputError, AuthenticationError, ApolloError, withFilter } from "apollo-server";
-import { Op } from "sequelize";
-import { User, Message } from "../../db/models";
+import { Op, QueryTypes } from "sequelize";
+import { sequelize, User, Message } from "../../db/models";
 import { Message as MessageInterface } from "../../db/interfaces/interfaces";
 import { validateMessageObj } from "../../utils/validatons";
 
@@ -20,19 +20,28 @@ export = {
           throw new UserInputError("User not found");
         }
 
-        const ids = [user.id, otherUserId];
+        const getTotalMessages = "select count(id) from messages";
+        let totalMessages = await sequelize.query(getTotalMessages, { type: QueryTypes.SELECT });
 
-        const messages = await Message.findAll({
-          where: {
-            senderId: { [Op.in]: ids },
-            recipientId: { [Op.in]: ids }
-          },
-          order: [["createdAt", "DESC"]],
-          offset,
-          limit
-        });
+        if (totalMessages[0]?.count > 0) {
+          totalMessages = totalMessages[0].count - 1;
 
-        return messages.reverse();
+          const ids = [user.id, otherUserId];
+
+          const messages = await Message.findAll({
+            where: {
+              senderId: { [Op.in]: ids },
+              recipientId: { [Op.in]: ids }
+            },
+            order: [["createdAt", "DESC"]],
+            offset,
+            limit
+          });
+
+          return { messages: messages.reverse(), totalMessages };
+        } else {
+          return { messages: [], totalMessages: 0 };
+        }
       } catch (err) {
         throw new ApolloError(err);
       }
