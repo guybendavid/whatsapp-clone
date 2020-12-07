@@ -43,7 +43,10 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
 
       if (senderId === selectedUser.id || (senderId === loggedInUser.id && recipientId === selectedUser.id)) {
         setMessages((prevMessages: Message[]) => [...prevMessages, newMessage]);
-        chatBottomRef.current?.scrollIntoView({ behavior: "smooth" });
+
+        // To do: make the chat scroll to bottom to be smooth
+
+        chatBottomRef.current?.scrollIntoView();
       }
     }
 

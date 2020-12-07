@@ -1,6 +1,7 @@
 @import "../../../../../styles/Mixins.scss";
 
 .conversation {
+  scroll-behavior: smooth;
   background: url("../../../../../images/chat-background.jpg");
   display: flex;
   flex-direction: column;
