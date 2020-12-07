@@ -48,8 +48,6 @@ const splitLink = split(
   httpLink
 );
 
-// To do: finish chat pagination
-
 const cache = new InMemoryCache({
   typePolicies: {
     Query: {
@@ -66,6 +64,24 @@ const cache = new InMemoryCache({
 
               if (incomingUsers.length > 0 && !newRegisteredUsersAddedAlready) {
                 newObj.users = [...prevUsers, ...incomingUsers];
+              }
+            }
+
+            return newObj;
+          }
+        },
+        getMessages: {
+          keyArgs: false,
+          merge: (prevResult, incomingResult = {}) => {
+            const newObj = { ...incomingResult };
+
+            if (prevResult && incomingResult) {
+              const { totalMessages: prevTotalMessages, messages: prevMessages } = prevResult;
+              const { totalMessages: incomingTotalMessages, messages: incomingMessages } = incomingResult;
+              const newMessagesAddedAlready = incomingTotalMessages > prevTotalMessages;
+
+              if (incomingMessages.length > 0 && !newMessagesAddedAlready) {
+                newObj.messages = [...prevMessages, ...incomingMessages];
               }
             }
 

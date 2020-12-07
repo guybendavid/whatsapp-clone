@@ -22,6 +22,8 @@ const Conversation: React.FC<Props> = ({ messages, isMoreMessagesToFetch, chatBo
     if (messages.length > 0) {
       observer.current?.disconnect();
 
+      // To do: fix on first load
+
       observer.current = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting && isMoreMessagesToFetch && loggedInUser.id) {
           fetchMoreMessages({
