@@ -1,11 +1,11 @@
 .main {
-  // preloading the Chat MiddleSection image
+  // preloading the Chat's Conversation image
   background: url("../../images/chat-background.jpg");
   display: flex;
   height: 96vh;
   width: 85vw;
 
-  .left-sidebar {
+  .sidebar {
     flex: 0.3;
   }
 

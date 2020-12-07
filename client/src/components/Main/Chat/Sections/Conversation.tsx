@@ -9,7 +9,7 @@ interface Props {
   chatBottomRef: any;
 }
 
-const MiddleSection: React.FC<Props> = ({ messages, chatBottomRef }) => {
+const Conversation: React.FC<Props> = ({ messages, chatBottomRef }) => {
   const { loggedInUser } = useContext(AppContext);
   const [firstIndexOfSeries, setFirstIndexOfSeries] = useState<(number | undefined)[]>([]);
 
@@ -52,7 +52,7 @@ const MiddleSection: React.FC<Props> = ({ messages, chatBottomRef }) => {
   }, [messages]);
 
   return (
-    <div className="middle-section">
+    <div className="conversation">
       {messages?.map((message, index) => (
         <div key={index} className={generateClasses(message.senderId, index)}>
           <Typography component="span" className="title">{message.content}</Typography>
@@ -64,4 +64,4 @@ const MiddleSection: React.FC<Props> = ({ messages, chatBottomRef }) => {
   );
 };
 
-export default MiddleSection;
+export default Conversation;

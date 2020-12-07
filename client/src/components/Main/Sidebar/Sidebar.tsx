@@ -2,30 +2,29 @@ import React, { useState } from "react";
 import { User } from "../../../interfaces/interfaces";
 import Actions from "./Sections/Actions";
 import UsersList from "./Sections/UsersList";
-import "./LeftSidebar.scss";
+import "./Sidebar.scss";
 
-// To do: rename to just sidebar
-// rename fetchMore to fetchMoreUsers
+// To do: split scss files
 // maybe move some variables / funcs to appContext, and handle Props Interface duplicates
 // make the chat scroll to bottom to be smooth
 
 interface Props {
   users: User[];
   isFetchMoreUsers: boolean;
-  fetchMore: (object: any) => void;
+  fetchMoreUsers: (object: any) => void;
   setSelectedUser: (user: User) => void;
 }
 
-const LeftSidebar: React.FC<Props> = ({ users, isFetchMoreUsers, fetchMore, setSelectedUser }) => {
+const Sidebar: React.FC<Props> = ({ users, isFetchMoreUsers, fetchMoreUsers, setSelectedUser }) => {
   const [searchValue, setSearchValue] = useState("");
 
   return (
-    <div className="left-sidebar">
+    <div className="sidebar">
       <Actions searchValue={searchValue} setSearchValue={setSearchValue} />
       <UsersList users={users} searchValue={searchValue} isFetchMoreUsers={isFetchMoreUsers}
-        fetchMore={fetchMore} setSelectedUser={setSelectedUser} />
+        fetchMoreUsers={fetchMoreUsers} setSelectedUser={setSelectedUser} />
     </div>
   );
 };
 
-export default LeftSidebar;
+export default Sidebar;

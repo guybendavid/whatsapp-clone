@@ -9,11 +9,11 @@ interface Props {
   users: User[];
   searchValue: string;
   isFetchMoreUsers: boolean;
-  fetchMore: (object: any) => void;
+  fetchMoreUsers: (object: any) => void;
   setSelectedUser: (user: User) => void;
 }
 
-const UsersList: React.FC<Props> = ({ users, searchValue, isFetchMoreUsers, fetchMore, setSelectedUser }) => {
+const UsersList: React.FC<Props> = ({ users, searchValue, isFetchMoreUsers, fetchMoreUsers, setSelectedUser }) => {
   const { loggedInUser } = useContext(AppContext);
   const observer: any = useRef();
 
@@ -23,7 +23,7 @@ const UsersList: React.FC<Props> = ({ users, searchValue, isFetchMoreUsers, fetc
 
       observer.current = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting && isFetchMoreUsers && loggedInUser.id) {
-          fetchMore({
+          fetchMoreUsers({
             variables: {
               loggedInUserId: loggedInUser.id,
               offset: `${users.length}`,

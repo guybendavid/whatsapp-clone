@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { User } from "../../interfaces/interfaces";
 import { useQuery, useLazyQuery, useSubscription } from "@apollo/client";
 import { GET_All_USERS_EXCEPT_LOGGED, GET_USER, NEW_MESSAGE, getUsersQueryVariables } from "../../services/graphql";
-import LeftSidebar from "./LeftSidebar/LeftSidebar";
+import Sidebar from "./Sidebar/Sidebar";
 import WelcomeScreen from "./WelcomeScreen/WelcomeScreen";
 import Chat from "./Chat/Chat";
 import "./Main.scss";
@@ -15,7 +15,7 @@ const Main = () => {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const { handleErrors, clearError } = useContext(AppContext);
 
-  const { data: usersData, client, fetchMore } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
+  const { data: usersData, client, fetchMore: fetchMoreUsers } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
     variables: getUsersQueryVariables(loggedInUser.id),
     onError: (error) => handleErrors(error, history),
     onCompleted: () => clearError()
@@ -82,8 +82,8 @@ const Main = () => {
 
   return (
     <div className="main">
-      <LeftSidebar users={sidebarData?.users} isFetchMoreUsers={isFetchMoreUsers}
-        fetchMore={fetchMore} setSelectedUser={setSelectedUser}
+      <Sidebar users={sidebarData?.users} isFetchMoreUsers={isFetchMoreUsers}
+        fetchMoreUsers={fetchMoreUsers} setSelectedUser={setSelectedUser}
       />
       {selectedUser ? <Chat selectedUser={selectedUser} newMessage={newMessageData?.newMessage} /> : <WelcomeScreen />}
     </div>

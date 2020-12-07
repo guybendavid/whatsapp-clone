@@ -3,9 +3,9 @@ import { AppContext } from "../../../contexts/AppContext";
 import { User, Message } from "../../../interfaces/interfaces";
 import { useQuery } from "@apollo/client";
 import { GET_MESSAGES, getMessagesQueryVariables } from "../../../services/graphql";
-import TopSection from "./Sections/TopSection";
-import MiddleSection from "./Sections/MiddleSection";
-import BottomSection from "./Sections/BottomSection";
+import ChatHeader from "./Sections/ChatHeader";
+import Conversation from "./Sections/Conversation";
+import MessageCreator from "./Sections/MessageCreator";
 import "./Chat.scss";
 
 interface Props {
@@ -52,9 +52,9 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
 
   return (
     <div className="chat">
-      <TopSection selectedUser={selectedUser} newMessage={newMessage} />
-      <MiddleSection messages={messages} chatBottomRef={chatBottomRef} />
-      <BottomSection selectedUser={selectedUser} />
+      <ChatHeader selectedUser={selectedUser} newMessage={newMessage} />
+      <Conversation messages={messages} chatBottomRef={chatBottomRef} />
+      <MessageCreator selectedUser={selectedUser} />
     </div>
   );
 };

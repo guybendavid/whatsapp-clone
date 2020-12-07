@@ -8,13 +8,11 @@ import MoodIcon from "@material-ui/icons/Mood";
 import AttachmentIcon from "@material-ui/icons/Attachment";
 import MicIcon from "@material-ui/icons/Mic";
 
-// To do: rename section parts
-
 interface Props {
   selectedUser: User;
 }
 
-const BottomSection: React.FC<Props> = ({ selectedUser }) => {
+const MessageCreator: React.FC<Props> = ({ selectedUser }) => {
   const { handlerErrors } = useContext(AppContext);
   const initialMessageObj = { content: "", recipientId: selectedUser.id };
   const [messageInput, setMessageInput] = useState(initialMessageObj);
@@ -43,7 +41,7 @@ const BottomSection: React.FC<Props> = ({ selectedUser }) => {
   };
 
   return (
-    <div className="bottom-section">
+    <div className="message-creator">
       {[MoodIcon, AttachmentIcon].map((Icon, index) => (
         <IconButton key={index}>
           <Icon />
@@ -67,4 +65,4 @@ const BottomSection: React.FC<Props> = ({ selectedUser }) => {
   );
 };
 
-export default BottomSection;
+export default MessageCreator;

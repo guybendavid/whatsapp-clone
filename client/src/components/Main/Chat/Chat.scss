@@ -7,7 +7,7 @@
   background: #f8f9fa;
   border-radius: 10px;
 
-  .top-section {
+  .chat-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -36,7 +36,7 @@
     }
   }
 
-  .middle-section {
+  .conversation {
     background: url("../../../images/chat-background.jpg");
     display: flex;
     flex-direction: column;
@@ -102,7 +102,7 @@
     }
   }
 
-  .bottom-section {
+  .message-creator {
     display: flex;
     justify-content: space-between;
     align-items: center;

@@ -10,7 +10,7 @@ interface Props {
   newMessage: Message;
 }
 
-const TopSection: React.FC<Props> = ({ selectedUser, newMessage }) => {
+const ChatHeader: React.FC<Props> = ({ selectedUser, newMessage }) => {
   useEffect(() => {
     if (newMessage) {
       const { senderId, recipientId } = newMessage;
@@ -24,7 +24,7 @@ const TopSection: React.FC<Props> = ({ selectedUser, newMessage }) => {
   }, [newMessage]);
 
   return (
-    <div className="top-section">
+    <div className="chat-header">
       <div className="left-side">
         <Avatar className="user-picture" alt="avatar" src={selectedUser.image} />
         <div className="text-wrapper">
@@ -43,4 +43,4 @@ const TopSection: React.FC<Props> = ({ selectedUser, newMessage }) => {
   );
 };
 
-export default TopSection;
+export default ChatHeader;
