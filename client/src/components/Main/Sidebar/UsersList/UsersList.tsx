@@ -1,19 +1,15 @@
 import React, { useContext, useRef, useCallback } from "react";
 import { AppContext } from "../../../../contexts/AppContext";
-import { User } from "../../../../interfaces/interfaces";
+import { SidebarProps } from "../../../../interfaces/interfaces";
 import { List, ListItem, Avatar, ListItemAvatar, Typography, Divider } from "@material-ui/core";
 import { getUsersSqlClauses } from "../../../../services/graphql";
 import timeDisplayer from "../../../../services/timeDisplayer";
 
-interface Props {
-  users: User[];
+interface Props extends SidebarProps {
   searchValue: string;
-  isFetchMoreUsers: boolean;
-  fetchMoreUsers: (object: any) => void;
-  setSelectedUser: (user: User) => void;
 }
 
-const UsersList: React.FC<Props> = ({ users, searchValue, isFetchMoreUsers, fetchMoreUsers, setSelectedUser }) => {
+const UsersList: React.FC<Props> = ({ users, searchValue, isMoreUsersToFetch, fetchMoreUsers, setSelectedUser }) => {
   const { loggedInUser } = useContext(AppContext);
   const observer: any = useRef();
 
@@ -22,7 +18,7 @@ const UsersList: React.FC<Props> = ({ users, searchValue, isFetchMoreUsers, fetc
       observer.current?.disconnect();
 
       observer.current = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting && isFetchMoreUsers && loggedInUser.id) {
+        if (entries[0].isIntersecting && isMoreUsersToFetch && loggedInUser.id) {
           fetchMoreUsers({
             variables: {
               loggedInUserId: loggedInUser.id,
@@ -39,7 +35,7 @@ const UsersList: React.FC<Props> = ({ users, searchValue, isFetchMoreUsers, fetc
     }
 
     // eslint-disable-next-line
-  }, [loggedInUser, users, isFetchMoreUsers]);
+  }, [loggedInUser, users, isMoreUsersToFetch]);
 
   return (
     <List className="users-list">

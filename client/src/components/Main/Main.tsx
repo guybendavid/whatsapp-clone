@@ -22,9 +22,7 @@ const Main = () => {
   });
 
   const sidebarData = usersData?.getAllUsersExceptLogged;
-  const isFetchMoreUsers = sidebarData?.users.length < sidebarData?.totalUsersCountExceptLoggedUser;
-  const isSidebarScrolledToBottom = !isFetchMoreUsers;
-
+  const isMoreUsersToFetch = sidebarData?.users.length < sidebarData?.totalUsersCountExceptLoggedUser;
   const { data: newMessageData } = useSubscription(NEW_MESSAGE);
   const [getUser, { data: newUserData }] = useLazyQuery(GET_USER);
 
@@ -44,7 +42,7 @@ const Main = () => {
             }
           }
         });
-      } else if (senderId !== loggedInUser.id && isSidebarScrolledToBottom) {
+      } else if (senderId !== loggedInUser.id && !isMoreUsersToFetch) {
         try {
           getUser({ variables: { id: senderId } });
         } catch (err) { }
@@ -82,7 +80,7 @@ const Main = () => {
 
   return (
     <div className="main">
-      <Sidebar users={sidebarData?.users} isFetchMoreUsers={isFetchMoreUsers}
+      <Sidebar users={sidebarData?.users} isMoreUsersToFetch={isMoreUsersToFetch}
         fetchMoreUsers={fetchMoreUsers} setSelectedUser={setSelectedUser}
       />
       {selectedUser ? <Chat selectedUser={selectedUser} newMessage={newMessageData?.newMessage} /> : <WelcomeScreen />}

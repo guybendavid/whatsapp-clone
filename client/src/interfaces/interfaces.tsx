@@ -18,4 +18,11 @@ interface Message {
   createdAt: string;
 }
 
-export type { User, Message };
+interface SidebarProps {
+  users: User[];
+  isMoreUsersToFetch: boolean;
+  fetchMoreUsers: (object: any) => void;
+  setSelectedUser: (user: User) => void;
+}
+
+export type { User, Message, SidebarProps };
