@@ -1,4 +1,3 @@
-// To do: organize both files => this and the server file
 interface User {
   id: string;
   firstName: string;
@@ -12,8 +11,9 @@ interface User {
 }
 
 interface Message {
+  id: string;
   senderId: string;
-  recipientId: string;
+  recipientId?: string;
   content: string;
   createdAt: string;
 }
