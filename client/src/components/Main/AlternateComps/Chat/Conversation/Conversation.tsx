@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import { AppContext } from "../../../../contexts/AppContext";
-import { Message } from "../../../../interfaces/interfaces";
+import { AppContext } from "../../../../../contexts/AppContext";
+import { Message } from "../../../../../interfaces/interfaces";
 import { Typography } from "@material-ui/core";
-import timeDisplayer from "../../../../services/timeDisplayer";
+import timeDisplayer from "../../../../../services/timeDisplayer";
 import "./Conversation.scss";
 
 interface Props {

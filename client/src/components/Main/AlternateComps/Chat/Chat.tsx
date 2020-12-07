@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { AppContext } from "../../../contexts/AppContext";
-import { User, Message } from "../../../interfaces/interfaces";
+import { AppContext } from "../../../../contexts/AppContext";
+import { User, Message } from "../../../../interfaces/interfaces";
 import { useQuery } from "@apollo/client";
-import { GET_MESSAGES, getMessagesQueryVariables } from "../../../services/graphql";
+import { GET_MESSAGES, getMessagesQueryVariables } from "../../../../services/graphql";
 import ChatHeader from "./ChatHeader/ChatHeader";
 import Conversation from "./Conversation/Conversation";
 import MessageCreator from "./MessageCreator/MessageCreator";

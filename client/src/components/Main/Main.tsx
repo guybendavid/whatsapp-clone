@@ -5,8 +5,8 @@ import { User } from "../../interfaces/interfaces";
 import { useQuery, useLazyQuery, useSubscription } from "@apollo/client";
 import { GET_All_USERS_EXCEPT_LOGGED, GET_USER, NEW_MESSAGE, getUsersQueryVariables } from "../../services/graphql";
 import Sidebar from "./Sidebar/Sidebar";
-import WelcomeScreen from "./WelcomeScreen/WelcomeScreen";
-import Chat from "./Chat/Chat";
+import WelcomeScreen from "./AlternateComps/WelcomeScreen/WelcomeScreen";
+import Chat from "./AlternateComps/Chat/Chat";
 import "./Main.scss";
 
 const Main = () => {
