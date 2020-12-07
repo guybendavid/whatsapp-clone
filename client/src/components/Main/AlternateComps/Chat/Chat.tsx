@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 import { AppContext } from "../../../../contexts/AppContext";
 import { User, Message } from "../../../../interfaces/interfaces";
 import { useQuery } from "@apollo/client";
@@ -17,10 +17,7 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
   const chatBottomRef = useRef<HTMLHeadingElement>(null);
   const { loggedInUser, handleErrors, clearError } = useContext(AppContext);
 
-  // To do: figure out why I'm saving it to the state, and maybe replace the concating below with a merge function
-  const [messages, setMessages] = useState<Message[]>([]);
-
-  const { data } = useQuery(GET_MESSAGES, {
+  const { data, fetchMore: fetchMoreMessages } = useQuery(GET_MESSAGES, {
     variables: getMessagesQueryVariables(selectedUser.id),
     fetchPolicy: "cache-and-network",
     onError: (error) => handleErrors(error),
@@ -31,23 +28,18 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
   const isMoreMessagesToFetch = conversationData?.messages.length < conversationData?.totalMessages;
 
   useEffect(() => {
-    if (data?.getMessages) {
-      setMessages(data.getMessages.messages);
+    if (data?.getMessages.messages.length > 0) {
+      chatBottomRef.current?.scrollIntoView({});
     }
   }, [data]);
-
-  useEffect(() => {
-    if (messages.length > 0) {
-      chatBottomRef.current?.scrollIntoView();
-    }
-  }, [messages]);
 
   useEffect(() => {
     if (newMessage) {
       const { senderId, recipientId } = newMessage;
 
       if (senderId === selectedUser.id || (senderId === loggedInUser.id && recipientId === selectedUser.id)) {
-        setMessages((prevMessages: Message[]) => [...prevMessages, newMessage]);
+        // To do: write to cache
+        // setMessages((prevMessages: Message[]) => [...prevMessages, newMessage]);
         chatBottomRef.current?.scrollIntoView();
       }
     }
@@ -58,7 +50,8 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
   return (
     <div className="chat">
       <ChatHeader selectedUser={selectedUser} newMessage={newMessage} />
-      <Conversation messages={messages} chatBottomRef={chatBottomRef} />
+      <Conversation messages={data?.getMessages.messages} isMoreMessagesToFetch={isMoreMessagesToFetch} chatBottomRef={chatBottomRef}
+        fetchMoreMessages={fetchMoreMessages} />
       <MessageCreator selectedUser={selectedUser} />
     </div>
   );

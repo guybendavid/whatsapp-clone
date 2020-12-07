@@ -8,37 +8,39 @@ import "./Conversation.scss";
 
 interface Props {
   messages: Message[];
+  isMoreMessagesToFetch: boolean;
   chatBottomRef: any;
+  fetchMoreMessages: (obj: any) => void;
 }
 
-const Conversation: React.FC<Props> = ({ messages, chatBottomRef }) => {
+const Conversation: React.FC<Props> = ({ messages, isMoreMessagesToFetch, chatBottomRef, fetchMoreMessages }) => {
   const { loggedInUser } = useContext(AppContext);
   const [firstIndexOfSeries, setFirstIndexOfSeries] = useState<(number | undefined)[]>([]);
   const observer: any = useRef();
 
-  // const firstMessageRef = useCallback(node => {
-  //   if (messages.length > 0) {
-  //     observer.current?.disconnect();
+  const firstMessageRef = useCallback(node => {
+    if (messages.length > 0) {
+      observer.current?.disconnect();
 
-  //     observer.current = new IntersectionObserver(entries => {
-  //       if (entries[0].isIntersecting && isMoreMessagesToFetch && loggedInUser.id) {
-  //         fetchMoreMessages({
-  //           variables: {
-  //             loggedInUserId: loggedInUser.id,
-  //             offset: `${messages.length}`,
-  //             limit: `${getMessagesSqlClauses.limit}`
-  //           }
-  //         });
-  //       }
-  //     });
+      observer.current = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting && isMoreMessagesToFetch && loggedInUser.id) {
+          fetchMoreMessages({
+            variables: {
+              loggedInUserId: loggedInUser.id,
+              offset: `${messages.length}`,
+              limit: `${getMessagesSqlClauses.limit}`
+            }
+          });
+        }
+      });
 
-  //     if (node) {
-  //       observer.current.observe(node);
-  //     }
-  //   }
+      if (node) {
+        observer.current.observe(node);
+      }
+    }
 
-  //   // eslint-disable-next-line
-  // }, [loggedInUser, messages, isMoreMessagesToFetch]);
+    // eslint-disable-next-line
+  }, [loggedInUser, messages, isMoreMessagesToFetch]);
 
   const generateClasses = (senderId: string, index: number) => {
     let classes = "message";
@@ -81,9 +83,7 @@ const Conversation: React.FC<Props> = ({ messages, chatBottomRef }) => {
   return (
     <div className="conversation">
       {messages?.map((message, index) => (
-        <div key={index} className={generateClasses(message.senderId, index)}
-        // ref={index === 0 ? firstMessageRef : null}
-        >
+        <div key={index} className={generateClasses(message.senderId, index)} ref={index === 0 ? firstMessageRef : null}>
           <Typography component="span" className="title">{message.content}</Typography>
           <Typography component="small">{timeDisplayer(message.createdAt)}</Typography>
         </div>
