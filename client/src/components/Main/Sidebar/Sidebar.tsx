@@ -4,8 +4,7 @@ import Actions from "./Actions/Actions";
 import UsersList from "./UsersList/UsersList";
 import "./Sidebar.scss";
 
-// To do: split scss files
-// maybe move some variables / funcs to appContext, and handle Props Interface duplicates
+// To do: maybe move some variables / funcs to appContext, and handle Props Interface duplicates
 // make the chat scroll to bottom to be smooth
 
 interface Props {
