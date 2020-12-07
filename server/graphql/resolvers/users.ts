@@ -19,24 +19,23 @@ export = {
         throw new AuthenticationError("Unauthenticated");
       }
 
-      const query = getUsersWithLatestMessage(offset, limit);
       const getTotalUsers = "select count(id) from users";
+      const getSidebarUsers = getUsersWithLatestMessage(offset, limit);
 
       try {
         let totalUsers = await sequelize.query(getTotalUsers, { type: QueryTypes.SELECT });
 
         if (totalUsers[0]?.count > 0) {
           totalUsers = totalUsers[0].count - 1;
+          const sidebarUsers = await sequelize.query(getSidebarUsers, { type: QueryTypes.SELECT, replacements: [id, id, id, offset, limit] });
 
-          const otherUsers = await sequelize.query(query, { type: QueryTypes.SELECT, replacements: [id, id, id, offset, limit] });
-
-          otherUsers.map((user: any) => {
+          sidebarUsers.map((user: any) => {
             user.latestMessage = { content: user.content, createdAt: user.createdAt };
             delete user.content;
             delete user.createdAt;
           });
 
-          return { users: otherUsers, totalUsersExceptLoggedUser: totalUsers };
+          return { users: sidebarUsers, totalUsersExceptLoggedUser: totalUsers };
         } else {
           return { users: [], totalUsersExceptLoggedUser: 0 };
         }

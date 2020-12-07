@@ -16,6 +16,8 @@ interface Props {
 const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
   const chatBottomRef = useRef<HTMLHeadingElement>(null);
   const { loggedInUser, handleErrors, clearError } = useContext(AppContext);
+
+  // To do: figure out why I'm saving it to the state, and maybe replace the concating below with a merge function
   const [messages, setMessages] = useState<Message[]>([]);
 
   const { data } = useQuery(GET_MESSAGES, {
@@ -24,6 +26,9 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
     onError: (error) => handleErrors(error),
     onCompleted: () => clearError()
   });
+
+  const conversationData = data?.getMessages;
+  const isMoreMessagesToFetch = conversationData?.messages.length < conversationData?.totalMessages;
 
   useEffect(() => {
     if (data?.getMessages) {
