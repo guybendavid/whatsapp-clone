@@ -50,11 +50,10 @@ const GET_USER = gql`
   }
 `;
 
-// To do: fetch id, also in subscription
-
 const GET_MESSAGES = gql`
 query GetMessages($otherUserId: ID! $offset: String! $limit: String!) {
   getMessages(otherUserId: $otherUserId offset: $offset limit: $limit) {
+    id
     senderId
     content
     createdAt
@@ -73,6 +72,7 @@ mutation SendMessage($recipientId: ID! $content: String!) {
 const NEW_MESSAGE = gql`
   subscription NewMessage {
     newMessage {
+      id
       senderId
       recipientId
       content
