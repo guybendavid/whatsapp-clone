@@ -49,7 +49,6 @@ const splitLink = split(
 );
 
 // To do: finish chat pagination
-// understand keyArgs
 
 const cache = new InMemoryCache({
   typePolicies: {
@@ -60,14 +59,8 @@ const cache = new InMemoryCache({
           merge: (prevResult, incomingResult = {}) => {
             const newObj = { ...incomingResult };
 
-            if (prevResult && incomingResult) {
-              const { totalUsersCountExceptLoggedUser: prevTotalUsersCount, users: prevUsers } = prevResult;
-              const { totalUsersCountExceptLoggedUser: incomingTotalUsersCount, users: incomingUsers } = incomingResult;
-              const newRegisteredUsersAddedAlready = incomingTotalUsersCount > prevTotalUsersCount;
-
-              if (incomingUsers.length > 0 && !newRegisteredUsersAddedAlready) {
-                newObj.users = [...prevUsers, ...incomingUsers];
-              }
+            if (prevResult && incomingResult.users?.length > 0) {
+              newObj.users = [...prevResult.users, ...incomingResult.users];
             }
 
             return newObj;
