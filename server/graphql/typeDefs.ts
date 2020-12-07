@@ -22,9 +22,9 @@ export = gql`
     createdAt: String
   }
   type Query {
-    getAllUsersExceptLogged(id: ID! limit: String! offset: String!): SideBarUsers!
+    getAllUsersExceptLogged(id: ID! offset: String! limit: String!): SideBarUsers!
     getUser(id: ID!): User!
-    getMessages(otherUserId: ID! limit: String! offset: String!): [Message]!
+    getMessages(otherUserId: ID! offset: String! limit: String!): [Message]!
   }
   type Mutation {
     login(username: String! password: String!): User!

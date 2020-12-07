@@ -22,8 +22,8 @@ mutation RegisterUser($firstName: String! $lastName: String! $username: String! 
 `;
 
 const GET_All_USERS_EXCEPT_LOGGED = gql`
-  query GetAllUsersExceptLogged($loggedInUserId: ID! $limit: String! $offset: String!) {
-    getAllUsersExceptLogged(id: $loggedInUserId limit: $limit offset: $offset) {
+  query GetAllUsersExceptLogged($loggedInUserId: ID! $offset: String! $limit: String!) {
+    getAllUsersExceptLogged(id: $loggedInUserId offset: $offset limit: $limit) {
       users {
         id
         firstName
@@ -50,9 +50,11 @@ const GET_USER = gql`
   }
 `;
 
+// To do: fetch id, also in subscription
+
 const GET_MESSAGES = gql`
-query GetMessages($otherUserId: ID! $limit: String! $offset: String!) {
-  getMessages(otherUserId: $otherUserId limit: $limit offset: $offset) {
+query GetMessages($otherUserId: ID! $offset: String! $limit: String!) {
+  getMessages(otherUserId: $otherUserId offset: $offset limit: $limit) {
     senderId
     content
     createdAt
@@ -79,22 +81,22 @@ const NEW_MESSAGE = gql`
   }
 `;
 
-const getUsersSqlClauses = { limit: 25, offset: 0 };
-const geMessagesSqlClauses = { limit: 25, offset: 0 };
+const getUsersSqlClauses = { offset: 0, limit: 25 };
+const geMessagesSqlClauses = { offset: 0, limit: 25 };
 
 const getUsersQueryVariables = (loggedInUserId: string) => {
   return {
     loggedInUserId,
-    limit: `${getUsersSqlClauses.limit}`,
-    offset: `${getUsersSqlClauses.offset}`
+    offset: `${getUsersSqlClauses.offset}`,
+    limit: `${getUsersSqlClauses.limit}`
   };
 };
 
 const getMessagesQueryVariables = (otherUserId: string) => {
   return {
     otherUserId,
-    limit: `${geMessagesSqlClauses.limit}`,
-    offset: `${geMessagesSqlClauses.offset}`
+    offset: `${geMessagesSqlClauses.offset}`,
+    limit: `${geMessagesSqlClauses.limit}`
   };
 };
 

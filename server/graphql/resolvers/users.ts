@@ -11,15 +11,15 @@ const imageGenerator = require("../../utils/imageGenerator");
 
 export = {
   Query: {
-    getAllUsersExceptLogged: async (parent: any, args: { id: string; limit: string; offset: string; }, context: { user: UserInterface; }) => {
-      const { id, limit, offset } = args;
+    getAllUsersExceptLogged: async (parent: any, args: { id: string; offset: string; limit: string; }, context: { user: UserInterface; }) => {
+      const { id, offset, limit } = args;
       const { user } = context;
 
       if (!user) {
         throw new AuthenticationError("Unauthenticated");
       }
 
-      const query = getUsersWithLatestMessage(limit, offset);
+      const query = getUsersWithLatestMessage(offset, limit);
       const getTotalUsersCount = "select count(id) from users";
 
       try {
@@ -28,7 +28,7 @@ export = {
         if (usersCount[0]?.count > 0) {
           usersCount = usersCount[0].count - 1;
 
-          const otherUsers = await sequelize.query(query, { type: QueryTypes.SELECT, replacements: [id, id, id, limit, offset] });
+          const otherUsers = await sequelize.query(query, { type: QueryTypes.SELECT, replacements: [id, id, id, offset, limit] });
 
           otherUsers.map((user: any) => {
             user.latestMessage = { content: user.content, createdAt: user.createdAt };

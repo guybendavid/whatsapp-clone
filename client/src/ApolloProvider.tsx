@@ -49,6 +49,7 @@ const splitLink = split(
 );
 
 // To do: finish chat pagination
+// understand keyArgs
 
 const cache = new InMemoryCache({
   typePolicies: {

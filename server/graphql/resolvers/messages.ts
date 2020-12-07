@@ -6,8 +6,8 @@ import { validateMessageObj } from "../../utils/validatons";
 
 export = {
   Query: {
-    getMessages: async (parent: any, args: { otherUserId: string; limit: string; offset: string; }, { user }: any) => {
-      const { otherUserId, limit, offset } = args;
+    getMessages: async (parent: any, args: { otherUserId: string; offset: string; limit: string; }, { user }: any) => {
+      const { otherUserId, offset, limit } = args;
 
       if (!user) {
         throw new AuthenticationError("Unauthenticated");
@@ -28,8 +28,8 @@ export = {
             recipientId: { [Op.in]: ids }
           },
           order: [["createdAt", "DESC"]],
-          limit,
-          offset
+          offset,
+          limit
         });
 
         return messages.reverse();
