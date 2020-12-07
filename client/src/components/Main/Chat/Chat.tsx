@@ -3,9 +3,9 @@ import { AppContext } from "../../../contexts/AppContext";
 import { User, Message } from "../../../interfaces/interfaces";
 import { useQuery } from "@apollo/client";
 import { GET_MESSAGES, getMessagesQueryVariables } from "../../../services/graphql";
-import ChatHeader from "./Sections/ChatHeader";
-import Conversation from "./Sections/Conversation";
-import MessageCreator from "./Sections/MessageCreator";
+import ChatHeader from "./ChatHeader/ChatHeader";
+import Conversation from "./Conversation/Conversation";
+import MessageCreator from "./MessageCreator/MessageCreator";
 import "./Chat.scss";
 
 interface Props {

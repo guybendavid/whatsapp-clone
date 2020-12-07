@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { User } from "../../../interfaces/interfaces";
-import Actions from "./Sections/Actions";
-import UsersList from "./Sections/UsersList";
+import Actions from "./Actions/Actions";
+import UsersList from "./UsersList/UsersList";
 import "./Sidebar.scss";
 
 // To do: split scss files

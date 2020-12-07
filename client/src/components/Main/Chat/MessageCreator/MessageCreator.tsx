@@ -7,6 +7,7 @@ import { IconButton, InputBase } from "@material-ui/core";
 import MoodIcon from "@material-ui/icons/Mood";
 import AttachmentIcon from "@material-ui/icons/Attachment";
 import MicIcon from "@material-ui/icons/Mic";
+import "./MessageCreator.scss";
 
 interface Props {
   selectedUser: User;

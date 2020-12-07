@@ -3,6 +3,7 @@ import { AppContext } from "../../../../contexts/AppContext";
 import { Message } from "../../../../interfaces/interfaces";
 import { Typography } from "@material-ui/core";
 import timeDisplayer from "../../../../services/timeDisplayer";
+import "./Conversation.scss";
 
 interface Props {
   messages: Message[];
@@ -46,7 +47,7 @@ const Conversation: React.FC<Props> = ({ messages, chatBottomRef }) => {
           }
         }
       });
-      
+
       setFirstIndexOfSeries(indexes);
     }
   }, [messages]);
