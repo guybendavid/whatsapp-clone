@@ -7,6 +7,7 @@ import ChatIcon from "@material-ui/icons/Chat";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import SearchIcon from "@material-ui/icons/Search";
 import ArrowDownWardIcon from "@material-ui/icons/ArrowDownward";
+import "./Actions.scss";
 
 const DotsIcon = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

@@ -1,0 +1,55 @@
+@import "../../../../styles/Mixins.scss";
+
+.users-list {
+  width: 100% !important;
+  overflow-y: auto;
+  padding: 0;
+
+  .list-item {
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    hr {
+      background-color: rgba(0, 0, 0, 0.05);
+      position: relative;
+      height: 0.5px;
+
+      &.is-chatted {
+        bottom: 10px;
+      }
+
+      &:not(.is-chatted) {
+        bottom: 18px;
+      }
+    }
+
+    .text-wrapper {
+      flex: 1;
+
+      .first-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .fullname {
+          max-width: 162px;
+        }
+      }
+
+      .second-row {
+        display: flex;
+
+        .last-message {
+          max-width: 260px;
+          font-size: 0.9rem;
+          color: var(--text-secondary-color);
+        }
+      }
+
+      .fullname,
+      .last-message {
+        @include overflow-handler;
+      }
+    }
+  }
+}
