@@ -48,6 +48,9 @@ const splitLink = split(
   httpLink
 );
 
+// To do: add merge function to newMessages
+// read again about fetchPolicy
+
 const cache = new InMemoryCache({
   typePolicies: {
     Query: {
@@ -79,8 +82,6 @@ const client = new ApolloClient({
   link: splitLink,
   cache
 });
-
-// To do: read again about fetchPolicy
 
 export default (
   <ApolloProvider client={client}>
