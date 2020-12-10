@@ -29,7 +29,7 @@ const Conversation: React.FC<Props> = ({ messages, isMoreMessagesToFetch, chatBo
     if (messages.length > 0) {
       observer.current?.disconnect();
 
-      // To do: dont call on first intersection and check apollo provider
+      // To do: invoke it only after scrollbar has reached to bottom and check apollo provider
       observer.current = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting && isMoreMessagesToFetch && loggedInUser.id) {
 
