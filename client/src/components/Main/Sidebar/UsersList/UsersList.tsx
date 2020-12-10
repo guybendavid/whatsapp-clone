@@ -43,7 +43,7 @@ const UsersList: React.FC<Props> = ({ users, searchValue, isMoreUsersToFetch, fe
       {users?.filter(user => `${user.firstName} ${user.lastName}`.toUpperCase().includes(searchValue.toUpperCase())).map((user, index) => (
         <React.Fragment key={index}>
           <ListItem button className="list-item" onClick={() => setSelectedUser({ ...user })}
-            ref={users.length === index + 1 ? lastUserRef : null}>
+            ref={index === users.length - 1 ? lastUserRef : null}>
             <ListItemAvatar className="avatar-wrapper">
               <Avatar className="avatar" alt="avatar" src={user?.image} />
             </ListItemAvatar>
