@@ -34,7 +34,6 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
   }, [data]);
 
   // To do: extract to a helper file
-  // change updateObj
   // move all main logic to here
 
   useEffect(() => {
@@ -47,15 +46,15 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
           variables: getMessagesQueryVariables(loggedInUser.id)
         });
 
-        const updatedObj = { ...getMessages };
-        updatedObj.messages = [...updatedObj.messages, newMessage];
-        updatedObj.totalMessages = `${Number(updatedObj.totalMessages) + 1}`;
+        const updatedData = { ...getMessages };
+        updatedData.messages = [...updatedData.messages, newMessage];
+        updatedData.totalMessages = `${Number(updatedData.totalMessages) + 1}`;
 
         client.writeQuery({
           query: GET_MESSAGES,
           variables: getMessagesQueryVariables(loggedInUser.id),
           data: {
-            getMessages: updatedObj
+            getMessages: updatedData
           }
         });
 
