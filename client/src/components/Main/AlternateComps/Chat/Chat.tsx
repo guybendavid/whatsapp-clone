@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useContext } from "react";
 import { AppContext } from "../../../../contexts/AppContext";
 import { User, Message } from "../../../../interfaces/interfaces";
 import { useQuery } from "@apollo/client";
-import { GET_MESSAGES, getMessagesQueryVariables } from "../../../../services/graphql";
+import { GET_MESSAGES } from "../../../../services/graphql";
 import { addNewMessageToConversation } from "../../../../services/ConversationHelper";
 import ChatHeader from "./ChatHeader/ChatHeader";
 import Conversation from "./Conversation/Conversation";
@@ -18,19 +18,16 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
   const chatBottomRef = useRef<HTMLHeadingElement>(null);
   const { loggedInUser, handleErrors, clearError } = useContext(AppContext);
 
-  const { data, client, fetchMore: fetchMoreMessages } = useQuery(GET_MESSAGES, {
-    variables: getMessagesQueryVariables(selectedUser.id),
+  const { data, client } = useQuery(GET_MESSAGES, {
+    variables: { otherUserId: selectedUser.id },
     fetchPolicy: "cache-and-network",
     onError: (error) => handleErrors(error),
     onCompleted: () => clearError()
   });
 
-  const conversationData = data?.getMessages;
-  const isMoreMessagesToFetch = conversationData?.messages.length < conversationData?.totalMessages;
-
   useEffect(() => {
-    if (data?.getMessages.messages.length > 0) {
-      // chatBottomRef.current?.scrollIntoView();
+    if (data?.getMessages.length > 0) {
+      chatBottomRef.current?.scrollIntoView();
     }
   }, [data]);
 
@@ -45,8 +42,7 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
   return (
     <div className="chat">
       <ChatHeader selectedUser={selectedUser} newMessage={newMessage} />
-      <Conversation messages={data?.getMessages.messages} isMoreMessagesToFetch={isMoreMessagesToFetch}
-        chatBottomRef={chatBottomRef} fetchMoreMessages={fetchMoreMessages} />
+      <Conversation messages={data?.getMessages} chatBottomRef={chatBottomRef} />
       <MessageCreator selectedUser={selectedUser} />
     </div>
   );

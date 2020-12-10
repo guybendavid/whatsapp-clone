@@ -6,8 +6,8 @@ import { validateMessageObj } from "../../utils/validatons";
 
 export = {
   Query: {
-    getMessages: async (parent: any, args: { otherUserId: string; offset: string; limit: string; }, { user }: any) => {
-      const { otherUserId, offset, limit } = args;
+    getMessages: async (parent: any, args: { otherUserId: string; }, { user }: any) => {
+      const { otherUserId } = args;
 
       if (!user) {
         throw new AuthenticationError("Unauthenticated");
@@ -21,20 +21,16 @@ export = {
         }
 
         const ids = [user.id, otherUserId];
-        const totalMessages = await Message.count({ where: { senderId: { [Op.in]: ids }, recipientId: { [Op.in]: ids } } });
 
-        if (totalMessages > 0) {
-          const messages = await Message.findAll({
-            where: { senderId: { [Op.in]: ids }, recipientId: { [Op.in]: ids } },
-            order: [["createdAt", "DESC"]],
-            offset,
-            limit
-          });
+        const messages = await Message.findAll({
+          where: {
+            senderId: { [Op.in]: ids },
+            recipientId: { [Op.in]: ids }
+          },
+          order: [["createdAt", "ASC"]]
+        });
 
-          return { messages: messages.reverse(), totalMessages };
-        } else {
-          return { messages: [], totalMessages: 0 };
-        }
+        return messages;
       } catch (err) {
         throw new ApolloError(err);
       }

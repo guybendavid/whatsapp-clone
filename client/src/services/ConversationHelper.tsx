@@ -1,5 +1,5 @@
 import { Message } from "../interfaces/interfaces";
-import { GET_MESSAGES, getMessagesQueryVariables } from "./graphql";
+import { GET_MESSAGES } from "./graphql";
 
 const addNewMessageToConversation = (newMessage: Message, selectedUserId: string, loggedInUserId: string, client: any,
   chatBottomRef: any) => {
@@ -9,22 +9,18 @@ const addNewMessageToConversation = (newMessage: Message, selectedUserId: string
   if (senderId === selectedUserId || (senderId === loggedInUserId && recipientId === selectedUserId)) {
     const { getMessages }: any = client.readQuery({
       query: GET_MESSAGES,
-      variables: getMessagesQueryVariables(selectedUserId)
+      variables: { otherUserId: selectedUserId }
     });
-
-    const updatedData = { ...getMessages };
-    updatedData.messages = [...updatedData.messages, newMessage];
-    updatedData.totalMessages = `${Number(updatedData.totalMessages) + 1}`;
 
     client.writeQuery({
       query: GET_MESSAGES,
-      variables: getMessagesQueryVariables(selectedUserId),
+      variables: { otherUser: selectedUserId },
       data: {
-        getMessages: updatedData
+        getMessages: [...getMessages, newMessage]
       }
     });
 
-    // chatBottomRef.current?.scrollIntoView();
+    chatBottomRef.current?.scrollIntoView();
   }
 };
 

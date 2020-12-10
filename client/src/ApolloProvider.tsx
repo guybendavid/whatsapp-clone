@@ -69,12 +69,6 @@ const cache = new InMemoryCache({
 
             return updatedObj;
           }
-        },
-        getMessages: {
-          keyArgs: false,
-          merge: (prevResult, incomingResult = {}) => {
-            return incomingResult;
-          }
         }
       }
     }
@@ -85,6 +79,8 @@ const client = new ApolloClient({
   link: splitLink,
   cache
 });
+
+// To do: read again about fetchPolicy
 
 export default (
   <ApolloProvider client={client}>

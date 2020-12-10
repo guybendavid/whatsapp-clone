@@ -5,10 +5,6 @@ export = gql`
     users: [User]!
     totalUsersExceptLoggedUser: String!
   }
-  type ConversationMessages {
-    messages: [Message]!
-    totalMessages: String!
-  }
   type User {
     id: ID!
     firstName: String!
@@ -28,7 +24,7 @@ export = gql`
   type Query {
     getAllUsersExceptLogged(id: ID! offset: String! limit: String!): SideBarUsers!
     getUser(id: ID!): User!
-    getMessages(otherUserId: ID! offset: String! limit: String!): ConversationMessages!
+    getMessages(otherUserId: ID!): [Message]!
   }
   type Mutation {
     login(username: String! password: String!): User!
