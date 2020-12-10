@@ -71,9 +71,21 @@ const cache = new InMemoryCache({
           }
         },
         getMessages: {
-          keyArgs: false,
-          merge: (prevResult = {}, incomingResult = {}) => {
-            return { ...prevResult, ...incomingResult };
+          keyArgs: ["otherUserId"],
+          merge: (prevResult, incomingResult = {}) => {
+            const newObj = { ...incomingResult };
+
+            if (prevResult && incomingResult) {
+              const { totalMessages: prevTotalMessages, messages: prevMessages } = prevResult;
+              const { totalMessages: incomingTotalMessages, messages: incomingMessages } = incomingResult;
+              const newMessageAddedAlready = incomingTotalMessages > prevTotalMessages;
+
+              if (incomingMessages.length > 0 && !newMessageAddedAlready) {
+                newObj.messages = [...prevMessages, ...incomingMessages];
+              }
+            }
+
+            return newObj;
           }
         }
       }

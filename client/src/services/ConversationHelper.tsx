@@ -9,7 +9,7 @@ const addNewMessageToConversation = (newMessage: Message, selectedUserId: string
   if (senderId === selectedUserId || (senderId === loggedInUserId && recipientId === selectedUserId)) {
     const { getMessages }: any = client.readQuery({
       query: GET_MESSAGES,
-      variables: getMessagesQueryVariables(loggedInUserId)
+      variables: getMessagesQueryVariables(selectedUserId)
     });
 
     const updatedData = { ...getMessages };
@@ -18,7 +18,7 @@ const addNewMessageToConversation = (newMessage: Message, selectedUserId: string
 
     client.writeQuery({
       query: GET_MESSAGES,
-      variables: getMessagesQueryVariables(loggedInUserId),
+      variables: getMessagesQueryVariables(selectedUserId),
       data: {
         getMessages: updatedData
       }

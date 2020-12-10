@@ -32,6 +32,7 @@ const Conversation: React.FC<Props> = ({ messages, isMoreMessagesToFetch, chatBo
       // To do: fix here and in apolloProvider
       observer.current = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting && isMoreMessagesToFetch && loggedInUser.id) {
+
           fetchMoreMessages({
             variables: {
               loggedInUserId: loggedInUser.id,
@@ -54,8 +55,8 @@ const Conversation: React.FC<Props> = ({ messages, isMoreMessagesToFetch, chatBo
     <div className="conversation">
       {messages?.map((message, index) => (
         <div key={index} className={classesGenerator(message.senderId, loggedInUser.id, firstIndexesOfSeries, index)}
-          // ref={index === 0 ? firstMessageRef : null}
-          >
+          ref={index === 0 ? firstMessageRef : null}
+        >
           <Typography component="span" className="title">{message.content}</Typography>
           <Typography component="small">{timeDisplayer(message.createdAt)}</Typography>
         </div>
