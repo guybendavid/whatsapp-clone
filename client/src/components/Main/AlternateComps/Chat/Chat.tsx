@@ -30,7 +30,7 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
 
   useEffect(() => {
     if (data?.getMessages.messages.length > 0) {
-      chatBottomRef.current?.scrollIntoView();
+      // chatBottomRef.current?.scrollIntoView();
     }
   }, [data]);
 

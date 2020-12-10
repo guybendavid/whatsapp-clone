@@ -25,21 +25,24 @@ const Conversation: React.FC<Props> = ({ messages, isMoreMessagesToFetch, chatBo
     }
   }, [messages]);
 
-  const firstMessageRef = useCallback(node => {
+  const lastMessageRef = useCallback(node => {
     if (messages.length > 0) {
       observer.current?.disconnect();
 
       // To do: invoke it only after scrollbar has reached to bottom and check apollo provider
+
       observer.current = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting && isMoreMessagesToFetch && loggedInUser.id) {
 
-          fetchMoreMessages({
-            variables: {
-              loggedInUserId: loggedInUser.id,
-              offset: `${messages.length}`,
-              limit: `${getMessagesSqlClauses.limit}`
-            }
-          });
+          // console.log("im here");
+
+          // fetchMoreMessages({
+          //   variables: {
+          //     loggedInUserId: loggedInUser.id,
+          //     offset: `${messages.length}`,
+          //     limit: `${getMessagesSqlClauses.limit}`
+          //   }
+          // });
         }
       });
 
@@ -55,7 +58,7 @@ const Conversation: React.FC<Props> = ({ messages, isMoreMessagesToFetch, chatBo
     <div className="conversation">
       {messages?.map((message, index) => (
         <div key={index} className={classesGenerator(message.senderId, loggedInUser.id, firstIndexesOfSeries, index)}
-          // ref={index === 0 ? firstMessageRef : null}
+          ref={index === messages.length - 1 ? lastMessageRef : null}
         >
           <Typography component="span" className="title">{message.content}</Typography>
           <Typography component="small">{timeDisplayer(message.createdAt)}</Typography>

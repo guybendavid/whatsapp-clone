@@ -24,7 +24,7 @@ const addNewMessageToConversation = (newMessage: Message, selectedUserId: string
       }
     });
 
-    chatBottomRef.current?.scrollIntoView();
+    // chatBottomRef.current?.scrollIntoView();
   }
 };
 

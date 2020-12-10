@@ -70,24 +70,12 @@ const cache = new InMemoryCache({
             return updatedObj;
           }
         },
-        // getMessages: {
-        //   keyArgs: ["otherUserId"],
-        //   merge: (prevResult, incomingResult = {}) => {
-        //     const updatedObj = { ...incomingResult };
-
-        //     if (prevResult) {
-        //       const { totalMessages: prevTotalMessages, messages: prevMessages } = prevResult;
-        //       const { totalMessages: incomingTotalMessages, messages: incomingMessages } = incomingResult;
-        //       const newMessagesAddedAlready = incomingTotalMessages > prevTotalMessages;
-
-        //       if (!newMessagesAddedAlready) {
-        //         updatedObj.messages = [...incomingMessages, ...prevMessages];
-        //       }
-        //     }
-
-        //     return updatedObj;
-        //   }
-        // }
+        getMessages: {
+          keyArgs: false,
+          merge: (prevResult, incomingResult = {}) => {
+            return incomingResult;
+          }
+        }
       }
     }
   }
