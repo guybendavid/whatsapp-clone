@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { User } from "../../interfaces/interfaces";
 import { useQuery, useLazyQuery, useSubscription } from "@apollo/client";
 import { GET_All_USERS_EXCEPT_LOGGED, GET_USER, NEW_MESSAGE, getUsersQueryVariables } from "../../services/graphql";
-import { displayNewMessageOnSidebar, displayNewUserOnSidebar } from "./MainHelper/MainHelper";
+import { displayNewMessageOnSidebar, displayNewUserOnSidebar } from "../../services/MainHelper";
 import Sidebar from "./Sidebar/Sidebar";
 import WelcomeScreen from "./AlternateComps/WelcomeScreen/WelcomeScreen";
 import Chat from "./AlternateComps/Chat/Chat";

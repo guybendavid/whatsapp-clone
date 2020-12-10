@@ -3,7 +3,7 @@ import { AppContext } from "../../../../../contexts/AppContext";
 import { Message } from "../../../../../interfaces/interfaces";
 import { Typography } from "@material-ui/core";
 import { getMessagesSqlClauses } from "../../../../../services/graphql";
-import { messagesIdentifier, classesGenerator } from "./ConversationHelper/ConversationHelper";
+import { messagesIdentifier, classesGenerator } from "../../../../../services/ConversationHelper";
 import timeDisplayer from "../../../../../services/timeDisplayer";
 import "./Conversation.scss";
 
@@ -29,7 +29,7 @@ const Conversation: React.FC<Props> = ({ messages, isMoreMessagesToFetch, chatBo
     if (messages.length > 0) {
       observer.current?.disconnect();
 
-      // To do: fix
+      // To do: fix here and in apolloProvider
       observer.current = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting && isMoreMessagesToFetch && loggedInUser.id) {
           fetchMoreMessages({

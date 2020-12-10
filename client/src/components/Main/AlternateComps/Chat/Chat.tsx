@@ -3,6 +3,7 @@ import { AppContext } from "../../../../contexts/AppContext";
 import { User, Message } from "../../../../interfaces/interfaces";
 import { useQuery } from "@apollo/client";
 import { GET_MESSAGES, getMessagesQueryVariables } from "../../../../services/graphql";
+import { addNewMessageToConversation } from "../../../../services/ConversationHelper";
 import ChatHeader from "./ChatHeader/ChatHeader";
 import Conversation from "./Conversation/Conversation";
 import MessageCreator from "./MessageCreator/MessageCreator";
@@ -33,33 +34,9 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
     }
   }, [data]);
 
-  // To do: extract to a helper file
-  // move all main logic to here
-
   useEffect(() => {
     if (newMessage) {
-      const { senderId, recipientId } = newMessage;
-
-      if (senderId === selectedUser.id || (senderId === loggedInUser.id && recipientId === selectedUser.id)) {
-        const { getMessages }: any = client.readQuery({
-          query: GET_MESSAGES,
-          variables: getMessagesQueryVariables(loggedInUser.id)
-        });
-
-        const updatedData = { ...getMessages };
-        updatedData.messages = [...updatedData.messages, newMessage];
-        updatedData.totalMessages = `${Number(updatedData.totalMessages) + 1}`;
-
-        client.writeQuery({
-          query: GET_MESSAGES,
-          variables: getMessagesQueryVariables(loggedInUser.id),
-          data: {
-            getMessages: updatedData
-          }
-        });
-
-        chatBottomRef.current?.scrollIntoView();
-      }
+      addNewMessageToConversation(newMessage, selectedUser.id, loggedInUser.id, client, chatBottomRef);
     }
 
     // eslint-disable-next-line

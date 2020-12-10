@@ -72,7 +72,6 @@ const cache = new InMemoryCache({
         },
         getMessages: {
           keyArgs: false,
-          // To do: fix with pagination
           merge: (prevResult = {}, incomingResult = {}) => {
             return { ...prevResult, ...incomingResult };
           }

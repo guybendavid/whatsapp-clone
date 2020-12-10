@@ -1,5 +1,5 @@
-import { Message, User } from "../../../interfaces/interfaces";
-import { getUsersQueryVariables, GET_All_USERS_EXCEPT_LOGGED } from "../../../services/graphql";
+import { Message, User } from "../interfaces/interfaces";
+import { getUsersQueryVariables, GET_All_USERS_EXCEPT_LOGGED } from "./graphql";
 
 const displayNewMessageOnSidebar = (cache: any, newMessage: Message, sidebarUsers: User[],
   loggedInUserId: string, isMoreUsersToFetch: boolean, getUser: (obj: any) => void) => {
