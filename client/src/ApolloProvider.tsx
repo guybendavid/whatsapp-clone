@@ -62,7 +62,6 @@ const cache = new InMemoryCache({
               const { totalUsersExceptLoggedUser: incomingTotalUsers, users: incomingUsers } = incomingResult;
               const newRegisteredUsersAddedAlready = incomingTotalUsers > prevTotalUsers;
 
-              // To do: check
               if (!newRegisteredUsersAddedAlready) {
                 updatedObj.users = [...prevUsers, ...incomingUsers];
               }
