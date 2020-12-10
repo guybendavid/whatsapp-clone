@@ -29,7 +29,7 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
 
   useEffect(() => {
     if (data?.getMessages.messages.length > 0) {
-      chatBottomRef.current?.scrollIntoView({});
+      chatBottomRef.current?.scrollIntoView();
     }
   }, [data]);
 
@@ -50,7 +50,8 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
   return (
     <div className="chat">
       <ChatHeader selectedUser={selectedUser} newMessage={newMessage} />
-      <Conversation messages={data?.getMessages.messages} isMoreMessagesToFetch={isMoreMessagesToFetch} chatBottomRef={chatBottomRef}
+      <Conversation messages={data?.getMessages.messages} isMoreMessagesToFetch={isMoreMessagesToFetch}
+        chatBottomRef={chatBottomRef}
         fetchMoreMessages={fetchMoreMessages} />
       <MessageCreator selectedUser={selectedUser} />
     </div>
