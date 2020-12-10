@@ -57,7 +57,7 @@ const cache = new InMemoryCache({
           merge: (prevResult, incomingResult = {}) => {
             const newObj = { ...incomingResult };
 
-            if (prevResult && incomingResult) {
+            if (prevResult) {
               const { totalUsersExceptLoggedUser: prevTotalUsers, users: prevUsers } = prevResult;
               const { totalUsersExceptLoggedUser: incomingTotalUsers, users: incomingUsers } = incomingResult;
               const newRegisteredUsersAddedAlready = incomingTotalUsers > prevTotalUsers;
@@ -70,24 +70,24 @@ const cache = new InMemoryCache({
             return newObj;
           }
         },
-        getMessages: {
-          keyArgs: ["otherUserId"],
-          merge: (prevResult, incomingResult = {}) => {
-            const newObj = { ...incomingResult };
+        // getMessages: {
+        //   keyArgs: ["otherUserId"],
+        //   merge: (prevResult, incomingResult = {}) => {
+        //     const newObj = { ...incomingResult };
 
-            if (prevResult && incomingResult) {
-              const { totalMessages: prevTotalMessages, messages: prevMessages } = prevResult;
-              const { totalMessages: incomingTotalMessages, messages: incomingMessages } = incomingResult;
-              const newMessageAddedAlready = incomingTotalMessages > prevTotalMessages;
+        //     if (prevResult) {
+        //       const { totalMessages: prevTotalMessages, messages: prevMessages } = prevResult;
+        //       const { totalMessages: incomingTotalMessages, messages: incomingMessages } = incomingResult;
+        //       const newMessageAddedAlready = incomingTotalMessages > prevTotalMessages;
 
-              if (incomingMessages.length > 0 && !newMessageAddedAlready) {
-                newObj.messages = [...prevMessages, ...incomingMessages];
-              }
-            }
+        //       if (incomingMessages.length > 0 && !newMessageAddedAlready) {
+        //         newObj.messages = [...prevMessages, ...incomingMessages];
+        //       }
+        //     }
 
-            return newObj;
-          }
-        }
+        //     return incomingResult;
+        //   }
+        // }
       }
     }
   }
