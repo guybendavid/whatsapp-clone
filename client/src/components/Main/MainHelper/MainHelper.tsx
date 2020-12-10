@@ -33,6 +33,10 @@ const displayNewUserOnSidebar = (sidebarNewUser: User, client: any, loggedInUser
   updatedSidebar.users = [...updatedSidebar.users, sidebarNewUser];
   updatedSidebar.totalUsersExceptLoggedUser = `${Number(updatedSidebar.totalUsersExceptLoggedUser) + 1}`;
 
+  // To do: change getAllUsersExceptLogged to getSidebarData and check it with readQuery
+  // do the same with messages maybe
+  // try to update the data like this: getAllUsersExceptLogged.users
+
   client.writeQuery({
     query: GET_All_USERS_EXCEPT_LOGGED,
     variables: getUsersQueryVariables(loggedInUserId),

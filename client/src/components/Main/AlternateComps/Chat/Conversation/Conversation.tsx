@@ -3,8 +3,8 @@ import { AppContext } from "../../../../../contexts/AppContext";
 import { Message } from "../../../../../interfaces/interfaces";
 import { Typography } from "@material-ui/core";
 import { getMessagesSqlClauses } from "../../../../../services/graphql";
-import timeDisplayer from "../../../../../services/timeDisplayer";
 import { messagesIdentifier, classesGenerator } from "./ConversationHelper/ConversationHelper";
+import timeDisplayer from "../../../../../services/timeDisplayer";
 import "./Conversation.scss";
 
 interface Props {
@@ -29,7 +29,7 @@ const Conversation: React.FC<Props> = ({ messages, isMoreMessagesToFetch, chatBo
     if (messages.length > 0) {
       observer.current?.disconnect();
 
-      // To do: fix on first load
+      // To do: fix
       observer.current = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting && isMoreMessagesToFetch && loggedInUser.id) {
           fetchMoreMessages({
@@ -54,7 +54,8 @@ const Conversation: React.FC<Props> = ({ messages, isMoreMessagesToFetch, chatBo
     <div className="conversation">
       {messages?.map((message, index) => (
         <div key={index} className={classesGenerator(message.senderId, loggedInUser.id, firstIndexesOfSeries, index)}
-          ref={index === 0 ? firstMessageRef : null}>
+          // ref={index === 0 ? firstMessageRef : null}
+          >
           <Typography component="span" className="title">{message.content}</Typography>
           <Typography component="small">{timeDisplayer(message.createdAt)}</Typography>
         </div>

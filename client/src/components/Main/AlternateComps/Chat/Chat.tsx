@@ -17,7 +17,7 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
   const chatBottomRef = useRef<HTMLHeadingElement>(null);
   const { loggedInUser, handleErrors, clearError } = useContext(AppContext);
 
-  const { data, fetchMore: fetchMoreMessages } = useQuery(GET_MESSAGES, {
+  const { data, client, fetchMore: fetchMoreMessages } = useQuery(GET_MESSAGES, {
     variables: getMessagesQueryVariables(selectedUser.id),
     fetchPolicy: "cache-and-network",
     onError: (error) => handleErrors(error),
@@ -33,13 +33,32 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
     }
   }, [data]);
 
+  // To do: extract to a helper file
+  // change updateObj
+  // move all main logic to here
+
   useEffect(() => {
     if (newMessage) {
       const { senderId, recipientId } = newMessage;
 
       if (senderId === selectedUser.id || (senderId === loggedInUser.id && recipientId === selectedUser.id)) {
-        // To do: write to cache
-        // setMessages((prevMessages: Message[]) => [...prevMessages, newMessage]);
+        const { getMessages }: any = client.readQuery({
+          query: GET_MESSAGES,
+          variables: getMessagesQueryVariables(loggedInUser.id)
+        });
+
+        const updatedObj = { ...getMessages };
+        updatedObj.messages = [...updatedObj.messages, newMessage];
+        updatedObj.totalMessages = `${Number(updatedObj.totalMessages) + 1}`;
+
+        client.writeQuery({
+          query: GET_MESSAGES,
+          variables: getMessagesQueryVariables(loggedInUser.id),
+          data: {
+            getMessages: updatedObj
+          }
+        });
+
         chatBottomRef.current?.scrollIntoView();
       }
     }

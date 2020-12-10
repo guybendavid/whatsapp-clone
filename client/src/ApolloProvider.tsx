@@ -58,9 +58,9 @@ const cache = new InMemoryCache({
             const newObj = { ...incomingResult };
 
             if (prevResult && incomingResult) {
-              const { totalUsersExceptLoggedUser: prevTotalUsersCount, users: prevUsers } = prevResult;
-              const { totalUsersExceptLoggedUser: incomingTotalUsersCount, users: incomingUsers } = incomingResult;
-              const newRegisteredUsersAddedAlready = incomingTotalUsersCount > prevTotalUsersCount;
+              const { totalUsersExceptLoggedUser: prevTotalUsers, users: prevUsers } = prevResult;
+              const { totalUsersExceptLoggedUser: incomingTotalUsers, users: incomingUsers } = incomingResult;
+              const newRegisteredUsersAddedAlready = incomingTotalUsers > prevTotalUsers;
 
               if (incomingUsers.length > 0 && !newRegisteredUsersAddedAlready) {
                 newObj.users = [...prevUsers, ...incomingUsers];
@@ -72,20 +72,9 @@ const cache = new InMemoryCache({
         },
         getMessages: {
           keyArgs: false,
-          merge: (prevResult, incomingResult = {}) => {
-            const newObj = { ...incomingResult };
-
-            if (prevResult && incomingResult) {
-              const { totalMessages: prevTotalMessages, messages: prevMessages } = prevResult;
-              const { totalMessages: incomingTotalMessages, messages: incomingMessages } = incomingResult;
-              const newMessagesAddedAlready = incomingTotalMessages > prevTotalMessages;
-
-              if (incomingMessages.length > 0 && !newMessagesAddedAlready) {
-                newObj.messages = [...prevMessages, ...incomingMessages];
-              }
-            }
-
-            return newObj;
+          // To do: fix with pagination
+          merge: (prevResult = {}, incomingResult = {}) => {
+            return { ...prevResult, ...incomingResult };
           }
         }
       }
