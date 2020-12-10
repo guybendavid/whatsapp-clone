@@ -55,37 +55,38 @@ const cache = new InMemoryCache({
         getAllUsersExceptLogged: {
           keyArgs: false,
           merge: (prevResult, incomingResult = {}) => {
-            const newObj = { ...incomingResult };
+            const updatedObj = { ...incomingResult };
 
             if (prevResult) {
               const { totalUsersExceptLoggedUser: prevTotalUsers, users: prevUsers } = prevResult;
               const { totalUsersExceptLoggedUser: incomingTotalUsers, users: incomingUsers } = incomingResult;
               const newRegisteredUsersAddedAlready = incomingTotalUsers > prevTotalUsers;
 
-              if (incomingUsers.length > 0 && !newRegisteredUsersAddedAlready) {
-                newObj.users = [...prevUsers, ...incomingUsers];
+              // To do: check
+              if (!newRegisteredUsersAddedAlready) {
+                updatedObj.users = [...prevUsers, ...incomingUsers];
               }
             }
 
-            return newObj;
+            return updatedObj;
           }
         },
         // getMessages: {
         //   keyArgs: ["otherUserId"],
         //   merge: (prevResult, incomingResult = {}) => {
-        //     const newObj = { ...incomingResult };
+        //     const updatedObj = { ...incomingResult };
 
         //     if (prevResult) {
         //       const { totalMessages: prevTotalMessages, messages: prevMessages } = prevResult;
         //       const { totalMessages: incomingTotalMessages, messages: incomingMessages } = incomingResult;
-        //       const newMessageAddedAlready = incomingTotalMessages > prevTotalMessages;
+        //       const newMessagesAddedAlready = incomingTotalMessages > prevTotalMessages;
 
-        //       if (incomingMessages.length > 0 && !newMessageAddedAlready) {
-        //         newObj.messages = [...prevMessages, ...incomingMessages];
+        //       if (!newMessagesAddedAlready) {
+        //         updatedObj.messages = [...incomingMessages, ...prevMessages];
         //       }
         //     }
 
-        //     return incomingResult;
+        //     return updatedObj;
         //   }
         // }
       }

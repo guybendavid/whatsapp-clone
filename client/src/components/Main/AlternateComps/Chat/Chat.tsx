@@ -46,8 +46,7 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
     <div className="chat">
       <ChatHeader selectedUser={selectedUser} newMessage={newMessage} />
       <Conversation messages={data?.getMessages.messages} isMoreMessagesToFetch={isMoreMessagesToFetch}
-        chatBottomRef={chatBottomRef}
-        fetchMoreMessages={fetchMoreMessages} />
+        chatBottomRef={chatBottomRef} fetchMoreMessages={fetchMoreMessages} />
       <MessageCreator selectedUser={selectedUser} />
     </div>
   );
