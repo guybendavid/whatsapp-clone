@@ -51,9 +51,8 @@ const messagesIdentifier = (messages: Message[], setFirstIndexesOfSeries: (index
   setFirstIndexesOfSeries(firstOfSeriesIndexes);
 };
 
-// To do: fix delay
-// fix the another fetch request when a new message is sent
-// try to move the merge logic of the conversation to apolloProvider
+// To do: fix the another fetch request when a new message is sent and maybe the delay will be removed also
+// Then try to move the merge logic of the conversation to apolloProvider
 
 const classesGenerator = (senderId: string, loggedInUserId: string, firstIndexesOfSeries: any[], index: number) => {
   let classes = "message";
