@@ -67,7 +67,7 @@ const cache = new InMemoryCache({
           }
         },
         getMessages: {
-          keyArgs: false,
+          keyArgs: ["otherUserId"],
           merge: (prevResult, incomingResult) => {
             return incomingResult;
           }
