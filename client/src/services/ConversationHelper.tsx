@@ -1,22 +1,28 @@
 import { Message } from "../interfaces/interfaces";
 import { GET_MESSAGES } from "./graphql";
 
-const addNewMessageToConversation = (newMessage: Message, selectedUserId: string, loggedInUserId: string, client: any,
-  chatBottomRef: any) => {
+const addNewMessageToConversation = (newMessage: Message, isPrevMessages: boolean, selectedUserId: string, loggedInUserId: string,
+  client: any, chatBottomRef: any) => {
 
   const { senderId, recipientId } = newMessage;
 
   if (senderId === selectedUserId || (senderId === loggedInUserId && recipientId === selectedUserId)) {
-    const { getMessages }: any = client.readQuery({
-      query: GET_MESSAGES,
-      variables: { otherUserId: selectedUserId }
-    });
+    let prevMessages: Message[] = [];
+
+    if (isPrevMessages) {
+      const { getMessages }: any = client.readQuery({
+        query: GET_MESSAGES,
+        variables: { otherUserId: selectedUserId }
+      });
+
+      prevMessages = [...getMessages];
+    }
 
     client.writeQuery({
       query: GET_MESSAGES,
       variables: { otherUser: selectedUserId },
       data: {
-        getMessages: [...getMessages, newMessage]
+        getMessages: [...prevMessages, newMessage]
       }
     });
 

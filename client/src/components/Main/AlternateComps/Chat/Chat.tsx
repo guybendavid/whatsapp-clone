@@ -34,8 +34,8 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
   }, [isMessages]);
 
   useEffect(() => {
-    if (newMessage && (isMessages || newMessage.senderId === loggedInUser.id)) {
-      addNewMessageToConversation(newMessage, selectedUser.id, loggedInUser.id, client, chatBottomRef);
+    if (newMessage) {
+      addNewMessageToConversation(newMessage, isMessages, selectedUser.id, loggedInUser.id, client, chatBottomRef);
     }
     // eslint-disable-next-line
   }, [newMessage]);
