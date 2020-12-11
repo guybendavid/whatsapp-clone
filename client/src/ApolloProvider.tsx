@@ -48,7 +48,7 @@ const splitLink = split(
   httpLink
 );
 
-// To do: add merge function to newMessages
+// To do: change {} maybe, and decide if to add a single object in the write query or to merge there all
 // read again about fetchPolicy
 
 const cache = new InMemoryCache({
@@ -71,6 +71,12 @@ const cache = new InMemoryCache({
             }
 
             return updatedObj;
+          }
+        },
+        getMessages: {
+          keyArgs: false,
+          merge: (prevResult, incomingResult) => {
+            return incomingResult;
           }
         }
       }
