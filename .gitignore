@@ -1,6 +1,6 @@
 /client/.eslintcache
 /client/debug.log
-/client/build
 /**/node_modules
+/**/build
 /**/.env
 /server/db/config
