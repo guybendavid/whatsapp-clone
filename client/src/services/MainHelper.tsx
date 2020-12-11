@@ -29,15 +29,16 @@ const displayNewUserOnSidebar = (sidebarNewUser: User, client: any, loggedInUser
     variables: getUsersQueryVariables(loggedInUserId)
   });
 
-  const updatedData = { ...getAllUsersExceptLogged };
-  updatedData.users = [...updatedData.users, sidebarNewUser];
-  updatedData.totalUsersExceptLoggedUser = `${Number(updatedData.totalUsersExceptLoggedUser) + 1}`;
+  const newData = {
+    users: [sidebarNewUser],
+    totalUsersExceptLoggedUser: `${Number(getAllUsersExceptLogged.totalUsersExceptLoggedUser) + 1}`
+  };
 
   client.writeQuery({
     query: GET_All_USERS_EXCEPT_LOGGED,
     variables: getUsersQueryVariables(loggedInUserId),
     data: {
-      getAllUsersExceptLogged: updatedData
+      getAllUsersExceptLogged: newData
     }
   });
 };

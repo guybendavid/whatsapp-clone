@@ -37,7 +37,6 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
     if (newMessage && (isMessages || newMessage.senderId === loggedInUser.id)) {
       addNewMessageToConversation(newMessage, selectedUser.id, loggedInUser.id, client, chatBottomRef);
     }
-
     // eslint-disable-next-line
   }, [newMessage]);
 

@@ -58,13 +58,9 @@ const cache = new InMemoryCache({
             const updatedObj = { ...incomingResult };
 
             if (prevResult) {
-              const { totalUsersExceptLoggedUser: prevTotalUsers, users: prevUsers } = prevResult;
-              const { totalUsersExceptLoggedUser: incomingTotalUsers, users: incomingUsers } = incomingResult;
-              const newRegisteredUsersAddedAlready = incomingTotalUsers > prevTotalUsers;
-
-              if (!newRegisteredUsersAddedAlready) {
-                updatedObj.users = [...prevUsers, ...incomingUsers];
-              }
+              const { users: prevUsers } = prevResult;
+              const { users: incomingUsers } = incomingResult;
+              updatedObj.users = [...prevUsers, ...incomingUsers];
             }
 
             return updatedObj;
