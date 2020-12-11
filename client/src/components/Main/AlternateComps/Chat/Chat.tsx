@@ -31,7 +31,8 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
     if (isMessages) {
       chatBottomRef.current?.scrollIntoView();
     }
-  }, [isMessages]);
+    // eslint-disable-next-line
+  }, [data]);
 
   useEffect(() => {
     if (newMessage) {
