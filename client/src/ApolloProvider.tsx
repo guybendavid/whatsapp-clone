@@ -48,10 +48,6 @@ const splitLink = split(
   httpLink
 );
 
-// To do: Decide if to add a single object in the write query or to merge there all
-// check all scenarios => no users / newUser / different mergings and etc...
-// read again about fetchPolicy
-
 const cache = new InMemoryCache({
   typePolicies: {
     Query: {
