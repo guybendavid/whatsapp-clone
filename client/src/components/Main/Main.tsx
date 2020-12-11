@@ -49,8 +49,7 @@ const Main = () => {
   return (
     <div className="main">
       <Sidebar users={sidebarData?.users} isMoreUsersToFetch={isMoreUsersToFetch}
-        fetchMoreUsers={fetchMoreUsers} setSelectedUser={setSelectedUser}
-      />
+        fetchMoreUsers={fetchMoreUsers} setSelectedUser={setSelectedUser} />
       {selectedUser ? <Chat selectedUser={selectedUser} newMessage={newMessageData?.newMessage} /> : <WelcomeScreen />}
     </div>
   );

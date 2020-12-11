@@ -45,6 +45,9 @@ const messagesIdentifier = (messages: Message[], setFirstIndexesOfSeries: (index
   setFirstIndexesOfSeries(firstOfSeriesIndexes);
 };
 
+// To do: fix delay
+// fix the another fetch request when a new user sends message
+
 const classesGenerator = (senderId: string, loggedInUserId: string, firstIndexesOfSeries: any[], index: number) => {
   let classes = "message";
 

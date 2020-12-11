@@ -25,14 +25,16 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
     onCompleted: () => clearError()
   });
 
-  useEffect(() => {
-    if (data?.getMessages.length > 0) {
-      chatBottomRef.current?.scrollIntoView();
-    }
-  }, [data]);
+  const isMessages = data?.getMessages.length > 0;
 
   useEffect(() => {
-    if (newMessage) {
+    if (isMessages) {
+      chatBottomRef.current?.scrollIntoView();
+    }
+  }, [isMessages]);
+
+  useEffect(() => {
+    if (newMessage && (isMessages || newMessage.senderId === loggedInUser.id)) {
       addNewMessageToConversation(newMessage, selectedUser.id, loggedInUser.id, client, chatBottomRef);
     }
 
