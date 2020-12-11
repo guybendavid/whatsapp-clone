@@ -20,6 +20,7 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
 
   const { data, client } = useQuery(GET_MESSAGES, {
     variables: { otherUserId: selectedUser.id },
+    fetchPolicy: "cache-and-network",
     onError: (error) => handleErrors(error),
     onCompleted: () => clearError()
   });

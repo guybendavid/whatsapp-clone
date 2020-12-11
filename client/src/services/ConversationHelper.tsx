@@ -46,7 +46,8 @@ const messagesIdentifier = (messages: Message[], setFirstIndexesOfSeries: (index
 };
 
 // To do: fix delay
-// handle edge cases with the totalUsers when a new user sends a message
+// check edge cases with the totalUsers when a new user sends a message
+// fix the another fetch request when a new message is sent
 // explore the cache system and find out how the paginated users are retrived from the cache after they are been saved there
 
 const classesGenerator = (senderId: string, loggedInUserId: string, firstIndexesOfSeries: any[], index: number) => {
