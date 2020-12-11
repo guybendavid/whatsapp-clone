@@ -58,9 +58,7 @@ const cache = new InMemoryCache({
             const updatedObj = { ...incomingResult };
 
             if (prevResult) {
-              const { users: prevUsers } = prevResult;
-              const { users: incomingUsers } = incomingResult;
-              updatedObj.users = [...prevUsers, ...incomingUsers];
+              updatedObj.users = [...prevResult.users, ...incomingResult.users];
             }
 
             return updatedObj;

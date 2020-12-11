@@ -31,7 +31,7 @@ const displayNewUserOnSidebar = (sidebarNewUser: User, client: any, loggedInUser
 
   const newData = {
     users: [sidebarNewUser],
-    totalUsersExceptLoggedUser: `${Number(getAllUsersExceptLogged.totalUsersExceptLoggedUser) + 1}`
+    totalUsersExceptLoggedUser: getAllUsersExceptLogged.totalUsersExceptLoggedUser
   };
 
   client.writeQuery({
