@@ -25,10 +25,8 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
     onCompleted: () => clearError()
   });
 
-  const isMessages = data?.getMessages.length > 0;
-
   useEffect(() => {
-    if (isMessages) {
+    if (data?.getMessages.length > 0) {
       chatBottomRef.current?.scrollIntoView();
     }
     // eslint-disable-next-line
@@ -36,7 +34,7 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
 
   useEffect(() => {
     if (newMessage) {
-      addNewMessageToConversation(newMessage, isMessages, selectedUser.id, loggedInUser.id, client, chatBottomRef);
+      addNewMessageToConversation(newMessage, selectedUser.id, loggedInUser.id, client, chatBottomRef);
     }
     // eslint-disable-next-line
   }, [newMessage]);

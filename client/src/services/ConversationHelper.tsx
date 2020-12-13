@@ -1,7 +1,7 @@
 import { Message } from "../interfaces/interfaces";
 import { GET_MESSAGES } from "./graphql";
 
-const addNewMessageToConversation = (newMessage: Message, isPrevMessages: boolean, selectedUserId: string, loggedInUserId: string,
+const addNewMessageToConversation = (newMessage: Message, selectedUserId: string, loggedInUserId: string,
   client: any, chatBottomRef: any) => {
 
   const { senderId, recipientId } = newMessage;
