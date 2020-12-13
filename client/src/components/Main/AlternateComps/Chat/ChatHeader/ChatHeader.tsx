@@ -8,7 +8,7 @@ import "./ChatHeader.scss";
 
 interface Props {
   selectedUser: User;
-  newMessage: Message;
+  newMessage?: Message;
 }
 
 const ChatHeader: React.FC<Props> = ({ selectedUser, newMessage }) => {
