@@ -7,22 +7,16 @@ const addNewMessageToConversation = (newMessage: Message, isPrevMessages: boolea
   const { senderId, recipientId } = newMessage;
 
   if (senderId === selectedUserId || (senderId === loggedInUserId && recipientId === selectedUserId)) {
-    let prevMessages: Message[] = [];
-
-    if (isPrevMessages) {
-      const { getMessages }: any = client.readQuery({
-        query: GET_MESSAGES,
-        variables: { otherUserId: selectedUserId }
-      });
-
-      prevMessages = [...getMessages];
-    }
+    const { getMessages }: any = client.readQuery({
+      query: GET_MESSAGES,
+      variables: { otherUserId: selectedUserId }
+    });
 
     client.writeQuery({
       query: GET_MESSAGES,
       variables: { otherUser: selectedUserId },
       data: {
-        getMessages: [...prevMessages, newMessage]
+        getMessages: [...getMessages, newMessage]
       }
     });
 
