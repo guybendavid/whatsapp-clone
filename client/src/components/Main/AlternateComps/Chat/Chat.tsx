@@ -11,7 +11,7 @@ import "./Chat.scss";
 
 interface Props {
   selectedUser: User;
-  newMessage: Message;
+  newMessage?: Message;
 }
 
 const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
