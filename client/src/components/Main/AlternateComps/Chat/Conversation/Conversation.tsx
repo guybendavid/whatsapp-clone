@@ -7,7 +7,7 @@ import timeDisplayer from "../../../../../services/timeDisplayer";
 import "./Conversation.scss";
 
 interface Props {
-  messages: Message[];
+  messages?: Message[];
   chatBottomRef: any;
 }
 
