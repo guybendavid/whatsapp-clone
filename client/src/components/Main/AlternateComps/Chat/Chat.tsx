@@ -1,25 +1,16 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
-import { AppContext } from "../../../contexts/AppContext";
-import { User, Message } from "../../../interfaces/interfaces";
-import { gql, useQuery } from "@apollo/client";
-import TopSection from "./Sections/TopSection";
-import MiddleSection from "./Sections/MiddleSection";
-import BottomSection from "./Sections/BottomSection";
+import React, { useEffect, useRef, useContext, useState } from "react";
+import { AppContext } from "../../../../contexts/AppContext";
+import { User, Message } from "../../../../interfaces/interfaces";
+import { useQuery } from "@apollo/client";
+import { GET_MESSAGES } from "../../../../services/graphql";
+import ChatHeader from "./ChatHeader/ChatHeader";
+import Conversation from "./Conversation/Conversation";
+import MessageCreator from "./MessageCreator/MessageCreator";
 import "./Chat.scss";
-
-const GET_MESSAGES = gql`
-query GetMessages($otherUserId: ID!) {
-  getMessages(otherUserId: $otherUserId) {
-    senderId
-    content
-    createdAt
-  }
-}
-`;
 
 interface Props {
   selectedUser: User;
-  newMessage: Message;
+  newMessage?: Message;
 }
 
 const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
@@ -28,24 +19,22 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
   const [messages, setMessages] = useState<Message[]>([]);
 
   const { data } = useQuery(GET_MESSAGES, {
-    variables: {
-      otherUserId: selectedUser.id
-    },
+    variables: { otherUserId: selectedUser.id },
     fetchPolicy: "cache-and-network",
     onError: (error) => handleErrors(error),
-    onCompleted: () => clearError()
+    onCompleted: () => handleData()
   });
 
-  useEffect(() => {
-    if (data?.getMessages) {
-      setMessages(data.getMessages);
-    }
-  }, [data]);
+  const handleData = () => {
+    setMessages(data.getMessages);
+    clearError();
+  };
 
   useEffect(() => {
     if (messages.length > 0) {
       chatBottomRef.current?.scrollIntoView();
     }
+    // eslint-disable-next-line
   }, [messages]);
 
   useEffect(() => {
@@ -57,15 +46,14 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
         chatBottomRef.current?.scrollIntoView({ behavior: "smooth" });
       }
     }
-
     // eslint-disable-next-line
   }, [newMessage]);
 
   return (
     <div className="chat">
-      <TopSection selectedUser={selectedUser} newMessage={newMessage} />
-      <MiddleSection messages={messages} chatBottomRef={chatBottomRef} />
-      <BottomSection selectedUser={selectedUser} />
+      <ChatHeader selectedUser={selectedUser} newMessage={newMessage} />
+      <Conversation messages={messages} chatBottomRef={chatBottomRef} />
+      <MessageCreator selectedUser={selectedUser} />
     </div>
   );
 };

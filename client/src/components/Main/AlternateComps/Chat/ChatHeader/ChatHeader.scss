@@ -1,0 +1,30 @@
+@import "../../../../../styles/Mixins.scss";
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--gray-color);
+  padding: var(--header-padding);
+  border-left: 1px solid lightgray;
+
+  .left-side {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    .user-picture {
+      margin-right: 15px;
+    }
+
+    .text-wrapper {
+      display: flex;
+      flex-direction: column;
+
+      .fullname {
+        max-width: 265px;
+        @include overflow-handler;
+      }
+    }
+  }
+}

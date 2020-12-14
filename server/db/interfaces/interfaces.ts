@@ -4,7 +4,6 @@ interface User {
   lastName: string;
   username?: string;
   password?: string;
-  latestMessage?: Message;
 }
 
 interface Message {

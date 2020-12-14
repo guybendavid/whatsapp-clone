@@ -5,6 +5,7 @@ import { QueryTypes } from "sequelize";
 import { sequelize, User } from "../../db/models";
 import { validateRegisterObj, validateLoginObj } from "../../utils/validatons";
 import { User as UserInterface } from "../../db/interfaces/interfaces";
+import { getUsersWithLatestMessage } from "../../utils/rawQueries";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const imageGenerator = require("../../utils/imageGenerator");
 
@@ -18,31 +19,26 @@ export = {
         throw new AuthenticationError("Unauthenticated");
       }
 
-      const getUsersWithLatestMessage = `select distinct on (u.id) u.id, u.first_name as "firstName",
-      u.last_name as "lastName", u.image, m.content, m.created_at as "createdAt" from
-      (select m.*, case when sender_id = ? then recipient_id else sender_id end as other_user_id
-          from messages m where ? in (m.sender_id, m.recipient_id)) m 
-          right join users u on u.id = m.other_user_id where u.id != ?
-          order by u.id, m.created_at desc ${limit ? "limit ?" : ""} ${offset ? "offset ?" : ""}`;
-
-      const getTotalUsersCount = "select count(id) from users";
+      const getTotalUsers = "select count(id) from users";
+      const getSidebarUsers = getUsersWithLatestMessage(offset, limit);
 
       try {
-        const otherUsers = await sequelize.query(getUsersWithLatestMessage, { type: QueryTypes.SELECT, replacements: [id, id, id, limit, offset] });
+        let totalUsers = await sequelize.query(getTotalUsers, { type: QueryTypes.SELECT });
 
-        otherUsers.map((user: any) => {
-          user.latestMessage = { content: user.content, createdAt: user.createdAt };
-          delete user.content;
-          delete user.createdAt;
-        });
+        if (totalUsers[0]?.count > 0) {
+          totalUsers = totalUsers[0].count - 1;
+          const sidebarUsers = await sequelize.query(getSidebarUsers, { type: QueryTypes.SELECT, replacements: [id, id, id, offset, limit] });
 
-        let usersCount = await sequelize.query(getTotalUsersCount, { type: QueryTypes.SELECT });
+          sidebarUsers.map((user: any) => {
+            user.latestMessage = { content: user.content, createdAt: user.createdAt };
+            delete user.content;
+            delete user.createdAt;
+          });
 
-        if (usersCount[0]?.count > 0) {
-          usersCount = usersCount[0].count - 1;
+          return { users: sidebarUsers, totalUsersExceptLoggedUser: totalUsers };
+        } else {
+          return { users: [], totalUsersExceptLoggedUser: 0 };
         }
-
-        return { users: otherUsers, totalUsersCountExceptLoggedUser: usersCount };
       } catch (err) {
         throw new ApolloError(err);
       }

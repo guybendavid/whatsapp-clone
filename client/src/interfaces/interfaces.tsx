@@ -11,10 +11,18 @@ interface User {
 }
 
 interface Message {
+  id: string;
   senderId: string;
-  recipientId: string;
+  recipientId?: string;
   content: string;
   createdAt: string;
 }
 
-export type { User, Message };
+interface SidebarProps {
+  users: User[];
+  isMoreUsersToFetch: boolean;
+  fetchMoreUsers: (object: any) => void;
+  setSelectedUser: (user: User) => void;
+}
+
+export type { User, Message, SidebarProps };

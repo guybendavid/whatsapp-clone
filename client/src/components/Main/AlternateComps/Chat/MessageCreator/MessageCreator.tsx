@@ -1,25 +1,19 @@
 import React, { useState, useEffect, SyntheticEvent, useContext } from "react";
-import { AppContext } from "../../../../contexts/AppContext";
-import { User } from "../../../../interfaces/interfaces";
-import { gql, useMutation } from "@apollo/client";
+import { AppContext } from "../../../../../contexts/AppContext";
+import { User } from "../../../../../interfaces/interfaces";
+import { useMutation } from "@apollo/client";
+import { SEND_MESSAGE } from "../../../../../services/graphql";
 import { IconButton, InputBase } from "@material-ui/core";
 import MoodIcon from "@material-ui/icons/Mood";
 import AttachmentIcon from "@material-ui/icons/Attachment";
 import MicIcon from "@material-ui/icons/Mic";
-
-const SEND_MESSAGE = gql`
-mutation SendMessage($recipientId: ID! $content: String!) {
-  sendMessage(recipientId: $recipientId content: $content) {
-    id
-  }
-}
-`;
+import "./MessageCreator.scss";
 
 interface Props {
   selectedUser: User;
 }
 
-const BottomSection: React.FC<Props> = ({ selectedUser }) => {
+const MessageCreator: React.FC<Props> = ({ selectedUser }) => {
   const { handlerErrors } = useContext(AppContext);
   const initialMessageObj = { content: "", recipientId: selectedUser.id };
   const [messageInput, setMessageInput] = useState(initialMessageObj);
@@ -48,7 +42,7 @@ const BottomSection: React.FC<Props> = ({ selectedUser }) => {
   };
 
   return (
-    <div className="bottom-section">
+    <div className="message-creator">
       {[MoodIcon, AttachmentIcon].map((Icon, index) => (
         <IconButton key={index}>
           <Icon />
@@ -72,4 +66,4 @@ const BottomSection: React.FC<Props> = ({ selectedUser }) => {
   );
 };
 
-export default BottomSection;
+export default MessageCreator;

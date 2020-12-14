@@ -3,10 +3,11 @@ import { AppContext } from "../../contexts/AppContext";
 import { useHistory } from "react-router-dom";
 import { User } from "../../interfaces/interfaces";
 import { useQuery, useLazyQuery, useSubscription } from "@apollo/client";
-import { GET_All_USERS_EXCEPT_LOGGED, GET_USER, NEW_MESSAGE, variables } from "./MainAssets/MainAssets";
-import LeftSidebar from "./LeftSidebar/LeftSidebar";
-import WelcomeScreen from "./WelcomeScreen/WelcomeScreen";
-import Chat from "./Chat/Chat";
+import { GET_All_USERS_EXCEPT_LOGGED, GET_USER, NEW_MESSAGE, getUsersQueryVariables } from "../../services/graphql";
+import { displayNewMessageOnSidebar, displayNewUserOnSidebar } from "../../services/MainHelper";
+import Sidebar from "./Sidebar/Sidebar";
+import WelcomeScreen from "./AlternateComps/WelcomeScreen/WelcomeScreen";
+import Chat from "./AlternateComps/Chat/Chat";
 import "./Main.scss";
 
 const Main = () => {
@@ -15,76 +16,45 @@ const Main = () => {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const { handleErrors, clearError } = useContext(AppContext);
 
-  const { data: usersData, client, fetchMore } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
-    variables: variables(loggedInUser.id),
+  const { data: usersData, client, fetchMore: fetchMoreUsers } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
+    variables: getUsersQueryVariables(loggedInUser.id),
     onError: (error) => handleErrors(error, history),
     onCompleted: () => clearError()
   });
 
   const sidebarData = usersData?.getAllUsersExceptLogged;
-  const isFetchMoreUsers = sidebarData?.users.length < sidebarData?.totalUsersCountExceptLoggedUser;
-  const isSidebarScrolledToBottom = !isFetchMoreUsers;
+  const isMoreUsersToFetch = sidebarData?.users.length < sidebarData?.totalUsersExceptLoggedUser;
 
   const { data: newMessageData } = useSubscription(NEW_MESSAGE);
-  const [getUser, { data: newUserData }] = useLazyQuery(GET_USER);
+  
+  const [getUser, { data: newUserData }] = useLazyQuery(GET_USER, {
+    onError: (error) => handleErrors(error, history),
+    onCompleted: () => clearError()
+  });
 
   useEffect(() => {
-    if (newMessageData?.newMessage) {
+    if (newMessageData) {
       const { cache } = client;
       const { newMessage } = newMessageData;
-      const { senderId, recipientId } = newMessage;
-      const otherUserOnSidebar = sidebarData?.users.find((user: User) => user.id === senderId || user.id === recipientId);
-
-      if (otherUserOnSidebar) {
-        cache.modify({
-          id: cache.identify(otherUserOnSidebar),
-          fields: {
-            latestMessage() {
-              return newMessage;
-            }
-          }
-        });
-      } else if (senderId !== loggedInUser.id && isSidebarScrolledToBottom) {
-        try {
-          getUser({ variables: { id: senderId } });
-        } catch (err) { }
-      }
+      displayNewMessageOnSidebar(cache, newMessage, sidebarData?.users, loggedInUser.id, isMoreUsersToFetch, getUser);
     }
-
     // eslint-disable-next-line
   }, [newMessageData]);
 
   useEffect(() => {
     if (newUserData) {
       const sidebarNewUser = { ...newUserData.getUser };
-      const { recipientId, senderId, ...neededMessageProperties } = newMessageData.newMessage;
-      sidebarNewUser.latestMessage = neededMessageProperties;
-
-      const { getAllUsersExceptLogged }: any = client.readQuery({
-        query: GET_All_USERS_EXCEPT_LOGGED,
-        variables: variables(loggedInUser.id)
-      });
-
-      const updatedSidebar = { ...getAllUsersExceptLogged };
-      updatedSidebar.users = [...updatedSidebar.users, sidebarNewUser];
-      updatedSidebar.totalUsersCountExceptLoggedUser = `${Number(updatedSidebar.totalUsersCountExceptLoggedUser) + 1}`;
-
-      client.writeQuery({
-        query: GET_All_USERS_EXCEPT_LOGGED,
-        variables: variables(loggedInUser.id),
-        data: {
-          getAllUsersExceptLogged: updatedSidebar
-        }
-      });
+      const { recipientId, senderId, ...userLatestMessageProperties } = newMessageData.newMessage;
+      sidebarNewUser.latestMessage = userLatestMessageProperties;
+      displayNewUserOnSidebar(sidebarNewUser, client, loggedInUser.id);
     }
     // eslint-disable-next-line
   }, [newUserData]);
 
   return (
     <div className="main">
-      <LeftSidebar users={sidebarData?.users} isFetchMoreUsers={isFetchMoreUsers}
-        fetchMore={fetchMore} setSelectedUser={setSelectedUser}
-      />
+      <Sidebar users={sidebarData?.users} isMoreUsersToFetch={isMoreUsersToFetch}
+        fetchMoreUsers={fetchMoreUsers} setSelectedUser={setSelectedUser} />
       {selectedUser ? <Chat selectedUser={selectedUser} newMessage={newMessageData?.newMessage} /> : <WelcomeScreen />}
     </div>
   );

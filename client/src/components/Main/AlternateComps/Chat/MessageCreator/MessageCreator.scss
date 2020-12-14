@@ -1,0 +1,26 @@
+@import "../../../../../styles/Mixins.scss";
+
+.message-creator {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--gray-color);
+  position: absolute;
+  box-sizing: border-box;
+  bottom: 0;
+  width: 100%;
+  padding: 10px 15px;
+
+  form {
+    @include search-input;
+    padding: 0 10px;
+
+    .input-wrapper {
+      padding: 5px 0 5px 20px;
+    }
+  }
+
+  svg {
+    font-size: 1.7rem !important;
+  }
+}

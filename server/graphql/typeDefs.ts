@@ -3,21 +3,21 @@ import { gql } from "apollo-server";
 export = gql`
   type SideBarUsers {
     users: [User]!
-    totalUsersCountExceptLoggedUser: String!
+    totalUsersExceptLoggedUser: String!
   }
   type User {
     id: ID!
     firstName: String!
     lastName: String!
     username: String!
-    image: String
-    latestMessage: Message
+    image: String!
+    latestMessage: Message!
     token: String
   }
   type Message {
     id: ID!
-    senderId: String!
-    recipientId: String!
+    senderId: ID!
+    recipientId: ID!
     content: String
     createdAt: String
   }
