@@ -21,7 +21,7 @@ const messagesIdentifier = (messages: Message[], setFirstIndexesOfSeries: (index
 };
 
 // To do: fix the delay
-// may be attach onCompleted and onError to all apollo methods
+// maybe replace the try catch blocks of useMutation with onError
 
 const classesGenerator = (senderId: string, loggedInUserId: string, firstIndexesOfSeries: any[], index: number) => {
   let classes = "message";

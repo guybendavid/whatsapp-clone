@@ -26,7 +26,11 @@ const Main = () => {
   const isMoreUsersToFetch = sidebarData?.users.length < sidebarData?.totalUsersExceptLoggedUser;
 
   const { data: newMessageData } = useSubscription(NEW_MESSAGE);
-  const [getUser, { data: newUserData }] = useLazyQuery(GET_USER);
+  
+  const [getUser, { data: newUserData }] = useLazyQuery(GET_USER, {
+    onError: (error) => handleErrors(error, history),
+    onCompleted: () => clearError()
+  });
 
   useEffect(() => {
     if (newMessageData) {
