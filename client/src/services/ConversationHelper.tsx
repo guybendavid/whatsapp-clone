@@ -1,28 +1,4 @@
 import { Message } from "../interfaces/interfaces";
-import { GET_MESSAGES } from "./graphql";
-
-const addNewMessageToConversation = (newMessage: Message, selectedUserId: string, loggedInUserId: string,
-  client: any, chatBottomRef: any) => {
-
-  const { senderId, recipientId } = newMessage;
-
-  if (senderId === selectedUserId || (senderId === loggedInUserId && recipientId === selectedUserId)) {
-    const { getMessages }: any = client.readQuery({
-      query: GET_MESSAGES,
-      variables: { otherUserId: selectedUserId }
-    });
-
-    client.writeQuery({
-      query: GET_MESSAGES,
-      variables: { otherUser: selectedUserId },
-      data: {
-        getMessages: [...getMessages, newMessage]
-      }
-    });
-
-    chatBottomRef.current?.scrollIntoView();
-  }
-};
 
 const messagesIdentifier = (messages: Message[], setFirstIndexesOfSeries: (indexes: any[]) => void) => {
   const lastMessageOfSeries: Message[] = [];
@@ -63,4 +39,4 @@ const classesGenerator = (senderId: string, loggedInUserId: string, firstIndexes
   return classes;
 };
 
-export { addNewMessageToConversation, messagesIdentifier, classesGenerator };
+export { messagesIdentifier, classesGenerator };

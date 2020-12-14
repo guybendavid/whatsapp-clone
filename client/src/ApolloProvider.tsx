@@ -63,12 +63,6 @@ const cache = new InMemoryCache({
 
             return updatedObj;
           }
-        },
-        getMessages: {
-          keyArgs: false,
-          merge: (prevResult, incomingResult) => {
-            return incomingResult;
-          }
         }
       }
     }
