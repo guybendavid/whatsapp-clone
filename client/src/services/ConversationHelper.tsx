@@ -20,7 +20,7 @@ const messagesIdentifier = (messages: Message[], setFirstIndexesOfSeries: (index
   setFirstIndexesOfSeries(indexes);
 };
 
-// maybe replace the try catch blocks of useMutation with onError
+// To do: Check all apollo errors behavior and maybe replace the try catch blocks of useMutation with onError
 
 const classesGenerator = (senderId: string, loggedInUserId: string, firstIndexesOfSeries: any[], index: number) => {
   let classes = "message";
