@@ -15,7 +15,7 @@ interface Props {
 
 const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
   const chatBottomRef = useRef<HTMLHeadingElement>(null);
-  const { handleErrors, clearError } = useContext(AppContext);
+  const { loggedInUser, handleErrors, clearError } = useContext(AppContext);
   const [messages, setMessages] = useState<Message[]>([]);
 
   const { data } = useQuery(GET_MESSAGES, {
@@ -39,8 +39,12 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
 
   useEffect(() => {
     if (newMessage) {
-      setMessages(prevMessages => [...prevMessages, newMessage]);
-      chatBottomRef.current?.scrollIntoView();
+      const { senderId, recipientId } = newMessage;
+
+      if (senderId === selectedUser.id || (senderId === loggedInUser.id && recipientId === selectedUser.id)) {
+        setMessages((prevMessages: Message[]) => [...prevMessages, newMessage]);
+        chatBottomRef.current?.scrollIntoView({ behavior: "smooth" });
+      }
     }
     // eslint-disable-next-line
   }, [newMessage]);
