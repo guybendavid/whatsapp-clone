@@ -20,10 +20,6 @@ const messagesIdentifier = (messages: Message[], setFirstIndexesOfSeries: (index
   setFirstIndexesOfSeries(indexes);
 };
 
-// To do: fix the delay
-// maybe replace the try catch blocks of useMutation with onError
-// Fix the messages merge (scenario that checked => new user is sending a newMessage while I'm on another chat)
-
 const classesGenerator = (senderId: string, loggedInUserId: string, firstIndexesOfSeries: any[], index: number) => {
   let classes = "message";
 
