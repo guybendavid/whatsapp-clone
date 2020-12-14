@@ -16,14 +16,14 @@ const Conversation: React.FC<Props> = ({ messages, chatBottomRef }) => {
   const [firstIndexesOfSeries, setFirstIndexesOfSeries] = useState<(number | undefined)[]>([]);
 
   useEffect(() => {
-    if (messages) {
+    if (messages.length > 0) {
       messagesIdentifier(messages, setFirstIndexesOfSeries);
     }
   }, [messages]);
 
   return (
     <div className="conversation">
-      {messages?.map((message, index) => (
+      {messages.map((message, index) => (
         <div key={index} className={classesGenerator(message.senderId, loggedInUser.id, firstIndexesOfSeries, index)}>
           <Typography component="span" className="title">{message.content}</Typography>
           <Typography component="small">{timeDisplayer(message.createdAt)}</Typography>

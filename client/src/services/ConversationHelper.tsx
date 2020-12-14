@@ -20,7 +20,6 @@ const messagesIdentifier = (messages: Message[], setFirstIndexesOfSeries: (index
   setFirstIndexesOfSeries(indexes);
 };
 
-// To do: fix the delay
 // maybe replace the try catch blocks of useMutation with onError
 
 const classesGenerator = (senderId: string, loggedInUserId: string, firstIndexesOfSeries: any[], index: number) => {
