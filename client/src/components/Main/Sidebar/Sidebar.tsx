@@ -17,8 +17,8 @@ interface Props {
 const Sidebar: React.FC<Props> = ({ setSelectedUser, newMessage }) => {
   const { handleErrors } = useContext(AppContext);
   const [searchValue, setSearchValue] = useState("");
-  const loggedInUser = JSON.parse(localStorage.loggedInUser);
   const history = useHistory();
+  const loggedInUser = JSON.parse(localStorage.loggedInUser);
 
   const { data, fetchMore: fetchMoreUsers, client } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
     variables: getUsersQueryVariables(loggedInUser.id),
@@ -34,8 +34,7 @@ const Sidebar: React.FC<Props> = ({ setSelectedUser, newMessage }) => {
 
   useEffect(() => {
     if (newMessage) {
-      const { cache } = client;
-      displayNewMessageOnSidebar(cache, newMessage, sidebarData?.users, loggedInUser.id, isMoreUsersToFetch, getUser);
+      displayNewMessageOnSidebar(client.cache, newMessage, sidebarData?.users, loggedInUser.id, isMoreUsersToFetch, getUser);
     }
     // eslint-disable-next-line
   }, [newMessage]);

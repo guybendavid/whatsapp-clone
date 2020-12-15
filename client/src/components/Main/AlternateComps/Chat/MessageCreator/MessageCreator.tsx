@@ -25,7 +25,6 @@ const MessageCreator: React.FC<Props> = ({ selectedUser }) => {
 
   useEffect(() => {
     setMessageInput(initialMessageObj);
-
     // eslint-disable-next-line
   }, [selectedUser]);
 

@@ -20,7 +20,6 @@ const ChatHeader: React.FC<Props> = ({ selectedUser, newMessage }) => {
         selectedUser.latestMessage = newMessage;
       };
     }
-
     // eslint-disable-next-line
   }, [newMessage]);
 

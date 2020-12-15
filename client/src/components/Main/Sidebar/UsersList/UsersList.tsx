@@ -7,7 +7,7 @@ import timeDisplayer from "../../../../services/timeDisplayer";
 import "./UsersList.scss";
 
 interface Props {
-  users: User[];
+  users?: User[];
   searchValue: string;
   isMoreUsersToFetch: boolean;
   fetchMoreUsers: (object: any) => void;
@@ -19,7 +19,7 @@ const UsersList: React.FC<Props> = ({ users, searchValue, isMoreUsersToFetch, fe
   const observer: any = useRef();
 
   const lastUserRef = useCallback(node => {
-    if (users.length > 0) {
+    if (users && users.length > 0) {
       observer.current?.disconnect();
 
       observer.current = new IntersectionObserver(entries => {
