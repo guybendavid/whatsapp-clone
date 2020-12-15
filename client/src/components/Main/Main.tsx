@@ -14,12 +14,11 @@ const Main = () => {
   const history = useHistory();
   const loggedInUser = JSON.parse(localStorage.loggedInUser);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const { handleErrors, clearError } = useContext(AppContext);
+  const { handleErrors } = useContext(AppContext);
 
   const { data: usersData, client, fetchMore: fetchMoreUsers } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
     variables: getUsersQueryVariables(loggedInUser.id),
-    onError: (error) => handleErrors(error, history),
-    onCompleted: () => clearError()
+    onError: (error) => handleErrors(error, history)
   });
 
   const sidebarData = usersData?.getAllUsersExceptLogged;
@@ -28,8 +27,7 @@ const Main = () => {
   const { data: newMessageData } = useSubscription(NEW_MESSAGE);
   
   const [getUser, { data: newUserData }] = useLazyQuery(GET_USER, {
-    onError: (error) => handleErrors(error, history),
-    onCompleted: () => clearError()
+    onError: (error) => handleErrors(error, history)
   });
 
   useEffect(() => {
