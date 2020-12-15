@@ -14,9 +14,11 @@ interface Props {
 }
 
 const MessageCreator: React.FC<Props> = ({ selectedUser }) => {
-  const { handlerErrors } = useContext(AppContext);
+  const { handleErrors } = useContext(AppContext);
+
   const initialMessageObj = { content: "", recipientId: selectedUser.id };
   const [messageInput, setMessageInput] = useState(initialMessageObj);
+  
   const [sendMessage] = useMutation(SEND_MESSAGE);
 
   useEffect(() => {
@@ -31,12 +33,12 @@ const MessageCreator: React.FC<Props> = ({ selectedUser }) => {
 
     if (content && recipientId) {
       const newMessage = { recipientId, content };
+      setMessageInput(initialMessageObj);
 
       try {
-        sendMessage({ variables: { ...newMessage } });
-        setMessageInput(initialMessageObj);
+        await sendMessage({ variables: { ...newMessage } });
       } catch (err) {
-        handlerErrors(err);
+        handleErrors(err);
       }
     }
   };
