@@ -45,7 +45,6 @@ const UsersList: React.FC<Props> = ({ users, searchValue, isMoreUsersToFetch, fe
     <List className="users-list">
       {users?.filter(user => `${user.firstName} ${user.lastName}`.toUpperCase().includes(searchValue.toUpperCase())).map((user, index) => (
         <React.Fragment key={index}>
-          {/* To do: maybe remove spread */}
           <ListItem button className="list-item" onClick={() => setSelectedUser({ ...user })}
             ref={index === users.length - 1 ? lastUserRef : null}>
             <ListItemAvatar className="avatar-wrapper">
