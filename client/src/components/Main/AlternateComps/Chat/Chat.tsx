@@ -21,8 +21,8 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
   useQuery(GET_MESSAGES, {
     variables: { otherUserId: selectedUser.id },
     fetchPolicy: "cache-and-network",
-    onError: (error) => handleErrors(error),
-    onCompleted: (data) => setMessages(data.getMessages)
+    onCompleted: (data) => setMessages(data.getMessages),
+    onError: (error) => handleErrors(error)
   });
 
   useEffect(() => {

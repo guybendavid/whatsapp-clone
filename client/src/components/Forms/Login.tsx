@@ -14,21 +14,17 @@ interface Props {
 
 const Login: React.FC<Props> = ({ history }) => {
   const { handleErrors } = useContext(AppContext);
-  const [login] = useMutation(LOGIN_USER);
   const [formValues, setFormValues] = useState({ username: "", password: "" });
 
-  const handleSubmit = async (e: SyntheticEvent) => {
+  const [login] = useMutation(LOGIN_USER, {
+    onCompleted: (data) => handleAuth(data.login, history),
+    onError: (err) => handleErrors(err)
+  });
+
+  const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     const { username, password } = formValues;
-
-    if (username && password) {
-      try {
-        const user = await login({ variables: { username, password } });
-        handleAuth(user.data?.login, history);
-      } catch (err) {
-        handleErrors(err);
-      }
-    }
+    login({ variables: { username, password } });
   };
 
   return (
