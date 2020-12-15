@@ -18,7 +18,7 @@ const Login: React.FC<Props> = ({ history }) => {
 
   const [login] = useMutation(LOGIN_USER, {
     onCompleted: (data) => handleAuth(data.login, history),
-    onError: (err) => handleErrors(err)
+    onError: (error) => handleErrors(error)
   });
 
   const handleSubmit = (e: SyntheticEvent) => {

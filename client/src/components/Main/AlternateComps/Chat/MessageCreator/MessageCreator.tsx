@@ -20,7 +20,7 @@ const MessageCreator: React.FC<Props> = ({ selectedUser }) => {
   const [messageInput, setMessageInput] = useState(initialMessageObj);
 
   const [sendMessage] = useMutation(SEND_MESSAGE, {
-    onError: (err) => handleErrors(err)
+    onError: (error) => handleErrors(error)
   });
 
   useEffect(() => {

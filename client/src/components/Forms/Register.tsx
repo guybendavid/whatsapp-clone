@@ -17,7 +17,7 @@ const Register: React.FC<Props> = ({ history }) => {
   const [formValues, setFormValues] = useState({ firstName: "", lastName: "", username: "", password: "" });
 
   const [register] = useMutation(REGISTER_USER, {
-    onError: (err) => handleErrors(err)
+    onError: (error) => handleErrors(error)
   });
 
   const handleSubmit = async (e: SyntheticEvent) => {
