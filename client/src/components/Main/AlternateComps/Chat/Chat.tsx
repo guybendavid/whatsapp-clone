@@ -38,7 +38,7 @@ const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
 
       if (senderId === selectedUser.id || (senderId === loggedInUser.id && recipientId === selectedUser.id)) {
         setMessages((prevMessages: Message[]) => [...prevMessages, newMessage]);
-        chatBottomRef.current?.scrollIntoView({ behavior: "smooth" });
+        chatBottomRef.current?.scrollIntoView();
       }
     }
     // eslint-disable-next-line
