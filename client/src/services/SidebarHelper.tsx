@@ -17,9 +17,7 @@ const displayNewMessageOnSidebar = (cache: any, newMessage: Message, sidebarUser
       }
     });
   } else if (senderId !== loggedInUserId && !isMoreUsersToFetch) {
-    try {
-      getUser({ variables: { id: senderId } });
-    } catch (err) { }
+    getUser({ variables: { id: senderId } });
   }
 };
 

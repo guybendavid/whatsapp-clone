@@ -14,26 +14,18 @@ interface Props {
 
 const Register: React.FC<Props> = ({ history }) => {
   const { handleErrors } = useContext(AppContext);
-  const [register] = useMutation(REGISTER_USER);
   const [formValues, setFormValues] = useState({ firstName: "", lastName: "", username: "", password: "" });
+
+  const [register] = useMutation(REGISTER_USER, {
+    onError: (error) => handleErrors(error)
+  });
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     const { firstName, lastName, username, password } = formValues;
-
-    if (firstName && lastName && username && password) {
-      try {
-        const user = await register({ variables: { firstName, lastName, username, password } });
-
-        if (user.data?.register) {
-          user.data.register.username = username;
-        }
-
-        handleAuth(user.data?.register, history);
-      } catch (err) {
-        handleErrors(err);
-      }
-    }
+    const res = await register({ variables: { firstName, lastName, username, password } });
+    res.data.register.username = username;
+    handleAuth(res.data.register, history);
   };
 
   return (

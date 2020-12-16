@@ -15,20 +15,15 @@ interface Props {
 
 const Chat: React.FC<Props> = ({ selectedUser, newMessage }) => {
   const chatBottomRef = useRef<HTMLHeadingElement>(null);
-  const { loggedInUser, handleErrors, clearError } = useContext(AppContext);
+  const { loggedInUser, handleErrors } = useContext(AppContext);
   const [messages, setMessages] = useState<Message[]>([]);
 
-  const { data } = useQuery(GET_MESSAGES, {
+  useQuery(GET_MESSAGES, {
     variables: { otherUserId: selectedUser.id },
     fetchPolicy: "cache-and-network",
-    onError: (error) => handleErrors(error),
-    onCompleted: () => handleData()
+    onCompleted: (data) => setMessages(data.getMessages),
+    onError: (error) => handleErrors(error)
   });
-
-  const handleData = () => {
-    setMessages(data.getMessages);
-    clearError();
-  };
 
   useEffect(() => {
     if (messages.length > 0) {

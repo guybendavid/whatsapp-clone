@@ -14,31 +14,25 @@ interface Props {
 }
 
 const MessageCreator: React.FC<Props> = ({ selectedUser }) => {
-  const { handlerErrors } = useContext(AppContext);
+  const { handleErrors } = useContext(AppContext);
+
   const initialMessageObj = { content: "", recipientId: selectedUser.id };
   const [messageInput, setMessageInput] = useState(initialMessageObj);
-  const [sendMessage] = useMutation(SEND_MESSAGE);
+
+  const [sendMessage] = useMutation(SEND_MESSAGE, {
+    onError: (error) => handleErrors(error)
+  });
 
   useEffect(() => {
     setMessageInput(initialMessageObj);
-
     // eslint-disable-next-line
   }, [selectedUser]);
 
-  const handleSubmit = async (e: SyntheticEvent) => {
+  const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     const { content, recipientId } = messageInput;
-
-    if (content && recipientId) {
-      const newMessage = { recipientId, content };
-
-      try {
-        sendMessage({ variables: { ...newMessage } });
-        setMessageInput(initialMessageObj);
-      } catch (err) {
-        handlerErrors(err);
-      }
-    }
+    sendMessage({ variables: { recipientId, content } });
+    setMessageInput(initialMessageObj);
   };
 
   return (
@@ -56,6 +50,7 @@ const MessageCreator: React.FC<Props> = ({ selectedUser }) => {
             className="input-base"
             placeholder={"Type a message"}
             inputProps={{ "aria-label": "create message" }}
+            required
           />
         </div>
       </form>

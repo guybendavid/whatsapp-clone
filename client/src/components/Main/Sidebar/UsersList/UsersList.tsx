@@ -1,13 +1,17 @@
 import React, { useContext, useRef, useCallback } from "react";
 import { AppContext } from "../../../../contexts/AppContext";
-import { SidebarProps } from "../../../../interfaces/interfaces";
+import { User } from "../../../../interfaces/interfaces";
 import { List, ListItem, Avatar, ListItemAvatar, Typography, Divider } from "@material-ui/core";
 import { getUsersSqlClauses } from "../../../../services/graphql";
 import timeDisplayer from "../../../../services/timeDisplayer";
 import "./UsersList.scss";
 
-interface Props extends SidebarProps {
+interface Props {
+  users?: User[];
   searchValue: string;
+  isMoreUsersToFetch: boolean;
+  fetchMoreUsers: (object: any) => void;
+  setSelectedUser: (user: User) => void;
 }
 
 const UsersList: React.FC<Props> = ({ users, searchValue, isMoreUsersToFetch, fetchMoreUsers, setSelectedUser }) => {
@@ -15,7 +19,7 @@ const UsersList: React.FC<Props> = ({ users, searchValue, isMoreUsersToFetch, fe
   const observer: any = useRef();
 
   const lastUserRef = useCallback(node => {
-    if (users.length > 0) {
+    if (users && users.length > 0) {
       observer.current?.disconnect();
 
       observer.current = new IntersectionObserver(entries => {
@@ -34,7 +38,6 @@ const UsersList: React.FC<Props> = ({ users, searchValue, isMoreUsersToFetch, fe
         observer.current.observe(node);
       }
     }
-
     // eslint-disable-next-line
   }, [loggedInUser, users, isMoreUsersToFetch]);
 

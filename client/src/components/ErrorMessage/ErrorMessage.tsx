@@ -14,7 +14,6 @@ const ErrorMessage: React.FC = () => {
 
   useEffect(() => {
     error ? setOpen(true) : closeError();
-
     // eslint-disable-next-line
   }, [error]);
 
