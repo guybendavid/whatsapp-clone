@@ -21,10 +21,13 @@ const Conversation: React.FC<Props> = ({ messages, chatBottomRef }) => {
     }
   }, [messages]);
 
+  const isMessagesIdentified = firstIndexesOfSeries.length > 0;
+
   return (
     <div className="conversation">
       {messages.map((message, index) => (
-        <div key={index} className={classesGenerator(message.senderId, loggedInUser.id, firstIndexesOfSeries, index)}>
+        <div key={index} className={isMessagesIdentified ?
+          classesGenerator(message.senderId, loggedInUser.id, firstIndexesOfSeries, index) : ""}>
           <Typography component="span" className="title">{message.content}</Typography>
           <Typography component="small">{timeDisplayer(message.createdAt)}</Typography>
         </div>
