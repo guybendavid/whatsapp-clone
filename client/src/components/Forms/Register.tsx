@@ -24,8 +24,11 @@ const Register: React.FC<Props> = ({ history }) => {
     e.preventDefault();
     const { firstName, lastName, username, password } = formValues;
     const res = await register({ variables: { firstName, lastName, username, password } });
-    res.data.register.username = username;
-    handleAuth(res.data.register, history);
+
+    if (res) {
+      res.data.register.username = username;
+      handleAuth(res.data.register, history);
+    }
   };
 
   return (
