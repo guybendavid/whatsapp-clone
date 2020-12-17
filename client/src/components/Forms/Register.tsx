@@ -16,6 +16,7 @@ const Register: React.FC<Props> = ({ history }) => {
   const { handleErrors } = useContext(AppContext);
   const [formValues, setFormValues] = useState({ firstName: "", lastName: "", username: "", password: "" });
 
+  // To do: fix the error when a user with the same username trying to register
   const [register] = useMutation(REGISTER_USER, {
     onError: (error) => handleErrors(error)
   });
