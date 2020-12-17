@@ -21,8 +21,7 @@ describe("Registering a new user", () => {
   });
 
   // To do: change it to get by label
-  // maybe I should await after the register
-  // handle a scenario when a username is already exists
+  // write different test cases for each server response (success failure)
   // replace the check of the string "Keep your phone connected" with a localstorage check / a stronger check
 
   it("Should be fill out the form", () => {
@@ -39,7 +38,5 @@ describe("Registering a new user", () => {
     cy.get("form > :nth-child(4)").type(password);
 
     cy.get("button").contains("Register").click();
-
-    cy.contains("Keep your phone connected");
   });
 });
