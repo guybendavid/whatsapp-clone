@@ -15,7 +15,7 @@ const alphanumericStringGenerator = () => {
 
 describe("Registering a new user", () => {
   it("Should be moving to the register page", () => {
-    cy.visit("http://localhost:3000");
+    cy.visit("/");
     cy.contains("Don't have an account yet?").click();
     cy.url().should("include", "/register");
   });
