@@ -21,6 +21,8 @@ const messagesIdentifier = (messages: Message[], setFirstIndexesOfSeries: (index
 };
 
 const classesGenerator = (senderId: string, loggedInUserId: string, firstIndexesOfSeries: any[], index: number) => {
+  console.log("im here");
+  
   let classes = "message";
 
   if (senderId === loggedInUserId) {
