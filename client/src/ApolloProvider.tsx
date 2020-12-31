@@ -27,7 +27,7 @@ httpLink = authLink.concat(httpLink);
 const wsLink = new WebSocketLink({
   uri: isProduction ?
     `wss://${process.env.REACT_APP_BASE_URL_PRODUCTION}` :
-    `ws://${process.env.REACT_APP_BASE_URL}/graphql`,
+    `ws://${process.env.REACT_APP_BASE_URL}`,
   options: {
     reconnect: true,
     connectionParams: {

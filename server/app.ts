@@ -8,7 +8,8 @@ import pino from "pino";
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: contextMiddleware
+  context: contextMiddleware,
+  subscriptions: { path: "/" }
 });
 
 const logger = pino({ level: process.env.LOG_LEVEL || "info" });
