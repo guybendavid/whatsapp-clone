@@ -55,5 +55,13 @@ body {
       width: 100vw;
       z-index: -1;
     }
+
+    &.is-auth-form {
+      margin-top: 160px;
+    }
+
+    &:not(.is-auth-form) {
+      align-items: center;
+    }
   }
 }
