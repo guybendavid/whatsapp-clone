@@ -51,7 +51,7 @@ const UsersList: React.FC<Props> = ({ users, searchValue, isMoreUsersToFetch, fe
               <Avatar className="avatar" alt="avatar" src={user?.image} />
             </ListItemAvatar>
             <div className="text-wrapper">
-              {index > 0 && <Divider className={user.latestMessage?.createdAt ? "is-chatted" : ""} />}
+              {index > 0 && <Divider className={user.latestMessage?.createdAt && "is-chatted"} />}
               <div className="first-row">
                 <Typography component="span" className="fullname">{`${user.firstName} ${user.lastName}`}</Typography>
                 <Typography component="small">{timeDisplayer(user.latestMessage?.createdAt)}</Typography>

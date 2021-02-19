@@ -9,12 +9,12 @@ import UnauthenticatedRoute from "./Routes/UnauthenticatedRoute";
 import DefaultRoute from "./Routes/DefaultRoute";
 import ErrorMessage from "../components/ErrorMessage/ErrorMessage";
 
-const AppRouter: React.FC = () => {
+const AppRouter = () => {
   const location = useLocation();
   const isAuthForm = location.pathname === "/login" || location.pathname === "/register";
 
   return (
-    <Container className={"container " + (isAuthForm ? "is-auth-form" : "")} maxWidth={isAuthForm ? "sm" : "xl"} >
+    <Container className={"container " + (isAuthForm && "is-auth-form")} maxWidth={isAuthForm ? "sm" : "xl"} >
       <Switch>
         <AuthenticatedRoute exact path="/" Component={Main} />
         <UnauthenticatedRoute exact path="/login" Component={Login} />

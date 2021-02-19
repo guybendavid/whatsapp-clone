@@ -3,7 +3,7 @@ import { AppContext } from "../../contexts/AppContext";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 
-const ErrorMessage: React.FC = () => {
+const ErrorMessage = () => {
   const { error, clearError } = useContext(AppContext);
   const [open, setOpen] = useState(false);
 
