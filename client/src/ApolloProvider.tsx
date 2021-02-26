@@ -13,7 +13,7 @@ let httpLink: any = new HttpLink({
     `http://${process.env.REACT_APP_BASE_URL}`
 });
 
-const authLink = setContext((_, { headers }: any) => {
+const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,

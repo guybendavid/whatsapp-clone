@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useCallback } from "react";
+import React, { FC, useContext, useRef, useCallback, Fragment } from "react";
 import { AppContext } from "../../../../contexts/AppContext";
 import { User } from "../../../../interfaces/interfaces";
 import { List, ListItem, Avatar, ListItemAvatar, Typography, Divider } from "@material-ui/core";
@@ -14,7 +14,7 @@ interface Props {
   setSelectedUser: (user: User) => void;
 }
 
-const UsersList: React.FC<Props> = ({ users, searchValue, isMoreUsersToFetch, fetchMoreUsers, setSelectedUser }) => {
+const UsersList: FC<Props> = ({ users, searchValue, isMoreUsersToFetch, fetchMoreUsers, setSelectedUser }) => {
   const { loggedInUser } = useContext(AppContext);
   const observer: any = useRef();
 
@@ -44,7 +44,7 @@ const UsersList: React.FC<Props> = ({ users, searchValue, isMoreUsersToFetch, fe
   return (
     <List className="users-list">
       {users?.filter(user => `${user.firstName} ${user.lastName}`.toUpperCase().includes(searchValue.toUpperCase())).map((user, index) => (
-        <React.Fragment key={index}>
+        <Fragment key={index}>
           <ListItem button className="list-item" onClick={() => setSelectedUser({ ...user })}
             ref={index === users.length - 1 ? lastUserRef : null}>
             <ListItemAvatar className="avatar-wrapper">
@@ -61,7 +61,7 @@ const UsersList: React.FC<Props> = ({ users, searchValue, isMoreUsersToFetch, fe
               </div>
             </div>
           </ListItem>
-        </React.Fragment>
+        </Fragment>
       ))}
     </List>
   );

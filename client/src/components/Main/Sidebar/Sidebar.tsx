@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { FC, useContext, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { AppContext } from "../../../contexts/AppContext";
 import { useQuery, useLazyQuery } from "@apollo/client";
@@ -14,7 +14,7 @@ interface Props {
   newMessage?: Message;
 }
 
-const Sidebar: React.FC<Props> = ({ setSelectedUser, newMessage }) => {
+const Sidebar: FC<Props> = ({ setSelectedUser, newMessage }) => {
   const { handleErrors } = useContext(AppContext);
   const [searchValue, setSearchValue] = useState("");
   const history = useHistory();

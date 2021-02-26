@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { FC, useContext, useState, useEffect, RefObject } from "react";
 import { AppContext } from "../../../../../contexts/AppContext";
 import { Message } from "../../../../../interfaces/interfaces";
 import { Typography } from "@material-ui/core";
@@ -7,10 +7,10 @@ import "./Conversation.scss";
 
 interface Props {
   messages: Message[];
-  chatBottomRef: any;
+  chatBottomRef: RefObject<HTMLDivElement>;
 }
 
-const Conversation: React.FC<Props> = ({ messages, chatBottomRef }) => {
+const Conversation: FC<Props> = ({ messages, chatBottomRef }) => {
   const { loggedInUser } = useContext(AppContext);
   const [firstIndexesOfSeries, setFirstIndexesOfSeries] = useState<(number | undefined)[]>([]);
 

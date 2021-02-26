@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { FC, useContext, useState, MouseEvent, Fragment } from "react";
 import { AppContext } from "../../../../contexts/AppContext";
 import { useHistory } from "react-router-dom";
 import { Avatar, IconButton, InputBase, ClickAwayListener, Menu, MenuItem } from "@material-ui/core";
@@ -11,9 +11,9 @@ import "./Actions.scss";
 
 const DotsIcon = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const history: any = useHistory();
+  const history = useHistory();
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -50,7 +50,7 @@ interface Props {
   setSearchValue: (value: string) => void;
 }
 
-const Actions: React.FC<Props> = ({ searchValue, setSearchValue }) => {
+const Actions: FC<Props> = ({ searchValue, setSearchValue }) => {
   const { loggedInUser } = useContext(AppContext);
   const [searchBarIsOpened, setSearchBarIsOpened] = useState(false);
 
@@ -62,13 +62,13 @@ const Actions: React.FC<Props> = ({ searchValue, setSearchValue }) => {
         </div>
         <div className="right-side">
           {[DonutLargeIcon, ChatIcon, DotsIcon].map((Icon, index) => (
-            <React.Fragment key={index}>
+            <Fragment key={index}>
               {index < 2 ?
                 <IconButton>
                   <Icon />
                 </IconButton> :
                 <Icon />}
-            </React.Fragment>
+            </Fragment>
           ))}
         </div>
       </div>

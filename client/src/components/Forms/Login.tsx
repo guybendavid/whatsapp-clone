@@ -1,4 +1,4 @@
-import React, { useState, SyntheticEvent, useContext } from "react";
+import React, { FC, useState, SyntheticEvent, useContext } from "react";
 import { AppContext } from "../../contexts/AppContext";
 import { Link } from "react-router-dom";
 import { handleAuth } from "../../services/auth";
@@ -9,10 +9,10 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import "./Forms.scss";
 
 interface Props {
-  history: any;
+  history: History;
 }
 
-const Login: React.FC<Props> = ({ history }) => {
+const Login: FC<Props> = ({ history }) => {
   const { handleErrors } = useContext(AppContext);
   const [formValues, setFormValues] = useState({ username: "", password: "" });
 

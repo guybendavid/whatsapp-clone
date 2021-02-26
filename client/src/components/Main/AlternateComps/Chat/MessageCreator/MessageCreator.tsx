@@ -1,4 +1,4 @@
-import React, { useState, useEffect, SyntheticEvent, useContext } from "react";
+import React, { FC, useState, useEffect, SyntheticEvent, useContext } from "react";
 import { AppContext } from "../../../../../contexts/AppContext";
 import { User } from "../../../../../interfaces/interfaces";
 import { useMutation } from "@apollo/client";
@@ -13,7 +13,7 @@ interface Props {
   selectedUser: User;
 }
 
-const MessageCreator: React.FC<Props> = ({ selectedUser }) => {
+const MessageCreator: FC<Props> = ({ selectedUser }) => {
   const { handleErrors } = useContext(AppContext);
 
   const initialMessageObj = { content: "", recipientId: selectedUser.id };

@@ -22,7 +22,7 @@ const displayNewMessageOnSidebar = (cache: any, newMessage: Message, sidebarUser
 };
 
 const displayNewUserOnSidebar = (sidebarNewUser: User, client: any, loggedInUserId: string) => {
-  const { getAllUsersExceptLogged }: any = client.readQuery({
+  const { getAllUsersExceptLogged } = client.readQuery({
     query: GET_All_USERS_EXCEPT_LOGGED,
     variables: getUsersQueryVariables(loggedInUserId)
   });

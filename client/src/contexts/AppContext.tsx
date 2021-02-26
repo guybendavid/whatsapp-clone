@@ -1,13 +1,13 @@
-import React, { useEffect, createContext, useState, Context } from "react";
+import React, { FC, useEffect, createContext, useState, Context, ReactNode } from "react";
 import { User } from "../interfaces/interfaces";
 
 interface Props {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 const AppContext: Context<any> = createContext(undefined);
 
-const AppContextProvider: React.FC<Props> = ({ children }) => {
+const AppContextProvider: FC<Props> = ({ children }) => {
   const [loggedInUser, setLoggedInUser] = useState<User | {}>({});
   const [error, setError] = useState("");
 

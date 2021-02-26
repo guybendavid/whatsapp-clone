@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { Route, Redirect } from "react-router";
 
 interface Props {
@@ -6,7 +6,7 @@ interface Props {
   path?: string;
 }
 
-const DefaultRoute: React.FC<Props> = () => {
+const DefaultRoute: FC<Props> = () => {
   return (
     <Route render={() => localStorage.loggedInUser ? <Redirect to="/" /> : <Redirect to="/login" />} />
   );

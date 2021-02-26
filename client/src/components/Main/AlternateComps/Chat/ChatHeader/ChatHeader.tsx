@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { User, Message } from "../../../../../interfaces/interfaces";
 import { Avatar, Typography, IconButton } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
@@ -11,7 +11,7 @@ interface Props {
   newMessage?: Message;
 }
 
-const ChatHeader: React.FC<Props> = ({ selectedUser, newMessage }) => {
+const ChatHeader: FC<Props> = ({ selectedUser, newMessage }) => {
   useEffect(() => {
     if (newMessage) {
       const { senderId, recipientId } = newMessage;
