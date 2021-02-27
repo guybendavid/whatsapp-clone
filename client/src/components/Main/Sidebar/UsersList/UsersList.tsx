@@ -16,7 +16,7 @@ interface Props {
 
 const UsersList: FC<Props> = ({ users, searchValue, isMoreUsersToFetch, fetchMoreUsers, setSelectedUser }) => {
   const { loggedInUser } = useContext(AppContext);
-  const observer: any = useRef();
+  const observer = useRef<IntersectionObserver | null>(null);
 
   const lastUserRef = useCallback(node => {
     if (users && users.length > 0) {

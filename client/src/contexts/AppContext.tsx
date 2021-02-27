@@ -1,4 +1,6 @@
 import React, { FC, useEffect, createContext, useState, Context, ReactNode } from "react";
+import { History, LocationState } from "history";
+import { ApolloError } from "@apollo/client";
 import { User } from "../interfaces/interfaces";
 
 interface Props {
@@ -11,7 +13,7 @@ const AppContextProvider: FC<Props> = ({ children }) => {
   const [loggedInUser, setLoggedInUser] = useState<User | {}>({});
   const [error, setError] = useState("");
 
-  const handleErrors = (error: any, history?: any) => {
+  const handleErrors = (error: ApolloError, history?: History<LocationState>) => {
     const isGraphQLErrorsIncludesError = (errorMessage: string) => {
       return error.graphQLErrors && error.graphQLErrors[0]?.message?.includes(errorMessage);
     };

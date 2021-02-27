@@ -1,4 +1,5 @@
 import React, { FC, useState, SyntheticEvent, useContext } from "react";
+import { History, LocationState } from "history";
 import { AppContext } from "../../contexts/AppContext";
 import { Link } from "react-router-dom";
 import { handleAuth } from "../../services/auth";
@@ -9,7 +10,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import "./Forms.scss";
 
 interface Props {
-  history: History;
+  history: History<LocationState>;
 }
 
 const Register: FC<Props> = ({ history }) => {

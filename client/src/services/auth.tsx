@@ -1,6 +1,7 @@
 import { User } from "../interfaces/interfaces";
+import { History, LocationState } from "history";
 
-const handleAuth = (data: User, history: any) => {
+const handleAuth = (data: User, history: History<LocationState>) => {
   const { token, ...user } = data;
 
   if (token && user) {

@@ -1,8 +1,11 @@
+import { ApolloClient, QueryLazyOptions } from "@apollo/client";
 import { Message, User } from "../interfaces/interfaces";
 import { getUsersQueryVariables, GET_All_USERS_EXCEPT_LOGGED } from "./graphql";
 
+type GetUser = (options?: QueryLazyOptions<Record<string, any>>) => void;
+
 const displayNewMessageOnSidebar = (cache: any, newMessage: Message, sidebarUsers: User[],
-  loggedInUserId: string, isMoreUsersToFetch: boolean, getUser: (obj: any) => void) => {
+  loggedInUserId: string, isMoreUsersToFetch: boolean, getUser: GetUser) => {
 
   const { senderId, recipientId } = newMessage;
   const otherUserIsDisplayedOnSidebar = sidebarUsers?.find((user: User) => user.id === senderId || user.id === recipientId);
@@ -21,7 +24,7 @@ const displayNewMessageOnSidebar = (cache: any, newMessage: Message, sidebarUser
   }
 };
 
-const displayNewUserOnSidebar = (sidebarNewUser: User, client: any, loggedInUserId: string) => {
+const displayNewUserOnSidebar = (sidebarNewUser: User, client: ApolloClient<any>, loggedInUserId: string) => {
   const { getAllUsersExceptLogged } = client.readQuery({
     query: GET_All_USERS_EXCEPT_LOGGED,
     variables: getUsersQueryVariables(loggedInUserId)
