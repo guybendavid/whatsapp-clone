@@ -1,8 +1,8 @@
-import React, { FC, useState, useEffect, SyntheticEvent, useContext } from "react";
-import { AppContext } from "../../../../../contexts/AppContext";
-import { User } from "../../../../../interfaces/interfaces";
+import { FC, useState, useEffect, SyntheticEvent, useContext } from "react";
+import { AppContext } from "contexts/AppContext";
+import { User } from "interfaces/interfaces";
 import { useMutation } from "@apollo/client";
-import { SEND_MESSAGE } from "../../../../../services/graphql";
+import { SEND_MESSAGE } from "services/graphql";
 import { IconButton, InputBase } from "@material-ui/core";
 import MoodIcon from "@material-ui/icons/Mood";
 import AttachmentIcon from "@material-ui/icons/Attachment";

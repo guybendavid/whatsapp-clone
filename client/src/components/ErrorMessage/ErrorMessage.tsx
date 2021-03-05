@@ -1,5 +1,5 @@
-import React, { useContext, useState, useEffect } from "react";
-import { AppContext } from "../../contexts/AppContext";
+import { useContext, useState, useEffect } from "react";
+import { AppContext } from "contexts/AppContext";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 

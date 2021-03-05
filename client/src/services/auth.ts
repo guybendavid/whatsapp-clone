@@ -1,4 +1,4 @@
-import { User } from "../interfaces/interfaces";
+import { User } from "interfaces/interfaces";
 import { History, LocationState } from "history";
 
 const handleAuth = (data: User, history: History<LocationState>) => {

@@ -1,11 +1,11 @@
-import React, { FC, useState, SyntheticEvent, useContext } from "react";
+import { FC, useState, SyntheticEvent, useContext } from "react";
 import { History, LocationState } from "history";
-import { AppContext } from "../../contexts/AppContext";
+import { AppContext } from "contexts/AppContext";
 import { Link } from "react-router-dom";
-import { handleAuth } from "../../services/auth";
+import { handleAuth } from "services/auth";
 import { Avatar, Button, TextField, Typography } from "@material-ui/core";
 import { useMutation } from "@apollo/client";
-import { LOGIN_USER } from "../../services/graphql";
+import { LOGIN_USER } from "services/graphql";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import "./Forms.scss";
 

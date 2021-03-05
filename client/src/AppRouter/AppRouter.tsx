@@ -1,13 +1,12 @@
-import React from "react";
 import { Container } from "@material-ui/core";
 import { Switch, useLocation, withRouter } from "react-router-dom";
-import Main from "../components/Main/Main";
-import Login from "../components/Forms/Login";
-import Register from "../components/Forms/Register";
+import Main from "components/Main/Main";
+import Login from "components/Forms/Login";
+import Register from "components/Forms/Register";
 import AuthenticatedRoute from "./Routes/AuthenticatedRoute";
 import UnauthenticatedRoute from "./Routes/UnauthenticatedRoute";
 import DefaultRoute from "./Routes/DefaultRoute";
-import ErrorMessage from "../components/ErrorMessage/ErrorMessage";
+import ErrorMessage from "components/ErrorMessage/ErrorMessage";
 
 const AppRouter = () => {
   const location = useLocation();

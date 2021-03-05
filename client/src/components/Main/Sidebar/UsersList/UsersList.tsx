@@ -1,9 +1,9 @@
-import React, { FC, useContext, useRef, useCallback, Fragment } from "react";
-import { AppContext } from "../../../../contexts/AppContext";
-import { User } from "../../../../interfaces/interfaces";
+import { FC, useContext, useRef, useCallback, Fragment } from "react";
+import { AppContext } from "contexts/AppContext";
+import { User } from "interfaces/interfaces";
 import { List, ListItem, Avatar, ListItemAvatar, Typography, Divider } from "@material-ui/core";
-import { getUsersSqlClauses } from "../../../../services/graphql";
-import timeDisplayer from "../../../../services/timeDisplayer";
+import { getUsersSqlClauses } from "services/graphql";
+import timeDisplayer from "services/timeDisplayer";
 import "./UsersList.scss";
 
 interface Props {

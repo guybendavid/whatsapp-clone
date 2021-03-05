@@ -1,7 +1,6 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { Typography } from "@material-ui/core";
-import introImg from "../../../../images/intro-img.png";
+import introImg from "images/intro-img.png";
 import LaptopIcon from "@material-ui/icons/Laptop";
 import "./WelcomeScreen.scss";
 

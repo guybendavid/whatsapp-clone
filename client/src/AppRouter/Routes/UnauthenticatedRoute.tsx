@@ -1,4 +1,4 @@
-import React, { FC, ComponentType } from "react";
+import { FC, ComponentType } from "react";
 import { Route, Redirect } from "react-router";
 
 interface Props {

@@ -1,5 +1,5 @@
-import React, { FC, useContext, useState, MouseEvent, Fragment } from "react";
-import { AppContext } from "../../../../contexts/AppContext";
+import { FC, useContext, useState, MouseEvent, Fragment } from "react";
+import { AppContext } from "contexts/AppContext";
 import { useHistory } from "react-router-dom";
 import { Avatar, IconButton, InputBase, ClickAwayListener, Menu, MenuItem } from "@material-ui/core";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";

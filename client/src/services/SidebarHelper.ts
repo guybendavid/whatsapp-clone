@@ -1,5 +1,5 @@
 import { ApolloClient, QueryLazyOptions } from "@apollo/client";
-import { Message, User } from "../interfaces/interfaces";
+import { Message, User } from "interfaces/interfaces";
 import { getUsersQueryVariables, GET_All_USERS_EXCEPT_LOGGED } from "./graphql";
 
 type GetUser = (options?: QueryLazyOptions<Record<string, any>>) => void;

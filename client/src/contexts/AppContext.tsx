@@ -1,7 +1,7 @@
-import React, { FC, useEffect, createContext, useState, Context, ReactNode } from "react";
+import { FC, useEffect, createContext, useState, Context, ReactNode } from "react";
 import { History, LocationState } from "history";
 import { ApolloError } from "@apollo/client";
-import { User } from "../interfaces/interfaces";
+import { User } from "interfaces/interfaces";
 
 interface Props {
   children: ReactNode;
