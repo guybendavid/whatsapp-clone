@@ -1,16 +1,29 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import Sequelize from "sequelize";
-let sequelize: any;
 
-if (process.env.NODE_ENV === "production") {
-  const productionConfig = process.env.DATABASE_URL;
-  // @ts-ignore
-  sequelize = new Sequelize(productionConfig);
+const { NODE_ENV, DB, DB_USERNAME, DB_PASSWORD, DB_HOST } = process.env;
+let config;
+
+if (NODE_ENV === "production") {
+  config = {
+    database: DB,
+    username: DB_USERNAME,
+    password: DB_PASSWORD,
+    host: DB_HOST,
+    dialect: "postgres",
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    }
+  };
 } else {
-  const developmentConfig = require(__dirname + "/../config/config.js")["development"];
-  // @ts-ignore
-  sequelize = new Sequelize(developmentConfig);
+  config = require(__dirname + "/../config/config.js")["development"];
 }
+
+// @ts-ignore
+const sequelize = new Sequelize(config);
 
 const models: any = {
   User: require("./User")(sequelize, Sequelize.DataTypes),

@@ -13,6 +13,11 @@ const AppContextProvider: FC<Props> = ({ children }) => {
   const [loggedInUser, setLoggedInUser] = useState<User | {}>({});
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    const user = localStorage.loggedInUser && JSON.parse(localStorage.loggedInUser);
+    setLoggedInUser(user);
+  }, []);
+
   const handleErrors = (error: ApolloError, history?: History<LocationState>) => {
     const isGraphQLErrorsIncludesError = (errorMessage: string) => {
       return error.graphQLErrors && error.graphQLErrors[0]?.message?.includes(errorMessage);
@@ -33,11 +38,6 @@ const AppContextProvider: FC<Props> = ({ children }) => {
   const clearError = () => {
     setError("");
   };
-
-  useEffect(() => {
-    const user = localStorage.loggedInUser && JSON.parse(localStorage.loggedInUser);
-    setLoggedInUser(user);
-  }, []);
 
   return (
     <AppContext.Provider value={{ loggedInUser, error, handleErrors, clearError }}>

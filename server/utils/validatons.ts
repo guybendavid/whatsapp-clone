@@ -40,7 +40,7 @@ const validateMessageObj = ({ recipientId, content }: Message) => {
   const errors = [];
 
   if (!recipientId) {
-    errors.push("RecipientId must not be empty");
+    errors.push("Recipient id must not be empty");
   }
 
   if (!content) {
