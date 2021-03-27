@@ -26,8 +26,8 @@ if (NODE_ENV === "production") {
 const sequelize = new Sequelize(config);
 
 const models: any = {
-  User: require("./User")(sequelize, Sequelize.DataTypes),
-  Message: require("./Message")(sequelize, Sequelize.DataTypes)
+  User: require("./user")(sequelize, Sequelize.DataTypes),
+  Message: require("./message")(sequelize, Sequelize.DataTypes)
 };
 
 const { User, Message } = models;
