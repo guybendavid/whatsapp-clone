@@ -19,8 +19,8 @@ const ErrorMessage = () => {
 
   return (
     <>
-      {error && <Snackbar open={open} autoHideDuration={3000} onClose={() => closeError()}>
-        <MuiAlert elevation={6} variant="filled" severity="error" onClose={() => closeError()}>{error}</MuiAlert>
+      {error && <Snackbar open={open} autoHideDuration={3000} onClose={closeError}>
+        <MuiAlert elevation={6} variant="filled" severity="error" onClose={closeError}>{error}</MuiAlert>
       </Snackbar>}
     </>
   );

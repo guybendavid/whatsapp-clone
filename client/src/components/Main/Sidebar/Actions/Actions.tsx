@@ -23,7 +23,6 @@ const DotsIcon = () => {
 
   const handleLogout = () => {
     localStorage.clear();
-    window.location.reload();
     history.push("/");
   };
 

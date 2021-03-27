@@ -1,6 +1,6 @@
 import { UserInputError, AuthenticationError, ApolloError, withFilter } from "apollo-server";
 import { Op } from "sequelize";
-import { User, Message } from "../../db/models";
+import { User, Message } from "../../db/models/modelsConfig";
 import { Message as MessageInterface } from "../../db/interfaces/interfaces";
 import { validateMessageObj } from "../../utils/validatons";
 
@@ -71,9 +71,7 @@ export = {
         }
 
         return pubsub.asyncIterator(["NEW_MESSAGE"]);
-      }, ({ newMessage }, args, { user }) => {
-        return newMessage.senderId === user.id || newMessage.recipientId === user.id ? true : false;
-      })
+      }, ({ newMessage }, args, { user }) => newMessage.senderId === user.id || newMessage.recipientId === user.id)
     }
   }
 };

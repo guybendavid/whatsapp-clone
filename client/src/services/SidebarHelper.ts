@@ -25,23 +25,15 @@ const displayNewMessageOnSidebar = (cache: any, newMessage: Message, sidebarUser
 };
 
 const displayNewUserOnSidebar = (sidebarNewUser: User, client: ApolloClient<any>, loggedInUserId: string) => {
-  const { getAllUsersExceptLogged } = client.readQuery({
-    query: GET_All_USERS_EXCEPT_LOGGED,
-    variables: getUsersQueryVariables(loggedInUserId)
-  });
+  const queryToUpdate = { query: GET_All_USERS_EXCEPT_LOGGED, variables: getUsersQueryVariables(loggedInUserId) };
+  const { getAllUsersExceptLogged } = client.readQuery(queryToUpdate);
 
   const newData = {
     users: [sidebarNewUser],
     totalUsersExceptLoggedUser: getAllUsersExceptLogged.totalUsersExceptLoggedUser
   };
 
-  client.writeQuery({
-    query: GET_All_USERS_EXCEPT_LOGGED,
-    variables: getUsersQueryVariables(loggedInUserId),
-    data: {
-      getAllUsersExceptLogged: newData
-    }
-  });
+  client.writeQuery({ ...queryToUpdate, data: { getAllUsersExceptLogged: newData } });
 };
 
 export { displayNewMessageOnSidebar, displayNewUserOnSidebar };

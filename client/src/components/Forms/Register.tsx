@@ -16,20 +16,16 @@ interface Props {
 const Register: FC<Props> = ({ history }) => {
   const { handleErrors } = useContext(AppContext);
   const [formValues, setFormValues] = useState({ firstName: "", lastName: "", username: "", password: "" });
+  const { firstName, lastName, username, password } = formValues;
 
   const [register] = useMutation(REGISTER_USER, {
+    onCompleted: (data) => handleAuth({ ...data.register, username }, history),
     onError: (error) => handleErrors(error)
   });
 
-  const handleSubmit = async (e: SyntheticEvent) => {
+  const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    const { firstName, lastName, username, password } = formValues;
-    const res = await register({ variables: { firstName, lastName, username, password } });
-
-    if (res) {
-      res.data.register.username = username;
-      handleAuth(res.data.register, history);
-    }
+    register({ variables: { ...formValues } });
   };
 
   return (
@@ -39,10 +35,10 @@ const Register: FC<Props> = ({ history }) => {
       </Avatar>
       <Typography component="h1">Register</Typography>
       <form onSubmit={handleSubmit}>
-        <TextField required variant="outlined" margin="normal" fullWidth label="first name" autoComplete="First Name" value={formValues.firstName} onChange={(e) => setFormValues({ ...formValues, firstName: e.target.value })} />
-        <TextField required variant="outlined" margin="normal" fullWidth label="last name" autoComplete="Last Name" value={formValues.lastName} onChange={(e) => setFormValues({ ...formValues, lastName: e.target.value })} />
-        <TextField required variant="outlined" margin="normal" fullWidth label="username" autoComplete="Username" value={formValues.username} onChange={(e) => setFormValues({ ...formValues, username: e.target.value })} />
-        <TextField required variant="outlined" margin="normal" fullWidth label="password" autoComplete="Password" value={formValues.password} type="password" onChange={(e) => setFormValues({ ...formValues, password: e.target.value })} />
+        <TextField required variant="outlined" margin="normal" fullWidth label="first name" autoComplete="First Name" value={firstName} onChange={(e) => setFormValues({ ...formValues, firstName: e.target.value })} />
+        <TextField required variant="outlined" margin="normal" fullWidth label="last name" autoComplete="Last Name" value={lastName} onChange={(e) => setFormValues({ ...formValues, lastName: e.target.value })} />
+        <TextField required variant="outlined" margin="normal" fullWidth label="username" autoComplete="Username" value={username} onChange={(e) => setFormValues({ ...formValues, username: e.target.value })} />
+        <TextField required variant="outlined" margin="normal" fullWidth label="password" autoComplete="Password" value={password} type="password" onChange={(e) => setFormValues({ ...formValues, password: e.target.value })} />
         <Link to="/login">Already have an account?</Link>
         <Button type="submit" fullWidth variant="contained">Register</Button>
       </form>

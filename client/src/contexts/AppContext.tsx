@@ -23,13 +23,14 @@ const AppContextProvider: FC<Props> = ({ children }) => {
       return error.graphQLErrors && error.graphQLErrors[0]?.message?.includes(errorMessage);
     };
 
+    const isUserInputError = isGraphQLErrorsIncludesError("UserInputError");
+    const isSequelizeValidationError = isGraphQLErrorsIncludesError("SequelizeValidationError");
+
     if (error.message === "Unauthenticated") {
       localStorage.clear();
       history?.push("/login");
-    } else if (isGraphQLErrorsIncludesError("UserInputError")) {
-      setError(error.graphQLErrors[0].message.split(": ")[1]);
-    } else if (isGraphQLErrorsIncludesError("SequelizeValidationError")) {
-      setError(error.graphQLErrors[0].message.split(": ")[2]);
+    } else if (isUserInputError || isSequelizeValidationError) {
+      setError(error.graphQLErrors[0].message.split(": ")[isUserInputError ? 1 : 2]);
     } else {
       setError(error.message);
     }

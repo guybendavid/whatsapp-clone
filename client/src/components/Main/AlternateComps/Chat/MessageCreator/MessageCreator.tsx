@@ -30,8 +30,7 @@ const MessageCreator: FC<Props> = ({ selectedUser }) => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    const { content, recipientId } = messageInput;
-    sendMessage({ variables: { recipientId, content } });
+    sendMessage({ variables: { ...messageInput } });
     setMessageInput(initialMessageObj);
   };
 

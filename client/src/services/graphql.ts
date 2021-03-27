@@ -1,24 +1,24 @@
 import { gql } from "@apollo/client";
 
 const LOGIN_USER = gql`
-mutation LoginUser($username: String! $password: String!) {
-  login(username: $username password: $password) {
-    id
-    username
-    image
-    token
+  mutation LoginUser($username: String! $password: String!) {
+    login(username: $username password: $password) {
+      id
+      username
+      image
+      token
+    }
   }
-}
 `;
 
 const REGISTER_USER = gql`
-mutation RegisterUser($firstName: String! $lastName: String! $username: String! $password: String!) {
-  register(firstName: $firstName lastName: $lastName username: $username password: $password) {
-    id
-    image
-    token
+  mutation RegisterUser($firstName: String! $lastName: String! $username: String! $password: String!) {
+    register(firstName: $firstName lastName: $lastName username: $username password: $password) {
+      id
+      image
+      token
+    }
   }
-}
 `;
 
 const GET_All_USERS_EXCEPT_LOGGED = gql`
@@ -51,22 +51,22 @@ const GET_USER = gql`
 `;
 
 const GET_MESSAGES = gql`
-query GetMessages($otherUserId: ID!) {
-  getMessages(otherUserId: $otherUserId) {
-    id
-    senderId
-    content
-    createdAt
+  query GetMessages($otherUserId: ID!) {
+    getMessages(otherUserId: $otherUserId) {
+      id
+      senderId
+      content
+      createdAt
+    }
   }
-}
 `;
 
 const SEND_MESSAGE = gql`
-mutation SendMessage($recipientId: ID! $content: String!) {
-  sendMessage(recipientId: $recipientId content: $content) {
-    id
+  mutation SendMessage($recipientId: ID! $content: String!) {
+    sendMessage(recipientId: $recipientId content: $content) {
+      id
+    }
   }
-}
 `;
 
 const NEW_MESSAGE = gql`

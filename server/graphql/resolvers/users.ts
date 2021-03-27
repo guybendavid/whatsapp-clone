@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import generateToken from "../../utils/generateToken";
 import { AuthenticationError, UserInputError, ApolloError } from "apollo-server";
 import { QueryTypes } from "sequelize";
-import { sequelize, User } from "../../db/models";
+import { sequelize, User } from "../../db/models/modelsConfig";
 import { validateRegisterObj, validateLoginObj } from "../../utils/validatons";
 import { User as UserInterface } from "../../db/interfaces/interfaces";
 import { getUsersWithLatestMessage } from "../../utils/rawQueries";

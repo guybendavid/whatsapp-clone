@@ -30,10 +30,12 @@ const models: any = {
   Message: require("./Message")(sequelize, Sequelize.DataTypes)
 };
 
-models.User.hasMany(models.Message, { foreignKey: "senderId" });
-models.User.hasMany(models.Message, { foreignKey: "recipientId" });
-models.Message.belongsTo(models.User, { foreignKey: "senderId" });
-models.Message.belongsTo(models.User, { foreignKey: "recipientId" });
+const { User, Message } = models;
+
+User.hasMany(Message, { foreignKey: "senderId" });
+User.hasMany(Message, { foreignKey: "recipientId" });
+Message.belongsTo(User, { foreignKey: "senderId" });
+Message.belongsTo(User, { foreignKey: "recipientId" });
 
 Object.keys(models).map(modelName => {
   if (models[modelName].associate) {
@@ -44,5 +46,4 @@ Object.keys(models).map(modelName => {
 models.sequelize = sequelize;
 models.Sequelize = Sequelize;
 
-const { User, Message } = models;
 export { sequelize, User, Message };
