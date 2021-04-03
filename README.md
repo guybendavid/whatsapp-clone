@@ -11,6 +11,7 @@
 
 ### Backend
 
+- TypeScript
 - Apollo GraphQL Server
 - PostgreSQL
 
