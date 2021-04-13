@@ -1,4 +1,4 @@
-import { FC, useContext, useState, useEffect, RefObject } from "react";
+import { FC, useContext, useMemo, RefObject } from "react";
 import { AppContext } from "contexts/AppContext";
 import { Message } from "interfaces/interfaces";
 import { Typography } from "@material-ui/core";
@@ -12,9 +12,8 @@ interface Props {
 
 const Conversation: FC<Props> = ({ messages, chatBottomRef }) => {
   const { loggedInUser } = useContext(AppContext);
-  const [firstIndexesOfSeries, setFirstIndexesOfSeries] = useState<(number | undefined)[]>([]);
 
-  useEffect(() => {
+  const firstIndexesOfSeries = useMemo(() => {
     if (messages.length > 0) {
       const firstMessagesOfSeries: Message[] = [];
 
@@ -33,16 +32,15 @@ const Conversation: FC<Props> = ({ messages, chatBottomRef }) => {
         }
       });
 
-      setFirstIndexesOfSeries(indexes);
+      return indexes;
     }
-    // eslint-disable-next-line
   }, [messages]);
 
   return (
     <div className="conversation">
       {messages.map((message, index) => (
         <div key={index} className={"message" + (message.senderId === loggedInUser.id ? " sent-message" : "")
-          + (firstIndexesOfSeries.includes(index) ? " first-of-series" : "")}>
+          + (firstIndexesOfSeries?.includes(index) ? " first-of-series" : "")}>
           <Typography component="span" className="title">{message.content}</Typography>
           <Typography component="small">{timeDisplayer(message.createdAt)}</Typography>
         </div>
