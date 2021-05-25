@@ -12,7 +12,7 @@ export = gql`
     username: String!
     image: String!
     latestMessage: Message!
-    token: String
+    token: String!
   }
   type Message {
     id: ID!

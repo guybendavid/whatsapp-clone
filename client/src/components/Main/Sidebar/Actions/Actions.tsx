@@ -1,6 +1,5 @@
 import { FC, useContext, useState, MouseEvent, Fragment } from "react";
 import { AppContext } from "contexts/AppContext";
-import { useHistory } from "react-router-dom";
 import { Avatar, IconButton, InputBase, ClickAwayListener, Menu, MenuItem } from "@material-ui/core";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";
 import ChatIcon from "@material-ui/icons/Chat";
@@ -10,8 +9,8 @@ import ArrowDownWardIcon from "@material-ui/icons/ArrowDownward";
 import "./Actions.scss";
 
 const DotsIcon = () => {
+  const { logout } = useContext(AppContext);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const history = useHistory();
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -19,11 +18,6 @@ const DotsIcon = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const handleLogout = () => {
-    localStorage.clear();
-    history.push("/");
   };
 
   return (
@@ -38,7 +32,7 @@ const DotsIcon = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        <MenuItem onClick={logout}>Logout</MenuItem>
       </Menu>
     </>
   );

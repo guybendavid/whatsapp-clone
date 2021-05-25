@@ -29,7 +29,7 @@ export = {
           totalUsers = totalUsers[0].count - 1;
           const sidebarUsers = await sequelize.query(getSidebarUsers, { type: QueryTypes.SELECT, replacements: [id, id, id, offset, limit] });
 
-          sidebarUsers.map((user: any) => {
+          sidebarUsers.forEach((user: any) => {
             user.latestMessage = { content: user.content, createdAt: user.createdAt };
             delete user.content;
             delete user.createdAt;

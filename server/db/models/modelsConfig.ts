@@ -37,7 +37,7 @@ User.hasMany(Message, { foreignKey: "recipientId" });
 Message.belongsTo(User, { foreignKey: "senderId" });
 Message.belongsTo(User, { foreignKey: "recipientId" });
 
-Object.keys(models).map(modelName => {
+Object.keys(models).forEach(modelName => {
   if (models[modelName].associate) {
     models[modelName].associate(models);
   }

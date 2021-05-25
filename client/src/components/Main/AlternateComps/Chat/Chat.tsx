@@ -10,7 +10,7 @@ import "./Chat.scss";
 
 interface Props {
   selectedUser: User;
-  newMessage?: Message;
+  newMessage: Message;
 }
 
 const Chat: FC<Props> = ({ selectedUser, newMessage }) => {

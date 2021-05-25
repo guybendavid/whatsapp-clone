@@ -3,13 +3,16 @@ import { History, LocationState } from "history";
 import { ApolloError } from "@apollo/client";
 import { User } from "interfaces/interfaces";
 
+type HistoryType = History<LocationState>;
+
 interface Props {
   children: ReactNode;
+  history: HistoryType | {};
 }
 
 const AppContext: Context<any> = createContext(undefined);
 
-const AppContextProvider: FC<Props> = ({ children }) => {
+const AppContextProvider: FC<Props> = ({ children, history }) => {
   const [loggedInUser, setLoggedInUser] = useState<User | {}>({});
   const [error, setError] = useState("");
 
@@ -18,7 +21,12 @@ const AppContextProvider: FC<Props> = ({ children }) => {
     setLoggedInUser(user);
   }, []);
 
-  const handleErrors = (error: ApolloError, history?: History<LocationState>) => {
+  const logout = () => {
+    localStorage.clear();
+    (history as HistoryType).push("/login");
+  };
+
+  const handleErrors = (error: ApolloError) => {
     const isGraphQLErrorsIncludesError = (errorMessage: string) => {
       return error.graphQLErrors && error.graphQLErrors[0]?.message?.includes(errorMessage);
     };
@@ -27,8 +35,7 @@ const AppContextProvider: FC<Props> = ({ children }) => {
     const isSequelizeValidationError = isGraphQLErrorsIncludesError("SequelizeValidationError");
 
     if (error.message === "Unauthenticated") {
-      localStorage.clear();
-      history?.push("/login");
+      logout();
     } else if (isUserInputError || isSequelizeValidationError) {
       setError(error.graphQLErrors[0].message.split(": ")[isUserInputError ? 1 : 2]);
     } else {
@@ -41,7 +48,7 @@ const AppContextProvider: FC<Props> = ({ children }) => {
   };
 
   return (
-    <AppContext.Provider value={{ loggedInUser, error, handleErrors, clearError }}>
+    <AppContext.Provider value={{ loggedInUser, error, logout, handleErrors, clearError }}>
       {children}
     </AppContext.Provider>
   );
