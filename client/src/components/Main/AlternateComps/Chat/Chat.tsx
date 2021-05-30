@@ -39,6 +39,7 @@ const Chat: FC<Props> = ({ selectedUser, newMessage }) => {
 
       if (senderId === selectedUser.id || (senderId === loggedInUser.id && recipientId === selectedUser.id)) {
         addNewMessageToChat(newMessage, client, selectedUser.id);
+        selectedUser.latestMessage = newMessage;
         chatBottomRef.current?.scrollIntoView();
       }
     }
@@ -47,7 +48,7 @@ const Chat: FC<Props> = ({ selectedUser, newMessage }) => {
 
   return (
     <div className="chat">
-      <ChatHeader selectedUser={selectedUser} newMessage={newMessage} />
+      <ChatHeader selectedUser={selectedUser} />
       <Conversation messages={messages} chatBottomRef={chatBottomRef} />
       <MessageCreator selectedUser={selectedUser} />
     </div>
