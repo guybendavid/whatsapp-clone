@@ -1,8 +1,9 @@
-import { FC, useEffect, useRef, useContext, useState } from "react";
+import { FC, useEffect, useRef, useContext } from "react";
 import { AppContext } from "contexts/AppContext";
 import { User, Message } from "interfaces/interfaces";
 import { useQuery } from "@apollo/client";
 import { GET_MESSAGES } from "services/graphql";
+import { addNewMessageToChat } from "services/chatHelper";
 import ChatHeader from "./ChatHeader/ChatHeader";
 import Conversation from "./Conversation/Conversation";
 import MessageCreator from "./MessageCreator/MessageCreator";
@@ -16,17 +17,17 @@ interface Props {
 const Chat: FC<Props> = ({ selectedUser, newMessage }) => {
   const chatBottomRef = useRef<HTMLHeadingElement>(null);
   const { loggedInUser, handleErrors } = useContext(AppContext);
-  const [messages, setMessages] = useState<Message[]>([]);
 
-  useQuery(GET_MESSAGES, {
+  const { data, client } = useQuery(GET_MESSAGES, {
     variables: { otherUserId: selectedUser.id },
     fetchPolicy: "cache-and-network",
-    onCompleted: (data) => setMessages(data.getMessages),
     onError: (error) => handleErrors(error)
   });
 
+  const messages = data?.getMessages;
+
   useEffect(() => {
-    if (messages.length > 0) {
+    if (messages && messages.length > 0) {
       chatBottomRef.current?.scrollIntoView();
     }
     // eslint-disable-next-line
@@ -37,7 +38,7 @@ const Chat: FC<Props> = ({ selectedUser, newMessage }) => {
       const { senderId, recipientId } = newMessage;
 
       if (senderId === selectedUser.id || (senderId === loggedInUser.id && recipientId === selectedUser.id)) {
-        setMessages((prevMessages: Message[]) => [...prevMessages, newMessage]);
+        addNewMessageToChat(newMessage, client, selectedUser.id);
         chatBottomRef.current?.scrollIntoView();
       }
     }

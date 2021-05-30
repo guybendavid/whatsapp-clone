@@ -6,7 +6,7 @@ import timeDisplayer from "services/timeDisplayer";
 import "./Conversation.scss";
 
 interface Props {
-  messages: Message[];
+  messages?: Message[];
   chatBottomRef: RefObject<HTMLDivElement>;
 }
 
@@ -14,7 +14,7 @@ const Conversation: FC<Props> = ({ messages, chatBottomRef }) => {
   const { loggedInUser } = useContext(AppContext);
 
   const firstIndexesOfSeries = useMemo(() => {
-    if (messages.length > 0) {
+    if (messages && messages.length > 0) {
       const firstMessagesOfSeries: Message[] = [];
 
       // eslint-disable-next-line
@@ -38,7 +38,7 @@ const Conversation: FC<Props> = ({ messages, chatBottomRef }) => {
 
   return (
     <div className="conversation">
-      {messages.map((message, index) => (
+      {messages?.map((message, index) => (
         <div key={index} className={"message" + (message.senderId === loggedInUser.id ? " sent-message" : "")
           + (firstIndexesOfSeries?.includes(index) ? " first-of-series" : "")}>
           <Typography component="span" className="title">{message.content}</Typography>

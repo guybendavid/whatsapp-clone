@@ -2,7 +2,7 @@ import { FC, useContext, useState, useEffect } from "react";
 import { AppContext } from "contexts/AppContext";
 import { useQuery, useLazyQuery } from "@apollo/client";
 import { getUsersQueryVariables, GET_All_USERS_EXCEPT_LOGGED, GET_USER } from "services/graphql";
-import { displayNewMessageOnSidebar, displayNewUserOnSidebar } from "services/SidebarHelper";
+import { displayNewMessageOnSidebar, displayNewUserOnSidebar } from "services/sidebarHelper";
 import { User, Message } from "interfaces/interfaces";
 import Actions from "./Actions/Actions";
 import UsersList from "./UsersList/UsersList";
