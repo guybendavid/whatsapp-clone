@@ -1,5 +1,5 @@
 import { FC, useContext, useRef, useCallback, Fragment } from "react";
-import { AppContext } from "contexts/AppContext";
+import { AppContext, AppContextType } from "contexts/AppContext";
 import { User } from "interfaces/interfaces";
 import { List, ListItem, Avatar, ListItemAvatar, Typography, Divider } from "@material-ui/core";
 import { getUsersSqlClauses } from "services/graphql";
@@ -15,7 +15,7 @@ interface Props {
 }
 
 const UsersList: FC<Props> = ({ users, searchValue, isMoreUsersToFetch, fetchMoreUsers, setSelectedUser }) => {
-  const { loggedInUser } = useContext(AppContext);
+  const { loggedInUser } = useContext(AppContext) as AppContextType;
   const observer = useRef<IntersectionObserver | null>(null);
 
   const lastUserRef = useCallback(node => {
@@ -23,10 +23,10 @@ const UsersList: FC<Props> = ({ users, searchValue, isMoreUsersToFetch, fetchMor
       observer.current?.disconnect();
 
       observer.current = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting && isMoreUsersToFetch && loggedInUser.id) {
+        if (entries[0].isIntersecting && isMoreUsersToFetch && (loggedInUser as User).id) {
           fetchMoreUsers({
             variables: {
-              loggedInUserId: loggedInUser.id,
+              loggedInUserId: (loggedInUser as User).id,
               offset: `${users.length}`,
               limit: `${getUsersSqlClauses.limit}`
             }

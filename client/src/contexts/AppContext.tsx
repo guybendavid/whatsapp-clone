@@ -1,7 +1,15 @@
-import { FC, useEffect, createContext, useState, Context, ReactNode } from "react";
+import { FC, useEffect, createContext, useState, ReactNode } from "react";
 import { History, LocationState } from "history";
 import { ApolloError } from "@apollo/client";
 import { User } from "interfaces/interfaces";
+
+export type AppContextType = {
+  loggedInUser: User | {};
+  error: string;
+  logout: () => void,
+  handleErrors: (error: ApolloError) => void;
+  clearError: () => void;
+};
 
 type HistoryType = History<LocationState>;
 
@@ -10,7 +18,7 @@ interface Props {
   history: HistoryType | {};
 }
 
-const AppContext: Context<any> = createContext(undefined);
+const AppContext = createContext<AppContextType | undefined>(undefined);
 
 const AppContextProvider: FC<Props> = ({ children, history }) => {
   const [loggedInUser, setLoggedInUser] = useState<User | {}>({});

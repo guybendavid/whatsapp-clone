@@ -1,10 +1,10 @@
 import { useContext, useState, useEffect } from "react";
-import { AppContext } from "contexts/AppContext";
+import { AppContext, AppContextType } from "contexts/AppContext";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 
 const ErrorMessage = () => {
-  const { error, clearError } = useContext(AppContext);
+  const { error, clearError } = useContext(AppContext) as AppContextType;
   const [open, setOpen] = useState(false);
 
   const closeError = () => {

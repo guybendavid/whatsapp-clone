@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useContext } from "react";
-import { AppContext } from "contexts/AppContext";
+import { AppContext, AppContextType } from "contexts/AppContext";
 import { User, Message } from "interfaces/interfaces";
 import { useQuery } from "@apollo/client";
 import { GET_MESSAGES } from "services/graphql";
@@ -16,7 +16,7 @@ interface Props {
 
 const Chat: FC<Props> = ({ selectedUser, newMessage }) => {
   const chatBottomRef = useRef<HTMLHeadingElement>(null);
-  const { loggedInUser, handleErrors } = useContext(AppContext);
+  const { loggedInUser, handleErrors } = useContext(AppContext) as AppContextType;
 
   const { data, client } = useQuery(GET_MESSAGES, {
     variables: { otherUserId: selectedUser.id },
@@ -37,7 +37,7 @@ const Chat: FC<Props> = ({ selectedUser, newMessage }) => {
     if (newMessage) {
       const { senderId, recipientId } = newMessage;
 
-      if (senderId === selectedUser.id || (senderId === loggedInUser.id && recipientId === selectedUser.id)) {
+      if (senderId === selectedUser.id || (senderId === (loggedInUser as User).id && recipientId === selectedUser.id)) {
         addNewMessageToChat(newMessage, client, selectedUser.id);
         selectedUser.latestMessage = newMessage;
         chatBottomRef.current?.scrollIntoView();

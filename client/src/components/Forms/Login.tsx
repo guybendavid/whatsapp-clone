@@ -1,6 +1,6 @@
 import { FC, useState, SyntheticEvent, useContext } from "react";
 import { History, LocationState } from "history";
-import { AppContext } from "contexts/AppContext";
+import { AppContext, AppContextType } from "contexts/AppContext";
 import { Link } from "react-router-dom";
 import { handleAuth } from "services/auth";
 import { Avatar, Button, TextField, Typography } from "@material-ui/core";
@@ -14,7 +14,7 @@ interface Props {
 }
 
 const Login: FC<Props> = ({ history }) => {
-  const { handleErrors } = useContext(AppContext);
+  const { handleErrors } = useContext(AppContext) as AppContextType;
   const [formValues, setFormValues] = useState({ username: "", password: "" });
   const { username, password } = formValues;
 
