@@ -5,6 +5,8 @@
     "moduleResolution": "Node",
     "strict": true,
     "esModuleInterop": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "target": "es6",
     "types": [
       "node"

@@ -11,7 +11,7 @@ const imageGenerator = require("../../utils/imageGenerator");
 
 export = {
   Query: {
-    getAllUsersExceptLogged: async (parent: any, args: { id: string; offset: string; limit: string; }, context: { user: UserInterface; }) => {
+    getAllUsersExceptLogged: async (_parent: any, args: { id: string; offset: string; limit: string; }, context: { user: UserInterface; }) => {
       const { id, offset, limit } = args;
       const { user } = context;
 
@@ -43,7 +43,7 @@ export = {
         throw new ApolloError(err);
       }
     },
-    getUser: async (parent: any, args: { id: string; }, context: { user: UserInterface; }) => {
+    getUser: async (_parent: any, args: { id: string; }, context: { user: UserInterface; }) => {
       const { id } = args;
       const { user } = context;
 
@@ -60,7 +60,7 @@ export = {
     }
   },
   Mutation: {
-    register: async (parent: any, args: UserInterface) => {
+    register: async (_parent: any, args: UserInterface) => {
       const { firstName, lastName, username, password } = args;
       const validateUser = validateRegisterObj(args);
 
@@ -84,7 +84,7 @@ export = {
         throw new UserInputError(validateUser.errors[0]);
       }
     },
-    login: async (parent: any, args: UserInterface) => {
+    login: async (_parent: any, args: UserInterface) => {
       const { username, password } = args;
       const validateUser = validateLoginObj(args);
 

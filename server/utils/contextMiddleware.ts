@@ -13,7 +13,7 @@ export = (context: any) => {
   }
 
   if (SECRET_KEY) {
-    jwt.verify(token, SECRET_KEY, (err: any, decodedToken: any) => {
+    jwt.verify(token, SECRET_KEY, (_err: any, decodedToken: any) => {
       context.user = decodedToken;
     });
   }
