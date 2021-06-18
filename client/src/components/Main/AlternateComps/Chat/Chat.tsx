@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useContext } from "react";
+import { useEffect, useRef, useContext } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { User, Message } from "interfaces/interfaces";
 import { useQuery } from "@apollo/client";
@@ -14,7 +14,7 @@ interface Props {
   newMessage: Message;
 }
 
-const Chat: FC<Props> = ({ selectedUser, newMessage }) => {
+const Chat = ({ selectedUser, newMessage }: Props) => {
   const chatBottomRef = useRef<HTMLHeadingElement>(null);
   const { loggedInUser, handleErrors } = useContext(AppContext) as AppContextType;
 

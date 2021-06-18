@@ -1,4 +1,4 @@
-import { FC, useContext, useMemo, RefObject } from "react";
+import { useContext, useMemo, RefObject } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { Message, User } from "interfaces/interfaces";
 import { Typography } from "@material-ui/core";
@@ -10,7 +10,7 @@ interface Props {
   chatBottomRef: RefObject<HTMLDivElement>;
 }
 
-const Conversation: FC<Props> = ({ messages, chatBottomRef }) => {
+const Conversation = ({ messages, chatBottomRef }: Props) => {
   const { loggedInUser } = useContext(AppContext) as AppContextType;
 
   const firstIndexesOfSeries = useMemo(() => {

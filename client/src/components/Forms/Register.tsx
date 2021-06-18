@@ -1,4 +1,4 @@
-import { FC, useState, SyntheticEvent, useContext } from "react";
+import { useState, SyntheticEvent, useContext } from "react";
 import { History, LocationState } from "history";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { Link } from "react-router-dom";
@@ -13,7 +13,7 @@ interface Props {
   history: History<LocationState>;
 }
 
-const Register: FC<Props> = ({ history }) => {
+const Register = ({ history }: Props) => {
   const { handleErrors } = useContext(AppContext) as AppContextType;
   const [formValues, setFormValues] = useState({ firstName: "", lastName: "", username: "", password: "" });
   const { firstName, lastName, username, password } = formValues;

@@ -1,4 +1,4 @@
-import { FC, useEffect, createContext, useState, ReactNode } from "react";
+import { useEffect, createContext, useState, ReactNode } from "react";
 import { History, LocationState } from "history";
 import { ApolloError } from "@apollo/client";
 import { User } from "interfaces/interfaces";
@@ -20,7 +20,7 @@ interface Props {
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
-const AppContextProvider: FC<Props> = ({ children, history }) => {
+const AppContextProvider = ({ children, history }: Props) => {
   const [loggedInUser, setLoggedInUser] = useState<User | {}>({});
   const [error, setError] = useState("");
 

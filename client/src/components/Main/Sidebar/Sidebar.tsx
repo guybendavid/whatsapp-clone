@@ -1,4 +1,4 @@
-import { FC, useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { useQuery, useLazyQuery } from "@apollo/client";
 import { getUsersQueryVariables, GET_All_USERS_EXCEPT_LOGGED, GET_USER } from "services/graphql";
@@ -13,7 +13,7 @@ interface Props {
   newMessage: Message;
 }
 
-const Sidebar: FC<Props> = ({ setSelectedUser, newMessage }) => {
+const Sidebar = ({ setSelectedUser, newMessage }: Props) => {
   const { handleErrors } = useContext(AppContext) as AppContextType;
   const [searchValue, setSearchValue] = useState("");
   const loggedInUser = JSON.parse(localStorage.loggedInUser);

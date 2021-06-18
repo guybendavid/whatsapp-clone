@@ -1,4 +1,4 @@
-import { FC, useContext, useRef, useCallback, Fragment } from "react";
+import { useContext, useRef, useCallback, Fragment } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { User } from "interfaces/interfaces";
 import { List, ListItem, Avatar, ListItemAvatar, Typography, Divider } from "@material-ui/core";
@@ -14,7 +14,7 @@ interface Props {
   setSelectedUser: (user: User) => void;
 }
 
-const UsersList: FC<Props> = ({ users, searchValue, isMoreUsersToFetch, fetchMoreUsers, setSelectedUser }) => {
+const UsersList = ({ users, searchValue, isMoreUsersToFetch, fetchMoreUsers, setSelectedUser }: Props) => {
   const { loggedInUser } = useContext(AppContext) as AppContextType;
   const observer = useRef<IntersectionObserver | null>(null);
 

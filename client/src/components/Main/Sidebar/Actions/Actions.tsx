@@ -1,4 +1,4 @@
-import { FC, useContext, useState, MouseEvent, Fragment } from "react";
+import { useContext, useState, MouseEvent, Fragment } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { User } from "interfaces/interfaces";
 import { Avatar, IconButton, InputBase, ClickAwayListener, Menu, MenuItem } from "@material-ui/core";
@@ -44,7 +44,7 @@ interface Props {
   setSearchValue: (value: string) => void;
 }
 
-const Actions: FC<Props> = ({ searchValue, setSearchValue }) => {
+const Actions = ({ searchValue, setSearchValue }: Props) => {
   const { loggedInUser } = useContext(AppContext) as AppContextType;
   const [searchBarIsOpened, setSearchBarIsOpened] = useState(false);
 

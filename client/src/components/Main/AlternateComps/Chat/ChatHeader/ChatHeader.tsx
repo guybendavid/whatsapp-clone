@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { User } from "interfaces/interfaces";
 import { Avatar, Typography, IconButton } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
@@ -10,7 +9,7 @@ interface Props {
   selectedUser: User;
 }
 
-const ChatHeader: FC<Props> = ({ selectedUser }) => {
+const ChatHeader = ({ selectedUser }: Props) => {
   return (
     <div className="chat-header">
       <div className="left-side">
