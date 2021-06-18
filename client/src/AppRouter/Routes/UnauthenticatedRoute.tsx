@@ -1,4 +1,4 @@
-import { FC, ComponentType } from "react";
+import { ComponentType } from "react";
 import { Route, Redirect } from "react-router";
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
   Component: ComponentType<any>;
 }
 
-const UnauthenticatedRoute: FC<Props> = ({ path, Component }) => {
+const UnauthenticatedRoute = ({ path, Component }: Props) => {
   return (
     <Route path={path} render={props => !localStorage.loggedInUser ? <Component {...props} /> : <Redirect to="/" />} />
   );
