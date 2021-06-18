@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { Container } from "@material-ui/core";
 import { Switch, useHistory, useLocation, withRouter } from "react-router-dom";
 import Main from "components/Main/Main";
