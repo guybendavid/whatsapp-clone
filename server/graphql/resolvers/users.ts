@@ -6,7 +6,7 @@ import { sequelize, User } from "../../db/models/modelsConfig";
 import { validateRegisterObj, validateLoginObj } from "../../utils/validatons";
 import { User as UserInterface } from "../../db/interfaces/interfaces";
 import { getUsersWithLatestMessage } from "../../utils/rawQueries";
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line
 const imageGenerator = require("../../utils/imageGenerator");
 
 export = {
