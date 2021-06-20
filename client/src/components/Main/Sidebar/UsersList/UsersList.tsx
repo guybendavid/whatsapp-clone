@@ -10,7 +10,7 @@ interface Props {
   users?: User[];
   searchValue: string;
   isMoreUsersToFetch: boolean;
-  fetchMoreUsers: (object: any) => void;
+  fetchMoreUsers: (object: { variables: { loggedInUserId: string, offset: string, limit: string; }; }) => void;
   setSelectedUser: (user: User) => void;
 }
 

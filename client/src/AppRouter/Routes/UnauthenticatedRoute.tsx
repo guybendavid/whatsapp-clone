@@ -1,10 +1,11 @@
-import { ComponentType } from "react";
+import { FC } from "react";
 import { Route, Redirect } from "react-router";
+import { RouteComponentProps } from "react-router-dom";
 
 interface Props {
   exact: boolean;
   path: string;
-  Component: ComponentType<any>;
+  Component: FC<RouteComponentProps>;
 }
 
 const UnauthenticatedRoute = ({ path, Component }: Props) => {
