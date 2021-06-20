@@ -72,7 +72,7 @@ export = {
             throw new UserInputError("Username already exists");
           }
 
-          const hasedPassword = await bcrypt.hash(password, 6);
+          const hasedPassword = await bcrypt.hash(password as string, 6);
           const image = imageGenerator();
           const user = await User.create({ firstName, lastName, username, password: hasedPassword, image });
           const { password: userPassword, ...safeUserData } = user.toJSON();
@@ -96,7 +96,7 @@ export = {
             throw new UserInputError("User not found");
           }
 
-          const correctPassword = await bcrypt.compare(password, user.password);
+          const correctPassword = await bcrypt.compare(password as string, user.password);
 
           if (!correctPassword) {
             throw new UserInputError("Password is incorrect");
