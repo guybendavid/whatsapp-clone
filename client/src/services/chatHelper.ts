@@ -4,12 +4,7 @@ import { GET_MESSAGES } from "./graphql";
 
 const addNewMessageToChat = (newMessage: Message, client: ApolloClient<any>, selectedUserId: string) => {
   const queryToUpdate = { query: GET_MESSAGES, variables: { otherUserId: selectedUserId } };
-
-  const newData = {
-    getMessages: [newMessage]
-  };
-
-  client.writeQuery({ ...queryToUpdate, data: newData });
+  client.writeQuery({ ...queryToUpdate, data: { getMessages: [newMessage] } });
 };
 
 export { addNewMessageToChat };
