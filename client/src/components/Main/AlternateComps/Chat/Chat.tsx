@@ -38,7 +38,8 @@ const Chat = ({ selectedUser, newMessage }: Props) => {
       const { senderId, recipientId } = newMessage;
 
       if (senderId === selectedUser.id || (senderId === (loggedInUser as User).id && recipientId === selectedUser.id)) {
-        addNewMessageToChat(newMessage, client, selectedUser.id);
+        const { recipientId, ...messageToAdd } = newMessage;
+        addNewMessageToChat(messageToAdd, client, selectedUser.id);
         selectedUser.latestMessage = newMessage;
         chatBottomRef.current?.scrollIntoView();
       }
