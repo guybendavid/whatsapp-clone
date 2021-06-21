@@ -20,7 +20,6 @@ const Chat = ({ selectedUser, newMessage }: Props) => {
 
   const { data, client } = useQuery(GET_MESSAGES, {
     variables: { otherUserId: selectedUser.id },
-    fetchPolicy: "cache-and-network",
     onError: (error) => handleErrors(error)
   });
 
