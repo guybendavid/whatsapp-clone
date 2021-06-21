@@ -9,7 +9,7 @@ const addNewMessageToChat = (newMessage: Message, client: ApolloClient<any>, sel
     getMessages: [newMessage]
   };
 
-  client.writeQuery({ ...queryToUpdate, data: { getMessages: newData } });
+  client.writeQuery({ ...queryToUpdate, data: newData });
 };
 
 export { addNewMessageToChat };
