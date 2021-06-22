@@ -1,5 +1,4 @@
-import { FC, useEffect } from "react";
-import { User, Message } from "interfaces/interfaces";
+import { User } from "interfaces/interfaces";
 import { Avatar, Typography, IconButton } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
@@ -8,21 +7,9 @@ import "./ChatHeader.scss";
 
 interface Props {
   selectedUser: User;
-  newMessage?: Message;
 }
 
-const ChatHeader: FC<Props> = ({ selectedUser, newMessage }) => {
-  useEffect(() => {
-    if (newMessage) {
-      const { senderId, recipientId } = newMessage;
-
-      if (selectedUser.id === senderId || selectedUser.id === recipientId) {
-        selectedUser.latestMessage = newMessage;
-      };
-    }
-    // eslint-disable-next-line
-  }, [newMessage]);
-
+const ChatHeader = ({ selectedUser }: Props) => {
   return (
     <div className="chat-header">
       <div className="left-side">

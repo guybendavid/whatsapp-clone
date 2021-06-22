@@ -9,10 +9,11 @@ export = gql`
     id: ID!
     firstName: String!
     lastName: String!
-    username: String!
+    username: String
+    password: String
     image: String!
     latestMessage: Message!
-    token: String
+    token: String!
   }
   type Message {
     id: ID!

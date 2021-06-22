@@ -6,12 +6,12 @@ import { sequelize, User } from "../../db/models/modelsConfig";
 import { validateRegisterObj, validateLoginObj } from "../../utils/validatons";
 import { User as UserInterface } from "../../db/interfaces/interfaces";
 import { getUsersWithLatestMessage } from "../../utils/rawQueries";
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line
 const imageGenerator = require("../../utils/imageGenerator");
 
 export = {
   Query: {
-    getAllUsersExceptLogged: async (parent: any, args: { id: string; offset: string; limit: string; }, context: { user: UserInterface; }) => {
+    getAllUsersExceptLogged: async (_parent: any, args: { id: string; offset: string; limit: string; }, context: { user: UserInterface; }) => {
       const { id, offset, limit } = args;
       const { user } = context;
 
@@ -29,7 +29,7 @@ export = {
           totalUsers = totalUsers[0].count - 1;
           const sidebarUsers = await sequelize.query(getSidebarUsers, { type: QueryTypes.SELECT, replacements: [id, id, id, offset, limit] });
 
-          sidebarUsers.map((user: any) => {
+          sidebarUsers.forEach((user: any) => {
             user.latestMessage = { content: user.content, createdAt: user.createdAt };
             delete user.content;
             delete user.createdAt;
@@ -43,7 +43,7 @@ export = {
         throw new ApolloError(err);
       }
     },
-    getUser: async (parent: any, args: { id: string; }, context: { user: UserInterface; }) => {
+    getUser: async (_parent: any, args: { id: string; }, context: { user: UserInterface; }) => {
       const { id } = args;
       const { user } = context;
 
@@ -60,7 +60,7 @@ export = {
     }
   },
   Mutation: {
-    register: async (parent: any, args: UserInterface) => {
+    register: async (_parent: any, args: UserInterface) => {
       const { firstName, lastName, username, password } = args;
       const validateUser = validateRegisterObj(args);
 
@@ -72,7 +72,7 @@ export = {
             throw new UserInputError("Username already exists");
           }
 
-          const hasedPassword = await bcrypt.hash(password, 6);
+          const hasedPassword = await bcrypt.hash(password as string, 6);
           const image = imageGenerator();
           const user = await User.create({ firstName, lastName, username, password: hasedPassword, image });
           const { password: userPassword, ...safeUserData } = user.toJSON();
@@ -84,7 +84,7 @@ export = {
         throw new UserInputError(validateUser.errors[0]);
       }
     },
-    login: async (parent: any, args: UserInterface) => {
+    login: async (_parent: any, args: UserInterface) => {
       const { username, password } = args;
       const validateUser = validateLoginObj(args);
 
@@ -96,7 +96,7 @@ export = {
             throw new UserInputError("User not found");
           }
 
-          const correctPassword = await bcrypt.compare(password, user.password);
+          const correctPassword = await bcrypt.compare(password as string, user.password);
 
           if (!correctPassword) {
             throw new UserInputError("Password is incorrect");

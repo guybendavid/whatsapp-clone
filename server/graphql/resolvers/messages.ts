@@ -1,12 +1,12 @@
-import { UserInputError, AuthenticationError, ApolloError, withFilter } from "apollo-server";
+import { UserInputError, AuthenticationError, ApolloError, withFilter, PubSub } from "apollo-server";
 import { Op } from "sequelize";
 import { User, Message } from "../../db/models/modelsConfig";
-import { Message as MessageInterface } from "../../db/interfaces/interfaces";
+import { Message as MessageInterface, User as IUser } from "../../db/interfaces/interfaces";
 import { validateMessageObj } from "../../utils/validatons";
 
 export = {
   Query: {
-    getMessages: async (parent: any, args: { otherUserId: string; }, { user }: any) => {
+    getMessages: async (_parent: any, args: { otherUserId: string; }, { user }: { user: IUser; }) => {
       const { otherUserId } = args;
 
       if (!user) {
@@ -37,7 +37,7 @@ export = {
     }
   },
   Mutation: {
-    sendMessage: async (parent: any, args: MessageInterface, { user, pubsub }: any) => {
+    sendMessage: async (_parent: any, args: MessageInterface, { user, pubsub }: { user: IUser; pubsub: PubSub; }) => {
       const { recipientId, content } = args;
 
       if (!user) {
@@ -65,13 +65,13 @@ export = {
   },
   Subscription: {
     newMessage: {
-      subscribe: withFilter((parent, args, { pubsub, user }) => {
+      subscribe: withFilter((_parent, _args, { pubsub, user }) => {
         if (!user) {
           throw new AuthenticationError("Unauthenticated");
         }
 
         return pubsub.asyncIterator(["NEW_MESSAGE"]);
-      }, ({ newMessage }, args, { user }) => newMessage.senderId === user.id || newMessage.recipientId === user.id)
+      }, ({ newMessage }, _args, { user }) => newMessage.senderId === user.id || newMessage.recipientId === user.id)
     }
   }
 };

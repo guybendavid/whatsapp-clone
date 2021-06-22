@@ -1,15 +1,26 @@
-import { FC, useEffect, createContext, useState, Context, ReactNode } from "react";
+import { useEffect, createContext, useState, ReactNode } from "react";
 import { History, LocationState } from "history";
 import { ApolloError } from "@apollo/client";
 import { User } from "interfaces/interfaces";
 
+export type AppContextType = {
+  loggedInUser: User | {};
+  error: string;
+  logout: () => void,
+  handleErrors: (error: ApolloError) => void;
+  clearError: () => void;
+};
+
+type HistoryType = History<LocationState>;
+
 interface Props {
   children: ReactNode;
+  history: HistoryType | {};
 }
 
-const AppContext: Context<any> = createContext(undefined);
+const AppContext = createContext<AppContextType | undefined>(undefined);
 
-const AppContextProvider: FC<Props> = ({ children }) => {
+const AppContextProvider = ({ children, history }: Props) => {
   const [loggedInUser, setLoggedInUser] = useState<User | {}>({});
   const [error, setError] = useState("");
 
@@ -18,7 +29,12 @@ const AppContextProvider: FC<Props> = ({ children }) => {
     setLoggedInUser(user);
   }, []);
 
-  const handleErrors = (error: ApolloError, history?: History<LocationState>) => {
+  const logout = () => {
+    localStorage.clear();
+    (history as HistoryType).push("/login");
+  };
+
+  const handleErrors = (error: ApolloError) => {
     const isGraphQLErrorsIncludesError = (errorMessage: string) => {
       return error.graphQLErrors && error.graphQLErrors[0]?.message?.includes(errorMessage);
     };
@@ -27,8 +43,7 @@ const AppContextProvider: FC<Props> = ({ children }) => {
     const isSequelizeValidationError = isGraphQLErrorsIncludesError("SequelizeValidationError");
 
     if (error.message === "Unauthenticated") {
-      localStorage.clear();
-      history?.push("/login");
+      logout();
     } else if (isUserInputError || isSequelizeValidationError) {
       setError(error.graphQLErrors[0].message.split(": ")[isUserInputError ? 1 : 2]);
     } else {
@@ -41,7 +56,7 @@ const AppContextProvider: FC<Props> = ({ children }) => {
   };
 
   return (
-    <AppContext.Provider value={{ loggedInUser, error, handleErrors, clearError }}>
+    <AppContext.Provider value={{ loggedInUser, error, logout, handleErrors, clearError }}>
       {children}
     </AppContext.Provider>
   );

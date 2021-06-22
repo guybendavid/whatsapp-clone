@@ -1,5 +1,5 @@
-import { FC, useState, useEffect, SyntheticEvent, useContext } from "react";
-import { AppContext } from "contexts/AppContext";
+import { useState, useEffect, SyntheticEvent, useContext } from "react";
+import { AppContext, AppContextType } from "contexts/AppContext";
 import { User } from "interfaces/interfaces";
 import { useMutation } from "@apollo/client";
 import { SEND_MESSAGE } from "services/graphql";
@@ -13,8 +13,8 @@ interface Props {
   selectedUser: User;
 }
 
-const MessageCreator: FC<Props> = ({ selectedUser }) => {
-  const { handleErrors } = useContext(AppContext);
+const MessageCreator = ({ selectedUser }: Props) => {
+  const { handleErrors } = useContext(AppContext) as AppContextType;
 
   const initialMessageObj = { content: "", recipientId: selectedUser.id };
   const [messageInput, setMessageInput] = useState(initialMessageObj);
