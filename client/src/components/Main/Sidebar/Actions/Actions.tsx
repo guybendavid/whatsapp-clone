@@ -66,7 +66,7 @@ const Actions = ({ searchValue, setSearchValue }: Props) => {
           ))}
         </div>
       </div>
-      <div className={`form-wrapper ${searchBarIsOpened && "white"}`}>
+      <div className={"form-wrapper " + (searchBarIsOpened ? "white" : "")}>
         <ClickAwayListener onClickAway={() => setSearchBarIsOpened(false)}>
           <form>
             <div className="search-wrapper">
