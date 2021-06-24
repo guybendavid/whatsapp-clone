@@ -34,7 +34,8 @@ const AppContextProvider = ({ children, history }: Props) => {
     (history as HistoryType).push("/login");
   };
 
-  const handleErrors = (error: ApolloError) => {
+  // To do: fix type, think about the first if
+  const handleErrors = (error: any) => {
     const isGraphQLErrorsIncludesError = (errorMessage: string) => {
       return error.graphQLErrors && error.graphQLErrors[0]?.message?.includes(errorMessage);
     };
@@ -42,7 +43,9 @@ const AppContextProvider = ({ children, history }: Props) => {
     const isUserInputError = isGraphQLErrorsIncludesError("UserInputError");
     const isSequelizeValidationError = isGraphQLErrorsIncludesError("SequelizeValidationError");
 
-    if (error.message === "Unauthenticated") {
+    if (error.networkError?.result?.errors[0]?.message) {
+      setError(error.networkError.result.errors[0].message.split("Context creation failed: ")[1]);
+    } else if (error.message === "Unauthenticated") {
       logout();
     } else if (isUserInputError || isSequelizeValidationError) {
       setError(error.graphQLErrors[0].message.split(": ")[isUserInputError ? 1 : 2]);

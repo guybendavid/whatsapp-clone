@@ -1,9 +1,8 @@
 import bcrypt from "bcrypt";
 import generateToken from "../../utils/generateToken";
-import { AuthenticationError, UserInputError, ApolloError } from "apollo-server";
+import { UserInputError, ApolloError } from "apollo-server";
 import { QueryTypes } from "sequelize";
 import { sequelize, User } from "../../db/models/modelsConfig";
-import { getErrors } from "../../utils/validations";
 import { User as UserInterface } from "../../db/interfaces/interfaces";
 import { getUsersWithLatestMessage } from "../../utils/rawQueries";
 // eslint-disable-next-line
@@ -11,14 +10,8 @@ const imageGenerator = require("../../utils/imageGenerator");
 
 export = {
   Query: {
-    getAllUsersExceptLogged: async (_parent: any, args: { id: string; offset: string; limit: string; }, context: { user: UserInterface; }) => {
+    getAllUsersExceptLogged: async (_parent: any, args: { id: string; offset: string; limit: string; }, _context: { user: UserInterface; }) => {
       const { id, offset, limit } = args;
-      const { user } = context;
-
-      if (!user) {
-        throw new AuthenticationError("Unauthenticated");
-      }
-
       const getTotalUsers = "select count(id) from users";
       const getSidebarUsers = getUsersWithLatestMessage(offset, limit);
 
@@ -43,13 +36,8 @@ export = {
         throw new ApolloError(err);
       }
     },
-    getUser: async (_parent: any, args: { id: string; }, context: { user: UserInterface; }) => {
+    getUser: async (_parent: any, args: { id: string; }, _context: { user: UserInterface; }) => {
       const { id } = args;
-      const { user } = context;
-
-      if (!user) {
-        throw new AuthenticationError("Unauthenticated");
-      }
 
       try {
         const user = await User.findOne({ where: { id } });
@@ -62,11 +50,6 @@ export = {
   Mutation: {
     register: async (_parent: any, args: UserInterface) => {
       const { firstName, lastName, username, password } = args;
-      const errors = getErrors(args);
-
-      if (errors) {
-        throw new UserInputError(errors);
-      }
 
       try {
         const isUserExists = await User.findOne({ where: { username } });
@@ -86,11 +69,6 @@ export = {
     },
     login: async (_parent: any, args: UserInterface) => {
       const { username, password } = args;
-      const errors = getErrors(args);
-
-      if (errors) {
-        throw new UserInputError(errors);
-      }
 
       try {
         const user = await User.findOne({ where: { username } });
