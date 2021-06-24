@@ -34,19 +34,20 @@ const AppContextProvider = ({ children, history }: Props) => {
     (history as HistoryType).push("/login");
   };
 
-  // To do: fix type, think about the first if
+  // To do: fix type, use formatError instead all of this mess
   const handleErrors = (error: any) => {
-    const isGraphQLErrorsIncludesError = (errorMessage: string) => {
-      return error.graphQLErrors && error.graphQLErrors[0]?.message?.includes(errorMessage);
-    };
-
+    const isGraphQLErrorsIncludesError = (errorMessage: string) => error.graphQLErrors?.[0]?.message?.includes(errorMessage);
     const isUserInputError = isGraphQLErrorsIncludesError("UserInputError");
     const isSequelizeValidationError = isGraphQLErrorsIncludesError("SequelizeValidationError");
 
     if (error.networkError?.result?.errors[0]?.message) {
-      setError(error.networkError.result.errors[0].message.split("Context creation failed: ")[1]);
-    } else if (error.message === "Unauthenticated") {
-      logout();
+      const errorMessage = error.networkError.result.errors[0].message.split("Context creation failed: ")[1];
+
+      if (errorMessage === "Unauthenticated") {
+        logout();
+      }
+
+      setError(errorMessage);
     } else if (isUserInputError || isSequelizeValidationError) {
       setError(error.graphQLErrors[0].message.split(": ")[isUserInputError ? 1 : 2]);
     } else {

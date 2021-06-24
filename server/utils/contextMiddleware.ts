@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 import { UserInputError, AuthenticationError, PubSub } from "apollo-server";
 import { getErrors } from "./validations";
-const pubsub = new PubSub();
 const { SECRET_KEY } = process.env;
+const pubsub = new PubSub();
 
 export = (context: any) => {
   const authOperations = ["LoginUser", "RegisterUser"];
