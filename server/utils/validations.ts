@@ -1,53 +1,41 @@
 import { Message, User } from "../db/interfaces/interfaces";
 
-const validateRegisterObj = ({ firstName, lastName, username, password }: User) => {
-  const errors = [];
+const getErrors = (payload: User | Message) => {
+  let errors = "";
+  const emptyFields: string[] = [];
+  const sideWhiteSpacesFields: string[] = [];
 
-  if (!firstName) {
-    errors.push("First Name must not be empty");
+  // This RegEx will disallow white-space at the beginning and at the end
+  const validString = /^[^\s]+(\s+[^\s]+)*$/;
+
+  Object.entries(payload).forEach(([key, value]) => {
+    if (!value || !validString.test(value)) {
+      if (!value) {
+        emptyFields.push(key);
+      } else {
+        sideWhiteSpacesFields.push(key);
+      }
+    }
+  });
+
+  // Template literals add a comma to the returned array using a map by default, so it's only needed to add a space
+  const getInvalidFields = (fields: string[]) => fields.map((field, index) => `${index > 0 ? ` ${field}` : field}`);
+  const isOnlyOneField = (fields: string[]) => getInvalidFields(fields).length === 1;
+
+  const getFormattedMessage = (message: string, fields: string[]) =>
+    `${message += isOnlyOneField(fields) ? ":" : "s:"} ${getInvalidFields(fields)}`;
+
+  if (emptyFields.length > 0) {
+    errors = getFormattedMessage("please send a non empty value for the field", emptyFields);
   }
 
-  if (!lastName) {
-    errors.push("Last Name must not be empty");
+  if (sideWhiteSpacesFields.length > 0) {
+    const message = getFormattedMessage("please remove side white-spaces from the field", sideWhiteSpacesFields);
+    const isPreviousErrors = errors.length > 0;
+    isPreviousErrors ? errors += `<br /> ${message}` : errors = message;
   }
 
-  if (!username) {
-    errors.push("Username must not be empty");
-  }
-
-  if (!password) {
-    errors.push("Password must not be empty");
-  }
-
-  return { errors, isValid: errors.length === 0 };
+  return errors;
 };
 
-const validateLoginObj = ({ username, password }: User) => {
-  const errors = [];
-
-  if (!username) {
-    errors.push("Username must not be empty");
-  }
-
-  if (!password) {
-    errors.push("Password must not be empty");
-  }
-
-  return { errors, isValid: errors.length === 0 };
-};
-
-const validateMessageObj = ({ recipientId, content }: Message) => {
-  const errors = [];
-
-  if (!recipientId) {
-    errors.push("Recipient id must not be empty");
-  }
-
-  if (!content) {
-    errors.push("Content must not be empty");
-  }
-
-  return { errors, isValid: errors.length === 0 };
-};
-
-export { validateLoginObj, validateRegisterObj, validateMessageObj };
+export { getErrors };

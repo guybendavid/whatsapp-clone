@@ -2,7 +2,7 @@ import { UserInputError, AuthenticationError, ApolloError, withFilter, PubSub } 
 import { Op } from "sequelize";
 import { User, Message } from "../../db/models/modelsConfig";
 import { Message as MessageInterface, User as IUser } from "../../db/interfaces/interfaces";
-import { validateMessageObj } from "../../utils/validations";
+import { getErrors } from "../../utils/validations";
 
 export = {
   Query: {
@@ -48,18 +48,18 @@ export = {
         throw new UserInputError("You cant message yourself");
       }
 
-      const validateMessage = validateMessageObj(args);
+      const errors = getErrors(args);
 
-      if (validateMessage.isValid) {
-        try {
-          const message = await Message.create({ senderId: user.id, recipientId, content });
-          pubsub.publish("NEW_MESSAGE", { newMessage: message });
-          return message;
-        } catch (err) {
-          throw new ApolloError(err);
-        }
-      } else {
-        throw new UserInputError(validateMessage.errors[0]);
+      if (errors) {
+        throw new UserInputError(errors);
+      }
+
+      try {
+        const message = await Message.create({ senderId: user.id, recipientId, content });
+        pubsub.publish("NEW_MESSAGE", { newMessage: message });
+        return message;
+      } catch (err) {
+        throw new ApolloError(err);
       }
     }
   },

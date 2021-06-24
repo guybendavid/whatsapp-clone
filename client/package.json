@@ -14,9 +14,10 @@
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.58",
+    "dompurify": "^2.2.9",
     "graphql": "^15.5.0",
     "graphql-tag": "^2.12.4",
-    "node-sass": "^6.0.0",
+    "node-sass": "^6.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0",
@@ -24,6 +25,7 @@
     "subscriptions-transport-ws": "^0.9.19"
   },
   "devDependencies": {
+    "@types/dompurify": "^2.2.2",
     "@types/material-ui": "^0.21.8",
     "@types/node": "^15.12.4",
     "@types/react": "^17.0.11",
