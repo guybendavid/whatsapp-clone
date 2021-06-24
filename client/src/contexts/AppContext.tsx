@@ -34,7 +34,7 @@ const AppContextProvider = ({ children, history }: Props) => {
     (history as HistoryType).push("/login");
   };
 
-  // To do: fix type, use formatError instead all of this mess
+  // To do: fix type, use formatError instead all of this mess and check all type of errors behavior
   const handleErrors = (error: any) => {
     const isGraphQLErrorsIncludesError = (errorMessage: string) => error.graphQLErrors?.[0]?.message?.includes(errorMessage);
     const isUserInputError = isGraphQLErrorsIncludesError("UserInputError");
