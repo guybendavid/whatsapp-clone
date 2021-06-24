@@ -25,7 +25,7 @@ const AppRouter = ({ setHistory }: Props) => {
   }, []);
 
   return (
-    <Container className={"container " + (isAuthForm && "is-auth-form")} maxWidth={isAuthForm ? "sm" : "xl"}>
+    <Container className={"container" + (isAuthForm ? " is-auth-form" : "")} maxWidth={isAuthForm ? "sm" : "xl"}>
       <Switch>
         <AuthenticatedRoute exact path="/" Component={Main} />
         <UnauthenticatedRoute exact path="/login" Component={Login} />
