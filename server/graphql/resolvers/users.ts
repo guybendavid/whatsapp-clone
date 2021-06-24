@@ -3,7 +3,7 @@ import generateToken from "../../utils/generateToken";
 import { AuthenticationError, UserInputError, ApolloError } from "apollo-server";
 import { QueryTypes } from "sequelize";
 import { sequelize, User } from "../../db/models/modelsConfig";
-import { validateRegisterObj, validateLoginObj } from "../../utils/validatons";
+import { validateRegisterObj, validateLoginObj } from "../../utils/validations";
 import { User as UserInterface } from "../../db/interfaces/interfaces";
 import { getUsersWithLatestMessage } from "../../utils/rawQueries";
 // eslint-disable-next-line

@@ -2,7 +2,7 @@ import { UserInputError, AuthenticationError, ApolloError, withFilter, PubSub } 
 import { Op } from "sequelize";
 import { User, Message } from "../../db/models/modelsConfig";
 import { Message as MessageInterface, User as IUser } from "../../db/interfaces/interfaces";
-import { validateMessageObj } from "../../utils/validatons";
+import { validateMessageObj } from "../../utils/validations";
 
 export = {
   Query: {
