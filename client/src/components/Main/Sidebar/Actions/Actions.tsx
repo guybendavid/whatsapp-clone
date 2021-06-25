@@ -66,7 +66,7 @@ const Actions = ({ searchValue, setSearchValue }: Props) => {
           ))}
         </div>
       </div>
-      <div className={"form-wrapper " + (searchBarIsOpened ? "white" : "")}>
+      <div className={"form-wrapper" + (searchBarIsOpened ? " white" : "")}>
         <ClickAwayListener onClickAway={() => setSearchBarIsOpened(false)}>
           <form>
             <div className="search-wrapper">
@@ -79,7 +79,7 @@ const Actions = ({ searchValue, setSearchValue }: Props) => {
                   inputProps={{ "aria-label": "search" }}
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
-                  onClick={() => setSearchBarIsOpened(!searchBarIsOpened)}
+                  onClick={() => setSearchBarIsOpened(prevState => !prevState)}
                   placeholder={searchBarIsOpened ? "" : "Search or start new chat"}
                 />
               </div>

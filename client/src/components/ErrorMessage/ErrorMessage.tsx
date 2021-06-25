@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
+import { sanitize } from "dompurify";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 
@@ -19,8 +20,10 @@ const ErrorMessage = () => {
 
   return (
     <>
-      {error && <Snackbar open={open} autoHideDuration={3000} onClose={closeError}>
-        <MuiAlert elevation={6} variant="filled" severity="error" onClose={closeError}>{error}</MuiAlert>
+      {error && <Snackbar open={open} autoHideDuration={5000} onClose={closeError}>
+        <MuiAlert elevation={6} variant="filled" severity="error" onClose={closeError}>
+          <div dangerouslySetInnerHTML={{ __html: sanitize(error) }}></div>
+        </MuiAlert>
       </Snackbar>}
     </>
   );
