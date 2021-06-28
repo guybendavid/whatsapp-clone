@@ -30,5 +30,8 @@
       "error",
       "always"
     ]
-  }
+  },
+  "ignorePatterns": [
+    "./build"
+  ],
 }
