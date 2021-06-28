@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "ts-node-dev --no-notify -r dotenv/config app | pino-pretty",
-    "build": "tsc"
+    "build": "tsc && rm -rf ./build/db/interfaces"
   },
   "dependencies": {
     "apollo-server": "^2.25.1",
