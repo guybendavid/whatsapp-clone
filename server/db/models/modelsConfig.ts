@@ -1,33 +1,17 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import Sequelize from "sequelize";
+import config from "../config/config";
 
-const { NODE_ENV, DB, DB_USERNAME, DB_PASSWORD, DB_HOST } = process.env;
-let config;
-
-if (NODE_ENV === "production") {
-  config = {
-    database: DB,
-    username: DB_USERNAME,
-    password: DB_PASSWORD,
-    host: DB_HOST,
-    dialect: "postgres",
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false
-      }
-    }
-  };
-} else {
-  config = require(__dirname + "/../config/config.js")["development"];
-}
+const { NODE_ENV } = process.env;
+const environmentConfig = config[NODE_ENV === "production" ? "production" : "development"];
 
 // @ts-ignore
-const sequelize = new Sequelize(config);
+const sequelize = new Sequelize(environmentConfig);
+import user from "./user";
+import message from "./message";
 
 const models: any = {
-  User: require("./user")(sequelize, Sequelize.DataTypes),
-  Message: require("./message")(sequelize, Sequelize.DataTypes)
+  User: user(sequelize, Sequelize.DataTypes),
+  Message: message(sequelize, Sequelize.DataTypes)
 };
 
 const { User, Message } = models;

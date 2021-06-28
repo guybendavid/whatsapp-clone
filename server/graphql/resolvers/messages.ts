@@ -3,7 +3,7 @@ import { Op } from "sequelize";
 import { User, Message } from "../../db/models/modelsConfig";
 import { Message as MessageInterface, User as IUser } from "../../db/interfaces/interfaces";
 
-export = {
+const messagesResolver = {
   Query: {
     getMessages: async (_parent: any, args: { otherUserId: string; }, { user }: { user: IUser; }) => {
       const { otherUserId } = args;
@@ -56,3 +56,5 @@ export = {
     }
   }
 };
+
+export default messagesResolver;

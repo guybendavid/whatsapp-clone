@@ -1,6 +1,5 @@
-// eslint-disable-next-line
-module.exports = {
-  up: async (queryInterface, Sequelize) => {
+const createUserMigration = {
+  up: async (queryInterface: any, Sequelize: any) => {
     await queryInterface.createTable("users", {
       id: {
         allowNull: false,
@@ -37,7 +36,9 @@ module.exports = {
       }
     });
   },
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface: any, Sequelize: any) => {
     await queryInterface.dropTable("users");
   }
 };
+
+export default createUserMigration;
