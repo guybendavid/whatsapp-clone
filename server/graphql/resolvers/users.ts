@@ -61,7 +61,7 @@ const usersResolver = {
         const hasedPassword = await bcrypt.hash(password as string, 6);
         const image = generateImage();
         const user = await User.create({ firstName, lastName, username, password: hasedPassword, image });
-        const { password: userPassword, ...safeUserData } = user.toJSON();
+        const { password: _userPassword, ...safeUserData } = user.toJSON();
         return { ...safeUserData, token: generateToken({ id: user.id, firstName, lastName }) };
       } catch (err) {
         throw new ApolloError(err);
