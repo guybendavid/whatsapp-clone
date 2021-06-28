@@ -5,7 +5,8 @@ import { QueryTypes } from "sequelize";
 import { sequelize, User } from "../../db/models/modelsConfig";
 import { User as UserInterface } from "../../db/interfaces/interfaces";
 import { getUsersWithLatestMessage } from "../../utils/rawQueries";
-import imageGenerator from "../../utils/imageGenerator";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const generateImage = require("../../utils/generateImage");
 
 const usersResolver = {
   Query: {
@@ -58,7 +59,7 @@ const usersResolver = {
         }
 
         const hasedPassword = await bcrypt.hash(password as string, 6);
-        const image = imageGenerator();
+        const image = generateImage();
         const user = await User.create({ firstName, lastName, username, password: hasedPassword, image });
         const { password: userPassword, ...safeUserData } = user.toJSON();
         return { ...safeUserData, token: generateToken({ id: user.id, firstName, lastName }) };
