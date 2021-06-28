@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
     "outDir": "./build",
+    "target": "ESNext",
     "moduleResolution": "Node",
     "strict": true,
     "esModuleInterop": true,
-    "target": "ESNext"
+    "resolveJsonModule": true
   }
 }

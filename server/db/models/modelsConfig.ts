@@ -1,5 +1,5 @@
 import Sequelize from "sequelize";
-import config from "../config/config";
+import config from "../config/config.json";
 
 const { NODE_ENV } = process.env;
 const environmentConfig = config[NODE_ENV === "production" ? "production" : "development"];
