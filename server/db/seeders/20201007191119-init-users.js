@@ -1,11 +1,11 @@
-import bcrypt from "bcrypt";
-import imageGenerator from "../../utils/imageGenerator";
-import dotenv from "dotenv";
-dotenv.config();
+/* eslint-disable no-undef */
+/* eslint-disable @typescript-eslint/no-var-requires */
+const bcrypt = require("bcrypt");
+const imageGenerator = require("../../utils/imageGenerator.ts");
+require("dotenv").config();
 
-const initUsersSeeder = {
-  up: async (queryInterface: any, Sequelize: any) => {
-    // @ts-ignore
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
     const hasedPassword = await bcrypt.hash(process.env.SEEDERS_PASSWORD, 6);
     await queryInterface.bulkInsert("users", [
       {
@@ -157,9 +157,7 @@ const initUsersSeeder = {
       }
     ], {});
   },
-  down: async (queryInterface: any, Sequelize: any) => {
+  down: async (queryInterface, Sequelize) => {
     await queryInterface.bulkDelete("users", null, {});
   }
 };
-
-export default initUsersSeeder;

@@ -1,5 +1,6 @@
-const createUserMigration = {
-  up: async (queryInterface: any, Sequelize: any) => {
+// eslint-disable-next-line
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable("users", {
       id: {
         allowNull: false,
@@ -36,9 +37,7 @@ const createUserMigration = {
       }
     });
   },
-  down: async (queryInterface: any, Sequelize: any) => {
+  down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable("users");
   }
 };
-
-export default createUserMigration;
