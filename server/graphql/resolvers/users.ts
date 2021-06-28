@@ -5,7 +5,7 @@ import { QueryTypes } from "sequelize";
 import { sequelize, User } from "../../db/models/modelsConfig";
 import { User as UserInterface } from "../../db/interfaces/interfaces";
 import { getUsersWithLatestMessage } from "../../utils/rawQueries";
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line
 const generateImage = require("../../utils/generateImage");
 
 const usersResolver = {
