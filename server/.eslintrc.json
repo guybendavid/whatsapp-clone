@@ -27,8 +27,12 @@
       "double"
     ],
     "semi": [
-      "error",
+      "warn",
       "always"
+    ],
+    "comma-dangle": [
+      "warn",
+      "never"
     ]
   },
   "ignorePatterns": [
