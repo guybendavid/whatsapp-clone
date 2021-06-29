@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./build",
-    "target": "esnext",
+    "target": "es5",
     "moduleResolution": "node",
     "strict": true,
     "esModuleInterop": true,
