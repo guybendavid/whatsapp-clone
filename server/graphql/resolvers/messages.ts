@@ -1,34 +1,29 @@
-import { UserInputError, ApolloError, withFilter, PubSub } from "apollo-server";
+import { UserInputError, withFilter, PubSub } from "apollo-server";
 import { Op } from "sequelize";
 import { User, Message } from "../../db/models/modelsConfig";
 import { Message as MessageInterface, User as IUser } from "../../db/interfaces/interfaces";
 
-export = {
+const messagesResolver = {
   Query: {
     getMessages: async (_parent: any, args: { otherUserId: string; }, { user }: { user: IUser; }) => {
       const { otherUserId } = args;
+      const otherUser = await User.findOne({ where: { id: otherUserId } });
 
-      try {
-        const otherUser = await User.findOne({ where: { id: otherUserId } });
-
-        if (!otherUser) {
-          throw new UserInputError("User not found");
-        }
-
-        const ids = [user.id, otherUserId];
-
-        const messages = await Message.findAll({
-          where: {
-            senderId: { [Op.in]: ids },
-            recipientId: { [Op.in]: ids }
-          },
-          order: [["createdAt", "ASC"]]
-        });
-
-        return messages;
-      } catch (err) {
-        throw new ApolloError(err);
+      if (!otherUser) {
+        throw new UserInputError("User not found");
       }
+
+      const ids = [user.id, otherUserId];
+
+      const messages = await Message.findAll({
+        where: {
+          senderId: { [Op.in]: ids },
+          recipientId: { [Op.in]: ids }
+        },
+        order: [["createdAt", "ASC"]]
+      });
+
+      return messages;
     }
   },
   Mutation: {
@@ -39,13 +34,9 @@ export = {
         throw new UserInputError("You cant message yourself");
       }
 
-      try {
-        const message = await Message.create({ senderId: user.id, recipientId, content });
-        pubsub.publish("NEW_MESSAGE", { newMessage: message });
-        return message;
-      } catch (err) {
-        throw new ApolloError(err);
-      }
+      const message = await Message.create({ senderId: user.id, recipientId, content });
+      pubsub.publish("NEW_MESSAGE", { newMessage: message });
+      return message;
     }
   },
   Subscription: {
@@ -56,3 +47,5 @@ export = {
     }
   }
 };
+
+export default messagesResolver;

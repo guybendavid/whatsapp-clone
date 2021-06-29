@@ -1,15 +1,11 @@
 {
   "compilerOptions": {
     "outDir": "./build",
-    "module": "CommonJS",
-    "moduleResolution": "Node",
+    "target": "esnext",
+    "module": "commonjs",
+    "moduleResolution": "node",
     "strict": true,
     "esModuleInterop": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "target": "es6",
-    "types": [
-      "node"
-    ]
+    "resolveJsonModule": true
   }
 }

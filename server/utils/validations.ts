@@ -10,11 +10,7 @@ const getErrors = (payload: User | Message) => {
 
   Object.entries(payload).forEach(([key, value]) => {
     if (!value || !validString.test(value)) {
-      if (!value) {
-        emptyFields.push(key);
-      } else {
-        sideWhiteSpacesFields.push(key);
-      }
+      !value ? emptyFields.push(key) : sideWhiteSpacesFields.push(key);
     }
   });
 

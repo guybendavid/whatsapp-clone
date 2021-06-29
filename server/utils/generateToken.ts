@@ -8,4 +8,4 @@ const generateToken = (userFields: User) => {
   }
 };
 
-export = generateToken;
+export default generateToken;

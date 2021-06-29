@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 
-export = (sequelize: Sequelize, DataTypes: any) => {
+const user = (sequelize: Sequelize, DataTypes: any) => {
   const User = sequelize.define("User", {
     firstName: {
       type: DataTypes.STRING(20),
@@ -37,3 +37,5 @@ export = (sequelize: Sequelize, DataTypes: any) => {
 
   return User;
 };
+
+export default user;

@@ -4,7 +4,7 @@ import { getErrors } from "./validations";
 const { SECRET_KEY } = process.env;
 const pubsub = new PubSub();
 
-export = (context: any) => {
+const contextMiddleware = (context: any) => {
   const authOperations = ["LoginUser", "RegisterUser"];
 
   const validationMiddleware = () => {
@@ -49,3 +49,5 @@ export = (context: any) => {
   authenticationMiddleware();
   return context;
 };
+
+export default contextMiddleware;

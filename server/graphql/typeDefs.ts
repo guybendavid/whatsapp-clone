@@ -1,6 +1,6 @@
 import { gql } from "apollo-server";
 
-export = gql`
+const typeDefs = gql`
   type SideBarUsers {
     users: [User]!
     totalUsersExceptLoggedUser: String!
@@ -36,3 +36,5 @@ export = gql`
     newMessage: Message!
   }
 `;
+
+export default typeDefs;
