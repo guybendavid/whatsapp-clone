@@ -1,7 +1,8 @@
 import Sequelize from "sequelize";
-import config from "../config/config.json";
 import user from "./user";
 import message from "./message";
+// @ts-ignore
+import config from "../config/config";
 
 const { NODE_ENV } = process.env;
 const environmentConfig = config[NODE_ENV === "production" ? "production" : "development"];

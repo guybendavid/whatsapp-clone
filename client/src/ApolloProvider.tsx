@@ -4,13 +4,9 @@ import { WebSocketLink } from "@apollo/client/link/ws";
 import { getMainDefinition } from "@apollo/client/utilities";
 import App from "App";
 
-const isProduction = process.env.NODE_ENV === "production";
-
-let httpLink: ApolloLink = new HttpLink({
-  uri: isProduction ?
-    `https://${process.env.REACT_APP_BASE_URL_PRODUCTION}` :
-    `http://${process.env.REACT_APP_BASE_URL}`
-});
+const { NODE_ENV, REACT_APP_BASE_URL } = process.env;
+const isProduction = NODE_ENV === "production";
+let httpLink: ApolloLink = new HttpLink({ uri: isProduction ? "" : `http://${REACT_APP_BASE_URL}` });
 
 const authLink = setContext((_, { headers }) => {
   return {
@@ -24,9 +20,7 @@ const authLink = setContext((_, { headers }) => {
 httpLink = authLink.concat(httpLink);
 
 const wsLink = new WebSocketLink({
-  uri: isProduction ?
-    `wss://${process.env.REACT_APP_BASE_URL_PRODUCTION}` :
-    `ws://${process.env.REACT_APP_BASE_URL}`,
+  uri: isProduction ? `wss://${window.location.host}` : `ws://${REACT_APP_BASE_URL}`,
   options: {
     reconnect: true,
     connectionParams: {

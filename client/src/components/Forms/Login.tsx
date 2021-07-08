@@ -16,7 +16,6 @@ interface Props {
 const Login = ({ history }: Props) => {
   const { handleErrors } = useContext(AppContext) as AppContextType;
   const [formValues, setFormValues] = useState({ username: "", password: "" });
-  const { username, password } = formValues;
 
   const [login] = useMutation(LOGIN_USER, {
     onCompleted: (data) => handleAuth(data.login, history),
@@ -35,8 +34,8 @@ const Login = ({ history }: Props) => {
       </Avatar>
       <Typography component="h1">Login</Typography>
       <form onSubmit={handleSubmit}>
-        <TextField required variant="outlined" margin="normal" fullWidth label="username" autoComplete="Username" value={username} onChange={(e) => setFormValues({ ...formValues, username: e.target.value })} />
-        <TextField required variant="outlined" margin="normal" fullWidth label="password" autoComplete="Password" value={password} type="password" onChange={(e) => setFormValues({ ...formValues, password: e.target.value })} />
+        <TextField required variant="outlined" margin="normal" fullWidth label="username" autoComplete="Username" onChange={(e) => setFormValues({ ...formValues, username: e.target.value })} />
+        <TextField required variant="outlined" margin="normal" fullWidth label="password" autoComplete="Password" type="password" onChange={(e) => setFormValues({ ...formValues, password: e.target.value })} />
         <Link to="/register">Don't have an account yet?</Link>
         <Button type="submit" fullWidth variant="contained">Login</Button>
       </form>

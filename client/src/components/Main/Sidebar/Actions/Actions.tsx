@@ -77,7 +77,6 @@ const Actions = ({ searchValue, setSearchValue }: Props) => {
                 <InputBase
                   className="input-base"
                   inputProps={{ "aria-label": "search" }}
-                  value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
                   onClick={() => setSearchBarIsOpened(prevState => !prevState)}
                   placeholder={searchBarIsOpened ? "" : "Search or start new chat"}
