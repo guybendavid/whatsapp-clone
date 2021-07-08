@@ -1,0 +1,16 @@
+{
+  "name": "whatsapp-clone",
+  "version": "1.0.0",
+  "author": "Guy Ben David",
+  "license": "BSD-3-Clause",
+  "private": true,
+  "scripts": {
+    "create-dist-folder": "mkdir dist",
+    "build-client": "cd client && npm i && npm audit fix && npm run build && cd ../ && npm run copy-client-files-to-dist",
+    "copy-client-files-to-dist": "cd client && cp -r build ../dist && rm -r build && cd ../dist && mv build client",
+    "build-server": "cd server && npm i && npm audit fix && npm run build && cd ../ && npm run copy-server-files-to-dist",
+    "copy-server-files-to-dist": "cd server && cp -r package.json ../dist && cp -r node_modules ../dist",
+    "postinstall": "npm run create-dist-folder && npm run build-client && npm run build-server && rm -r client && rm -r server",
+    "start": "cd dist && npm run start"
+  }
+}

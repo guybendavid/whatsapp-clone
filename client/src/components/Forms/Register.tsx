@@ -16,7 +16,7 @@ interface Props {
 const Register = ({ history }: Props) => {
   const { handleErrors } = useContext(AppContext) as AppContextType;
   const [formValues, setFormValues] = useState({ firstName: "", lastName: "", username: "", password: "" });
-  const { firstName, lastName, username, password } = formValues;
+  const { username } = formValues;
 
   const [register] = useMutation(REGISTER_USER, {
     onCompleted: (data) => handleAuth({ ...data.register, username }, history),
@@ -35,10 +35,10 @@ const Register = ({ history }: Props) => {
       </Avatar>
       <Typography component="h1">Register</Typography>
       <form onSubmit={handleSubmit}>
-        <TextField required variant="outlined" margin="normal" fullWidth label="first name" autoComplete="First Name" value={firstName} onChange={(e) => setFormValues({ ...formValues, firstName: e.target.value })} />
-        <TextField required variant="outlined" margin="normal" fullWidth label="last name" autoComplete="Last Name" value={lastName} onChange={(e) => setFormValues({ ...formValues, lastName: e.target.value })} />
-        <TextField required variant="outlined" margin="normal" fullWidth label="username" autoComplete="Username" value={username} onChange={(e) => setFormValues({ ...formValues, username: e.target.value })} />
-        <TextField required variant="outlined" margin="normal" fullWidth label="password" autoComplete="Password" value={password} type="password" onChange={(e) => setFormValues({ ...formValues, password: e.target.value })} />
+        <TextField required variant="outlined" margin="normal" fullWidth label="first name" autoComplete="First Name" onChange={(e) => setFormValues({ ...formValues, firstName: e.target.value })} />
+        <TextField required variant="outlined" margin="normal" fullWidth label="last name" autoComplete="Last Name" onChange={(e) => setFormValues({ ...formValues, lastName: e.target.value })} />
+        <TextField required variant="outlined" margin="normal" fullWidth label="username" autoComplete="Username" onChange={(e) => setFormValues({ ...formValues, username: e.target.value })} />
+        <TextField required variant="outlined" margin="normal" fullWidth label="password" autoComplete="Password" type="password" onChange={(e) => setFormValues({ ...formValues, password: e.target.value })} />
         <Link to="/login">Already have an account?</Link>
         <Button type="submit" fullWidth variant="contained">Register</Button>
       </form>
