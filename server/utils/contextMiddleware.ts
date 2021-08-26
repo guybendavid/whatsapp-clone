@@ -7,21 +7,6 @@ const pubsub = new PubSub();
 const contextMiddleware = (context: any) => {
   const authOperations = ["LoginUser", "RegisterUser"];
 
-  const validationMiddleware = () => {
-    if (context.req?.body) {
-      const { operationName, variables } = context.req.body;
-
-      // Check errors only for specific operations (mutations with payload)
-      if ([...authOperations, "SendMessage"].includes(operationName)) {
-        const errors = getErrors(variables);
-
-        if (errors) {
-          throw new UserInputError(errors);
-        }
-      }
-    }
-  };
-
   const authenticationMiddleware = () => {
     let token;
 
@@ -37,7 +22,7 @@ const contextMiddleware = (context: any) => {
       });
     }
 
-    // Throw error if the request is not login or register and there is no valid user
+    // Throwing error if the request is not login or register and there is no valid user
     if (!authOperations.includes(context.req?.body?.operationName) && !context.user) {
       throw new AuthenticationError("Unauthenticated");
     }
@@ -45,8 +30,23 @@ const contextMiddleware = (context: any) => {
     context.pubsub = pubsub;
   };
 
-  validationMiddleware();
+  const validationMiddleware = () => {
+    if (context.req?.body) {
+      const { operationName, variables } = context.req.body;
+
+      // Check errors only for specific operations (mutations with payload)
+      if ([...authOperations, "SendMessage"].includes(operationName)) {
+        const errors = getErrors(variables);
+
+        if (errors) {
+          throw new UserInputError(errors);
+        }
+      }
+    }
+  };
+
   authenticationMiddleware();
+  validationMiddleware();
   return context;
 };
 
