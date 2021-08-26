@@ -41,7 +41,7 @@ const Sidebar = ({ setSelectedUser, newMessage }: Props) => {
     if (newMessage && newUserData) {
       const { recipientId, senderId, ...userLatestMessageProperties } = newMessage;
       const sidebarNewUser = { ...newUserData.getUser };
-      sidebarNewUser.latestMessage = userLatestMessageProperties;
+      sidebarNewUser.latestMessage = { ...userLatestMessageProperties };
       displayNewUserOnSidebar(sidebarNewUser, client, loggedInUser.id);
     }
     // eslint-disable-next-line

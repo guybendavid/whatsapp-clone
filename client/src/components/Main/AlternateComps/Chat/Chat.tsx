@@ -16,7 +16,7 @@ interface Props {
 
 const Chat = ({ selectedUser, newMessage }: Props) => {
   const chatBottomRef = useRef<HTMLHeadingElement>(null);
-  const { loggedInUser, handleErrors } = useContext(AppContext) as AppContextType;
+  const { handleErrors } = useContext(AppContext) as AppContextType;
 
   const { data, client } = useQuery(GET_MESSAGES, {
     variables: { otherUserId: selectedUser.id },
@@ -34,14 +34,10 @@ const Chat = ({ selectedUser, newMessage }: Props) => {
 
   useEffect(() => {
     if (newMessage) {
-      const { senderId, recipientId } = newMessage;
-
-      if (senderId === selectedUser.id || (senderId === (loggedInUser as User).id && recipientId === selectedUser.id)) {
-        const { recipientId, ...messageToAdd } = newMessage;
-        addNewMessageToChat(messageToAdd, client, selectedUser.id);
-        selectedUser.latestMessage = newMessage;
-        chatBottomRef.current?.scrollIntoView();
-      }
+      const { recipientId, ...messageToAdd } = newMessage;
+      addNewMessageToChat(messageToAdd, client, selectedUser.id);
+      selectedUser.latestMessage = { ...newMessage };
+      chatBottomRef.current?.scrollIntoView();
     }
     // eslint-disable-next-line
   }, [newMessage]);
