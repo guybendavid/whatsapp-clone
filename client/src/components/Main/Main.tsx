@@ -25,7 +25,6 @@ const Main = () => {
     }
   };
 
-
   return (
     <div className="main">
       <Sidebar setSelectedUser={setSelectedUser} newMessage={newMessage} />
