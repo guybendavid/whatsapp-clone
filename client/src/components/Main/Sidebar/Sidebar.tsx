@@ -47,14 +47,11 @@ const Sidebar = ({ setSelectedUser, newMessage }: Props) => {
     // eslint-disable-next-line
   }, [newUserData]);
 
-  const sharedProps = { searchValue };
-  const actionsProps = { setSearchValue, ...sharedProps };
-  const usersListProps = { users: sidebarData?.users, isMoreUsersToFetch, fetchMoreUsers, setSelectedUser, ...sharedProps };
-
   return (
     <div className="sidebar">
-      <Actions {...actionsProps} />
-      <UsersList {...usersListProps} />
+      <Actions setSearchValue={setSearchValue} />
+      <UsersList searchValue={searchValue} users={sidebarData?.users} isMoreUsersToFetch={isMoreUsersToFetch}
+        fetchMoreUsers={fetchMoreUsers} setSelectedUser={setSelectedUser} />
     </div>
   );
 };

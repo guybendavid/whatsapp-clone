@@ -40,11 +40,10 @@ const DotsIcon = () => {
 };
 
 interface Props {
-  searchValue: string;
   setSearchValue: (value: string) => void;
 }
 
-const Actions = ({ searchValue, setSearchValue }: Props) => {
+const Actions = ({ setSearchValue }: Props) => {
   const { loggedInUser } = useContext(AppContext) as AppContextType;
   const [searchBarIsOpened, setSearchBarIsOpened] = useState(false);
 
@@ -52,7 +51,7 @@ const Actions = ({ searchValue, setSearchValue }: Props) => {
     <div className="actions">
       <div className="icons">
         <div className="left-side">
-          <Avatar className="avatar" alt="avatar" src={(loggedInUser as User)?.image} />
+          <Avatar className="avatar" alt="avatar" src={(loggedInUser as User).image} />
         </div>
         <div className="right-side">
           {[DonutLargeIcon, ChatIcon, DotsIcon].map((Icon, index) => (

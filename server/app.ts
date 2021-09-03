@@ -52,7 +52,7 @@ const connect = async (server: ApolloServerDev | Server, isProd?: boolean) => {
       logger.info(`Susbscription ready at ${subscriptionsUrl}`);
     }
   } catch (err) {
-    logger.error(err);
+    logger.error(err as string);
   }
 };
 

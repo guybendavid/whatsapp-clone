@@ -10,18 +10,15 @@ import "./Main.scss";
 
 const Main = () => {
   const { loggedInUser } = useContext(AppContext) as AppContextType;
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [selectedUser, setSelectedUser] = useState<User>();
   const { data: newMessageData } = useSubscription(NEW_MESSAGE);
   const newMessage = newMessageData?.newMessage;
 
   const isNewMessageRelevantToOpenedChat = () => {
     if (newMessage) {
       const { senderId, recipientId } = newMessage;
-
-      return (
-        senderId === (selectedUser as User).id ||
-        (senderId === (loggedInUser as User).id && recipientId === (selectedUser as User).id)
-      );
+      const { id: selectedUserId } = selectedUser as User;
+      return senderId === selectedUserId || (senderId === (loggedInUser as User).id && recipientId === selectedUserId);
     }
   };
 

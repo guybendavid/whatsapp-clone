@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { AppContextProvider } from "contexts/AppContext";
 import { BrowserRouter } from "react-router-dom";
+import { History, LocationState } from "history";
 import { useMediaQuery } from "@material-ui/core";
 import AppRouter from "AppRouter/AppRouter";
 import "styles/Style.scss";
 
+export type HistoryType = History<LocationState>;
+
 const App = () => {
-  const [history, setHistory] = useState({});
+  const [history, setHistory] = useState<HistoryType>();
   const isUnsupported = useMediaQuery("(max-width:950px)");
 
   return isUnsupported ?
