@@ -22,8 +22,7 @@
       flex-direction: column;
 
       .fullname {
-        max-width: 265px;
-        @include overflow-handler;
+        @include overflow-handler(265px);
       }
     }
   }

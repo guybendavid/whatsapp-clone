@@ -32,7 +32,7 @@
         align-items: center;
 
         .fullname {
-          max-width: 162px;
+          @include overflow-handler(162px);
         }
       }
 
@@ -40,15 +40,10 @@
         display: flex;
 
         .last-message {
-          max-width: 260px;
           font-size: 0.9rem;
           color: var(--text-secondary-color);
+          @include overflow-handler(260px);
         }
-      }
-
-      .fullname,
-      .last-message {
-        @include overflow-handler;
       }
     }
   }

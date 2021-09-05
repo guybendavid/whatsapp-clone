@@ -1,15 +1,17 @@
-@mixin overflow-handler {
+@mixin overflow-handler($max-width) {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  max-width: $max-width;
 }
 
-@mixin vertical-overflow-handler {
+@mixin vertical-overflow-handler($max-lines) {
   display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-all;
   -webkit-box-orient: vertical;
+  -webkit-line-clamp: $max-lines;
 }
 
 @mixin search-input {

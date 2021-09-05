@@ -19,8 +19,7 @@
     border-radius: 5px;
 
     span {
-      @include vertical-overflow-handler;
-      -webkit-line-clamp: 7;
+      @include vertical-overflow-handler(7);
       min-height: 25px;
     }
 
