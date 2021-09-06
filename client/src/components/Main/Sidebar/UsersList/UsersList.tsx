@@ -23,7 +23,7 @@ const UsersList = ({ users, searchValue, isMoreUsersToFetch, fetchMoreUsers, set
       observer.current?.disconnect();
 
       observer.current = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting && isMoreUsersToFetch && (loggedInUser as User).id) {
+        if (entries[0].isIntersecting && isMoreUsersToFetch && (loggedInUser as User)?.id) {
           fetchMoreUsers({
             variables: {
               loggedInUserId: (loggedInUser as User).id,

@@ -51,7 +51,7 @@ const Actions = ({ setSearchValue }: Props) => {
     <div className="actions">
       <div className="icons">
         <div className="left-side">
-          <Avatar className="avatar" alt="avatar" src={(loggedInUser as User).image} />
+          <Avatar className="avatar" alt="avatar" src={(loggedInUser as User)?.image} />
         </div>
         <div className="right-side">
           {[DonutLargeIcon, ChatIcon, DotsIcon].map((Icon, index) => (
