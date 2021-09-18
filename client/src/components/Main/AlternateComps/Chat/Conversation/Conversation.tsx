@@ -3,6 +3,7 @@ import { AppContext, AppContextType } from "contexts/AppContext";
 import { Message, User } from "interfaces/interfaces";
 import { Typography } from "@material-ui/core";
 import timeDisplayer from "services/timeDisplayer";
+import classNamesGenerator from "services/classNamesGenerator";
 import "./Conversation.scss";
 
 interface Props {
@@ -39,8 +40,9 @@ const Conversation = ({ messages, chatBottomRef }: Props) => {
   return (
     <div className="conversation">
       {messages?.map((message, index) => (
-        <div key={index} className={"message" + (message.senderId === (loggedInUser as User)?.id ? " sent-message" : "")
-          + (firstIndexesOfSeries?.includes(index) ? " first-of-series" : "")}>
+        <div key={index} className={classNamesGenerator("message",
+          message.senderId === (loggedInUser as User)?.id && "sent-message",
+          firstIndexesOfSeries?.includes(index) && "first-of-series")}>
           <Typography component="span" className="title">{message.content}</Typography>
           <Typography component="small">{timeDisplayer(message.createdAt)}</Typography>
         </div>

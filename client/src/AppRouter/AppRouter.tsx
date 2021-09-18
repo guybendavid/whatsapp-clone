@@ -9,6 +9,7 @@ import AuthenticatedRoute from "./Routes/AuthenticatedRoute";
 import UnauthenticatedRoute from "./Routes/UnauthenticatedRoute";
 import DefaultRoute from "./Routes/DefaultRoute";
 import ErrorMessage from "components/ErrorMessage/ErrorMessage";
+import classNamesGenerator from "services/classNamesGenerator";
 
 interface Props extends RouteComponentProps {
   setHistory: (history: History<LocationState>) => void;
@@ -25,7 +26,7 @@ const AppRouter = ({ setHistory }: Props) => {
   }, []);
 
   return (
-    <Container className={"container" + (isAuthForm ? " is-auth-form" : "")} maxWidth={isAuthForm ? "sm" : "xl"}>
+    <Container className={classNamesGenerator("container", isAuthForm && "is-auth-form")} maxWidth={isAuthForm ? "sm" : "xl"}>
       <Switch>
         <AuthenticatedRoute exact path="/" Component={Main} />
         <UnauthenticatedRoute exact path="/login" Component={Login} />

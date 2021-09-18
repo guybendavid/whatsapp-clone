@@ -4,6 +4,7 @@ import { User } from "interfaces/interfaces";
 import { List, ListItem, Avatar, ListItemAvatar, Typography, Divider } from "@material-ui/core";
 import { getUsersSqlClauses } from "services/graphql";
 import timeDisplayer from "services/timeDisplayer";
+import classNamesGenerator from "services/classNamesGenerator";
 import "./UsersList.scss";
 
 interface Props {
@@ -51,7 +52,7 @@ const UsersList = ({ users, searchValue, isMoreUsersToFetch, fetchMoreUsers, set
               <Avatar className="avatar" alt="avatar" src={user?.image} />
             </ListItemAvatar>
             <div className="text-wrapper">
-              {index > 0 && <Divider className={user.latestMessage?.createdAt ? "is-chatted" : ""} />}
+              {index > 0 && <Divider className={classNamesGenerator(user.latestMessage?.createdAt && "is-chatted")} />}
               <div className="first-row">
                 <Typography component="span" className="fullname">{`${user.firstName} ${user.lastName}`}</Typography>
                 <Typography component="small">{timeDisplayer(user.latestMessage?.createdAt)}</Typography>

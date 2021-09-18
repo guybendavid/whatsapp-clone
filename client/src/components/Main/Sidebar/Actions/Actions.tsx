@@ -7,6 +7,7 @@ import ChatIcon from "@material-ui/icons/Chat";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import SearchIcon from "@material-ui/icons/Search";
 import ArrowDownWardIcon from "@material-ui/icons/ArrowDownward";
+import classNamesGenerator from "services/classNamesGenerator";
 import "./Actions.scss";
 
 const DotsIcon = () => {
@@ -65,7 +66,7 @@ const Actions = ({ setSearchValue }: Props) => {
           ))}
         </div>
       </div>
-      <div className={"form-wrapper" + (searchBarIsOpened ? " white" : "")}>
+      <div className={classNamesGenerator("form-wrapper", searchBarIsOpened && "white")}>
         <ClickAwayListener onClickAway={() => setSearchBarIsOpened(false)}>
           <form>
             <div className="search-wrapper">
