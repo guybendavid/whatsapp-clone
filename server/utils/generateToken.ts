@@ -4,7 +4,7 @@ const { SECRET_KEY } = process.env;
 
 const generateToken = (userFields: User) => {
   if (SECRET_KEY) {
-    return jwt.sign({ ...userFields }, SECRET_KEY, { expiresIn: "7d" });
+    return jwt.sign({ ...userFields }, SECRET_KEY, { expiresIn: "7 days" });
   }
 };
 
