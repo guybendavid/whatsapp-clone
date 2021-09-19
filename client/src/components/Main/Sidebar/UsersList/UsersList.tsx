@@ -3,8 +3,7 @@ import { AppContext, AppContextType } from "contexts/AppContext";
 import { User } from "interfaces/interfaces";
 import { List, ListItem, Avatar, ListItemAvatar, Typography, Divider } from "@material-ui/core";
 import { getUsersSqlClauses } from "services/graphql";
-import timeDisplayer from "services/timeDisplayer";
-import classNamesGenerator from "services/classNamesGenerator";
+import { classNamesGenerator, timeDisplayer } from "@guybendavid/utils";
 import "./UsersList.scss";
 
 interface Props {

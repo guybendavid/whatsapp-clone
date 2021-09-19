@@ -2,12 +2,12 @@ import { useContext, useState, MouseEvent, Fragment } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { User } from "interfaces/interfaces";
 import { Avatar, IconButton, InputBase, ClickAwayListener, Menu, MenuItem } from "@material-ui/core";
+import { classNamesGenerator } from "@guybendavid/utils";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";
 import ChatIcon from "@material-ui/icons/Chat";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import SearchIcon from "@material-ui/icons/Search";
 import ArrowDownWardIcon from "@material-ui/icons/ArrowDownward";
-import classNamesGenerator from "services/classNamesGenerator";
 import "./Actions.scss";
 
 const DotsIcon = () => {

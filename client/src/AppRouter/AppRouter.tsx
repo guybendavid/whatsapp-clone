@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Container } from "@material-ui/core";
 import { Switch, useHistory, useLocation, withRouter, RouteComponentProps } from "react-router-dom";
 import { History, LocationState } from "history";
+import { classNamesGenerator } from "@guybendavid/utils";
 import Main from "components/Main/Main";
 import Login from "components/Forms/Login";
 import Register from "components/Forms/Register";
@@ -9,7 +10,6 @@ import AuthenticatedRoute from "./Routes/AuthenticatedRoute";
 import UnauthenticatedRoute from "./Routes/UnauthenticatedRoute";
 import DefaultRoute from "./Routes/DefaultRoute";
 import ErrorMessage from "components/ErrorMessage/ErrorMessage";
-import classNamesGenerator from "services/classNamesGenerator";
 
 interface Props extends RouteComponentProps {
   setHistory: (history: History<LocationState>) => void;

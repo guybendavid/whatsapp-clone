@@ -2,8 +2,7 @@ import { useContext, useMemo, RefObject } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { Message, User } from "interfaces/interfaces";
 import { Typography } from "@material-ui/core";
-import timeDisplayer from "services/timeDisplayer";
-import classNamesGenerator from "services/classNamesGenerator";
+import { classNamesGenerator, timeDisplayer } from "@guybendavid/utils";
 import "./Conversation.scss";
 
 interface Props {
