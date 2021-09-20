@@ -14,7 +14,7 @@
   -webkit-line-clamp: $max-lines;
 }
 
-@mixin search-input {
+%search-input {
   flex: 1;
 
   .input-wrapper {

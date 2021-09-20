@@ -33,7 +33,7 @@
     }
 
     form {
-      @include search-input;
+      @extend %search-input;
 
       .search-wrapper {
         position: relative;
