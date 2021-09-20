@@ -1,8 +1,8 @@
 import { User } from "interfaces/interfaces";
 import { Avatar, Typography, IconButton } from "@material-ui/core";
+import { timeDisplayer } from "@guybendavid/utils";
 import SearchIcon from "@material-ui/icons/Search";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import timeDisplayer from "services/timeDisplayer";
 import "./ChatHeader.scss";
 
 interface Props {

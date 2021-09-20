@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Container } from "@material-ui/core";
 import { Switch, useHistory, useLocation, withRouter, RouteComponentProps } from "react-router-dom";
 import { History, LocationState } from "history";
+import { classNamesGenerator } from "@guybendavid/utils";
 import Main from "components/Main/Main";
 import Login from "components/Forms/Login";
 import Register from "components/Forms/Register";
@@ -25,7 +26,7 @@ const AppRouter = ({ setHistory }: Props) => {
   }, []);
 
   return (
-    <Container className={"container" + (isAuthForm ? " is-auth-form" : "")} maxWidth={isAuthForm ? "sm" : "xl"}>
+    <Container className={classNamesGenerator("container", isAuthForm && "is-auth-form")} maxWidth={isAuthForm ? "sm" : "xl"}>
       <Switch>
         <AuthenticatedRoute exact path="/" Component={Main} />
         <UnauthenticatedRoute exact path="/login" Component={Login} />

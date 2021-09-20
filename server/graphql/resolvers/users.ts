@@ -1,12 +1,12 @@
 import bcrypt from "bcrypt";
-import generateToken from "../../utils/generateToken";
+import generateToken from "../../utils/generate-token";
 import { UserInputError } from "apollo-server";
 import { QueryTypes } from "sequelize";
 import { sequelize, User } from "../../db/models/modelsConfig";
 import { User as UserInterface } from "../../db/interfaces/interfaces";
-import { getUsersWithLatestMessage } from "../../utils/rawQueries";
+import { getUsersWithLatestMessage } from "../../utils/raw-queries";
 // eslint-disable-next-line
-const generateImage = require("../../utils/generateImage");
+const generateImage = require("../../utils/generate-image");
 
 const usersResolver = {
   Query: {

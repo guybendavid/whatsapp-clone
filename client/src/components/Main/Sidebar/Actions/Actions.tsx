@@ -2,6 +2,7 @@ import { useContext, useState, MouseEvent, Fragment } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { User } from "interfaces/interfaces";
 import { Avatar, IconButton, InputBase, ClickAwayListener, Menu, MenuItem } from "@material-ui/core";
+import { classNamesGenerator } from "@guybendavid/utils";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";
 import ChatIcon from "@material-ui/icons/Chat";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
@@ -65,7 +66,7 @@ const Actions = ({ setSearchValue }: Props) => {
           ))}
         </div>
       </div>
-      <div className={"form-wrapper" + (searchBarIsOpened ? " white" : "")}>
+      <div className={classNamesGenerator("form-wrapper", searchBarIsOpened && "white")}>
         <ClickAwayListener onClickAway={() => setSearchBarIsOpened(false)}>
           <form>
             <div className="search-wrapper">

@@ -7,7 +7,7 @@ import pino from "pino";
 import path from "path";
 import resolvers from "./graphql/resolvers/resolversConfig";
 import typeDefs from "./graphql/typeDefs";
-import contextMiddleware from "./utils/contextMiddleware";
+import contextMiddleware from "./utils/context-middleware";
 
 const { NODE_ENV, LOG_LEVEL, PORT } = process.env;
 const logger = pino({ level: LOG_LEVEL || "info" });
