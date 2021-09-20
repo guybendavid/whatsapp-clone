@@ -3,7 +3,7 @@ import { AppContext, AppContextType } from "contexts/AppContext";
 import { User, Message } from "interfaces/interfaces";
 import { useQuery } from "@apollo/client";
 import { GET_MESSAGES } from "services/graphql";
-import { addNewMessageToChat } from "services/chatHelper";
+import { addNewMessageToChat } from "services/chat-helper";
 import ChatHeader from "./ChatHeader/ChatHeader";
 import Conversation from "./Conversation/Conversation";
 import MessageCreator from "./MessageCreator/MessageCreator";
