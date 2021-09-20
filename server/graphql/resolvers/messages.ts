@@ -1,6 +1,6 @@
 import { UserInputError, withFilter, PubSub } from "apollo-server";
 import { Op } from "sequelize";
-import { User, Message } from "../../db/models/modelsConfig";
+import { User, Message } from "../../db/models/models-config";
 import { Message as MessageInterface, User as IUser } from "../../db/interfaces/interfaces";
 
 const messagesResolver = {
