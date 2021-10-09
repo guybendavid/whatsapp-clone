@@ -12,6 +12,4 @@ const handleAuth = (data: User, history: History<LocationState>) => {
   }
 };
 
-const getLoggedInUser = () => localStorage.loggedInUser && JSON.parse(localStorage.loggedInUser);
-
-export { handleAuth, getLoggedInUser };
+export { handleAuth };

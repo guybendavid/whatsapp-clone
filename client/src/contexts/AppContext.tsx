@@ -2,7 +2,6 @@ import { useEffect, createContext, useState, ReactNode } from "react";
 import { ApolloError } from "@apollo/client";
 import { User } from "interfaces/interfaces";
 import { HistoryType } from "App";
-import { getLoggedInUser } from "services/auth";
 
 export type AppContextType = {
   loggedInUser: User | {};
@@ -24,7 +23,7 @@ const AppContextProvider = ({ children, history }: Props) => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const user = getLoggedInUser();
+    const user = localStorage.loggedInUser && JSON.parse(localStorage.loggedInUser);
     setLoggedInUser(user);
   }, []);
 
