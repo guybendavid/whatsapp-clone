@@ -3,6 +3,7 @@ import { AppContext, AppContextType } from "contexts/AppContext";
 import { useQuery, useLazyQuery } from "@apollo/client";
 import { getUsersQueryVariables, GET_All_USERS_EXCEPT_LOGGED, GET_USER } from "services/graphql";
 import { displayNewMessageOnSidebar, displayNewUserOnSidebar } from "services/sidebar-helper";
+import { getLoggedInUser } from "services/auth";
 import { User, Message } from "interfaces/interfaces";
 import Actions from "./Actions/Actions";
 import UsersList from "./UsersList/UsersList";
@@ -16,7 +17,7 @@ interface Props {
 const Sidebar = ({ setSelectedUser, newMessage }: Props) => {
   const { handleErrors } = useContext(AppContext) as AppContextType;
   const [searchValue, setSearchValue] = useState("");
-  const loggedInUser = JSON.parse(localStorage.loggedInUser);
+  const loggedInUser = getLoggedInUser();
 
   const { data, fetchMore: fetchMoreUsers, client } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
     variables: getUsersQueryVariables(loggedInUser.id),

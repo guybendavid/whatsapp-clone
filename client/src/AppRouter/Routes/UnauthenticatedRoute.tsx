@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { Route, Redirect } from "react-router";
 import { RouteComponentProps } from "react-router-dom";
+import { getLoggedInUser } from "services/auth";
 
 interface Props {
   exact: boolean;
@@ -9,8 +10,10 @@ interface Props {
 }
 
 const UnauthenticatedRoute = ({ path, Component }: Props) => {
+  const loggedInUser = getLoggedInUser();
+
   return (
-    <Route path={path} render={props => !localStorage.loggedInUser ? <Component {...props} /> : <Redirect to="/" />} />
+    <Route path={path} render={props => !loggedInUser ? <Component {...props} /> : <Redirect to="/" />} />
   );
 };
 

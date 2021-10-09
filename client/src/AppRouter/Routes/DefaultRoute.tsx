@@ -1,8 +1,11 @@
 import { Route, Redirect } from "react-router";
+import { getLoggedInUser } from "services/auth";
 
 const DefaultRoute = () => {
+  const loggedInUser = getLoggedInUser();
+
   return (
-    <Route render={() => localStorage.loggedInUser ? <Redirect to="/" /> : <Redirect to="/login" />} />
+    <Route render={() => loggedInUser ? <Redirect to="/" /> : <Redirect to="/login" />} />
   );
 };
 
