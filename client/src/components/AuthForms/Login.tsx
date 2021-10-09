@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 import { handleAuth } from "services/auth";
 import { Avatar, Button, TextField, Typography, OutlinedTextFieldProps } from "@material-ui/core";
 import { useMutation } from "@apollo/client";
-import { REGISTER_USER } from "services/graphql";
+import { LOGIN_USER } from "services/graphql";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import "./Forms.scss";
+import "./AuthForms.scss";
 
 interface Props {
   history: History<LocationState>;
@@ -15,13 +15,12 @@ interface Props {
 
 const textFieldProps = { required: true, variant: "outlined", margin: "normal", fullWidth: true } as OutlinedTextFieldProps;
 
-const Register = ({ history }: Props) => {
+const Login = ({ history }: Props) => {
   const { handleErrors } = useContext(AppContext) as AppContextType;
-  const [formValues, setFormValues] = useState({ firstName: "", lastName: "", username: "", password: "" });
-  const { username } = formValues;
+  const [formValues, setFormValues] = useState({ username: "", password: "" });
 
-  const [register] = useMutation(REGISTER_USER, {
-    onCompleted: (data) => handleAuth({ ...data.register, username }, history),
+  const [login] = useMutation(LOGIN_USER, {
+    onCompleted: (data) => handleAuth(data.login, history),
     onError: (error) => handleErrors(error)
   });
 
@@ -30,25 +29,23 @@ const Register = ({ history }: Props) => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    register({ variables: { ...formValues } });
+    login({ variables: { ...formValues } });
   };
 
   return (
-    <div className="register-container">
+    <div className="login-container">
       <Avatar>
         <LockOutlinedIcon />
       </Avatar>
-      <Typography component="h1">Register</Typography>
+      <Typography component="h1">Login</Typography>
       <form onSubmit={handleSubmit}>
-        <TextField {...textFieldProps} label="first name" autoComplete="First Name" onChange={(e) => handleOnChange(e, "firstName")} />
-        <TextField {...textFieldProps} label="last name" autoComplete="Last Name" onChange={(e) => handleOnChange(e, "lastName")} />
         <TextField {...textFieldProps} label="username" autoComplete="Username" onChange={(e) => handleOnChange(e, "username")} />
         <TextField {...textFieldProps} label="password" autoComplete="Password" type="password" onChange={(e) => handleOnChange(e, "password")} />
-        <Link to="/login">Already have an account?</Link>
-        <Button type="submit" fullWidth variant="contained">Register</Button>
+        <Link to="/register">Don't have an account yet?</Link>
+        <Button type="submit" fullWidth variant="contained">Login</Button>
       </form>
     </div>
   );
 };
 
-export default Register;
+export default Login;

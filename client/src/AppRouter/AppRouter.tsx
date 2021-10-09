@@ -4,8 +4,8 @@ import { Switch, useHistory, useLocation, withRouter, RouteComponentProps } from
 import { History, LocationState } from "history";
 import { classNamesGenerator } from "@guybendavid/utils";
 import Main from "components/Main/Main";
-import Login from "components/Forms/Login";
-import Register from "components/Forms/Register";
+import Login from "components/AuthForms/Login";
+import Register from "components/AuthForms/Register";
 import AuthenticatedRoute from "./Routes/AuthenticatedRoute";
 import UnauthenticatedRoute from "./Routes/UnauthenticatedRoute";
 import DefaultRoute from "./Routes/DefaultRoute";
