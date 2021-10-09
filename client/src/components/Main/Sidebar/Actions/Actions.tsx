@@ -1,7 +1,6 @@
 import { useContext, useState, MouseEvent, Fragment } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { getLoggedInUser } from "services/auth";
-import { User } from "interfaces/interfaces";
 import { Avatar, IconButton, InputBase, ClickAwayListener, Menu, MenuItem } from "@material-ui/core";
 import { classNamesGenerator } from "@guybendavid/utils";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";
@@ -53,7 +52,7 @@ const Actions = ({ setSearchValue }: Props) => {
     <div className="actions">
       <div className="icons">
         <div className="left-side">
-          <Avatar className="avatar" alt="avatar" src={(loggedInUser as User)?.image} />
+          <Avatar className="avatar" alt="avatar" src={loggedInUser.image} />
         </div>
         <div className="right-side">
           {[DonutLargeIcon, ChatIcon, DotsIcon].map((Icon, index) => (
