@@ -1,5 +1,5 @@
-import { useState, useContext } from "react";
-import { AppContext, AppContextType } from "contexts/AppContext";
+import { useState } from "react";
+import { getLoggedInUser } from "services/auth";
 import { User } from "interfaces/interfaces";
 import { useSubscription } from "@apollo/client";
 import { NEW_MESSAGE } from "services/graphql";
@@ -9,7 +9,7 @@ import Chat from "./AlternateComps/Chat/Chat";
 import "./Main.scss";
 
 const Main = () => {
-  const { loggedInUser } = useContext(AppContext) as AppContextType;
+  const loggedInUser = getLoggedInUser();
   const [selectedUser, setSelectedUser] = useState<User>();
   const { data: newMessageData } = useSubscription(NEW_MESSAGE);
   const newMessage = newMessageData?.newMessage;

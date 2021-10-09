@@ -1,10 +1,8 @@
-import { useEffect, createContext, useState, ReactNode } from "react";
+import { createContext, useState, ReactNode } from "react";
 import { ApolloError } from "@apollo/client";
-import { User } from "interfaces/interfaces";
 import { HistoryType } from "App";
 
 export type AppContextType = {
-  loggedInUser: User | {};
   error: string;
   logout: () => void,
   handleErrors: (error: ApolloError) => void;
@@ -19,13 +17,7 @@ interface Props {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 const AppContextProvider = ({ children, history }: Props) => {
-  const [loggedInUser, setLoggedInUser] = useState<User | {}>({});
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    const user = localStorage.loggedInUser && JSON.parse(localStorage.loggedInUser);
-    setLoggedInUser(user);
-  }, []);
 
   const logout = () => {
     localStorage.clear();
@@ -56,7 +48,7 @@ const AppContextProvider = ({ children, history }: Props) => {
   };
 
   return (
-    <AppContext.Provider value={{ loggedInUser, error, logout, handleErrors, clearError }}>
+    <AppContext.Provider value={{ error, logout, handleErrors, clearError }}>
       {children}
     </AppContext.Provider>
   );
