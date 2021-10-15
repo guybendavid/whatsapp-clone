@@ -18,7 +18,7 @@ const Main = () => {
     if (newMessage) {
       const { senderId, recipientId } = newMessage;
       const { id: selectedUserId } = selectedUser as User;
-      return senderId === selectedUserId || (senderId === loggedInUser.id && recipientId === selectedUserId);
+      return senderId === selectedUserId || (senderId === loggedInUser?.id && recipientId === selectedUserId);
     }
   };
 

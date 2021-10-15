@@ -4,9 +4,22 @@ import { getUsersQueryVariables, GET_All_USERS_EXCEPT_LOGGED } from "./graphql";
 
 type GetUser = (options?: QueryLazyOptions<Record<string, any>>) => void;
 
-const displayNewMessageOnSidebar = (cache: any, newMessage: Message, sidebarUsers: User[],
-  loggedInUserId: string, isMoreUsersToFetch: boolean, getUser: GetUser) => {
+interface DisplayNewMessageOnSidebarData {
+  cache: any;
+  newMessage: Message;
+  sidebarUsers: User[];
+  loggedInUserId?: string;
+  isMoreUsersToFetch: boolean;
+  getUser: GetUser;
+}
 
+interface displayNewUserOnSidebarData {
+  sidebarNewUser: User;
+  client: ApolloClient<any>;
+  loggedInUserId?: string;
+}
+
+const displayNewMessageOnSidebar = ({ cache, newMessage, sidebarUsers, loggedInUserId, isMoreUsersToFetch, getUser }: DisplayNewMessageOnSidebarData) => {
   const { senderId, recipientId } = newMessage;
   const otherUserIsDisplayedOnSidebar = sidebarUsers?.find((user: User) => user.id === senderId || user.id === recipientId);
 
@@ -24,8 +37,8 @@ const displayNewMessageOnSidebar = (cache: any, newMessage: Message, sidebarUser
   }
 };
 
-const displayNewUserOnSidebar = (sidebarNewUser: User, client: ApolloClient<any>, loggedInUserId: string) => {
-  const queryToUpdate = { query: GET_All_USERS_EXCEPT_LOGGED, variables: getUsersQueryVariables(loggedInUserId) };
+const displayNewUserOnSidebar = ({ sidebarNewUser, client, loggedInUserId }: displayNewUserOnSidebarData) => {
+  const queryToUpdate = { query: GET_All_USERS_EXCEPT_LOGGED, variables: getUsersQueryVariables(loggedInUserId as string) };
   const { getAllUsersExceptLogged } = client.readQuery(queryToUpdate);
 
   const newData = {

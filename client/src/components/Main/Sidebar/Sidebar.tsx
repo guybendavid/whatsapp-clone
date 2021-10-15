@@ -20,7 +20,7 @@ const Sidebar = ({ setSelectedUser, newMessage }: Props) => {
   const [searchValue, setSearchValue] = useState("");
 
   const { data, fetchMore: fetchMoreUsers, client } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
-    variables: getUsersQueryVariables(loggedInUser.id),
+    variables: getUsersQueryVariables((loggedInUser as User)?.id),
     onError: (error) => handleErrors(error)
   });
 
@@ -33,7 +33,14 @@ const Sidebar = ({ setSelectedUser, newMessage }: Props) => {
 
   useEffect(() => {
     if (newMessage) {
-      displayNewMessageOnSidebar(client.cache, newMessage, sidebarData?.users, loggedInUser.id, isMoreUsersToFetch, getUser);
+      displayNewMessageOnSidebar({
+        cache: client.cache,
+        newMessage,
+        sidebarUsers: sidebarData?.users,
+        loggedInUserId: loggedInUser?.id,
+        isMoreUsersToFetch,
+        getUser
+      });
     }
     // eslint-disable-next-line
   }, [newMessage]);
@@ -43,7 +50,7 @@ const Sidebar = ({ setSelectedUser, newMessage }: Props) => {
       const { recipientId, senderId, ...userLatestMessageProperties } = newMessage;
       const sidebarNewUser = { ...newUserData.getUser };
       sidebarNewUser.latestMessage = { ...userLatestMessageProperties };
-      displayNewUserOnSidebar(sidebarNewUser, client, loggedInUser.id);
+      displayNewUserOnSidebar({ sidebarNewUser, client, loggedInUserId: loggedInUser?.id });
     }
     // eslint-disable-next-line
   }, [newUserData]);

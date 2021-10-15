@@ -26,7 +26,7 @@ const Chat = ({ selectedUser, newMessage }: Props) => {
   const messages = data?.getMessages;
 
   useEffect(() => {
-    if (messages && messages.length > 0) {
+    if (messages?.length > 0) {
       chatBottomRef.current?.scrollIntoView();
     }
     // eslint-disable-next-line

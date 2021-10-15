@@ -14,19 +14,19 @@ interface Props {
   setSelectedUser: (user: User) => void;
 }
 
-const UsersList = ({ users, searchValue, isMoreUsersToFetch, fetchMoreUsers, setSelectedUser }: Props) => {
+const UsersList = ({ users = [], searchValue, isMoreUsersToFetch, fetchMoreUsers, setSelectedUser }: Props) => {
   const loggedInUser = getLoggedInUser();
   const observer = useRef<IntersectionObserver | null>(null);
 
   const lastUserRef = useCallback(node => {
-    if (users && users.length > 0) {
+    if (users.length > 0) {
       observer.current?.disconnect();
 
       observer.current = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting && isMoreUsersToFetch && loggedInUser.id) {
+        if (entries[0].isIntersecting && isMoreUsersToFetch && (loggedInUser as User)?.id) {
           fetchMoreUsers({
             variables: {
-              loggedInUserId: loggedInUser.id,
+              loggedInUserId: (loggedInUser as User).id,
               offset: `${users.length}`,
               limit: `${getUsersSqlClauses.limit}`
             }
