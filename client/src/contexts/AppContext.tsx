@@ -27,12 +27,13 @@ const AppContextProvider = ({ children, history }: Props) => {
 
   const handleErrors = (error: any) => {
     const loggedInUser = getLoggedInUser();
+    const isAuthForm = window.location.pathname === "/login" || window.location.pathname === "/register";
     const isGraphQLErrorsIncludesError = (errorMessage: string) => error.graphQLErrors?.[0]?.message?.includes(errorMessage);
     const isUserInputError = isGraphQLErrorsIncludesError("UserInputError");
     const isSequelizeValidationError = isGraphQLErrorsIncludesError("SequelizeValidationError");
     const gqlContextErrorMessage = error.networkError?.result?.errors[0]?.message?.split("Context creation failed: ")[1];
 
-    if (!loggedInUser || gqlContextErrorMessage === "Unauthenticated") {
+    if (gqlContextErrorMessage === "Unauthenticated" || (!loggedInUser && !isAuthForm)) {
       logout();
       setError(gqlContextErrorMessage || "Unauthenticated");
     } else if (isUserInputError || isSequelizeValidationError) {
