@@ -10,36 +10,6 @@ import SearchIcon from "@material-ui/icons/Search";
 import ArrowDownWardIcon from "@material-ui/icons/ArrowDownward";
 import "./Actions.scss";
 
-const DotsIcon = () => {
-  const { logout } = useContext(AppContext) as AppContextType;
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  return (
-    <>
-      <IconButton onClick={handleClick}>
-        <MoreVertIcon />
-      </IconButton>
-      <Menu
-        id="logout-menu"
-        keepMounted
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <MenuItem onClick={logout}>Logout</MenuItem>
-      </Menu>
-    </>
-  );
-};
-
 interface Props {
   setSearchValue: (value: string) => void;
 }
@@ -87,6 +57,36 @@ const Actions = ({ setSearchValue }: Props) => {
         </ClickAwayListener>
       </div>
     </div>
+  );
+};
+
+const DotsIcon = () => {
+  const { logout } = useContext(AppContext) as AppContextType;
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <>
+      <IconButton onClick={handleClick}>
+        <MoreVertIcon />
+      </IconButton>
+      <Menu
+        id="logout-menu"
+        keepMounted
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={logout}>Logout</MenuItem>
+      </Menu>
+    </>
   );
 };
 
