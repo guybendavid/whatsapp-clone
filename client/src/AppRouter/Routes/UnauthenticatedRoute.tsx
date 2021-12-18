@@ -8,10 +8,10 @@ interface Props {
   Component: FC<RouteComponentProps>;
 }
 
-const UnauthenticatedRoute = ({ path, Component }: Props) => {
+const UnAuthenticatedRoute = ({ path, Component }: Props) => {
   return (
     <Route path={path} render={props => !localStorage.token ? <Component {...props} /> : <Redirect to="/" />} />
   );
 };
 
-export default UnauthenticatedRoute;
+export default UnAuthenticatedRoute;
