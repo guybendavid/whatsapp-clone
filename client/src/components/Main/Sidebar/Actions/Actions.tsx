@@ -1,6 +1,6 @@
 import { useContext, useState, MouseEvent, Fragment } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
-import { getLoggedInUser } from "services/auth";
+import { loggedInUser } from "services/auth";
 import { Avatar, IconButton, InputBase, ClickAwayListener, Menu, MenuItem } from "@material-ui/core";
 import { classNamesGenerator } from "@guybendavid/utils";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";
@@ -15,7 +15,6 @@ interface Props {
 }
 
 const Actions = ({ setSearchValue }: Props) => {
-  const loggedInUser = getLoggedInUser();
   const [searchBarIsOpened, setSearchBarIsOpened] = useState(false);
 
   return (

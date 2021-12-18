@@ -1,5 +1,5 @@
 import { useMemo, RefObject } from "react";
-import { getLoggedInUser } from "services/auth";
+import { loggedInUser } from "services/auth";
 import { Message } from "interfaces/interfaces";
 import { Typography } from "@material-ui/core";
 import { classNamesGenerator, timeDisplayer } from "@guybendavid/utils";
@@ -11,8 +11,6 @@ interface Props {
 }
 
 const Conversation = ({ messages = [], chatBottomRef }: Props) => {
-  const loggedInUser = getLoggedInUser();
-
   const firstIndexesOfSeries = useMemo(() => {
     if (messages.length > 0) {
       const firstMessagesOfSeries: Message[] = [];

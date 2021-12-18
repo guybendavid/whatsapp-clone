@@ -1,7 +1,7 @@
 import { createContext, useState, ReactNode } from "react";
 import { ApolloError } from "@apollo/client";
 import { HistoryType } from "App";
-import { getLoggedInUser } from "services/auth";
+import { isAuthenticated } from "services/auth";
 
 export type AppContextType = {
   error: string;
@@ -26,14 +26,13 @@ const AppContextProvider = ({ children, history }: Props) => {
   };
 
   const handleErrors = (error: any) => {
-    const loggedInUser = getLoggedInUser();
-    const isAuthForm = window.location.pathname === "/login" || window.location.pathname === "/register";
-    const isGraphQLErrorsIncludesError = (errorMessage: string) => error.graphQLErrors?.[0]?.message?.includes(errorMessage);
-    const isUserInputError = isGraphQLErrorsIncludesError("UserInputError");
-    const isSequelizeValidationError = isGraphQLErrorsIncludesError("SequelizeValidationError");
+    const isAuthForm = ["/login", "register"].includes(window.location.pathname);
+    const isGQLErrorExists = (gqlErrorMessage: string) => error.graphQLErrors?.[0]?.message?.includes(gqlErrorMessage);
+    const isUserInputError = isGQLErrorExists("UserInputError");
+    const isSequelizeValidationError = isGQLErrorExists("SequelizeValidationError");
     const gqlContextErrorMessage = error.networkError?.result?.errors[0]?.message?.split("Context creation failed: ")[1];
 
-    if (gqlContextErrorMessage === "Unauthenticated" || (!loggedInUser && !isAuthForm)) {
+    if (gqlContextErrorMessage === "Unauthenticated" || (!isAuthenticated && !isAuthForm)) {
       logout();
       setError(gqlContextErrorMessage || "Unauthenticated");
     } else if (isUserInputError || isSequelizeValidationError) {

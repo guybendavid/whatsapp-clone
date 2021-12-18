@@ -41,7 +41,7 @@ const MessageCreator = ({ selectedUser }: Props) => {
           <Icon />
         </IconButton>
       ))}
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form onSubmit={handleSubmit}>
         <div className="input-wrapper">
           <InputBase
             onChange={(e) => setMessageInput({ ...messageInput, content: e.target.value })}

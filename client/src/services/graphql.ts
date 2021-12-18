@@ -89,7 +89,7 @@ const NEW_MESSAGE = gql`
 
 const getUsersSqlClauses = { offset: 0, limit: 50 };
 
-const getUsersQueryVariables = (loggedInUserId: string) => {
+function getUsersQueryVariables(loggedInUserId: string) {
   return {
     loggedInUserId,
     offset: `${getUsersSqlClauses.offset}`,

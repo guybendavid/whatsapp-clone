@@ -19,7 +19,7 @@ interface displayNewUserOnSidebarData {
   loggedInUserId?: string;
 }
 
-const displayNewMessageOnSidebar = ({ cache, newMessage, sidebarUsers, loggedInUserId, isMoreUsersToFetch, getUser }: DisplayNewMessageOnSidebarData) => {
+function displayNewMessageOnSidebar({ cache, newMessage, sidebarUsers, loggedInUserId, isMoreUsersToFetch, getUser }: DisplayNewMessageOnSidebarData) {
   const { senderId, recipientId } = newMessage;
   const otherUserIsDisplayedOnSidebar = sidebarUsers?.find((user: User) => user.id === senderId || user.id === recipientId);
 
@@ -37,7 +37,7 @@ const displayNewMessageOnSidebar = ({ cache, newMessage, sidebarUsers, loggedInU
   }
 };
 
-const displayNewUserOnSidebar = ({ sidebarNewUser, client, loggedInUserId }: displayNewUserOnSidebarData) => {
+function displayNewUserOnSidebar({ sidebarNewUser, client, loggedInUserId }: displayNewUserOnSidebarData) {
   const queryToUpdate = { query: GET_All_USERS_EXCEPT_LOGGED, variables: getUsersQueryVariables(loggedInUserId as string) };
   const { getAllUsersExceptLogged } = client.readQuery(queryToUpdate);
 
