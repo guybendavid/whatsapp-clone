@@ -2,7 +2,7 @@ import { createContext, useState, ReactNode } from "react";
 import { ApolloError } from "@apollo/client";
 import { logout } from "services/auth";
 
-export type AppContextType = {
+type AppContextType = {
   error: string;
   handleErrors: (error: ApolloError) => void;
   clearError: () => void;
@@ -42,3 +42,4 @@ const AppContextProvider = ({ children }: Props) => {
 };
 
 export { AppContext, AppContextProvider };
+export type { AppContextType };
