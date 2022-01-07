@@ -15,7 +15,7 @@ interface Props {
 
 const Actions = ({ setSearchValue }: Props) => {
   const { loggedInUser } = getAuthData();
-  const [searchBarIsOpened, setSearchBarIsOpened] = useState(false);
+  const [searchBarIsOpen, setSearchBarIsOpen] = useState(false);
 
   return (
     <div className="actions">
@@ -35,20 +35,20 @@ const Actions = ({ setSearchValue }: Props) => {
           ))}
         </div>
       </div>
-      <div className={classNamesGenerator("form-wrapper", searchBarIsOpened && "white")}>
-        <ClickAwayListener onClickAway={() => setSearchBarIsOpened(false)}>
+      <div className={classNamesGenerator("form-wrapper", searchBarIsOpen && "white")}>
+        <ClickAwayListener onClickAway={() => setSearchBarIsOpen(false)}>
           <form>
             <div className="search-wrapper">
               <div className="icon-wrapper">
-                {searchBarIsOpened ? <ArrowDownWardIcon className="is-arrow" /> : <SearchIcon />}
+                {searchBarIsOpen ? <ArrowDownWardIcon className="is-arrow" /> : <SearchIcon />}
               </div>
               <div className="input-wrapper">
                 <InputBase
                   className="input-base"
                   inputProps={{ "aria-label": "search" }}
                   onChange={(e) => setSearchValue(e.target.value)}
-                  onClick={() => setSearchBarIsOpened(prevState => !prevState)}
-                  placeholder={searchBarIsOpened ? "" : "Search or start new chat"}
+                  onClick={() => setSearchBarIsOpen(prevState => !prevState)}
+                  placeholder={searchBarIsOpen ? "" : "Search or start new chat"}
                 />
               </div>
             </div>
