@@ -1,6 +1,6 @@
 import { createContext, useState, ReactNode } from "react";
 import { ApolloError } from "@apollo/client";
-import { getAuthData, logout } from "services/auth";
+import { logout } from "services/auth";
 
 export type AppContextType = {
   error: string;
@@ -15,13 +15,12 @@ interface Props {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 const AppContextProvider = ({ children }: Props) => {
-  const { isAuthenticated, isAuthForm } = getAuthData();
   const [error, setError] = useState("");
 
   const handleErrors = (error: any) => {
     const gqlContextErrorMessage = error.networkError?.result?.errors[0]?.message?.split("Context creation failed: ")[1];
 
-    if (gqlContextErrorMessage === "Unauthenticated" || (!isAuthenticated && !isAuthForm)) {
+    if (gqlContextErrorMessage === "Unauthenticated") {
       logout();
       setError("Unauthenticated");
     } else if (gqlContextErrorMessage) {
