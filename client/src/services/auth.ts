@@ -1,13 +1,11 @@
 import { User } from "interfaces/interfaces";
-import { History, LocationState } from "history";
 
-function handleAuth(data: User, history: History<LocationState>) {
+function handleAuth(data: User) {
   const { token, ...user } = data;
 
   if (token && user) {
     localStorage.token = token;
     localStorage.loggedInUser = JSON.stringify(user);
-    history.push("/chat");
     window.location.reload();
   }
 }

@@ -1,5 +1,4 @@
 import { useState, useContext, SyntheticEvent, ChangeEvent } from "react";
-import { History, LocationState } from "history";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { Link } from "react-router-dom";
 import { handleAuth } from "services/auth";
@@ -9,19 +8,15 @@ import { REGISTER_USER } from "services/graphql";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import "./AuthForms.scss";
 
-interface Props {
-  history: History<LocationState>;
-}
-
 const textFieldProps = { required: true, variant: "outlined", margin: "normal", fullWidth: true } as OutlinedTextFieldProps;
 
-const Register = ({ history }: Props) => {
+const Register = () => {
   const { handleErrors } = useContext(AppContext) as AppContextType;
   const [formValues, setFormValues] = useState({ firstName: "", lastName: "", username: "", password: "" });
   const { username } = formValues;
 
   const [register] = useMutation(REGISTER_USER, {
-    onCompleted: (data) => handleAuth({ ...data.register, username }, history),
+    onCompleted: (data) => handleAuth({ ...data.register, username }),
     onError: (error) => handleErrors(error)
   });
 

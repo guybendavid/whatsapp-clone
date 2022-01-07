@@ -1,5 +1,4 @@
 import { useState, useContext, SyntheticEvent, ChangeEvent } from "react";
-import { History, LocationState } from "history";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { Link } from "react-router-dom";
 import { handleAuth } from "services/auth";
@@ -9,18 +8,14 @@ import { LOGIN_USER } from "services/graphql";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import "./AuthForms.scss";
 
-interface Props {
-  history: History<LocationState>;
-}
-
 const textFieldProps = { required: true, variant: "outlined", margin: "normal", fullWidth: true } as OutlinedTextFieldProps;
 
-const Login = ({ history }: Props) => {
+const Login = () => {
   const { handleErrors } = useContext(AppContext) as AppContextType;
   const [formValues, setFormValues] = useState({ username: "", password: "" });
 
   const [login] = useMutation(LOGIN_USER, {
-    onCompleted: (data) => handleAuth(data.login, history),
+    onCompleted: (data) => handleAuth(data.login),
     onError: (error) => handleErrors(error)
   });
 
