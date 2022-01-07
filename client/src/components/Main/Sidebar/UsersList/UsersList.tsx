@@ -1,7 +1,7 @@
 import { useRef, useCallback, Fragment } from "react";
 import { User } from "interfaces/interfaces";
 import { List, ListItem, Avatar, ListItemAvatar, Typography, Divider } from "@material-ui/core";
-import { loggedInUser } from "services/auth";
+import { getAuthData } from "services/auth";
 import { getUsersSqlClauses } from "services/graphql";
 import { classNamesGenerator, timeDisplayer } from "@guybendavid/utils";
 import "./UsersList.scss";
@@ -15,6 +15,7 @@ interface Props {
 }
 
 const UsersList = ({ users = [], searchValue, isMoreUsersToFetch, fetchMoreUsers, setSelectedUser }: Props) => {
+  const { loggedInUser } = getAuthData();
   const observer = useRef<IntersectionObserver | null>(null);
 
   const lastUserRef = useCallback(node => {

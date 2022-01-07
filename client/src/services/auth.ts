@@ -10,12 +10,16 @@ function handleAuth(data: User) {
   }
 }
 
+function getAuthData() {
+  const loggedInUser = localStorage.loggedInUser && JSON.parse(localStorage.loggedInUser);
+  const isAuthenticated = Boolean(loggedInUser && localStorage.token);
+  const isAuthForm = ["/login", "/register"].includes(window.location.pathname);
+  return { loggedInUser, isAuthenticated, isAuthForm };
+}
+
 function logout() {
   localStorage.clear();
   window.location.reload();
 };
 
-const loggedInUser = localStorage.loggedInUser && JSON.parse(localStorage.loggedInUser);
-const isAuthenticated = loggedInUser && localStorage.token;
-
-export { loggedInUser, isAuthenticated, handleAuth, logout };
+export { getAuthData, handleAuth, logout };

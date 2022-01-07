@@ -1,8 +1,11 @@
 import { Route, Redirect } from "react-router";
+import { getAuthData } from "services/auth";
 
 const DefaultRoute = () => {
+  const { isAuthenticated } = getAuthData();
+  
   return (
-    <Route render={() => localStorage.token ? <Redirect to="/" /> : <Redirect to="/login" />} />
+    <Route render={() => isAuthenticated ? <Redirect to="/" /> : <Redirect to="/login" />} />
   );
 };
 

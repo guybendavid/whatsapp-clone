@@ -1,5 +1,6 @@
 import { ApolloClient, QueryLazyOptions } from "@apollo/client";
 import { Message, User } from "interfaces/interfaces";
+import { getAuthData } from "./auth";
 import { getUsersQueryVariables, GET_All_USERS_EXCEPT_LOGGED } from "./graphql";
 
 type GetUser = (options?: QueryLazyOptions<Record<string, any>>) => void;
@@ -8,7 +9,6 @@ interface DisplayNewMessageOnSidebarData {
   cache: any;
   newMessage: Message;
   sidebarUsers: User[];
-  loggedInUserId?: string;
   isMoreUsersToFetch: boolean;
   getUser: GetUser;
 }
@@ -16,10 +16,10 @@ interface DisplayNewMessageOnSidebarData {
 interface displayNewUserOnSidebarData {
   sidebarNewUser: User;
   client: ApolloClient<any>;
-  loggedInUserId?: string;
 }
 
-function displayNewMessageOnSidebar({ cache, newMessage, sidebarUsers, loggedInUserId, isMoreUsersToFetch, getUser }: DisplayNewMessageOnSidebarData) {
+function displayNewMessageOnSidebar({ cache, newMessage, sidebarUsers, isMoreUsersToFetch, getUser }: DisplayNewMessageOnSidebarData) {
+  const { loggedInUser } = getAuthData();
   const { senderId, recipientId } = newMessage;
   const otherUserIsDisplayedOnSidebar = sidebarUsers?.find((user: User) => user.id === senderId || user.id === recipientId);
 
@@ -32,13 +32,14 @@ function displayNewMessageOnSidebar({ cache, newMessage, sidebarUsers, loggedInU
         }
       }
     });
-  } else if (senderId !== loggedInUserId && !isMoreUsersToFetch) {
+  } else if (senderId !== loggedInUser.id && !isMoreUsersToFetch) {
     getUser({ variables: { id: senderId } });
   }
 };
 
-function displayNewUserOnSidebar({ sidebarNewUser, client, loggedInUserId }: displayNewUserOnSidebarData) {
-  const queryToUpdate = { query: GET_All_USERS_EXCEPT_LOGGED, variables: getUsersQueryVariables(loggedInUserId as string) };
+function displayNewUserOnSidebar({ sidebarNewUser, client }: displayNewUserOnSidebarData) {
+  const { loggedInUser } = getAuthData();
+  const queryToUpdate = { query: GET_All_USERS_EXCEPT_LOGGED, variables: getUsersQueryVariables(loggedInUser.id as string) };
   const { getAllUsersExceptLogged } = client.readQuery(queryToUpdate);
 
   const newData = {

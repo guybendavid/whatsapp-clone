@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { useQuery, useLazyQuery } from "@apollo/client";
-import { loggedInUser } from "services/auth";
+import { getAuthData } from "services/auth";
 import { getUsersQueryVariables, GET_All_USERS_EXCEPT_LOGGED, GET_USER } from "services/graphql";
 import { displayNewMessageOnSidebar, displayNewUserOnSidebar } from "services/sidebar-helper";
 import { User, Message } from "interfaces/interfaces";
@@ -15,6 +15,7 @@ interface Props {
 }
 
 const Sidebar = ({ setSelectedUser, newMessage }: Props) => {
+  const { loggedInUser } = getAuthData();
   const { handleErrors } = useContext(AppContext) as AppContextType;
   const [searchValue, setSearchValue] = useState("");
 
@@ -36,7 +37,6 @@ const Sidebar = ({ setSelectedUser, newMessage }: Props) => {
         cache: client.cache,
         newMessage,
         sidebarUsers: sidebarData?.users,
-        loggedInUserId: loggedInUser?.id,
         isMoreUsersToFetch,
         getUser
       });
@@ -49,7 +49,7 @@ const Sidebar = ({ setSelectedUser, newMessage }: Props) => {
       const { recipientId, senderId, ...userLatestMessageProperties } = newMessage;
       const sidebarNewUser = { ...newUserData.getUser };
       sidebarNewUser.latestMessage = { ...userLatestMessageProperties };
-      displayNewUserOnSidebar({ sidebarNewUser, client, loggedInUserId: loggedInUser?.id });
+      displayNewUserOnSidebar({ sidebarNewUser, client });
     }
     // eslint-disable-next-line
   }, [newUserData]);

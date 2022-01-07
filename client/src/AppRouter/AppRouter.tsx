@@ -1,6 +1,7 @@
 import { Container } from "@material-ui/core";
-import { Switch, useLocation, withRouter } from "react-router-dom";
+import { Switch, withRouter } from "react-router-dom";
 import { classNamesGenerator } from "@guybendavid/utils";
+import { getAuthData } from "services/auth";
 import Main from "components/Main/Main";
 import Login from "components/AuthForms/Login";
 import Register from "components/AuthForms/Register";
@@ -10,8 +11,7 @@ import DefaultRoute from "./Routes/DefaultRoute";
 import ErrorMessage from "components/ErrorMessage/ErrorMessage";
 
 const AppRouter = () => {
-  const location = useLocation();
-  const isAuthForm = location.pathname === "/login" || location.pathname === "/register";
+  const { isAuthForm } = getAuthData();
 
   return (
     <Container className={classNamesGenerator("container", isAuthForm && "is-auth-form")} maxWidth={isAuthForm ? "sm" : "xl"}>

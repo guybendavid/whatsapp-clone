@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { loggedInUser } from "services/auth";
+import { getAuthData } from "services/auth";
 import { User, Message } from "interfaces/interfaces";
 import { useSubscription } from "@apollo/client";
 import { NEW_MESSAGE } from "services/graphql";
@@ -23,6 +23,8 @@ const Main = () => {
 };
 
 function isNewMessageRelevantToOpenedChat(newMessage?: Message, selectedUser?: User) {
+  const { loggedInUser } = getAuthData();
+  
   if (newMessage) {
     const { senderId, recipientId } = newMessage;
     const { id: selectedUserId } = selectedUser as User;

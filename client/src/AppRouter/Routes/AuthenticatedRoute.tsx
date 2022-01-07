@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Route, Redirect } from "react-router";
+import { getAuthData } from "services/auth";
 
 interface Props {
   exact: boolean;
@@ -9,8 +10,10 @@ interface Props {
 }
 
 const AuthenticatedRoute = ({ path, Component }: Props) => {
+  const { isAuthenticated } = getAuthData();
+
   return (
-    <Route path={path} render={() => localStorage.token ? <Component /> : <Redirect to="/login" />} />
+    <Route path={path} render={() => isAuthenticated ? <Component /> : <Redirect to="/login" />} />
   );
 };
 
