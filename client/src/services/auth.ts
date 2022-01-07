@@ -10,7 +10,12 @@ function handleAuth(data: User) {
   }
 }
 
+function logout() {
+  localStorage.clear();
+  window.location.reload();
+};
+
 const loggedInUser = localStorage.loggedInUser && JSON.parse(localStorage.loggedInUser);
 const isAuthenticated = loggedInUser && localStorage.token;
 
-export { loggedInUser, isAuthenticated, handleAuth };
+export { loggedInUser, isAuthenticated, handleAuth, logout };

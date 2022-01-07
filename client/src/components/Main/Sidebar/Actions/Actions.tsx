@@ -1,6 +1,5 @@
-import { useContext, useState, MouseEvent, Fragment } from "react";
-import { AppContext, AppContextType } from "contexts/AppContext";
-import { loggedInUser } from "services/auth";
+import { useState, MouseEvent, Fragment } from "react";
+import { loggedInUser, logout } from "services/auth";
 import { Avatar, IconButton, InputBase, ClickAwayListener, Menu, MenuItem } from "@material-ui/core";
 import { classNamesGenerator } from "@guybendavid/utils";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";
@@ -60,7 +59,6 @@ const Actions = ({ setSearchValue }: Props) => {
 };
 
 const DotsIcon = () => {
-  const { logout } = useContext(AppContext) as AppContextType;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {

@@ -1,10 +1,9 @@
 import { createContext, useState, ReactNode } from "react";
 import { ApolloError } from "@apollo/client";
-import { isAuthenticated } from "services/auth";
+import { isAuthenticated, logout } from "services/auth";
 
 export type AppContextType = {
   error: string;
-  logout: () => void,
   handleErrors: (error: ApolloError) => void;
   clearError: () => void;
 };
@@ -17,11 +16,6 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 const AppContextProvider = ({ children }: Props) => {
   const [error, setError] = useState("");
-
-  const logout = () => {
-    localStorage.clear();
-    window.location.reload();
-  };
 
   const handleErrors = (error: any) => {
     const isAuthForm = ["/login", "/register"].includes(window.location.pathname);
@@ -42,7 +36,7 @@ const AppContextProvider = ({ children }: Props) => {
   };
 
   return (
-    <AppContext.Provider value={{ error, logout, handleErrors, clearError }}>
+    <AppContext.Provider value={{ error, handleErrors, clearError }}>
       {children}
     </AppContext.Provider>
   );
