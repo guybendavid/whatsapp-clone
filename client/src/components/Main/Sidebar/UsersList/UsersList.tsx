@@ -23,10 +23,10 @@ const UsersList = ({ users = [], searchValue, isMoreUsersToFetch, fetchMoreUsers
       observer.current?.disconnect();
 
       observer.current = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting && isMoreUsersToFetch && (loggedInUser as User)?.id) {
+        if (entries[0].isIntersecting && isMoreUsersToFetch && loggedInUser?.id) {
           fetchMoreUsers({
             variables: {
-              loggedInUserId: (loggedInUser as User).id,
+              loggedInUserId: loggedInUser.id,
               offset: `${users.length}`,
               limit: `${getUsersSqlClauses.limit}`
             }

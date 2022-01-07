@@ -20,7 +20,7 @@ const Sidebar = ({ setSelectedUser, newMessage }: Props) => {
   const [searchValue, setSearchValue] = useState("");
 
   const { data, fetchMore: fetchMoreUsers, client } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
-    variables: getUsersQueryVariables((loggedInUser as User)?.id),
+    variables: getUsersQueryVariables(loggedInUser?.id),
     onError: (error) => handleErrors(error)
   });
 
