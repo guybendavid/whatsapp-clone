@@ -4,6 +4,9 @@
   "author": "Guy Ben David",
   "license": "BSD-3-Clause",
   "private": true,
+  "engines": {
+    "node": "14.17.1"
+  },
   "scripts": {
     "create-dist-folder": "mkdir dist",
     "build-client": "cd client && npm i && npm audit fix && npm run build && cd ../ && npm run copy-client-files-to-dist",
