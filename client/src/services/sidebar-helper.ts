@@ -21,11 +21,11 @@ interface displayNewUserOnSidebarData {
 function displayNewMessageOnSidebar({ cache, newMessage, sidebarUsers, isMoreUsersToFetch, getUser }: DisplayNewMessageOnSidebarData) {
   const { loggedInUser } = getAuthData();
   const { senderId, recipientId } = newMessage;
-  const otherUserIsDisplayedOnSidebar = sidebarUsers?.find((user: User) => user.id === senderId || user.id === recipientId);
+  const isOtherUserDisplayedOnSidebar = sidebarUsers?.find((user: User) => user.id === senderId || user.id === recipientId);
 
-  if (otherUserIsDisplayedOnSidebar) {
+  if (isOtherUserDisplayedOnSidebar) {
     cache.modify({
-      id: cache.identify(otherUserIsDisplayedOnSidebar),
+      id: cache.identify(isOtherUserDisplayedOnSidebar),
       fields: {
         latestMessage() {
           return newMessage;
