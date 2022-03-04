@@ -8,6 +8,8 @@
     "node": "14.17.1"
   },
   "scripts": {
+    "start-client": "cd client && npm run start",
+    "start-server": "cd server && npm run dev",
     "create-dist-folder": "mkdir dist",
     "build-client": "cd client && npm i && npm audit fix && npm run build && cd ../ && npm run copy-client-files-to-dist",
     "copy-client-files-to-dist": "cd client && cp -r build ../dist && rm -r build && cd ../dist && mv build client",
