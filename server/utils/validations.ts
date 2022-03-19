@@ -15,11 +15,11 @@ const getErrors = (payload: User | Message) => {
   });
 
   if (emptyFields.length > 0) {
-    errors = getFormattedMessage("please send a non empty value for the field", emptyFields);
+    errors = formatMessage("please send a non empty value for the field", emptyFields);
   }
 
   if (sideWhiteSpacesFields.length > 0) {
-    const message = getFormattedMessage("please remove side white-spaces from the field", sideWhiteSpacesFields);
+    const message = formatMessage("please remove side white-spaces from the field", sideWhiteSpacesFields);
     const isPreviousErrors = errors.length > 0;
     isPreviousErrors ? errors += `<br /> ${message}` : errors = message;
   }
@@ -32,7 +32,7 @@ const isOnlyOneField = (fields: string[]) => getInvalidFields(fields).length ===
 // Template literals add a comma to the returned array using a map by default, so it's only needed to add a space
 const getInvalidFields = (fields: string[]) => fields.map((field, index) => `${index > 0 ? ` ${field}` : field}`);
 
-const getFormattedMessage = (message: string, fields: string[]) =>
+const formatMessage = (message: string, fields: string[]) =>
   `${message += isOnlyOneField(fields) ? ":" : "s:"} ${getInvalidFields(fields)}`;
 
 export { getErrors };
