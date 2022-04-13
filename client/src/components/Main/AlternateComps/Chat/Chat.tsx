@@ -33,7 +33,7 @@ const Chat = ({ selectedUser, newMessage }: Props) => {
   }, [messages]);
 
   useEffect(() => {
-    if (newMessage) {
+    if (newMessage && !messages.some((message: Message) => message.id === newMessage.id)) {
       const { recipientId, ...messageToAdd } = newMessage;
       addNewMessageToChat(messageToAdd, client, selectedUser.id);
       selectedUser.latestMessage = { ...newMessage };
