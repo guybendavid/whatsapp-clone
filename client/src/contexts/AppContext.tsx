@@ -19,20 +19,14 @@ const AppContextProvider = ({ children }: Props) => {
 
   const handleErrors = (error: any) => {
     const gqlContextErrorMessage = error.networkError?.result?.errors[0]?.message?.split("Context creation failed: ")[1];
+    setError(gqlContextErrorMessage || error.message || "Something went wrong...");
 
     if (gqlContextErrorMessage === "Unauthenticated") {
       logout();
-      setError("Unauthenticated");
-    } else if (gqlContextErrorMessage) {
-      setError(gqlContextErrorMessage);
-    } else {
-      setError(error.message);
     }
   };
 
-  const clearError = () => {
-    setError("");
-  };
+  const clearError = () => setError("");
 
   return (
     <AppContext.Provider value={{ error, handleErrors, clearError }}>

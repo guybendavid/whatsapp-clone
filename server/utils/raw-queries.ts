@@ -1,3 +1,5 @@
+const getTotalUsers = "select count(id) from users";
+
 const getUsersWithLatestMessage = (offset: string, limit: string) => {
   return `select distinct on (u.id) u.id, u.first_name as "firstName",
   u.last_name as "lastName", u.image, m.content, m.created_at as "createdAt" from
@@ -7,4 +9,4 @@ const getUsersWithLatestMessage = (offset: string, limit: string) => {
       order by u.id, m.created_at desc ${offset ? "offset ?" : ""} ${limit ? "limit ?" : ""}`;
 };
 
-export { getUsersWithLatestMessage };
+export { getTotalUsers, getUsersWithLatestMessage };

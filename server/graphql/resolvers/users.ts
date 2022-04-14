@@ -4,7 +4,7 @@ import { UserInputError } from "apollo-server";
 import { QueryTypes } from "sequelize";
 import { sequelize, User } from "../../db/models/models-config";
 import { User as UserInterface } from "../../db/interfaces/interfaces";
-import { getUsersWithLatestMessage } from "../../utils/raw-queries";
+import { getTotalUsers, getUsersWithLatestMessage } from "../../utils/raw-queries";
 // eslint-disable-next-line
 const generateImage = require("../../utils/generate-image");
 
@@ -12,7 +12,6 @@ const usersResolver = {
   Query: {
     getAllUsersExceptLogged: async (_parent: any, args: { id: string; offset: string; limit: string; }, _context: { user: UserInterface; }) => {
       const { id, offset, limit } = args;
-      const getTotalUsers = "select count(id) from users";
       const getSidebarUsers = getUsersWithLatestMessage(offset, limit);
       let totalUsers = await sequelize.query(getTotalUsers, { type: QueryTypes.SELECT });
 

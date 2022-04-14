@@ -17,12 +17,12 @@ const Main = () => {
     <div className="main">
       <Sidebar setSelectedUser={setSelectedUser} newMessage={newMessage} />
       {selectedUser ? <Chat selectedUser={selectedUser}
-        newMessage={isNewMessageRelevantToOpenedChat(newMessage, selectedUser) ? newMessage : undefined} /> : <WelcomeScreen />}
+        newMessage={isNewMessageRelatedToOpenedChat(newMessage, selectedUser) ? newMessage : undefined} /> : <WelcomeScreen />}
     </div>
   );
 };
 
-function isNewMessageRelevantToOpenedChat(newMessage?: Message, selectedUser?: User) {
+function isNewMessageRelatedToOpenedChat(newMessage?: Message, selectedUser?: User) {
   const { loggedInUser } = getAuthData();
 
   if (newMessage) {
