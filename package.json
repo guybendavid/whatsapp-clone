@@ -8,6 +8,7 @@
     "node": "14.17.1"
   },
   "scripts": {
+    "install-project": "cd client && npm i && npm audit fix && cd ../server && npm i && npm audit fix",
     "start-client": "cd client && npm run start",
     "start-server": "cd server && npm run dev",
     "create-dist-folder": "mkdir dist",
