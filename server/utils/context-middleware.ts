@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { UserInputError, AuthenticationError, PubSub } from "apollo-server";
-import { getErrors } from "./validations";
+import { getErrors } from "@guybendavid/utils";
 
 const { SECRET_KEY } = process.env;
 const pubsub = new PubSub();
