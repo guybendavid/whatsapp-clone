@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { UserInputError, AuthenticationError, PubSub } from "apollo-server";
-import { getErrors } from "@guybendavid/utils";
+import { getFormValidationErrors } from "@guybendavid/utils";
 
 const { SECRET_KEY } = process.env;
 const pubsub = new PubSub();
@@ -31,7 +31,7 @@ const validationMiddleware = (context: any) => {
   const { operationName, variables } = context.req.body;
 
   if ([...authOperations, "SendMessage"].includes(operationName)) {
-    const errors = getErrors(variables);
+    const errors = getFormValidationErrors(variables);
 
     if (errors) {
       throw new UserInputError(errors);
