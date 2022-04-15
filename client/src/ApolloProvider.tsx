@@ -41,30 +41,28 @@ const splitLink = split(
   httpLink
 );
 
-const cache = new InMemoryCache({
-  typePolicies: {
-    Query: {
-      fields: {
-        getAllUsersExceptLogged: {
-          keyArgs: false,
-          merge: (prevResult, incomingResult) => {
-            const updatedObj = { ...incomingResult };
-
-            if (prevResult) {
-              updatedObj.users = [...prevResult.users, ...incomingResult.users];
-            }
-
-            return updatedObj;
-          }
-        },
-      }
-    }
-  }
-});
-
 const client = new ApolloClient({
   link: splitLink,
-  cache
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          getAllUsersExceptLogged: {
+            keyArgs: false,
+            merge: (prevResult, incomingResult) => {
+              const updatedObj = { ...incomingResult };
+
+              if (prevResult) {
+                updatedObj.users = [...prevResult.users, ...incomingResult.users];
+              }
+
+              return updatedObj;
+            }
+          },
+        }
+      }
+    }
+  })
 });
 
 export default (

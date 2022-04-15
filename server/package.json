@@ -10,7 +10,7 @@
     "build": "tsc && rm -rf ./build/db/interfaces"
   },
   "dependencies": {
-    "@guybendavid/utils": "^1.1.2",
+    "@guybendavid/utils": "^2.0.3",
     "apollo-server": "^2.25.3",
     "bcrypt": "^5.0.1",
     "express-pino-logger": "^6.0.0",

@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
-import { useQuery, useLazyQuery } from "@apollo/client";
+import { useQuery, useLazyQuery, InMemoryCache } from "@apollo/client";
 import { getAuthData } from "services/auth";
 import { getUsersQueryVariables, GET_All_USERS_EXCEPT_LOGGED, GET_USER } from "services/graphql";
 import { displayNewMessageOnSidebar, displayNewUserOnSidebar } from "services/sidebar-helper";
@@ -34,7 +34,7 @@ const Sidebar = ({ setSelectedUser, newMessage }: Props) => {
   useEffect(() => {
     if (newMessage) {
       displayNewMessageOnSidebar({
-        cache: client.cache,
+        cache: client.cache as InMemoryCache,
         newMessage,
         sidebarUsers: sidebarData?.users,
         isMoreUsersToFetch,

@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload, VerifyErrors } from "jsonwebtoken";
 import { UserInputError, AuthenticationError, PubSub } from "apollo-server";
 import { getFormValidationErrors } from "@guybendavid/utils";
 
@@ -13,7 +13,7 @@ const authenticationMiddleware = (context: any) => {
   ).split("Bearer ")[1];
 
   if (SECRET_KEY) {
-    jwt.verify(token, SECRET_KEY, (_err: any, decodedToken: any) => (context.user = decodedToken));
+    jwt.verify(token, SECRET_KEY, (_err: VerifyErrors | null, decodedToken?: JwtPayload) => (context.user = decodedToken));
   }
 
   if (!context.user && !authOperations.includes(context.req?.body?.operationName)) {
@@ -31,10 +31,10 @@ const validationMiddleware = (context: any) => {
   const { operationName, variables } = context.req.body;
 
   if ([...authOperations, "SendMessage"].includes(operationName)) {
-    const errors = getFormValidationErrors(variables);
+    const { message } = getFormValidationErrors(variables);
 
-    if (errors) {
-      throw new UserInputError(errors);
+    if (message) {
+      throw new UserInputError(message);
     }
   }
 };
