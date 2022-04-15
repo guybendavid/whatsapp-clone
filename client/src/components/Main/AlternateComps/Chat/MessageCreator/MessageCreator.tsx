@@ -1,9 +1,10 @@
-import { useState, useEffect, SyntheticEvent, useContext } from "react";
+import { useState, SyntheticEvent, useContext } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { User } from "interfaces/interfaces";
 import { useMutation } from "@apollo/client";
 import { SEND_MESSAGE } from "services/graphql";
 import { IconButton, InputBase } from "@material-ui/core";
+import { getFormValidationErrors } from "@guybendavid/utils";
 import MoodIcon from "@material-ui/icons/Mood";
 import AttachmentIcon from "@material-ui/icons/Attachment";
 import MicIcon from "@material-ui/icons/Mic";
@@ -14,24 +15,26 @@ interface Props {
 }
 
 const MessageCreator = ({ selectedUser }: Props) => {
-  const { handleErrors } = useContext(AppContext) as AppContextType;
-
-  const initialMessageObj = { content: "", recipientId: selectedUser.id };
-  const [messageInput, setMessageInput] = useState(initialMessageObj);
+  const { handleServerErrors, setError } = useContext(AppContext) as AppContextType;
+  const [message, setMessage] = useState("");
 
   const [sendMessage] = useMutation(SEND_MESSAGE, {
-    onError: (error) => handleErrors(error)
+    onError: (error) => handleServerErrors(error)
   });
 
-  useEffect(() => {
-    setMessageInput(initialMessageObj);
-    // eslint-disable-next-line
-  }, [selectedUser]);
 
-  const handleSubmit = (e: SyntheticEvent) => {
+  const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    sendMessage({ variables: { ...messageInput } });
-    setMessageInput(initialMessageObj);
+    const sendMessagePayload = { content: message, recipientId: selectedUser.id };
+    const { message: errorMessage } = getFormValidationErrors(sendMessagePayload);
+
+    if (errorMessage) {
+      setError(errorMessage);
+      return;
+    }
+
+    await sendMessage({ variables: sendMessagePayload });
+    setMessage("");
   };
 
   return (
@@ -44,8 +47,8 @@ const MessageCreator = ({ selectedUser }: Props) => {
       <form onSubmit={handleSubmit}>
         <div className="input-wrapper">
           <InputBase
-            onChange={(e) => setMessageInput({ ...messageInput, content: e.target.value })}
-            value={messageInput.content}
+            onChange={(e) => setMessage(e.target.value)}
+            value={message}
             className="input-base"
             placeholder={"Type a message"}
             inputProps={{ "aria-label": "create message" }}

@@ -16,19 +16,19 @@ interface Props {
 
 const Sidebar = ({ setSelectedUser, newMessage }: Props) => {
   const { loggedInUser } = getAuthData();
-  const { handleErrors } = useContext(AppContext) as AppContextType;
+  const { handleServerErrors } = useContext(AppContext) as AppContextType;
   const [searchValue, setSearchValue] = useState("");
 
   const { data, fetchMore: fetchMoreUsers, client } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
     variables: getUsersQueryVariables(loggedInUser?.id),
-    onError: (error) => handleErrors(error)
+    onError: (error) => handleServerErrors(error)
   });
 
   const sidebarData = data?.getAllUsersExceptLogged;
   const isMoreUsersToFetch = sidebarData?.users.length < sidebarData?.totalUsersExceptLoggedUser;
 
   const [getUser, { data: newUserData }] = useLazyQuery(GET_USER, {
-    onError: (error) => handleErrors(error)
+    onError: (error) => handleServerErrors(error)
   });
 
   useEffect(() => {

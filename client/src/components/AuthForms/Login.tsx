@@ -5,26 +5,34 @@ import { handleAuth } from "services/auth";
 import { Avatar, Button, TextField, Typography, OutlinedTextFieldProps } from "@material-ui/core";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "services/graphql";
+import { getFormValidationErrors } from "@guybendavid/utils";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import "./AuthForms.scss";
 
 const textFieldProps = { required: true, variant: "outlined", margin: "normal", fullWidth: true } as OutlinedTextFieldProps;
 
 const Login = () => {
-  const { handleErrors } = useContext(AppContext) as AppContextType;
+  const { handleServerErrors, setError } = useContext(AppContext) as AppContextType;
   const [formValues, setFormValues] = useState({ username: "", password: "" });
 
   const [login] = useMutation(LOGIN_USER, {
     onCompleted: (data) => handleAuth(data.login),
-    onError: (error) => handleErrors(error)
+    onError: (error) => handleServerErrors(error)
   });
 
   const handleOnChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, field: keyof typeof formValues) =>
     setFormValues({ ...formValues, [field]: e.target.value });
 
-  const handleSubmit = (e: SyntheticEvent) => {
+  const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    login({ variables: { ...formValues } });
+    const { message: errorMessage } = getFormValidationErrors(formValues);
+
+    if (errorMessage) {
+      setError(errorMessage);
+      return;
+    }
+
+    await login({ variables: formValues });
   };
 
   return (

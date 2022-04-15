@@ -4,7 +4,8 @@ import { logout } from "services/auth";
 
 type AppContextType = {
   error: string;
-  handleErrors: (error: ApolloError) => void;
+  setError: (error: string) => void;
+  handleServerErrors: (error: ApolloError) => void;
   clearError: () => void;
 };
 
@@ -17,7 +18,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 const AppContextProvider = ({ children }: Props) => {
   const [error, setError] = useState("");
 
-  const handleErrors = (error: any) => {
+  const handleServerErrors = (error: any) => {
     const gqlContextErrorMessage = error.networkError?.result?.errors[0]?.message?.split("Context creation failed: ")[1];
     setError(gqlContextErrorMessage || error.message || "Something went wrong...");
 
@@ -29,7 +30,7 @@ const AppContextProvider = ({ children }: Props) => {
   const clearError = () => setError("");
 
   return (
-    <AppContext.Provider value={{ error, handleErrors, clearError }}>
+    <AppContext.Provider value={{ error, setError, handleServerErrors, clearError }}>
       {children}
     </AppContext.Provider>
   );

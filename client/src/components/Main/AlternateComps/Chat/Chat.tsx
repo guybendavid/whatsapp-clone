@@ -16,11 +16,11 @@ interface Props {
 
 const Chat = ({ selectedUser, newMessage }: Props) => {
   const chatBottomRef = useRef<HTMLHeadingElement>(null);
-  const { handleErrors } = useContext(AppContext) as AppContextType;
+  const { handleServerErrors } = useContext(AppContext) as AppContextType;
 
   const { data, client } = useQuery(GET_MESSAGES, {
     variables: { otherUserId: selectedUser.id },
-    onError: (error) => handleErrors(error)
+    onError: (error) => handleServerErrors(error)
   });
 
   const messages = data?.getMessages;
