@@ -3,10 +3,10 @@ import { ApolloError } from "@apollo/client";
 import { logout } from "services/auth";
 
 type AppContextType = {
-  error: string;
-  setError: (error: string) => void;
+  snackBarError: string;
+  setSnackBarError: (error: string) => void;
   handleServerErrors: (error: ApolloError) => void;
-  clearError: () => void;
+  clearSnackBarError: () => void;
 };
 
 interface Props {
@@ -16,21 +16,21 @@ interface Props {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 const AppContextProvider = ({ children }: Props) => {
-  const [error, setError] = useState("");
+  const [snackBarError, setSnackBarError] = useState("");
 
   const handleServerErrors = (error: any) => {
     const gqlContextErrorMessage = error.networkError?.result?.errors[0]?.message?.split("Context creation failed: ")[1];
-    setError(gqlContextErrorMessage || error.message || "Something went wrong...");
+    setSnackBarError(gqlContextErrorMessage || error.message || "Something went wrong...");
 
     if (gqlContextErrorMessage === "Unauthenticated") {
       logout();
     }
   };
 
-  const clearError = () => setError("");
+  const clearSnackBarError = () => setSnackBarError("");
 
   return (
-    <AppContext.Provider value={{ error, setError, handleServerErrors, clearError }}>
+    <AppContext.Provider value={{ snackBarError, setSnackBarError, handleServerErrors, clearSnackBarError }}>
       {children}
     </AppContext.Provider>
   );

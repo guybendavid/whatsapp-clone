@@ -12,7 +12,7 @@ import "./AuthForms.scss";
 const textFieldProps = { required: true, variant: "outlined", margin: "normal", fullWidth: true } as OutlinedTextFieldProps;
 
 const Register = () => {
-  const { handleServerErrors, setError } = useContext(AppContext) as AppContextType;
+  const { handleServerErrors, setSnackBarError } = useContext(AppContext) as AppContextType;
   const [formValues, setFormValues] = useState({ firstName: "", lastName: "", username: "", password: "" });
   const { username } = formValues;
 
@@ -29,7 +29,7 @@ const Register = () => {
     const { message: errorMessage } = getFormValidationErrors(formValues);
 
     if (errorMessage) {
-      setError(errorMessage);
+      setSnackBarError(errorMessage);
       return;
     }
 

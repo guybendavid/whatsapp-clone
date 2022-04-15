@@ -15,7 +15,7 @@ interface Props {
 }
 
 const MessageCreator = ({ selectedUser }: Props) => {
-  const { handleServerErrors, setError } = useContext(AppContext) as AppContextType;
+  const { handleServerErrors, setSnackBarError } = useContext(AppContext) as AppContextType;
   const [message, setMessage] = useState("");
 
   const [sendMessage] = useMutation(SEND_MESSAGE, {
@@ -29,7 +29,7 @@ const MessageCreator = ({ selectedUser }: Props) => {
     const { message: errorMessage } = getFormValidationErrors(sendMessagePayload);
 
     if (errorMessage) {
-      setError(errorMessage);
+      setSnackBarError(errorMessage);
       return;
     }
 
