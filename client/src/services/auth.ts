@@ -11,9 +11,10 @@ function handleAuth(data: User) {
 }
 
 function getAuthData() {
+  const { pathname } = window.location;
   const loggedInUser = localStorage.loggedInUser && JSON.parse(localStorage.loggedInUser);
   const isAuthenticated = Boolean(loggedInUser && localStorage.token);
-  const isAuthForm = ["/login", "/register"].includes(window.location.pathname);
+  const isAuthForm = pathname === "/login" || pathname === "/register";
   return { loggedInUser, isAuthenticated, isAuthForm };
 }
 
