@@ -6,8 +6,8 @@ import http, { Server } from "http";
 import pino from "pino";
 import path from "path";
 import resolvers from "./graphql/resolvers/resolvers-config";
-import typeDefs from "./graphql/typeDefs";
-import contextMiddleware from "./utils/context-middleware";
+import typeDefs from "./graphql/type-definitions";
+import contextMiddleware from "./graphql/context-middleware";
 
 const { NODE_ENV, LOG_LEVEL, PORT } = process.env;
 const logger = pino({ level: LOG_LEVEL || "info" });

@@ -4,7 +4,7 @@ import { UserInputError } from "apollo-server";
 import { QueryTypes } from "sequelize";
 import { sequelize, User } from "../../db/models/models-config";
 import { User as UserInterface } from "../../db/interfaces/interfaces";
-import { getTotalUsers, getUsersWithLatestMessage } from "../../utils/raw-queries";
+import { getTotalUsers, getUsersWithLatestMessage } from "../../db/raw-queries/users";
 // eslint-disable-next-line
 const generateImage = require("../../utils/generate-image");
 
