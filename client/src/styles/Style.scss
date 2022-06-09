@@ -1,7 +1,7 @@
 :root {
   --gray-color: #ededed;
   --green-color: #009688;
-  --text-secondary-color: #00000099;
+  --text-color: #00000099;
   --header-padding: 5px 15px;
 }
 
@@ -35,7 +35,7 @@ body {
   }
 
   small {
-    color: var(--text-secondary-color);
+    color: var(--text-color);
     font-size: 0.8rem !important;
   }
 

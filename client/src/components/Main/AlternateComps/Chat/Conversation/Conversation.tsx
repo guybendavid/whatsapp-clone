@@ -40,13 +40,13 @@ const Conversation = ({ messages = [], chatBottomRef }: Props) => {
     <div className="conversation">
       {messages?.map((message, index) => (
         <div key={index} className={classNamesGenerator("message",
-          message.senderId === loggedInUser.id && "sent-message",
+          message.senderId === loggedInUser.id && "is-sent-message",
           firstIndexesOfSeries?.includes(index) && "first-of-series")}>
-          <Typography component="span" className="title">{message.content}</Typography>
+          <Typography component="span">{message.content}</Typography>
           <Typography component="small">{timeDisplayer(message.createdAt)}</Typography>
         </div>
       ))}
-      <div className="chat-bottom" ref={chatBottomRef}></div>
+      <div className="chat-bottom" ref={chatBottomRef} />
     </div>
   );
 };

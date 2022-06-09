@@ -9,13 +9,10 @@
   border-left: 1px solid lightgray;
 
   .left-side {
+    cursor: pointer;
     display: flex;
     align-items: center;
-    cursor: pointer;
-
-    .user-picture {
-      margin-right: 15px;
-    }
+    gap: 15px;
 
     .text-wrapper {
       display: flex;

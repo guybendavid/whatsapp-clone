@@ -6,7 +6,7 @@ const { SECRET_KEY } = process.env;
 const pubsub = new PubSub();
 const authOperations = ["LoginUser", "RegisterUser"];
 
-const authenticationMiddleware = (context: any) => {
+const authMiddleware = (context: any) => {
   const token = (
     context.req?.headers?.authorization ||
     context.connection.context.authorization
@@ -24,10 +24,7 @@ const authenticationMiddleware = (context: any) => {
 };
 
 const validationMiddleware = (context: any) => {
-  if (!context.req?.body) {
-    return;
-  }
-
+  if (!context.req?.body) return;
   const { operationName, variables } = context.req.body;
 
   if ([...authOperations, "SendMessage"].includes(operationName)) {
@@ -40,7 +37,7 @@ const validationMiddleware = (context: any) => {
 };
 
 const contextMiddleware = (context: any) => {
-  authenticationMiddleware(context);
+  authMiddleware(context);
   validationMiddleware(context);
   return context;
 };

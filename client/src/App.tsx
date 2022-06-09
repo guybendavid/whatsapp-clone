@@ -7,7 +7,7 @@ import AppRouter from "AppRouter/AppRouter";
 import "styles/Style.scss";
 
 const App = () => {
-  const isUnsupported = useMediaQuery("(max-width:950px)");
+  const isUnsupportedResolution = useMediaQuery("(max-width:950px)");
   const { listen: listenToChangesInLS } = useLocalStorageTracker();
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const App = () => {
     // eslint-disable-next-line
   }, []);
 
-  return isUnsupported ?
+  return isUnsupportedResolution ?
     <div style={{ height: "100vh", background: "#dddbd1" }}>
       <h1>Sorry, this resolution is not supported yet &#128577;</h1>
     </div>

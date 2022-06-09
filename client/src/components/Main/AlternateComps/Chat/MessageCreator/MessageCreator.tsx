@@ -49,7 +49,6 @@ const MessageCreator = ({ selectedUser }: Props) => {
           <InputBase
             onChange={(e) => setMessage(e.target.value)}
             value={message}
-            className="input-base"
             placeholder={"Type a message"}
             inputProps={{ "aria-label": "create message" }}
             required

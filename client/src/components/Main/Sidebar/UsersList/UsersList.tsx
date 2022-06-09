@@ -1,6 +1,6 @@
 import { useRef, useCallback, Fragment } from "react";
 import { User } from "interfaces/interfaces";
-import { List, ListItem, Avatar, ListItemAvatar, Typography, Divider } from "@material-ui/core";
+import { List, ListItem, Avatar, Typography, Divider } from "@material-ui/core";
 import { getAuthData } from "services/auth";
 import { getUsersSqlClauses } from "services/graphql";
 import { classNamesGenerator, timeDisplayer } from "@guybendavid/utils";
@@ -43,26 +43,25 @@ const UsersList = ({ users = [], searchValue, isMoreUsersToFetch, fetchMoreUsers
 
   return (
     <List className="users-list">
-      {users?.filter(user => `${user.firstName} ${user.lastName}`.toUpperCase().includes(searchValue.toUpperCase())).map((user, index) => (
-        <Fragment key={index}>
-          <ListItem button className="list-item" onClick={() => setSelectedUser({ ...user })}
-            ref={index === users.length - 1 ? lastUserRef : null}>
-            <ListItemAvatar className="avatar-wrapper">
-              <Avatar className="avatar" alt="avatar" src={user?.image} />
-            </ListItemAvatar>
-            <div className="text-wrapper">
-              {index > 0 && <Divider className={classNamesGenerator(user.latestMessage?.createdAt && "is-chatted")} />}
-              <div className="first-row">
-                <Typography component="span" className="fullname">{`${user.firstName} ${user.lastName}`}</Typography>
-                <Typography component="small">{timeDisplayer(user.latestMessage?.createdAt)}</Typography>
+      {users.filter(user => `${user.firstName} ${user.lastName}`.toUpperCase().includes(searchValue.toUpperCase()))
+        .map((user, index) => (
+          <Fragment key={index}>
+            <ListItem button className="list-item" onClick={() => setSelectedUser({ ...user })}
+              ref={index === users.length - 1 ? lastUserRef : null}>
+              <Avatar alt="avatar" src={user.image} />
+              <div className="text-wrapper">
+                {index > 0 && <Divider className={classNamesGenerator(user.latestMessage?.createdAt && "is-chatted")} />}
+                <div className="first-row">
+                  <Typography component="span" className="fullname">{`${user.firstName} ${user.lastName}`}</Typography>
+                  <Typography component="small">{timeDisplayer(user.latestMessage?.createdAt)}</Typography>
+                </div>
+                <div className="second-row">
+                  <Typography className="last-message" component="span">{user.latestMessage?.content}</Typography>
+                </div>
               </div>
-              <div className="second-row">
-                <Typography className="last-message" component="span">{user.latestMessage?.content}</Typography>
-              </div>
-            </div>
-          </ListItem>
-        </Fragment>
-      ))}
+            </ListItem>
+          </Fragment>
+        ))}
     </List>
   );
 };

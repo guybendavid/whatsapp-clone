@@ -1,11 +1,12 @@
 @import "styles/Mixins.scss";
 
 .users-list {
-  width: 100% !important;
   padding: 0 !important;
   overflow-y: auto;
 
   .list-item {
+    display: flex;
+    gap: 15px;
     padding-top: 10px;
     padding-bottom: 10px;
 
@@ -41,7 +42,7 @@
 
         .last-message {
           font-size: 0.9rem;
-          color: var(--text-secondary-color);
+          color: var(--text-color);
           @include overflow-handler(260px);
         }
       }

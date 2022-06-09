@@ -20,10 +20,8 @@ const Actions = ({ setSearchValue }: Props) => {
   return (
     <div className="actions">
       <div className="icons">
-        <div className="left-side">
-          <Avatar className="avatar" alt="avatar" src={loggedInUser.image} />
-        </div>
-        <div className="right-side">
+        <Avatar className="avatar" alt="avatar" src={loggedInUser.image} />
+        <div>
           {[DonutLargeIcon, ChatIcon, DotsIcon].map((Icon, index) => (
             <Fragment key={index}>
               {index < 2 ?
@@ -76,7 +74,7 @@ const DotsIcon = () => {
         <MoreVertIcon />
       </IconButton>
       <Menu
-        id="logout-menu"
+        className="main-menu"
         keepMounted
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}

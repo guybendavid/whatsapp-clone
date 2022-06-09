@@ -29,7 +29,7 @@
       bottom: 2px;
     }
 
-    &.sent-message {
+    &.is-sent-message {
       align-self: flex-end;
       background: #dcf8c6;
 
@@ -41,7 +41,7 @@
       }
     }
 
-    &:not(.sent-message) {
+    &:not(.is-sent-message) {
       background: white;
 
       &.first-of-series {

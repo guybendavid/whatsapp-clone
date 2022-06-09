@@ -9,7 +9,7 @@ interface Props {
   Component: FC<RouteComponentProps>;
 }
 
-const UnAuthenticatedRoute = ({ path, Component }: Props) => {
+const UnauthenticatedRoute = ({ path, Component }: Props) => {
   const { isAuthenticated } = getAuthData();
 
   return (
@@ -17,4 +17,4 @@ const UnAuthenticatedRoute = ({ path, Component }: Props) => {
   );
 };
 
-export default UnAuthenticatedRoute;
+export default UnauthenticatedRoute;

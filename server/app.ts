@@ -15,7 +15,6 @@ const serverConfig = { typeDefs, resolvers, context: contextMiddleware, subscrip
 const port = PORT || 4000;
 
 const startProductionServer = () => {
-  const isProd = true;
   const app = express();
 
   app.use(express.static(path.join(__dirname, "client")));
@@ -28,15 +27,15 @@ const startProductionServer = () => {
   server.applyMiddleware({ app });
   const httpServer = http.createServer(app);
   server.installSubscriptionHandlers(httpServer);
-  connect(httpServer, isProd);
+  connect({ server: httpServer, isProd: true });
 };
 
 const startDevelopmentServer = () => {
   const server = new ApolloServerDev(serverConfig);
-  connect(server);
+  connect({ server });
 };
 
-const connect = async (server: ApolloServerDev | Server, isProd?: boolean) => {
+const connect = async ({ server, isProd }: { server: ApolloServerDev | Server, isProd?: boolean; }) => {
   try {
     await sequelize.authenticate();
     logger.info("Database connected!");
