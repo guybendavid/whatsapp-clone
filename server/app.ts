@@ -16,7 +16,6 @@ const port = PORT || 4000;
 
 const startProductionServer = () => {
   const app = express();
-
   app.use(express.static(path.join(__dirname, "client")));
 
   app.get("*", (_req, res) => {
@@ -35,7 +34,7 @@ const startDevelopmentServer = () => {
   connect({ server });
 };
 
-const connect = async ({ server, isProd }: { server: ApolloServerDev | Server, isProd?: boolean; }) => {
+const connect = async ({ server, isProd }: { server: ApolloServerDev | Server; isProd?: boolean; }) => {
   try {
     await sequelize.authenticate();
     logger.info("Database connected!");

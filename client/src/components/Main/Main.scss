@@ -1,11 +1,10 @@
 .main {
-  // preloading the Chat's Conversation component image
-  background: url("/images/chat-background.jpg");
   display: flex;
   height: 96vh;
   width: 85vw;
 
   .sidebar {
+    min-width: 353px;
     flex: 0.3;
   }
 
