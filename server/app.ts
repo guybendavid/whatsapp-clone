@@ -9,7 +9,7 @@ import resolvers from "./graphql/resolvers/resolvers-config";
 import typeDefs from "./graphql/type-definitions";
 import contextMiddleware from "./graphql/context-middleware";
 
-const { NODE_ENV, LOG_LEVEL, PORT } = process.env;
+const { NODE_ENV, LOG_LEVEL, PORT, BASE_URL_PROD } = process.env;
 const logger = pino({ level: LOG_LEVEL || "info" });
 const serverConfig = { typeDefs, resolvers, context: contextMiddleware, subscriptions: { path: "/" } };
 const port = PORT || 4000;
@@ -41,9 +41,8 @@ const connect = async ({ server, isProd }: { server: ApolloServerDev | Server; i
 
     if (isProd) {
       await server.listen(port);
-      const baseUrl = "clone-of-whatsapp.herokuapp.com";
-      logger.info(`Server ready at https://${baseUrl}`);
-      logger.info(`Subscriptions ready at wss://${baseUrl}`);
+      logger.info(`Server ready at https://${BASE_URL_PROD}`);
+      logger.info(`Subscriptions ready at wss://${BASE_URL_PROD}`);
     } else {
       const { url, subscriptionsUrl } = await (server as ApolloServerDev).listen({ port });
       logger.info(`Server ready at ${url}`);
