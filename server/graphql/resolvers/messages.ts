@@ -1,9 +1,9 @@
 import { UserInputError, withFilter, PubSub } from "apollo-server";
 import { Op } from "sequelize";
 import { User, Message } from "../../db/models/models-config";
-import { User as IUser, SendMessagePayload } from "../../db/interfaces/interfaces";
+import { User as IUser, SendMessagePayload } from "../../db/types/types";
 
-const messagesResolver = {
+export default {
   Query: {
     getMessages: async (_parent: any, args: { otherUserId: string; }, { user }: { user: IUser; }) => {
       const { otherUserId } = args;
@@ -47,5 +47,3 @@ const messagesResolver = {
     }
   }
 };
-
-export default messagesResolver;

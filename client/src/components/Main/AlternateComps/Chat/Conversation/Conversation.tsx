@@ -1,6 +1,6 @@
 import { useMemo, RefObject } from "react";
 import { getAuthData } from "services/auth";
-import { Message } from "interfaces/interfaces";
+import { Message } from "types/types";
 import { Typography } from "@material-ui/core";
 import { classNamesGenerator, timeDisplayer } from "@guybendavid/utils";
 import "./Conversation.scss";

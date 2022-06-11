@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "ts-node-dev --no-notify -r dotenv/config app | pino-pretty",
     "start": "node app.js | pino-pretty",
-    "build": "tsc && rm -rf ./build/db/interfaces"
+    "build": "tsc && rm -rf ./build/db/types"
   },
   "dependencies": {
     "@guybendavid/utils": "^2.0.3",

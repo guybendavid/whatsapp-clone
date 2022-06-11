@@ -1,4 +1,4 @@
-interface User {
+export interface User {
   id: string;
   firstName: string;
   lastName: string;
@@ -10,12 +10,10 @@ interface User {
   };
 }
 
-interface Message {
+export interface Message {
   id: string;
   senderId: string;
   recipientId?: string;
   content: string;
   createdAt: string;
 }
-
-export type { User, Message };

@@ -1,5 +1,5 @@
 import { ApolloClient } from "@apollo/client";
-import { Message } from "interfaces/interfaces";
+import { Message } from "types/types";
 import { GET_MESSAGES } from "./graphql";
 
 function addNewMessageToChat(newMessage: Message, client: ApolloClient<any>, selectedUserId: string) {

@@ -1,6 +1,6 @@
 import { useState, SyntheticEvent, useContext } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
-import { User } from "interfaces/interfaces";
+import { User } from "types/types";
 import { useMutation } from "@apollo/client";
 import { SEND_MESSAGE } from "services/graphql";
 import { IconButton, InputBase } from "@material-ui/core";

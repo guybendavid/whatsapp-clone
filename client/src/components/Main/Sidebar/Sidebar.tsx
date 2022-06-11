@@ -4,7 +4,7 @@ import { useQuery, useLazyQuery, InMemoryCache } from "@apollo/client";
 import { getAuthData } from "services/auth";
 import { getUsersQueryVariables, GET_All_USERS_EXCEPT_LOGGED, GET_USER } from "services/graphql";
 import { displayNewMessageOnSidebar, displayNewUserOnSidebar } from "services/sidebar-helper";
-import { User, Message } from "interfaces/interfaces";
+import { User, Message } from "types/types";
 import Actions from "./Actions/Actions";
 import UsersList from "./UsersList/UsersList";
 import "./Sidebar.scss";

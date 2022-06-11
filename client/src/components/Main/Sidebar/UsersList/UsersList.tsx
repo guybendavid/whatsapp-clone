@@ -1,5 +1,5 @@
 import { useRef, useCallback, Fragment } from "react";
-import { User } from "interfaces/interfaces";
+import { User } from "types/types";
 import { List, ListItem, Avatar, Typography, Divider } from "@material-ui/core";
 import { getAuthData } from "services/auth";
 import { getUsersSqlClauses } from "services/graphql";

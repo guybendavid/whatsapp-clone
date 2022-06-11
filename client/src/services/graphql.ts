@@ -8,7 +8,7 @@ const AUTH_FIELDS = gql`
   }
 `;
 
-const LOGIN_USER = gql`
+export const LOGIN_USER = gql`
   ${AUTH_FIELDS}
   mutation LoginUser($username: String! $password: String!) {
     login(username: $username password: $password) {
@@ -18,7 +18,7 @@ const LOGIN_USER = gql`
   }
 `;
 
-const REGISTER_USER = gql`
+export const REGISTER_USER = gql`
   ${AUTH_FIELDS}
   mutation RegisterUser($firstName: String! $lastName: String! $username: String! $password: String!) {
     register(firstName: $firstName lastName: $lastName username: $username password: $password) {
@@ -27,7 +27,7 @@ const REGISTER_USER = gql`
   }
 `;
 
-const GET_All_USERS_EXCEPT_LOGGED = gql`
+export const GET_All_USERS_EXCEPT_LOGGED = gql`
   query GetAllUsersExceptLogged($loggedInUserId: ID! $offset: String! $limit: String!) {
     getAllUsersExceptLogged(id: $loggedInUserId offset: $offset limit: $limit) {
       users {
@@ -45,7 +45,7 @@ const GET_All_USERS_EXCEPT_LOGGED = gql`
   }
 `;
 
-const GET_USER = gql`
+export const GET_USER = gql`
   query GetUser($id: ID!) {
     getUser(id: $id) {
       id
@@ -56,7 +56,7 @@ const GET_USER = gql`
   }
 `;
 
-const GET_MESSAGES = gql`
+export const GET_MESSAGES = gql`
   query GetMessages($otherUserId: ID!) {
     getMessages(otherUserId: $otherUserId) {
       id
@@ -67,7 +67,7 @@ const GET_MESSAGES = gql`
   }
 `;
 
-const SEND_MESSAGE = gql`
+export const SEND_MESSAGE = gql`
   mutation SendMessage($recipientId: ID! $content: String!) {
     sendMessage(recipientId: $recipientId content: $content) {
       id
@@ -75,7 +75,7 @@ const SEND_MESSAGE = gql`
   }
 `;
 
-const NEW_MESSAGE = gql`
+export const NEW_MESSAGE = gql`
   subscription NewMessage {
     newMessage {
       id
@@ -87,17 +87,12 @@ const NEW_MESSAGE = gql`
   }
 `;
 
-const getUsersSqlClauses = { offset: 0, limit: 50 };
+export const getUsersSqlClauses = { offset: 0, limit: 50 };
 
-function getUsersQueryVariables(loggedInUserId: string) {
+export function getUsersQueryVariables(loggedInUserId: string) {
   return {
     loggedInUserId,
     offset: `${getUsersSqlClauses.offset}`,
     limit: `${getUsersSqlClauses.limit}`
   };
-};
-
-export {
-  LOGIN_USER, REGISTER_USER, GET_All_USERS_EXCEPT_LOGGED, GET_USER, GET_MESSAGES, SEND_MESSAGE,
-  NEW_MESSAGE, getUsersSqlClauses, getUsersQueryVariables
 };

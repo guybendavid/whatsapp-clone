@@ -2,20 +2,20 @@ import { createContext, useState, ReactNode } from "react";
 import { ApolloError } from "@apollo/client";
 import { logout } from "services/auth";
 
-type AppContextType = {
+interface Props {
+  children: ReactNode;
+}
+
+export type AppContextType = {
   snackBarError: string;
   setSnackBarError: (error: string) => void;
   handleServerErrors: (error: ApolloError) => void;
   clearSnackBarError: () => void;
 };
 
-interface Props {
-  children: ReactNode;
-}
+export const AppContext = createContext<AppContextType | undefined>(undefined);
 
-const AppContext = createContext<AppContextType | undefined>(undefined);
-
-const AppContextProvider = ({ children }: Props) => {
+export const AppContextProvider = ({ children }: Props) => {
   const [snackBarError, setSnackBarError] = useState("");
 
   const handleServerErrors = (error: any) => {
@@ -35,6 +35,3 @@ const AppContextProvider = ({ children }: Props) => {
     </AppContext.Provider>
   );
 };
-
-export { AppContext, AppContextProvider };
-export type { AppContextType };

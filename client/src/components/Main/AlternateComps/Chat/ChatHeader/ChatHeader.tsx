@@ -1,4 +1,4 @@
-import { User } from "interfaces/interfaces";
+import { User } from "types/types";
 import { Avatar, Typography, IconButton } from "@material-ui/core";
 import { timeDisplayer } from "@guybendavid/utils";
 import SearchIcon from "@material-ui/icons/Search";

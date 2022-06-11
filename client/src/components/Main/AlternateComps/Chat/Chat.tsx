@@ -1,6 +1,6 @@
 import { useEffect, useRef, useContext } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
-import { User, Message } from "interfaces/interfaces";
+import { User, Message } from "types/types";
 import { useQuery } from "@apollo/client";
 import { GET_MESSAGES } from "services/graphql";
 import { addNewMessageToChat } from "services/chat-helper";

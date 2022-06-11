@@ -3,12 +3,12 @@ import generateToken from "../../utils/generate-token";
 import { UserInputError } from "apollo-server";
 import { QueryTypes } from "sequelize";
 import { sequelize, User } from "../../db/models/models-config";
-import { User as UserInterface } from "../../db/interfaces/interfaces";
+import { User as UserInterface } from "../../db/types/types";
 import { getTotalUsers, getUsersWithLatestMessage } from "../../db/raw-queries/users";
 // eslint-disable-next-line
 const generateImage = require("../../utils/generate-image");
 
-const usersResolver = {
+export default {
   Query: {
     getAllUsersExceptLogged: async (_parent: any, args: { id: string; offset: string; limit: string; }, _context: { user: UserInterface; }) => {
       const { id, offset, limit } = args;
@@ -70,5 +70,3 @@ const usersResolver = {
     }
   }
 };
-
-export default usersResolver;

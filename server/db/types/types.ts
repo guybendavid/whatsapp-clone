@@ -1,4 +1,4 @@
-interface User {
+export interface User {
   id: string;
   firstName: string;
   lastName: string;
@@ -6,10 +6,8 @@ interface User {
   password?: string;
 }
 
-interface SendMessagePayload {
+export interface SendMessagePayload {
   senderId: string;
   recipientId: string;
   content: string;
 }
-
-export { User, SendMessagePayload };

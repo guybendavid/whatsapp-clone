@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 
-const message = (sequelize: Sequelize, DataTypes: any) => {
+export default (sequelize: Sequelize, DataTypes: any) => {
   const Message = sequelize.define("Message", {
     senderId: {
       type: DataTypes.INTEGER,
@@ -36,5 +36,3 @@ const message = (sequelize: Sequelize, DataTypes: any) => {
 
   return Message;
 };
-
-export default message;
