@@ -47,8 +47,9 @@ const MessageCreator = ({ selectedUser }: Props) => {
       <form onSubmit={handleSubmit}>
         <div className="input-wrapper">
           <InputBase
-            onChange={(e) => setMessage(e.target.value)}
             value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            className="input-base"
             placeholder={"Type a message"}
             inputProps={{ "aria-label": "create message" }}
             required

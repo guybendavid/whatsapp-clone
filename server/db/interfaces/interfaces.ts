@@ -6,10 +6,10 @@ interface User {
   password?: string;
 }
 
-interface Message {
+interface SendMessagePayload {
   senderId: string;
   recipientId: string;
   content: string;
 }
 
-export { User, Message };
+export { User, SendMessagePayload };

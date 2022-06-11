@@ -1,7 +1,7 @@
 import { UserInputError, withFilter, PubSub } from "apollo-server";
 import { Op } from "sequelize";
 import { User, Message } from "../../db/models/models-config";
-import { Message as MessageInterface, User as IUser } from "../../db/interfaces/interfaces";
+import { User as IUser, SendMessagePayload } from "../../db/interfaces/interfaces";
 
 const messagesResolver = {
   Query: {
@@ -27,7 +27,7 @@ const messagesResolver = {
     }
   },
   Mutation: {
-    sendMessage: async (_parent: any, args: MessageInterface, { user, pubsub }: { user: IUser; pubsub: PubSub; }) => {
+    sendMessage: async (_parent: any, args: SendMessagePayload, { user, pubsub }: { user: IUser; pubsub: PubSub; }) => {
       const { recipientId, content } = args;
 
       if (recipientId.toString() === user.id.toString()) {

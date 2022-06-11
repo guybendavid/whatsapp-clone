@@ -11,7 +11,7 @@ import "./Sidebar.scss";
 
 interface Props {
   setSelectedUser: (user: User) => void;
-  newMessage: Message;
+  newMessage?: Message;
 }
 
 const Sidebar = ({ setSelectedUser, newMessage }: Props) => {
