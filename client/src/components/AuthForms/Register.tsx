@@ -17,7 +17,7 @@ const Register = () => {
   const { username } = formValues;
 
   const [register] = useMutation(REGISTER_USER, {
-    onCompleted: (data) => handleAuth({ ...data.register, username }),
+    onCompleted: ({ register: data }) => handleAuth({ user: { ...data.user, username }, token: data.token }),
     onError: (error) => handleServerErrors(error)
   });
 

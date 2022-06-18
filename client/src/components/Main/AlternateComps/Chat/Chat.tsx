@@ -1,6 +1,6 @@
 import { useEffect, useRef, useContext } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
-import { User, Message } from "types/types";
+import { SidebarUser, Message } from "types/types";
 import { useQuery } from "@apollo/client";
 import { GET_MESSAGES } from "services/graphql";
 import { addNewMessageToChat } from "services/chat-helper";
@@ -9,8 +9,8 @@ import Conversation from "./Conversation/Conversation";
 import MessageCreator from "./MessageCreator/MessageCreator";
 import "./Chat.scss";
 
-interface Props {
-  selectedUser: User;
+type Props = {
+  selectedUser: SidebarUser;
   newMessage?: Message;
 }
 
@@ -34,8 +34,8 @@ const Chat = ({ selectedUser, newMessage }: Props) => {
 
   useEffect(() => {
     if (newMessage && !messages?.some((message: Message) => message.id === newMessage.id)) {
-      const { recipientId, ...messageToAdd } = newMessage;
-      addNewMessageToChat(messageToAdd, client, selectedUser.id);
+      const { recipientId, ...relevantMessageFields } = newMessage;
+      addNewMessageToChat(relevantMessageFields, client, selectedUser.id);
       selectedUser.latestMessage = { ...newMessage };
       chatBottomRef.current?.scrollIntoView();
     }

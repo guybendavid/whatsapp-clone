@@ -4,7 +4,6 @@ const AUTH_FIELDS = gql`
   fragment AuthFields on User {
     id
     image
-    token
   }
 `;
 
@@ -12,8 +11,11 @@ export const LOGIN_USER = gql`
   ${AUTH_FIELDS}
   mutation LoginUser($username: String! $password: String!) {
     login(username: $username password: $password) {
-      ...AuthFields
-      username
+      user {
+        ...AuthFields
+        username
+      }
+      token
     }
   }
 `;
@@ -22,7 +24,10 @@ export const REGISTER_USER = gql`
   ${AUTH_FIELDS}
   mutation RegisterUser($firstName: String! $lastName: String! $username: String! $password: String!) {
     register(firstName: $firstName lastName: $lastName username: $username password: $password) {
-      ...AuthFields
+      user {
+        ...AuthFields
+      }
+      token
     }
   }
 `;

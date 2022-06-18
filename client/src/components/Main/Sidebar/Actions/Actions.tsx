@@ -9,7 +9,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import ArrowDownWardIcon from "@material-ui/icons/ArrowDownward";
 import "./Actions.scss";
 
-interface Props {
+type Props = {
   setSearchValue: (value: string) => void;
 }
 

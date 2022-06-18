@@ -1,7 +1,8 @@
-import { UserInputError, withFilter, PubSub } from "apollo-server";
+import { UserInputError, withFilter } from "apollo-server";
 import { Op } from "sequelize";
 import { User, Message } from "../../db/models/models-config";
 import { User as IUser, SendMessagePayload } from "../../db/types/types";
+import { pubsub } from "../../app";
 
 export default {
   Query: {
@@ -27,11 +28,11 @@ export default {
     }
   },
   Mutation: {
-    sendMessage: async (_parent: any, args: SendMessagePayload, { user, pubsub }: { user: IUser; pubsub: PubSub; }) => {
+    sendMessage: async (_parent: any, args: SendMessagePayload, { user }: { user: IUser; }) => {
       const { recipientId, content } = args;
 
       if (recipientId.toString() === user.id.toString()) {
-        throw new UserInputError("You cant message yourself");
+        throw new UserInputError("You can't message yourself");
       }
 
       const message = await Message.create({ senderId: user.id, recipientId, content });
@@ -41,9 +42,10 @@ export default {
   },
   Subscription: {
     newMessage: {
-      subscribe: withFilter((_parent, _args, { pubsub }) => {
-        return pubsub.asyncIterator(["NEW_MESSAGE"]);
-      }, ({ newMessage }, _args, { user }) => newMessage.senderId === user.id || newMessage.recipientId === user.id)
+      subscribe: withFilter(
+        (_parent, _args, _context) => pubsub.asyncIterator("NEW_MESSAGE"),
+        ({ newMessage }, _args, { user }) => newMessage.senderId === user.id || newMessage.recipientId === user.id
+      )
     }
   }
 };

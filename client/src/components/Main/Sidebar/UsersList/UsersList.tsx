@@ -1,20 +1,21 @@
 import { useRef, useCallback, Fragment } from "react";
-import { User } from "types/types";
+import { SidebarUser } from "types/types";
 import { List, ListItem, Avatar, Typography, Divider } from "@material-ui/core";
 import { getAuthData } from "services/auth";
 import { getUsersSqlClauses } from "services/graphql";
 import { classNamesGenerator, timeDisplayer } from "@guybendavid/utils";
 import "./UsersList.scss";
 
-interface Props {
-  users?: User[];
+type Props = {
+  users?: SidebarUser[];
   searchValue: string;
   isMoreUsersToFetch: boolean;
+  selectedUser?: SidebarUser;
+  setSelectedUser: (user: SidebarUser) => void;
   fetchMoreUsers: (object: { variables: { loggedInUserId: string, offset: string, limit: string; }; }) => void;
-  setSelectedUser: (user: User) => void;
-}
+};
 
-const UsersList = ({ users = [], searchValue, isMoreUsersToFetch, fetchMoreUsers, setSelectedUser }: Props) => {
+const UsersList = ({ users = [], searchValue, isMoreUsersToFetch, selectedUser, setSelectedUser, fetchMoreUsers }: Props) => {
   const { loggedInUser } = getAuthData();
   const observer = useRef<IntersectionObserver | null>(null);
 
@@ -46,7 +47,7 @@ const UsersList = ({ users = [], searchValue, isMoreUsersToFetch, fetchMoreUsers
       {users.filter(user => `${user.firstName} ${user.lastName}`.toUpperCase().includes(searchValue.toUpperCase()))
         .map((user, index) => (
           <Fragment key={index}>
-            <ListItem button className="list-item" onClick={() => setSelectedUser({ ...user })}
+            <ListItem button className={classNamesGenerator("list-item", selectedUser?.id === user.id && "is-selected")} onClick={() => setSelectedUser({ ...user })}
               ref={index === users.length - 1 ? lastUserRef : null}>
               <Avatar alt="avatar" src={user.image} />
               <div className="text-wrapper">

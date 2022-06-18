@@ -1,27 +1,27 @@
 import { ApolloClient, InMemoryCache, QueryLazyOptions } from "@apollo/client";
-import { Message, User } from "types/types";
+import { Message, SidebarUser } from "types/types";
 import { getAuthData } from "./auth";
 import { getUsersQueryVariables, GET_All_USERS_EXCEPT_LOGGED } from "./graphql";
 
 type GetUser = (options?: QueryLazyOptions<Record<string, any>>) => void;
 
-interface DisplayNewMessageOnSidebarData {
+type DisplayNewMessageOnSidebarData = {
   cache: InMemoryCache;
   newMessage: Message;
-  sidebarUsers: User[];
+  sidebarUsers: SidebarUser[];
   isMoreUsersToFetch: boolean;
   getUser: GetUser;
 }
 
-interface displayNewUserOnSidebarData {
-  sidebarNewUser: User;
+type displayNewUserOnSidebarData = {
+  sidebarNewUser: SidebarUser;
   client: ApolloClient<any>;
 }
 
 export function displayNewMessageOnSidebar({ cache, newMessage, sidebarUsers, isMoreUsersToFetch, getUser }: DisplayNewMessageOnSidebarData) {
   const { loggedInUser } = getAuthData();
   const { senderId, recipientId } = newMessage;
-  const otherUser = sidebarUsers?.find((user: User) => user.id === senderId || user.id === recipientId);
+  const otherUser = sidebarUsers?.find((user: SidebarUser) => user.id === senderId || user.id === recipientId);
   const isOtherUserDisplayedOnSidebar = Boolean(otherUser);
 
   if (isOtherUserDisplayedOnSidebar) {

@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Route, Redirect } from "react-router";
 import { getAuthData } from "services/auth";
 
-interface Props {
+type Props = {
   exact: boolean;
   path: string;
   isAdminRoute?: boolean;

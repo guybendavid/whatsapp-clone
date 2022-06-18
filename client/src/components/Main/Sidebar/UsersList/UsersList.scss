@@ -10,6 +10,10 @@
     padding-top: 10px;
     padding-bottom: 10px;
 
+    &.is-selected {
+      background: #f0f2f5;
+    }
+
     hr {
       background-color: rgba(0, 0, 0, 0.05);
       position: relative;

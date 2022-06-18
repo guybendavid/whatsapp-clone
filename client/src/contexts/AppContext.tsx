@@ -2,7 +2,7 @@ import { createContext, useState, ReactNode } from "react";
 import { ApolloError } from "@apollo/client";
 import { logout } from "services/auth";
 
-interface Props {
+type Props = {
   children: ReactNode;
 }
 

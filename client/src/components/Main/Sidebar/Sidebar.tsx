@@ -4,17 +4,18 @@ import { useQuery, useLazyQuery, InMemoryCache } from "@apollo/client";
 import { getAuthData } from "services/auth";
 import { getUsersQueryVariables, GET_All_USERS_EXCEPT_LOGGED, GET_USER } from "services/graphql";
 import { displayNewMessageOnSidebar, displayNewUserOnSidebar } from "services/sidebar-helper";
-import { User, Message } from "types/types";
+import { SidebarUser, Message } from "types/types";
 import Actions from "./Actions/Actions";
 import UsersList from "./UsersList/UsersList";
 import "./Sidebar.scss";
 
-interface Props {
-  setSelectedUser: (user: User) => void;
+type Props = {
   newMessage?: Message;
-}
+  selectedUser?: SidebarUser;
+  setSelectedUser: (user: SidebarUser) => void;
+};
 
-const Sidebar = ({ setSelectedUser, newMessage }: Props) => {
+const Sidebar = ({ selectedUser, setSelectedUser, newMessage }: Props) => {
   const { loggedInUser } = getAuthData();
   const { handleServerErrors } = useContext(AppContext) as AppContextType;
   const [searchValue, setSearchValue] = useState("");
@@ -58,7 +59,7 @@ const Sidebar = ({ setSelectedUser, newMessage }: Props) => {
     <div className="sidebar">
       <Actions setSearchValue={setSearchValue} />
       <UsersList searchValue={searchValue} users={sidebarData?.users} isMoreUsersToFetch={isMoreUsersToFetch}
-        fetchMoreUsers={fetchMoreUsers} setSelectedUser={setSelectedUser} />
+        selectedUser={selectedUser} setSelectedUser={setSelectedUser} fetchMoreUsers={fetchMoreUsers} />
     </div>
   );
 };

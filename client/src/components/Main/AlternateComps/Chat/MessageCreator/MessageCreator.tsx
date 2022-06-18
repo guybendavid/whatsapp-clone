@@ -1,6 +1,6 @@
-import { useState, SyntheticEvent, useContext } from "react";
+import { useState, SyntheticEvent, useContext, useEffect } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
-import { User } from "types/types";
+import { SidebarUser } from "types/types";
 import { useMutation } from "@apollo/client";
 import { SEND_MESSAGE } from "services/graphql";
 import { IconButton, InputBase } from "@material-ui/core";
@@ -10,18 +10,22 @@ import AttachmentIcon from "@material-ui/icons/Attachment";
 import MicIcon from "@material-ui/icons/Mic";
 import "./MessageCreator.scss";
 
-interface Props {
-  selectedUser: User;
-}
+type Props = {
+  selectedUser: SidebarUser;
+};
 
 const MessageCreator = ({ selectedUser }: Props) => {
   const { handleServerErrors, setSnackBarError } = useContext(AppContext) as AppContextType;
   const [message, setMessage] = useState("");
 
+  useEffect(() => {
+    setMessage("");
+  }, [selectedUser]);
+
   const [sendMessage] = useMutation(SEND_MESSAGE, {
+    onCompleted: () => setMessage(""),
     onError: (error) => handleServerErrors(error)
   });
-
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -34,7 +38,6 @@ const MessageCreator = ({ selectedUser }: Props) => {
     }
 
     await sendMessage({ variables: sendMessagePayload });
-    setMessage("");
   };
 
   return (

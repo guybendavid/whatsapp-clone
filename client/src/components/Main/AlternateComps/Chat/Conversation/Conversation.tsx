@@ -5,8 +5,10 @@ import { Typography } from "@material-ui/core";
 import { classNamesGenerator, timeDisplayer } from "@guybendavid/utils";
 import "./Conversation.scss";
 
-interface Props {
-  messages?: Message[];
+export type ConversationMessage = Omit<Message, "recipientId">;
+
+type Props = {
+  messages?: ConversationMessage[];
   chatBottomRef: RefObject<HTMLDivElement>;
 }
 
@@ -15,10 +17,10 @@ const Conversation = ({ messages = [], chatBottomRef }: Props) => {
 
   const firstIndexesOfSeries = useMemo(() => {
     if (messages.length > 0) {
-      const firstMessagesOfSeries: Message[] = [];
+      const firstMessagesOfSeries: ConversationMessage[] = [];
 
       // eslint-disable-next-line
-      const indexes = messages.map((message: Message, index: number) => {
+      const indexes = messages.map((message: ConversationMessage, index: number) => {
         if (firstMessagesOfSeries.length === 0) {
           firstMessagesOfSeries.push(message);
           return index;

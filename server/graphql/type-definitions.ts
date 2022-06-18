@@ -1,11 +1,23 @@
 import { gql } from "apollo-server";
 
 export default gql`
-  type SideBarUsers {
-    users: [User]!
-    totalUsersExceptLoggedUser: String!
+  interface UserInterface {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    username: String
+    password: String
+    image: String!
   }
-  type User {
+  type User implements UserInterface {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    username: String
+    password: String
+    image: String!
+  }
+  type SidebarUser implements UserInterface {
     id: ID!
     firstName: String!
     lastName: String!
@@ -13,6 +25,13 @@ export default gql`
     password: String
     image: String!
     latestMessage: Message!
+  }
+  type SidebarUsers {
+    users: [SidebarUser]!
+    totalUsersExceptLoggedUser: String!
+  }
+  type AuthOperationResponse {
+    user: User!
     token: String!
   }
   type Message {
@@ -23,13 +42,13 @@ export default gql`
     createdAt: String
   }
   type Query {
-    getAllUsersExceptLogged(id: ID! offset: String! limit: String!): SideBarUsers!
+    getAllUsersExceptLogged(id: ID! offset: String! limit: String!): SidebarUsers!
     getUser(id: ID!): User!
     getMessages(otherUserId: ID!): [Message]!
   }
   type Mutation {
-    login(username: String! password: String!): User!
-    register(firstName: String! lastName: String! username: String! password: String!): User!
+    login(username: String! password: String!): AuthOperationResponse!
+    register(firstName: String! lastName: String! username: String! password: String!): AuthOperationResponse!
     sendMessage(recipientId: ID! content: String!): Message!
   }
   type Subscription {

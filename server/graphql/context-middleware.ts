@@ -1,45 +1,31 @@
 import jwt, { JwtPayload, VerifyErrors } from "jsonwebtoken";
-import { UserInputError, AuthenticationError, PubSub } from "apollo-server";
+import { UserInputError, AuthenticationError } from "apollo-server";
 import { getFormValidationErrors } from "@guybendavid/utils";
 
 const { SECRET_KEY } = process.env;
-const pubsub = new PubSub();
-const authOperations = ["LoginUser", "RegisterUser"];
 
-const authMiddleware = (context: any) => {
+export default (context: any) => {
+  if (context.req?.body) {
+    const { message } = getFormValidationErrors(context.req.body.variables);
+    if (message) throw new UserInputError(message);
+  }
+
   const token = (
     context.req?.headers?.authorization ||
     context.connection.context.authorization
-  ).split("Bearer ")[1];
+  ).split("Bearer ").pop();
 
-  if (SECRET_KEY) {
-    jwt.verify(token, SECRET_KEY, (_err: VerifyErrors | null, decodedToken?: JwtPayload) => (context.user = decodedToken));
+  if (token === "null" && ["LoginUser", "RegisterUser"].includes(context.req.body.operationName)) {
+    return context;
   }
 
-  if (!context.user && !authOperations.includes(context.req?.body?.operationName)) {
-    throw new AuthenticationError("Unauthenticated");
-  }
-
-  context.pubsub = pubsub;
-};
-
-const validationMiddleware = (context: any) => {
-  if (!context.req?.body) return;
-  const { operationName, variables } = context.req.body;
-
-  if ([...authOperations, "SendMessage"].includes(operationName)) {
-    const { message } = getFormValidationErrors(variables);
-
-    if (message) {
-      throw new UserInputError(message);
+  jwt.verify(token, SECRET_KEY as string, (err: VerifyErrors | null, decodedToken?: JwtPayload) => {
+    if (err) {
+      throw new AuthenticationError("Unauthenticated");
     }
-  }
-};
 
-const contextMiddleware = (context: any) => {
-  authMiddleware(context);
-  validationMiddleware(context);
+    context.user = { ...decodedToken };
+  });
+
   return context;
 };
-
-export default contextMiddleware;

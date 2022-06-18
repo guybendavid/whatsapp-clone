@@ -3,7 +3,7 @@ import { Route, Redirect } from "react-router";
 import { RouteComponentProps } from "react-router-dom";
 import { getAuthData } from "services/auth";
 
-interface Props {
+type Props = {
   exact: boolean;
   path: string;
   Component: FC<RouteComponentProps>;

@@ -16,7 +16,7 @@ const Login = () => {
   const [formValues, setFormValues] = useState({ username: "", password: "" });
 
   const [login] = useMutation(LOGIN_USER, {
-    onCompleted: (data) => handleAuth(data.login),
+    onCompleted: ({ login: data }) => handleAuth(data),
     onError: (error) => handleServerErrors(error)
   });
 

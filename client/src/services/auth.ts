@@ -1,7 +1,14 @@
 import { User } from "types/types";
 
-export function handleAuth(data: User) {
-  const { token, ...user } = data;
+type AuthOperationResponseUser = Omit<User, "email" | "password">;
+
+type AuthOperationResponse = {
+  user: AuthOperationResponseUser;
+  token: string;
+}
+
+export function handleAuth(data: AuthOperationResponse) {
+  const { token, user } = data;
 
   if (token && user) {
     localStorage.token = token;

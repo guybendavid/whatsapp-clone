@@ -1,13 +1,14 @@
-export interface User {
+export type User = {
   id: string;
   firstName: string;
   lastName: string;
-  username?: string;
-  password?: string;
-}
+  username: string;
+  password: string;
+  image: string;
+};
 
-export interface SendMessagePayload {
+export type SendMessagePayload = {
   senderId: string;
   recipientId: string;
   content: string;
-}
+};
