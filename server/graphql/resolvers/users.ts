@@ -15,7 +15,7 @@ export default {
     getAllUsersExceptLogged: async (_parent: any, args: { id: string; offset: string; limit: string; }, _context: { user: ContextUser; }) => {
       const { id, offset, limit } = args;
       const [totalUsers] = await sequelize.query(getTotalUsers, { type: QueryTypes.SELECT });
-      const totalUsersExceptLoggedUser = totalUsers?.count - 1;
+      const totalUsersExceptLoggedUser = totalUsers.count - 1;
 
       if (totalUsersExceptLoggedUser === 0) {
         return { users: [], totalUsersExceptLoggedUser };
