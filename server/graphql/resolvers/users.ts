@@ -3,14 +3,14 @@ import generateToken from "../../utils/generate-token";
 import { UserInputError } from "apollo-server";
 import { QueryTypes } from "sequelize";
 import { sequelize, User } from "../../db/models/models-config";
-import { User as IUser } from "../../db/types/types";
+import { User as UserType } from "../../db/types/types";
 import { getTotalUsers, getUsersWithLatestMessage } from "../../db/raw-queries/users";
 // eslint-disable-next-line
 const generateImage = require("../../utils/generate-image");
 
 export default {
   Query: {
-    getAllUsersExceptLogged: async (_parent: any, args: { id: string; offset: string; limit: string; }, _context: { user: Omit<IUser, "id">; }) => {
+    getAllUsersExceptLogged: async (_parent: any, args: { id: string; offset: string; limit: string; }, _context: { user: Omit<UserType, "id">; }) => {
       const { id, offset, limit } = args;
       const [totalUsers] = await sequelize.query(getTotalUsers, { type: QueryTypes.SELECT });
 
@@ -28,14 +28,14 @@ export default {
 
       return { users: formattedSidebarUsers, totalUsersExceptLoggedUser: formattedSidebarUsers.length };
     },
-    getUser: async (_parent: any, args: { id: string; }, _context: { user: IUser; }) => {
+    getUser: async (_parent: any, args: { id: string; }, _context: { user: UserType; }) => {
       const { id } = args;
       const user = await User.findOne({ where: { id } });
       return user;
     }
   },
   Mutation: {
-    register: async (_parent: any, args: IUser) => {
+    register: async (_parent: any, args: UserType) => {
       const { firstName, lastName, username, password } = args;
       const isUserExists = await User.findOne({ where: { username } });
 
@@ -48,7 +48,7 @@ export default {
       const { password: _userPassword, ...safeUserData } = user.toJSON();
       return { user: safeUserData, token: generateToken({ id: user.id, firstName, lastName }) };
     },
-    login: async (_parent: any, args: Pick<IUser, "username" | "password">) => {
+    login: async (_parent: any, args: Pick<UserType, "username" | "password">) => {
       const { username, password } = args;
       const user = await User.findOne({ where: { username } });
 

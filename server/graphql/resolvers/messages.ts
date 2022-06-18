@@ -1,12 +1,12 @@
 import { UserInputError, withFilter } from "apollo-server";
 import { Op } from "sequelize";
 import { User, Message } from "../../db/models/models-config";
-import { User as IUser, SendMessagePayload } from "../../db/types/types";
+import { User as UserType, SendMessagePayload } from "../../db/types/types";
 import { pubsub } from "../../app";
 
 export default {
   Query: {
-    getMessages: async (_parent: any, args: { otherUserId: string; }, { user }: { user: IUser; }) => {
+    getMessages: async (_parent: any, args: { otherUserId: string; }, { user }: { user: UserType; }) => {
       const { otherUserId } = args;
       const otherUser = await User.findOne({ where: { id: otherUserId } });
 
@@ -28,7 +28,7 @@ export default {
     }
   },
   Mutation: {
-    sendMessage: async (_parent: any, args: SendMessagePayload, { user }: { user: IUser; }) => {
+    sendMessage: async (_parent: any, args: SendMessagePayload, { user }: { user: UserType; }) => {
       const { recipientId, content } = args;
 
       if (recipientId.toString() === user.id.toString()) {
