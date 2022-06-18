@@ -1,8 +1,8 @@
 import Sequelize from "sequelize";
 import user from "./user";
 import message from "./message";
-// @ts-ignore
-import config from "../config/config.js";
+// eslint-disable-next-line
+const config = require("../../config/config");
 
 const { NODE_ENV } = process.env;
 const environmentConfig = config[NODE_ENV === "production" ? "production" : "development"];
