@@ -14,10 +14,10 @@ const textFieldProps = { required: true, variant: "outlined", margin: "normal", 
 const Register = () => {
   const { handleServerErrors, setSnackBarError } = useContext(AppContext) as AppContextType;
   const [formValues, setFormValues] = useState({ firstName: "", lastName: "", username: "", password: "" });
-  const { username } = formValues;
+  const { firstName, lastName, username } = formValues;
 
   const [register] = useMutation(REGISTER_USER, {
-    onCompleted: ({ register: data }) => handleAuth({ user: { ...data.user, username }, token: data.token }),
+    onCompleted: ({ register: data }) => handleAuth({ user: { ...data.user, firstName, lastName, username }, token: data.token }),
     onError: (error) => handleServerErrors(error)
   });
 
