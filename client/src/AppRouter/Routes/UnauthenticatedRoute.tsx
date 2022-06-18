@@ -7,7 +7,7 @@ type Props = {
   exact: boolean;
   path: string;
   Component: FC<RouteComponentProps>;
-}
+};
 
 const UnauthenticatedRoute = ({ path, Component }: Props) => {
   const { isAuthenticated } = getAuthData();

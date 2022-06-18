@@ -11,12 +11,12 @@ type DisplayNewMessageOnSidebarData = {
   sidebarUsers: SidebarUser[];
   isMoreUsersToFetch: boolean;
   getUser: GetUser;
-}
+};
 
 type displayNewUserOnSidebarData = {
   sidebarNewUser: SidebarUser;
   client: ApolloClient<any>;
-}
+};
 
 export function displayNewMessageOnSidebar({ cache, newMessage, sidebarUsers, isMoreUsersToFetch, getUser }: DisplayNewMessageOnSidebarData) {
   const { loggedInUser } = getAuthData();

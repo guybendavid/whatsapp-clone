@@ -3,30 +3,34 @@ import generateToken from "../../utils/generate-token";
 import { UserInputError } from "apollo-server";
 import { QueryTypes } from "sequelize";
 import { sequelize, User } from "../../db/models/models-config";
-import { User as UserType } from "../../db/types/types";
+import { LatestMessage, User as UserType } from "../../db/types/types";
 import { getTotalUsers, getUsersWithLatestMessage } from "../../db/raw-queries/users";
 // eslint-disable-next-line
 const generateImage = require("../../utils/generate-image");
+
+interface GetUsersWithLatestMessageResponse extends Omit<UserType, "username" | "password">, LatestMessage { }
 
 export default {
   Query: {
     getAllUsersExceptLogged: async (_parent: any, args: { id: string; offset: string; limit: string; }, _context: { user: Omit<UserType, "id">; }) => {
       const { id, offset, limit } = args;
       const [totalUsers] = await sequelize.query(getTotalUsers, { type: QueryTypes.SELECT });
+      const totalUsersExceptLoggedUser = totalUsers?.count - 1;
 
-      if (totalUsers?.count === 0) {
-        return { users: [], totalUsersExceptLoggedUser: 0 };
+      if (totalUsersExceptLoggedUser === 0) {
+        return { users: [], totalUsersExceptLoggedUser };
       }
 
       const getSidebarUsersChunk = getUsersWithLatestMessage(offset, limit);
       const sidebarUsersChunk = await sequelize.query(getSidebarUsersChunk, { type: QueryTypes.SELECT, replacements: [id, id, id, offset, limit] });
 
-      const formattedSidebarUsersChunk = sidebarUsersChunk.map(({ content, createdAt, ...rest }: any) => ({
+      // To do: any
+      const formattedSidebarUsersChunk = sidebarUsersChunk.map(({ content, createdAt, ...rest }: GetUsersWithLatestMessageResponse) => ({
         latestMessage: { content, createdAt },
         ...rest
       }));
 
-      return { users: formattedSidebarUsersChunk, totalUsersExceptLoggedUser: totalUsers.count - 1 };
+      return { users: formattedSidebarUsersChunk, totalUsersExceptLoggedUser };
     },
     getUser: async (_parent: any, args: { id: string; }, _context: { user: UserType; }) => {
       const { id } = args;

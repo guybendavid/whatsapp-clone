@@ -11,7 +11,7 @@ import "./Actions.scss";
 
 type Props = {
   setSearchValue: (value: string) => void;
-}
+};
 
 const Actions = ({ setSearchValue }: Props) => {
   const { loggedInUser } = getAuthData();

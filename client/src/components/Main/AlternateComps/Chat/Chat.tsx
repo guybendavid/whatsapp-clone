@@ -12,7 +12,7 @@ import "./Chat.scss";
 type Props = {
   selectedUser: SidebarUser;
   newMessage?: Message;
-}
+};
 
 const Chat = ({ selectedUser, newMessage }: Props) => {
   const chatBottomRef = useRef<HTMLHeadingElement>(null);

@@ -5,7 +5,7 @@ export type User = {
   username: string;
   password: string;
   image: string;
-}
+};
 
 export interface SidebarUser extends Omit<User, "username" | "password"> {
   latestMessage: {
@@ -20,4 +20,4 @@ export type Message = {
   recipientId: string;
   content: string;
   createdAt: string;
-}
+};

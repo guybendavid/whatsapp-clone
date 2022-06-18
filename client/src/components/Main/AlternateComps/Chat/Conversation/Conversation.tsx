@@ -10,7 +10,7 @@ export type ConversationMessage = Omit<Message, "recipientId">;
 type Props = {
   messages?: ConversationMessage[];
   chatBottomRef: RefObject<HTMLDivElement>;
-}
+};
 
 const Conversation = ({ messages = [], chatBottomRef }: Props) => {
   const { loggedInUser } = getAuthData();

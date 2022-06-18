@@ -5,7 +5,7 @@ type AuthOperationResponseUser = Omit<User, "email" | "password">;
 type AuthOperationResponse = {
   user: AuthOperationResponseUser;
   token: string;
-}
+};
 
 export function handleAuth(data: AuthOperationResponse) {
   const { token, user } = data;

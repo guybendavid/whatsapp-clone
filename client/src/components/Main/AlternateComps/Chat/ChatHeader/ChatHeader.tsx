@@ -7,7 +7,7 @@ import "./ChatHeader.scss";
 
 type Props = {
   selectedUser: SidebarUser;
-}
+};
 
 const ChatHeader = ({ selectedUser }: Props) => {
   return (

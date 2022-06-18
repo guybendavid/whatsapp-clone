@@ -4,7 +4,7 @@ import { logout } from "services/auth";
 
 type Props = {
   children: ReactNode;
-}
+};
 
 export type AppContextType = {
   snackBarError: string;
@@ -19,7 +19,7 @@ export const AppContextProvider = ({ children }: Props) => {
   const [snackBarError, setSnackBarError] = useState("");
 
   const handleServerErrors = (error: any) => {
-    const gqlContextErrorMessage = error.networkError?.result?.errors[0]?.message?.split("Context creation failed: ")[1];
+    const gqlContextErrorMessage = error.networkError?.result?.errors[0]?.message?.split("Context creation failed: ").pop();
     setSnackBarError(gqlContextErrorMessage || error.message || "Something went wrong...");
 
     if (gqlContextErrorMessage === "Unauthenticated") {

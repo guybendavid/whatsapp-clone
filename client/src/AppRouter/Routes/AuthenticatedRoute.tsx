@@ -7,7 +7,7 @@ type Props = {
   path: string;
   isAdminRoute?: boolean;
   Component: FC;
-}
+};
 
 const AuthenticatedRoute = ({ path, Component }: Props) => {
   const { isAuthenticated } = getAuthData();
