@@ -24,7 +24,6 @@ export default {
       const getSidebarUsersChunk = getUsersWithLatestMessage(offset, limit);
       const sidebarUsersChunk = await sequelize.query(getSidebarUsersChunk, { type: QueryTypes.SELECT, replacements: [id, id, id, offset, limit] });
 
-      // To do: any
       const formattedSidebarUsersChunk = sidebarUsersChunk.map(({ content, createdAt, ...rest }: GetUsersWithLatestMessageResponse) => ({
         latestMessage: { content, createdAt },
         ...rest
