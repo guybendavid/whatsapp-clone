@@ -18,10 +18,10 @@ type displayNewUserOnSidebarData = {
   client: ApolloClient<any>;
 };
 
-export function displayNewMessageOnSidebar({ cache, newMessage, sidebarUsers, isMoreUsersToFetch, getUser }: DisplayNewMessageOnSidebarData) {
+export function displayNewMessageOnSidebar({ cache, newMessage, sidebarUsers = [], isMoreUsersToFetch, getUser }: DisplayNewMessageOnSidebarData) {
   const { loggedInUser } = getAuthData();
   const { senderId, recipientId } = newMessage;
-  const otherUser = sidebarUsers?.find((user: SidebarUser) => user.id === senderId || user.id === recipientId);
+  const otherUser = sidebarUsers.find((user: SidebarUser) => user.id === senderId || user.id === recipientId);
   const isOtherUserDisplayedOnSidebar = Boolean(otherUser);
 
   if (isOtherUserDisplayedOnSidebar) {

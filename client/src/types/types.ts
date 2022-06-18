@@ -9,8 +9,8 @@ export type User = {
 
 export interface SidebarUser extends Omit<User, "username" | "password"> {
   latestMessage: {
-    content: string;
-    createdAt: string;
+    content: string | null;
+    createdAt: string | null;
   };
 }
 

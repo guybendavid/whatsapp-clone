@@ -23,17 +23,18 @@ const Chat = ({ selectedUser, newMessage }: Props) => {
     onError: (error) => handleServerErrors(error)
   });
 
-  const messages = data?.getMessages;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const messages = data?.getMessages || [];
 
   useEffect(() => {
-    if (messages?.length > 0) {
+    if (messages.length > 0) {
       chatBottomRef.current?.scrollIntoView();
     }
     // eslint-disable-next-line
   }, [messages]);
 
   useEffect(() => {
-    if (newMessage && !messages?.some((message: Message) => message.id === newMessage.id)) {
+    if (newMessage && !messages.some((message: Message) => message.id === newMessage.id)) {
       const { recipientId, ...relevantMessageFields } = newMessage;
       addNewMessageToChat(relevantMessageFields, client, selectedUser.id);
       selectedUser.latestMessage = { ...newMessage };
