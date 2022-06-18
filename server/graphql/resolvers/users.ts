@@ -26,7 +26,7 @@ export default {
         ...rest
       }));
 
-      return { users: formattedSidebarUsers, totalUsersExceptLoggedUser: formattedSidebarUsers.length };
+      return { users: formattedSidebarUsers, totalUsersExceptLoggedUser: totalUsers.count - 1 };
     },
     getUser: async (_parent: any, args: { id: string; }, _context: { user: UserType; }) => {
       const { id } = args;
