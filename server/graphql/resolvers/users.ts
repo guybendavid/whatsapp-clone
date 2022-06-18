@@ -18,15 +18,15 @@ export default {
         return { users: [], totalUsersExceptLoggedUser: 0 };
       }
 
-      const getSidebarUsers = getUsersWithLatestMessage(offset, limit);
-      const sidebarUsers = await sequelize.query(getSidebarUsers, { type: QueryTypes.SELECT, replacements: [id, id, id, offset, limit] });
+      const getSidebarUsersChunk = getUsersWithLatestMessage(offset, limit);
+      const sidebarUsersChunk = await sequelize.query(getSidebarUsersChunk, { type: QueryTypes.SELECT, replacements: [id, id, id, offset, limit] });
 
-      const formattedSidebarUsers = sidebarUsers.map(({ content, createdAt, ...rest }: any) => ({
+      const formattedSidebarUsersChunk = sidebarUsersChunk.map(({ content, createdAt, ...rest }: any) => ({
         latestMessage: { content, createdAt },
         ...rest
       }));
 
-      return { users: formattedSidebarUsers, totalUsersExceptLoggedUser: totalUsers.count - 1 };
+      return { users: formattedSidebarUsersChunk, totalUsersExceptLoggedUser: totalUsers.count - 1 };
     },
     getUser: async (_parent: any, args: { id: string; }, _context: { user: UserType; }) => {
       const { id } = args;
