@@ -3,16 +3,16 @@ import generateToken from "../../utils/generate-token";
 import { UserInputError } from "apollo-server";
 import { QueryTypes } from "sequelize";
 import { sequelize, User } from "../../db/models/models-config";
-import { LatestMessage, User as UserType } from "../../db/types/types";
+import { User as UserType, ContextUser, LatestMessage } from "../../types/types";
 import { getTotalUsers, getUsersWithLatestMessage } from "../../db/raw-queries/users";
 // eslint-disable-next-line
 const generateImage = require("../../utils/generate-image");
 
-interface GetUsersWithLatestMessageResponse extends Omit<UserType, "username" | "password">, LatestMessage { }
+interface GetUsersWithLatestMessageResponse extends Omit<ContextUser, "username" | "password">, LatestMessage { }
 
 export default {
   Query: {
-    getAllUsersExceptLogged: async (_parent: any, args: { id: string; offset: string; limit: string; }, _context: { user: Omit<UserType, "id">; }) => {
+    getAllUsersExceptLogged: async (_parent: any, args: { id: string; offset: string; limit: string; }, _context: { user: ContextUser; }) => {
       const { id, offset, limit } = args;
       const [totalUsers] = await sequelize.query(getTotalUsers, { type: QueryTypes.SELECT });
       const totalUsersExceptLoggedUser = totalUsers?.count - 1;
@@ -32,14 +32,14 @@ export default {
 
       return { users: formattedSidebarUsersChunk, totalUsersExceptLoggedUser };
     },
-    getUser: async (_parent: any, args: { id: string; }, _context: { user: UserType; }) => {
+    getUser: async (_parent: any, args: { id: string; }, _context: { user: ContextUser; }) => {
       const { id } = args;
       const user = await User.findOne({ where: { id } });
       return user;
     }
   },
   Mutation: {
-    register: async (_parent: any, args: UserType) => {
+    register: async (_parent: any, args: Omit<UserType, "id">) => {
       const { firstName, lastName, username, password } = args;
       const isUserExists = await User.findOne({ where: { username } });
 

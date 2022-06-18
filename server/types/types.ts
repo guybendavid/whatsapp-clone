@@ -17,3 +17,5 @@ export type SendMessagePayload = {
   recipientId: string;
   content: string;
 };
+
+export type ContextUser = Pick<User, "id" | "firstName" | "lastName">;

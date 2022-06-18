@@ -24,7 +24,8 @@ export default (context: any) => {
       throw new AuthenticationError("Unauthenticated");
     }
 
-    context.user = { ...decodedToken };
+    const { iat, exp, ...relevantUserFields } = decodedToken as JwtPayload;
+    context.user = { ...relevantUserFields };
   });
 
   return context;
