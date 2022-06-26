@@ -1,4 +1,6 @@
 import { useState, SyntheticEvent, useContext, useEffect } from "react";
+import { css } from "@emotion/css";
+import { baseSearchInputStyle } from "styles/reusable-css-in-js-styles";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { SidebarUser } from "types/types";
 import { useMutation } from "@apollo/client";
@@ -8,7 +10,6 @@ import { getFormValidationErrors } from "@guybendavid/utils";
 import MoodIcon from "@material-ui/icons/Mood";
 import AttachmentIcon from "@material-ui/icons/Attachment";
 import MicIcon from "@material-ui/icons/Mic";
-import "./MessageCreator.scss";
 
 type Props = {
   selectedUser: SidebarUser;
@@ -41,7 +42,7 @@ const MessageCreator = ({ selectedUser }: Props) => {
   };
 
   return (
-    <div className="message-creator">
+    <div className={style}>
       {[MoodIcon, AttachmentIcon].map((Icon, index) => (
         <IconButton key={index}>
           <Icon />
@@ -67,3 +68,28 @@ const MessageCreator = ({ selectedUser }: Props) => {
 };
 
 export default MessageCreator;
+
+const style = css`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--gray-color);
+  position: absolute;
+  box-sizing: border-box;
+  bottom: 0;
+  width: 100%;
+  padding: 10px 15px;
+
+  form {
+    ${baseSearchInputStyle};
+    padding: 0 10px;
+
+    .input-wrapper {
+      padding: 5px 0 5px 20px;
+    }
+  }
+
+  svg {
+    font-size: 1.7rem !important;
+  }
+`;

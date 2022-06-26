@@ -1,5 +1,6 @@
-.login-container,
-.register-container {
+import { css } from "@emotion/css";
+
+export const authFormStyle = css`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -47,4 +48,4 @@
       }
     }
   }
-}
+`;

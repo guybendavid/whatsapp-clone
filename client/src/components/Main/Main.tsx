@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { css } from "@emotion/css";
 import { getAuthData } from "services/auth";
 import { SidebarUser, Message } from "types/types";
 import { useSubscription } from "@apollo/client";
@@ -6,7 +7,7 @@ import { NEW_MESSAGE } from "services/graphql";
 import Sidebar from "./Sidebar/Sidebar";
 import WelcomeScreen from "./AlternateComps/WelcomeScreen/WelcomeScreen";
 import Chat from "./AlternateComps/Chat/Chat";
-import "./Main.scss";
+import conversationImage from 'images/conversation-background.jpg';
 
 const Main = () => {
   const [selectedUser, setSelectedUser] = useState<SidebarUser>();
@@ -14,7 +15,7 @@ const Main = () => {
   const newMessage = newMessageData?.newMessage;
 
   return (
-    <div className="main">
+    <div className={style}>
       <Sidebar newMessage={newMessage} selectedUser={selectedUser} setSelectedUser={setSelectedUser} />
       {selectedUser ? <Chat selectedUser={selectedUser}
         newMessage={isNewMessageRelatedToOpenedChat(newMessage, selectedUser) ? newMessage : undefined} /> : <WelcomeScreen />}
@@ -33,3 +34,21 @@ function isNewMessageRelatedToOpenedChat(newMessage?: Message, selectedUser?: Si
 };
 
 export default Main;
+
+const style = css`
+  // preloading the conversation image
+  background: url(${conversationImage});
+  display: flex;
+  height: 96vh;
+  width: 85vw;
+
+  svg {
+    color: #919191;
+    font-size: 1.4rem;
+  }
+
+  @media only screen and (max-width: 1200px) {
+    height: 100vh;
+    width: 100vw;
+  }
+`;

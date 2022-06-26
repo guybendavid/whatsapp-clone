@@ -2,12 +2,13 @@ import { useEffect, useRef, useContext } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { SidebarUser, Message } from "types/types";
 import { useQuery } from "@apollo/client";
+import { css, cx } from "@emotion/css";
+import { container } from "../shared-styles";
 import { GET_MESSAGES } from "services/graphql";
 import { addNewMessageToChat } from "services/chat-helper";
 import ChatHeader from "./ChatHeader/ChatHeader";
 import Conversation from "./Conversation/Conversation";
 import MessageCreator from "./MessageCreator/MessageCreator";
-import "./Chat.scss";
 
 type Props = {
   selectedUser: SidebarUser;
@@ -44,7 +45,7 @@ const Chat = ({ selectedUser, newMessage }: Props) => {
   }, [newMessage]);
 
   return (
-    <div className="chat">
+    <div className={cx(style, container)}>
       <ChatHeader selectedUser={selectedUser} />
       <Conversation messages={messages} chatBottomRef={chatBottomRef} />
       <MessageCreator selectedUser={selectedUser} />
@@ -53,3 +54,11 @@ const Chat = ({ selectedUser, newMessage }: Props) => {
 };
 
 export default Chat;
+
+const style = css`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: #f8f9fa;
+  border-radius: 10px;
+`;

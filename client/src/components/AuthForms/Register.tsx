@@ -1,13 +1,13 @@
 import { useState, useContext, SyntheticEvent, ChangeEvent } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { Link } from "react-router-dom";
+import { authFormStyle } from "./shared-styles";
 import { handleAuth } from "services/auth";
 import { Avatar, Button, TextField, Typography, OutlinedTextFieldProps } from "@material-ui/core";
 import { useMutation } from "@apollo/client";
 import { REGISTER_USER } from "services/graphql";
 import { getFormValidationErrors } from "@guybendavid/utils";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import "./AuthForms.scss";
 
 const textFieldProps = { required: true, variant: "outlined", margin: "normal", fullWidth: true } as OutlinedTextFieldProps;
 
@@ -37,7 +37,7 @@ const Register = () => {
   };
 
   return (
-    <div className="register-container">
+    <div className={authFormStyle}>
       <Avatar>
         <LockOutlinedIcon />
       </Avatar>

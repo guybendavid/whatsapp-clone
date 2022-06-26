@@ -18,11 +18,9 @@ export function handleAuth(data: AuthOperationResponse) {
 }
 
 export function getAuthData() {
-  const { pathname } = window.location;
   const loggedInUser = localStorage.loggedInUser && JSON.parse(localStorage.loggedInUser);
   const isAuthenticated = Boolean(loggedInUser && localStorage.token);
-  const isAuthForm = pathname === "/login" || pathname === "/register";
-  return { loggedInUser, isAuthenticated, isAuthForm };
+  return { loggedInUser, isAuthenticated };
 }
 
 export function logout() {

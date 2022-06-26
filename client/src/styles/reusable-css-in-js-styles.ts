@@ -1,20 +1,22 @@
-@mixin overflow-handler($max-width) {
+import { css } from "@emotion/css";
+
+export const overflowHandler = (maxWidth: string) => css`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: $max-width;
-}
+  max-width: ${maxWidth};
+`;
 
-@mixin vertical-overflow-handler($max-lines) {
-  display: -webkit-box;
+export const verticalOverflowHandler = (maxLines: number) => css`
+  display:-webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-all;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: $max-lines;
-}
+  -webkit-line-clamp: ${maxLines};
+`;
 
-%search-input {
+export const baseSearchInputStyle = css`
   flex: 1;
 
   .input-wrapper {
@@ -25,4 +27,4 @@
       width: 100%;
     }
   }
-}
+`;

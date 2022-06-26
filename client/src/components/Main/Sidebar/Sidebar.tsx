@@ -1,4 +1,5 @@
 import { useContext, useState, useEffect } from "react";
+import { css } from "@emotion/css";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { useQuery, useLazyQuery, InMemoryCache } from "@apollo/client";
 import { getAuthData } from "services/auth";
@@ -7,7 +8,6 @@ import { displayNewMessageOnSidebar, displayNewUserOnSidebar } from "services/si
 import { SidebarUser, Message } from "types/types";
 import Actions from "./Actions/Actions";
 import UsersList from "./UsersList/UsersList";
-import "./Sidebar.scss";
 
 type Props = {
   newMessage?: Message;
@@ -56,7 +56,7 @@ const Sidebar = ({ selectedUser, setSelectedUser, newMessage }: Props) => {
   }, [newUserData]);
 
   return (
-    <div className="sidebar">
+    <div className={style}>
       <Actions setSearchValue={setSearchValue} />
       <UsersList searchValue={searchValue} users={sidebarData?.users} isMoreUsersToFetch={isMoreUsersToFetch}
         selectedUser={selectedUser} setSelectedUser={setSelectedUser} fetchMoreUsers={fetchMoreUsers} />
@@ -65,3 +65,11 @@ const Sidebar = ({ selectedUser, setSelectedUser, newMessage }: Props) => {
 };
 
 export default Sidebar;
+
+const style = css`
+  display: flex;
+  flex-direction: column;
+  background: white;
+  min-width: 353px;
+  flex: 0.3;
+`;
