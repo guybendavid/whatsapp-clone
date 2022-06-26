@@ -4,7 +4,7 @@
   --dark-gray-color: #919191;
   --green-color: #009688;
   --text-color: #00000099;
-  --divider-color: "#000000c";
+  --divider-color: rgba(0, 0, 0, 0.05);
   --header-padding: 5px 15px;
 }
 
