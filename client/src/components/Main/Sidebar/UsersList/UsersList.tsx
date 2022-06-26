@@ -84,7 +84,7 @@ const style = css`
     }
 
     hr {
-      background-color: rgba(0, 0, 0, 0.05);
+      background-color: var(--divider-color);
       position: relative;
       height: 0.5px;
 

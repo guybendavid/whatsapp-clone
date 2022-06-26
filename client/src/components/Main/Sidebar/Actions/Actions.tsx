@@ -90,7 +90,7 @@ export default Actions;
 
 const style = css`
   background: var(--gray-color);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid var(--divider-color);
 
   .avatar {
     cursor: pointer;
@@ -133,10 +133,10 @@ const style = css`
           position: absolute;
           display: flex;
           align-items: center;
-          color: #919191;
+          color: var(--dark-gray-color);
 
           .is-arrow {
-            color: #33b7f6 !important;
+            color: #33b7f6;
             animation: flip-90 0.3s forwards;
 
             @keyframes flip-90 {

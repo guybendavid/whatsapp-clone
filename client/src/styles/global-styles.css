@@ -1,7 +1,10 @@
 :root {
   --gray-color: #ededed;
+  --gray-smoke-color: #dddbd1;
+  --dark-gray-color: #919191;
   --green-color: #009688;
   --text-color: #00000099;
+  --divider-color: "#000000c";
   --header-padding: 5px 15px;
 }
 
@@ -10,7 +13,7 @@
 }
 
 body {
-  background: linear-gradient(180deg, #dddbd1, #d2dbdc);
+  background: linear-gradient(180deg, var(--gray-smoke-color), #d2dbdc);
   overflow: hidden;
 }
 

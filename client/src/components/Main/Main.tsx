@@ -36,14 +36,13 @@ function isNewMessageRelatedToOpenedChat(newMessage?: Message, selectedUser?: Si
 export default Main;
 
 const style = css`
-  // preloading the conversation image
-  background: url(${conversationImage});
+  background: url(${conversationImage}); // preloading the conversation image
   display: flex;
   height: 96vh;
   width: 85vw;
 
   svg {
-    color: #919191;
+    color: var(--dark-gray-color);
     font-size: 1.4rem;
   }
 

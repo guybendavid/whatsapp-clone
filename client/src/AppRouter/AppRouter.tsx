@@ -29,6 +29,7 @@ const AppRouter = () => {
 export default withRouter(AppRouter);
 
 const containerStyle = (isAuthenticated: boolean) => css`
+  ${isAuthenticated ? "align-items: center" : "margin-top: 160px"};
   padding: 0 !important;
   display: flex !important;
   justify-content: center;
@@ -44,6 +45,4 @@ const containerStyle = (isAuthenticated: boolean) => css`
     width: 100vw;
     z-index: -1;
   }
-
-  ${isAuthenticated ? "align-items: center" : "margin-top: 160px"};
 `;

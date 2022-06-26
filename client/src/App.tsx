@@ -32,5 +32,5 @@ export default App;
 
 const unsupportedStyle = css`
   height: 100vh;
-  background: #dddbd1;
+  background: var(--gray-smoke-color);
 `;
