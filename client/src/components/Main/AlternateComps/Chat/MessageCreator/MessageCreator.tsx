@@ -7,9 +7,7 @@ import { useMutation } from "@apollo/client";
 import { SEND_MESSAGE } from "services/graphql";
 import { IconButton, InputBase } from "@material-ui/core";
 import { getFormValidationErrors } from "@guybendavid/utils";
-import MoodIcon from "@material-ui/icons/Mood";
-import AttachmentIcon from "@material-ui/icons/Attachment";
-import MicIcon from "@material-ui/icons/Mic";
+import { Mood as MoodIcon, Attachment as AttachmentIcon, Mic as MicIcon } from "@material-ui/icons";
 
 type Props = {
   selectedUser: SidebarUser;

@@ -2,8 +2,8 @@ import { css, cx } from "@emotion/css";
 import { Link } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 import { container } from "../shared-styles";
+import { Laptop as LaptopIcon } from "@material-ui/icons";
 import introImg from "images/intro-img.png";
-import LaptopIcon from "@material-ui/icons/Laptop";
 
 const WelcomeScreen = () => {
   return (

@@ -3,8 +3,7 @@ import { Avatar, Typography, IconButton } from "@material-ui/core";
 import { css } from "@emotion/css";
 import { overflowHandler } from "styles/reusable-css-in-js-styles";
 import { timeDisplayer } from "@guybendavid/utils";
-import SearchIcon from "@material-ui/icons/Search";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { Search as SearchIcon, MoreVert as MoreVertIcon } from "@material-ui/icons";
 
 type Props = {
   selectedUser: SidebarUser;

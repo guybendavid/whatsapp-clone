@@ -3,11 +3,13 @@ import { getAuthData, logout } from "services/auth";
 import { Avatar, IconButton, InputBase, ClickAwayListener, Menu, MenuItem } from "@material-ui/core";
 import { css, cx } from "@emotion/css";
 import { baseSearchInputStyle } from "styles/reusable-css-in-js-styles";
-import DonutLargeIcon from "@material-ui/icons/DonutLarge";
-import ChatIcon from "@material-ui/icons/Chat";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import SearchIcon from "@material-ui/icons/Search";
-import ArrowDownWardIcon from "@material-ui/icons/ArrowDownward";
+import {
+  DonutLarge as DonutLargeIcon,
+  Chat as ChatIcon,
+  MoreVert as MoreVertIcon,
+  Search as SearchIcon,
+  ArrowDownward as ArrowDownwardIcon
+} from "@material-ui/icons";
 
 type Props = {
   setSearchValue: (value: string) => void;
@@ -38,7 +40,7 @@ const Actions = ({ setSearchValue }: Props) => {
           <form>
             <div className="search-wrapper">
               <div className="icon-wrapper">
-                {searchBarIsOpen ? <ArrowDownWardIcon className="is-arrow" /> : <SearchIcon />}
+                {searchBarIsOpen ? <ArrowDownwardIcon className="is-arrow" /> : <SearchIcon />}
               </div>
               <div className="input-wrapper">
                 <InputBase
