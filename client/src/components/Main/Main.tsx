@@ -7,7 +7,7 @@ import { NEW_MESSAGE } from "services/graphql";
 import Sidebar from "./Sidebar/Sidebar";
 import WelcomeScreen from "./AlternateComps/WelcomeScreen/WelcomeScreen";
 import Chat from "./AlternateComps/Chat/Chat";
-import conversationImage from 'images/conversation-background.jpg';
+import conversationImage from "images/conversation-background.jpg";
 
 const Main = () => {
   const [selectedUser, setSelectedUser] = useState<SidebarUser>();

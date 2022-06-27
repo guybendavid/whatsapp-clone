@@ -1,7 +1,7 @@
 import { logout } from "services/auth";
 
 const useLocalStorageTracker = () => {
-  const listen = () => window.addEventListener('storage', handleChangesInLocalStorage);
+  const listen = () => window.addEventListener("storage", handleChangesInLocalStorage);
 
   const handleChangesInLocalStorage = (e: StorageEvent) => {
     const authKeys = ["loggedInUser", "token"];

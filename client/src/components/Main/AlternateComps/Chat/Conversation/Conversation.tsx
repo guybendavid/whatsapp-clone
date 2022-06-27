@@ -5,7 +5,7 @@ import { Message } from "types/types";
 import { Typography } from "@material-ui/core";
 import { timeDisplayer } from "@guybendavid/utils";
 import { verticalOverflowHandler } from "styles/reusable-css-in-js-styles";
-import backgroundImage from 'images/conversation-background.jpg';
+import backgroundImage from "images/conversation-background.jpg";
 
 export type ConversationMessage = Omit<Message, "recipientId">;
 
