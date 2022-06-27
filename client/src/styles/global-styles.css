@@ -42,3 +42,12 @@ small {
   color: var(--text-color);
   font-size: 0.8rem !important;
 }
+
+#main-menu ul {
+  padding: 0;
+}
+
+#main-menu li {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}

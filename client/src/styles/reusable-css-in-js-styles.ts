@@ -19,11 +19,13 @@ export const verticalOverflowHandler = (maxLines: number) => css`
 export const baseSearchInputStyle = css`
   flex: 1;
 
-  .input-wrapper {
-    background: white;
-    border-radius: 30px;
+  & > div {
+    &:first-child {
+      background: white;
+      border-radius: 30px;
+    }
 
-    .input-base {
+    .MuiInputBase-root {
       width: 100%;
     }
   }

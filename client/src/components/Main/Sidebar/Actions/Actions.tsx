@@ -74,7 +74,7 @@ const DotsIcon = () => {
         <MoreVertIcon />
       </IconButton>
       <Menu
-        className="main-menu"
+        id="main-menu"
         keepMounted
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
@@ -92,12 +92,12 @@ const style = css`
   background: var(--gray-color);
   border-bottom: 1px solid var(--divider-color);
 
-  .avatar {
-    cursor: pointer;
-  }
-
   .icons {
     padding: var(--header-padding);
+
+    .avatar {
+      cursor: pointer;
+    }
   }
 
   .icons,
@@ -152,17 +152,6 @@ const style = css`
           cursor: pointer;
         }
       }
-    }
-  }
-}
-
-.main-menu {
-  ul {
-    padding: 0;
-
-    li {
-      padding-top: 10px;
-      padding-bottom: 10px;
     }
   }
 `;

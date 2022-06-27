@@ -7,7 +7,7 @@ export const authFormStyle = css`
   width: 100%;
 
   & > div {
-    &:nth-child(1) {
+    &:first-child {
       background: var(--green-color);
     }
   }
@@ -17,7 +17,7 @@ export const authFormStyle = css`
       margin-bottom: 0;
     }
 
-    div {
+    & > div {
       .MuiFormLabel-root.Mui-focused {
         color: var(--green-color);
       }
@@ -40,12 +40,8 @@ export const authFormStyle = css`
 
     button {
       color: white;
-      background: var(--green-color);
+      background: var(--green-color) !important;
       text-transform: capitalize;
-
-      &:hover {
-        background-color: rgb(0, 105, 95);
-      }
     }
   }
 `;
