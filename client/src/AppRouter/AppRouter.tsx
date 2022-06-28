@@ -30,7 +30,7 @@ export default withRouter(AppRouter);
 
 const getContainerStyle = (isAuthenticated: boolean) => css`
   ${isAuthenticated ? "align-items: center" : "margin-top: 160px"};
-  padding: 0 !important;
+  padding-inline: 0 !important;
   display: flex !important;
   justify-content: center;
   height: 100vh;

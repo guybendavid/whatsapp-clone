@@ -1,20 +1,12 @@
-import { useEffect } from "react";
 import { AppContextProvider } from "contexts/AppContext";
 import { BrowserRouter } from "react-router-dom";
 import { css } from "@emotion/css";
 import { useMediaQuery } from "@material-ui/core";
-import useLocalStorageTracker from "hooks/use-local-storage-tracker";
 import AppRouter from "AppRouter/AppRouter";
 import "styles/global-styles.css";
 
 const App = () => {
   const isUnsupportedResolution = useMediaQuery("(max-width:950px)");
-  const { listen: listenToChangesInLS } = useLocalStorageTracker();
-
-  useEffect(() => {
-    listenToChangesInLS();
-    // eslint-disable-next-line
-  }, []);
 
   return isUnsupportedResolution ?
     <div className={unsupportedStyle}>
