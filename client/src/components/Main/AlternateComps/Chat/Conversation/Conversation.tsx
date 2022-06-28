@@ -44,7 +44,7 @@ const Conversation = ({ messages = [], chatBottomRef }: Props) => {
       {messages.map((message, index) => (
         <div key={index} className={cx("message",
           message.senderId === loggedInUser.id && "is-sent-message",
-          firstIndexesOfSeries.includes(index) && "first-of-series")}>
+          firstIndexesOfSeries.includes(index) && "is-first-of-series")}>
           <Typography component="span">{message.content}</Typography>
           <Typography component="small">{timeDisplayer(message.createdAt)}</Typography>
         </div>
@@ -74,22 +74,11 @@ const style = css`
     padding: 5px 80px 5px 10px;
     border-radius: 5px;
 
-    span {
-      ${verticalOverflowHandler(7)};
-      min-height: 25px;
-    }
-
-    small {
-      position: absolute;
-      right: 10px;
-      bottom: 2px;
-    }
-
     &.is-sent-message {
       align-self: flex-end;
       background: #dcf8c6;
 
-      &.first-of-series {
+      &.is-first-of-series {
         &::before {
           border-top: 12px solid #dcf8c6;
           right: -12px;
@@ -100,7 +89,7 @@ const style = css`
     &:not(.is-sent-message) {
       background: white;
 
-      &.first-of-series {
+      &.is-first-of-series {
         &::before {
           border-top: 12px solid #fff;
           left: -12px;
@@ -108,7 +97,7 @@ const style = css`
       }
     }
 
-    &.first-of-series {
+    &.is-first-of-series {
       &::before {
         content: "";
         position: absolute;
@@ -118,6 +107,17 @@ const style = css`
         border-left: 12px solid transparent;
         border-right: 12px solid transparent;
       }
+    }
+
+    span {
+      ${verticalOverflowHandler(7)};
+      min-height: 25px;
+    }
+
+    small {
+      position: absolute;
+      right: 10px;
+      bottom: 2px;
     }
   }
 `;

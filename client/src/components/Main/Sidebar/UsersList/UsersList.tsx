@@ -83,20 +83,6 @@ const style = css`
       background: #f0f2f5;
     }
 
-    hr {
-      background-color: var(--divider-color);
-      position: relative;
-      height: 0.5px;
-
-      &.is-chatted {
-        bottom: 10px;
-      }
-
-      &:not(.is-chatted) {
-        bottom: 18px;
-      }
-    }
-
     .text-wrapper {
       flex: 1;
 
@@ -117,6 +103,20 @@ const style = css`
           font-size: 0.9rem;
           color: var(--text-color);
           ${overflowHandler("260px")};
+        }
+      }
+
+      hr {
+        background-color: var(--divider-color);
+        position: relative;
+        height: 0.5px;
+
+        &.is-chatted {
+          bottom: 10px;
+        }
+
+        &:not(.is-chatted) {
+          bottom: 18px;
         }
       }
     }

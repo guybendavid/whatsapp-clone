@@ -41,13 +41,13 @@ const style = css`
   height: 96vh;
   width: 85vw;
 
-  svg {
-    color: var(--dark-gray-color);
-    font-size: 1.4rem;
-  }
-
   @media only screen and (max-width: 1200px) {
     height: 100vh;
     width: 100vw;
+  }
+
+  svg {
+    color: var(--dark-gray-color);
+    font-size: 1.4rem;
   }
 `;
