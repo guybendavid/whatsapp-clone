@@ -8,7 +8,6 @@ import path from "path";
 import resolvers from "./graphql/resolvers/resolvers-config";
 import typeDefs from "./graphql/type-definitions";
 import context from "./graphql/context-middleware";
-import rateLimit from "express-rate-limit";
 
 export const pubsub = new PubSub();
 
@@ -19,14 +18,7 @@ const port = PORT || 4000;
 
 const startProductionServer = () => {
   const app = express();
-
-  const limiter = rateLimit({
-    windowMs: 1 * 60 * 1000,
-    max: 10
-  });
-
-  app.use(express.static(path.join(__dirname, "client")))
-    .use(limiter);
+  app.use(express.static(path.join(__dirname, "client")));
 
   app.get("*", (_req, res) => {
     res.sendFile(path.resolve(__dirname, "client", "index.html"));
