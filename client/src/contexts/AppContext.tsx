@@ -30,7 +30,7 @@ export const AppContextProvider = ({ children }: Props) => {
   const clearSnackBarError = () => setSnackBarError("");
 
   return (
-    <AppContext.Provider value={{ snackBarError, setSnackBarError, handleServerErrors, clearSnackBarError }}>
+    <AppContext.Provider value={{ snackBarError, setSnackBarError, clearSnackBarError, handleServerErrors }}>
       {children}
     </AppContext.Provider>
   );
