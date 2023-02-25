@@ -20,7 +20,7 @@
     "pg-hstore": "^2.3.4",
     "pino": "^6.11.3",
     "pino-pretty": "^5.0.2",
-    "sequelize": "^6.18.0"
+    "sequelize": "^6.29.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
