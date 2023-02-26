@@ -9,6 +9,8 @@ import resolvers from "./graphql/resolvers/resolvers-config";
 import typeDefs from "./graphql/type-definitions";
 import context from "./graphql/context-middleware";
 
+// To do: check if @types/cors is needed
+
 export const pubsub = new PubSub();
 
 const { NODE_ENV, LOG_LEVEL, PORT, BASE_URL_PROD } = process.env;
