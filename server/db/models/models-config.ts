@@ -7,8 +7,13 @@ import config from "../config/config";
 const { NODE_ENV } = process.env;
 const environmentConfig = config[NODE_ENV === "production" ? "production" : "development"];
 
-// @ts-ignore
-const sequelize = new Sequelize(environmentConfig);
+let sequelize;
+
+try {
+  // @ts-ignore
+  sequelize = new Sequelize(environmentConfig);
+} catch (error) { }
+
 
 const models: any = {
   User: user(sequelize, Sequelize.DataTypes),
