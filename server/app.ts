@@ -38,7 +38,7 @@ const startDevelopmentServer = () => {
 
 const connect = async ({ server, isProd }: { server: ApolloServerDev | Server; isProd?: boolean; }) => {
   try {
-    await sequelize.authenticate();
+    await sequelize.authenticate().catch((err: any) => logger.error(err));
     logger.info("Database connected!");
 
     if (isProd) {
@@ -51,10 +51,9 @@ const connect = async ({ server, isProd }: { server: ApolloServerDev | Server; i
     const { url, subscriptionsUrl } = await (server as ApolloServerDev).listen({ port });
     logger.info(`Server ready at ${url}`);
     logger.info(`Susbscription ready at ${subscriptionsUrl}`);
-
   } catch (err) {
     isProd && await server.listen(port);
-    logger.error("Something went wrong...");
+    logger.error(err as string);
   }
 };
 
