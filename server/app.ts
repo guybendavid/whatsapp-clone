@@ -54,7 +54,7 @@ const connect = async ({ server, isProd }: { server: ApolloServerDev | Server; i
 
   } catch (err) {
     isProd && await server.listen(port);
-    logger.error(isProd ? "Something went wrong..." : err as string);
+    logger.error("Something went wrong...");
   }
 };
 
