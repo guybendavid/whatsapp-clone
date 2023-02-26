@@ -45,11 +45,13 @@ const connect = async ({ server, isProd }: { server: ApolloServerDev | Server; i
       await server.listen(port);
       logger.info(`Server ready at https://${BASE_URL_PROD}`);
       logger.info(`Subscriptions ready at wss://${BASE_URL_PROD}`);
-    } else {
-      const { url, subscriptionsUrl } = await (server as ApolloServerDev).listen({ port });
-      logger.info(`Server ready at ${url}`);
-      logger.info(`Susbscription ready at ${subscriptionsUrl}`);
+      return;
     }
+
+    const { url, subscriptionsUrl } = await (server as ApolloServerDev).listen({ port });
+    logger.info(`Server ready at ${url}`);
+    logger.info(`Susbscription ready at ${subscriptionsUrl}`);
+
   } catch (err) {
     isProd && await server.listen(port);
     logger.error(isProd ? "Something went wrong..." : err as string);
