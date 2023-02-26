@@ -1,6 +1,7 @@
 import express from "express";
 import { ApolloServer as ApolloServerDev, PubSub } from "apollo-server";
 import { ApolloServer as ApolloServerProd } from "apollo-server-express";
+// @ts-ignore
 import { sequelize } from "./db/models/models-config";
 import http, { Server } from "http";
 import pino from "pino";
@@ -9,7 +10,7 @@ import resolvers from "./graphql/resolvers/resolvers-config";
 import typeDefs from "./graphql/type-definitions";
 import context from "./graphql/context-middleware";
 
-// To do: check if @types/cors is needed
+// To do: check if @types/cors is needed, try to optimize package.json process
 
 export const pubsub = new PubSub();
 
@@ -40,6 +41,7 @@ const startDevelopmentServer = () => {
 
 const connect = async ({ server, isProd }: { server: ApolloServerDev | Server; isProd?: boolean; }) => {
   try {
+    // @ts-ignore
     await sequelize.authenticate();
     logger.info("Database connected!");
 

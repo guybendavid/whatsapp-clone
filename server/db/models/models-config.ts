@@ -14,7 +14,6 @@ try {
   sequelize = new Sequelize(environmentConfig);
 } catch (error) { }
 
-
 const models: any = {
   User: user(sequelize, Sequelize.DataTypes),
   Message: message(sequelize, Sequelize.DataTypes)
