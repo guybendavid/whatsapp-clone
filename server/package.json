@@ -15,12 +15,12 @@
     "bcrypt": "^5.0.1",
     "express-pino-logger": "^6.0.0",
     "graphql": "^15.5.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "pg": "^8.6.0",
     "pg-hstore": "^2.3.4",
     "pino": "^6.11.3",
     "pino-pretty": "^5.0.2",
-    "sequelize": "^6.18.0"
+    "sequelize": "^6.29.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
