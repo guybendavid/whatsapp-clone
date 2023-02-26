@@ -52,7 +52,6 @@ const connect = async ({ server, isProd }: { server: ApolloServerDev | Server; i
     logger.info(`Server ready at ${url}`);
     logger.info(`Susbscription ready at ${subscriptionsUrl}`);
   } catch (err) {
-    isProd && await server.listen(port);
     logger.error(err as string);
   }
 };
