@@ -38,7 +38,7 @@ const startDevelopmentServer = () => {
 
 const connect = async ({ server, isProd }: { server: ApolloServerDev | Server; isProd?: boolean; }) => {
   try {
-    await sequelize.authenticate().catch((err: any) => logger.error(err));
+    await sequelize.authenticate();
     logger.info("Database connected!");
 
     if (isProd) {
