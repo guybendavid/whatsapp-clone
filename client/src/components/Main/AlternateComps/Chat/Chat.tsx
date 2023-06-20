@@ -24,7 +24,7 @@ const Chat = ({ selectedUser, newMessage }: Props) => {
     onError: (error) => handleServerErrors(error)
   });
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line
   const messages = data?.getMessages || [];
 
   useEffect(() => {
