@@ -21,5 +21,5 @@ http://clone-of-whatsapp.herokuapp.com/
 
 ## Preview 
 
-![Intro](https://i.ibb.co/T17dTNT/intro.png)
-![Chat](https://i.ibb.co/9s8VfcY/chat.png)
+![Intro](https://github.com/user-attachments/assets/afaed2a0-798e-409a-8349-61b8fab587a9)
+![Chat](https://github.com/user-attachments/assets/681527d4-8c5d-434d-b469-fe455684503c)
