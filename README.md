@@ -17,7 +17,7 @@
 
 ## Live Demo
 
-http://clone-of-whatsapp.herokuapp.com/
+https://whatsapp-clone-18lt.onrender.com/
 
 ## Preview 
 
