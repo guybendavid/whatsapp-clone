@@ -1,6 +1,7 @@
 ## Contributors
 
 - **Arda Ocak** – 64220037
+- **Kevser Kutlu** – 64220018
 
 # whatsapp-clone
 
