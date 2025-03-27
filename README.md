@@ -1,3 +1,7 @@
+## Contributors
+
+- **Arda Ocak** – 64220037
+
 # whatsapp-clone
 
 ## Stack
