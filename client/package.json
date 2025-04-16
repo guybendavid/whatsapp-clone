@@ -16,7 +16,7 @@
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.58",
-    "dompurify": "^2.5.4",
+    "dompurify": "^3.2.4",
     "graphql": "^15.5.0",
     "graphql-tag": "^2.12.4",
     "react": "^17.0.2",
