@@ -8,16 +8,17 @@ import "styles/global-styles.css";
 const App = () => {
   const isUnsupportedResolution = useMediaQuery("(max-width:950px)");
 
-  return isUnsupportedResolution ?
+  return isUnsupportedResolution ? (
     <div className={unsupportedStyle}>
       <h1>Sorry, this resolution is not supported yet &#128577;</h1>
     </div>
-    :
+  ) : (
     <AppContextProvider>
       <BrowserRouter>
         <AppRouter />
       </BrowserRouter>
-    </AppContextProvider>;
+    </AppContextProvider>
+  );
 };
 
 export default App;

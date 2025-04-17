@@ -7,34 +7,23 @@
   "scripts": {
     "dev": "ts-node-dev --no-notify -r dotenv/config app | pino-pretty",
     "start": "node app.js | pino-pretty",
-    "build": "tsc && rm -rf ./build/db/types"
+    "build": "tsc"
   },
   "dependencies": {
-    "@guybendavid/utils": "^2.0.3",
+    "@guybendavid/utils": "^3.0.0",
     "apollo-server": "^2.25.4",
-    "bcrypt": "^5.0.1",
-    "express-pino-logger": "^6.0.0",
+    "bcrypt": "^5.1.1",
     "graphql": "^15.5.0",
-    "jsonwebtoken": "^9.0.0",
-    "pg": "^8.6.0",
-    "pino": "^6.11.3",
-    "pino-pretty": "^5.0.2",
-    "sequelize": "^6.29.0"
+    "jsonwebtoken": "^9.0.2",
+    "pino": "^9.6.0",
+    "pino-pretty": "^13.0.0",
+    "sequelize": "^6.37.7"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.0",
-    "@types/express": "^4.17.12",
-    "@types/express-pino-logger": "^4.0.2",
-    "@types/jsonwebtoken": "^8.5.2",
-    "@types/node": "^14.14.31",
-    "@types/pino": "^6.3.8",
-    "@types/validator": "^13.1.4",
-    "@typescript-eslint/eslint-plugin": "^4.27.0",
-    "@typescript-eslint/parser": "^4.27.0",
-    "dotenv": "^10.0.0",
-    "eslint": "^7.29.0",
-    "sequelize-cli": "^6.4.1",
-    "ts-node-dev": "^1.1.8",
-    "typescript": "^4.3.4"
+    "@types/bcrypt": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.9",
+    "dotenv": "^16.5.0",
+    "pg": "^8.14.1",
+    "ts-node-dev": "^2.0.0"
   }
 }

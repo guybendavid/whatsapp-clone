@@ -46,9 +46,17 @@ const Register = () => {
         <TextField {...textFieldProps} label="first name" autoComplete="First Name" onChange={(e) => handleOnChange(e, "firstName")} />
         <TextField {...textFieldProps} label="last name" autoComplete="Last Name" onChange={(e) => handleOnChange(e, "lastName")} />
         <TextField {...textFieldProps} label="username" autoComplete="Username" onChange={(e) => handleOnChange(e, "username")} />
-        <TextField {...textFieldProps} label="password" autoComplete="Password" type="password" onChange={(e) => handleOnChange(e, "password")} />
+        <TextField
+          {...textFieldProps}
+          label="password"
+          autoComplete="Password"
+          type="password"
+          onChange={(e) => handleOnChange(e, "password")}
+        />
         <Link to="/login">Already have an account?</Link>
-        <Button type="submit" fullWidth variant="contained">Register</Button>
+        <Button type="submit" fullWidth variant="contained">
+          Register
+        </Button>
       </form>
     </div>
   );

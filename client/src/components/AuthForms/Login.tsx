@@ -43,9 +43,17 @@ const Login = () => {
       <Typography component="h1">Login</Typography>
       <form onSubmit={handleSubmit}>
         <TextField {...textFieldProps} label="username" autoComplete="Username" onChange={(e) => handleOnChange(e, "username")} />
-        <TextField {...textFieldProps} label="password" autoComplete="Password" type="password" onChange={(e) => handleOnChange(e, "password")} />
+        <TextField
+          {...textFieldProps}
+          label="password"
+          autoComplete="Password"
+          type="password"
+          onChange={(e) => handleOnChange(e, "password")}
+        />
         <Link to="/register">Don't have an account yet?</Link>
-        <Button type="submit" fullWidth variant="contained">Login</Button>
+        <Button type="submit" fullWidth variant="contained">
+          Login
+        </Button>
       </form>
     </div>
   );

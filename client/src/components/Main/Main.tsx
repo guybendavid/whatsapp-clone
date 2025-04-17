@@ -17,8 +17,14 @@ const Main = () => {
   return (
     <div className={style}>
       <Sidebar newMessage={newMessage} selectedUser={selectedUser} setSelectedUser={setSelectedUser} />
-      {selectedUser ? <Chat selectedUser={selectedUser}
-        newMessage={isNewMessageRelatedToOpenedChat(newMessage, selectedUser) ? newMessage : undefined} /> : <WelcomeScreen />}
+      {selectedUser ? (
+        <Chat
+          selectedUser={selectedUser}
+          newMessage={isNewMessageRelatedToOpenedChat(newMessage, selectedUser) ? newMessage : undefined}
+        />
+      ) : (
+        <WelcomeScreen />
+      )}
     </div>
   );
 };
@@ -31,7 +37,7 @@ function isNewMessageRelatedToOpenedChat(newMessage?: Message, selectedUser?: Si
     const { id: selectedUserId } = selectedUser as SidebarUser;
     return senderId === selectedUserId || (senderId === loggedInUser.id && recipientId === selectedUserId);
   }
-};
+}
 
 export default Main;
 

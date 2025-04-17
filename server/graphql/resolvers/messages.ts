@@ -6,7 +6,7 @@ import { pubsub } from "../../app";
 
 export default {
   Query: {
-    getMessages: async (_parent: any, args: { otherUserId: string; }, { user }: { user: ContextUser; }) => {
+    getMessages: async (_parent: any, args: { otherUserId: string }, { user }: { user: ContextUser }) => {
       const { otherUserId } = args;
       const otherUser = await User.findOne({ where: { id: otherUserId } });
 
@@ -28,7 +28,7 @@ export default {
     }
   },
   Mutation: {
-    sendMessage: async (_parent: any, args: SendMessagePayload, { user }: { user: ContextUser; }) => {
+    sendMessage: async (_parent: any, args: SendMessagePayload, { user }: { user: ContextUser }) => {
       const { recipientId, content } = args;
 
       if (recipientId.toString() === user.id.toString()) {

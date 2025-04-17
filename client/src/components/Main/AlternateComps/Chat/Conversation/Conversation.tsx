@@ -42,9 +42,13 @@ const Conversation = ({ messages = [], chatBottomRef }: Props) => {
   return (
     <div className={style}>
       {messages.map((message, index) => (
-        <div key={index} className={cx("message",
-          message.senderId === loggedInUser.id && "is-sent-message",
-          firstIndexesOfSeries.includes(index) && "is-first-of-series")}>
+        <div
+          key={index}
+          className={cx(
+            "message",
+            message.senderId === loggedInUser.id && "is-sent-message",
+            firstIndexesOfSeries.includes(index) && "is-first-of-series"
+          )}>
           <Typography component="span">{message.content}</Typography>
           <Typography component="small">{timeDisplayer(message.createdAt)}</Typography>
         </div>

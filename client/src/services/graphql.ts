@@ -9,8 +9,8 @@ const AUTH_FIELDS = gql`
 
 export const LOGIN_USER = gql`
   ${AUTH_FIELDS}
-  mutation LoginUser($username: String! $password: String!) {
-    login(username: $username password: $password) {
+  mutation LoginUser($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
       user {
         ...AuthFields
         username
@@ -22,8 +22,8 @@ export const LOGIN_USER = gql`
 
 export const REGISTER_USER = gql`
   ${AUTH_FIELDS}
-  mutation RegisterUser($firstName: String! $lastName: String! $username: String! $password: String!) {
-    register(firstName: $firstName lastName: $lastName username: $username password: $password) {
+  mutation RegisterUser($firstName: String!, $lastName: String!, $username: String!, $password: String!) {
+    register(firstName: $firstName, lastName: $lastName, username: $username, password: $password) {
       user {
         ...AuthFields
       }
@@ -33,8 +33,8 @@ export const REGISTER_USER = gql`
 `;
 
 export const GET_All_USERS_EXCEPT_LOGGED = gql`
-  query GetAllUsersExceptLogged($loggedInUserId: ID! $offset: String! $limit: String!) {
-    getAllUsersExceptLogged(id: $loggedInUserId offset: $offset limit: $limit) {
+  query GetAllUsersExceptLogged($loggedInUserId: ID!, $offset: String!, $limit: String!) {
+    getAllUsersExceptLogged(id: $loggedInUserId, offset: $offset, limit: $limit) {
       users {
         id
         firstName
@@ -73,8 +73,8 @@ export const GET_MESSAGES = gql`
 `;
 
 export const SEND_MESSAGE = gql`
-  mutation SendMessage($recipientId: ID! $content: String!) {
-    sendMessage(recipientId: $recipientId content: $content) {
+  mutation SendMessage($recipientId: ID!, $content: String!) {
+    sendMessage(recipientId: $recipientId, content: $content) {
       id
     }
   }
@@ -100,4 +100,4 @@ export function getUsersQueryVariables(loggedInUserId: string) {
     offset: `${getUsersSqlClauses.offset}`,
     limit: `${getUsersSqlClauses.limit}`
   };
-};
+}

@@ -11,7 +11,7 @@ type Props = {
 
 const AuthenticatedRoute = ({ path, Component }: Props) => {
   const { isAuthenticated } = getAuthData();
-  return <Route path={path} render={() => isAuthenticated ? <Component /> : <Redirect to="/login" />} />;
+  return <Route path={path} render={() => (isAuthenticated ? <Component /> : <Redirect to="/login" />)} />;
 };
 
 export default AuthenticatedRoute;

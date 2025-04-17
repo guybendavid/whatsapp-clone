@@ -20,7 +20,11 @@ const Sidebar = ({ selectedUser, setSelectedUser, newMessage }: Props) => {
   const { handleServerErrors } = useContext(AppContext) as AppContextType;
   const [searchValue, setSearchValue] = useState("");
 
-  const { data, fetchMore: fetchMoreUsers, client } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
+  const {
+    data,
+    fetchMore: fetchMoreUsers,
+    client
+  } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
     variables: getUsersQueryVariables(loggedInUser.id),
     onError: (error) => handleServerErrors(error)
   });
@@ -58,8 +62,14 @@ const Sidebar = ({ selectedUser, setSelectedUser, newMessage }: Props) => {
   return (
     <div className={style}>
       <Actions setSearchValue={setSearchValue} />
-      <UsersList searchValue={searchValue} users={sidebarData?.users} isMoreUsersToFetch={isMoreUsersToFetch}
-        selectedUser={selectedUser} setSelectedUser={setSelectedUser} fetchMoreUsers={fetchMoreUsers} />
+      <UsersList
+        searchValue={searchValue}
+        users={sidebarData?.users}
+        isMoreUsersToFetch={isMoreUsersToFetch}
+        selectedUser={selectedUser}
+        setSelectedUser={setSelectedUser}
+        fetchMoreUsers={fetchMoreUsers}
+      />
     </div>
   );
 };

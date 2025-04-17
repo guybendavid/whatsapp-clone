@@ -18,7 +18,13 @@ type displayNewUserOnSidebarData = {
   client: ApolloClient<any>;
 };
 
-export function displayNewMessageOnSidebar({ cache, newMessage, sidebarUsers = [], isMoreUsersToFetch, getUser }: DisplayNewMessageOnSidebarData) {
+export function displayNewMessageOnSidebar({
+  cache,
+  newMessage,
+  sidebarUsers = [],
+  isMoreUsersToFetch,
+  getUser
+}: DisplayNewMessageOnSidebarData) {
   const { loggedInUser } = getAuthData();
   const { senderId, recipientId } = newMessage;
   const otherUser = sidebarUsers.find((user: SidebarUser) => user.id === senderId || user.id === recipientId);
@@ -36,7 +42,7 @@ export function displayNewMessageOnSidebar({ cache, newMessage, sidebarUsers = [
   } else if (senderId !== loggedInUser.id && !isMoreUsersToFetch) {
     getUser({ variables: { id: senderId } });
   }
-};
+}
 
 export function displayNewUserOnSidebar({ sidebarNewUser, client }: displayNewUserOnSidebarData) {
   const { loggedInUser } = getAuthData();
@@ -49,4 +55,4 @@ export function displayNewUserOnSidebar({ sidebarNewUser, client }: displayNewUs
   };
 
   client.writeQuery({ ...queryToUpdate, data: { getAllUsersExceptLogged: newData } });
-};
+}

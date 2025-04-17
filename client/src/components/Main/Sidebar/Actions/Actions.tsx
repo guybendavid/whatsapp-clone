@@ -26,11 +26,13 @@ const Actions = ({ setSearchValue }: Props) => {
         <div>
           {[DonutLargeIcon, ChatIcon, DotsIcon].map((Icon, index) => (
             <Fragment key={index}>
-              {index < 2 ?
+              {index < 2 ? (
                 <IconButton>
                   <Icon />
-                </IconButton> :
-                <Icon />}
+                </IconButton>
+              ) : (
+                <Icon />
+              )}
             </Fragment>
           ))}
         </div>
@@ -39,15 +41,13 @@ const Actions = ({ setSearchValue }: Props) => {
         <ClickAwayListener onClickAway={() => setSearchBarIsOpen(false)}>
           <form>
             <div className="search-wrapper">
-              <div className="icon-wrapper">
-                {searchBarIsOpen ? <ArrowDownwardIcon className="is-arrow" /> : <SearchIcon />}
-              </div>
+              <div className="icon-wrapper">{searchBarIsOpen ? <ArrowDownwardIcon className="is-arrow" /> : <SearchIcon />}</div>
               <div className="input-wrapper">
                 <InputBase
                   className="input-base"
                   inputProps={{ "aria-label": "search" }}
                   onChange={(e) => setSearchValue(e.target.value)}
-                  onClick={() => setSearchBarIsOpen(prevState => !prevState)}
+                  onClick={() => setSearchBarIsOpen((prevState) => !prevState)}
                   placeholder={searchBarIsOpen ? "" : "Search or start new chat"}
                 />
               </div>
@@ -75,13 +75,7 @@ const DotsIcon = () => {
       <IconButton onClick={handleClick}>
         <MoreVertIcon />
       </IconButton>
-      <Menu
-        id="main-menu"
-        keepMounted
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
+      <Menu id="main-menu" keepMounted anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
         <MenuItem onClick={logout}>Logout</MenuItem>
       </Menu>
     </>

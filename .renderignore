@@ -1,0 +1,8 @@
+client/
+server/
+.prettier*
+.github/
+.gitignore
+.renderignore
+LICENSE
+README.md

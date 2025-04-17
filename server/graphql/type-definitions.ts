@@ -42,14 +42,14 @@ export default gql`
     createdAt: String
   }
   type Query {
-    getAllUsersExceptLogged(id: ID! offset: String! limit: String!): SidebarUsers!
+    getAllUsersExceptLogged(id: ID!, offset: String!, limit: String!): SidebarUsers!
     getUser(id: ID!): User!
     getMessages(otherUserId: ID!): [Message]!
   }
   type Mutation {
-    login(username: String! password: String!): AuthOperationResponse!
-    register(firstName: String! lastName: String! username: String! password: String!): AuthOperationResponse!
-    sendMessage(recipientId: ID! content: String!): Message!
+    login(username: String!, password: String!): AuthOperationResponse!
+    register(firstName: String!, lastName: String!, username: String!, password: String!): AuthOperationResponse!
+    sendMessage(recipientId: ID!, content: String!): Message!
   }
   type Subscription {
     newMessage: Message!

@@ -1,7 +1,5 @@
 {
-  "extends": [
-    "plugin:@typescript-eslint/recommended"
-  ],
+  "extends": ["plugin:@typescript-eslint/recommended"],
   "rules": {
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unused-vars": [
@@ -18,24 +16,10 @@
     "func-names": "error",
     "no-trailing-spaces": "error",
     "no-console": "error",
-    "indent": [
-      "error",
-      2
-    ],
-    "quotes": [
-      "error",
-      "double"
-    ],
-    "semi": [
-      "warn",
-      "always"
-    ],
-    "comma-dangle": [
-      "warn",
-      "never"
-    ]
+    "indent": ["error", 2],
+    "quotes": ["error", "double"],
+    "semi": ["warn", "always"],
+    "comma-dangle": ["warn", "never"]
   },
-  "ignorePatterns": [
-    "build"
-  ]
+  "ignorePatterns": ["build"]
 }

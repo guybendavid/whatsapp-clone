@@ -1,8 +1,10 @@
 import { useContext, useState, useEffect } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
-import { sanitize } from "dompurify";
-import Snackbar from "@material-ui/core/Snackbar";
+import dompurify from "dompurify";
 import MuiAlert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
+
+const { sanitize } = dompurify;
 
 const ErrorMessage = () => {
   const { snackBarError, clearSnackBarError } = useContext(AppContext) as AppContextType;
@@ -20,11 +22,13 @@ const ErrorMessage = () => {
 
   return (
     <>
-      {snackBarError && <Snackbar open={isOpen} autoHideDuration={5000} onClose={closeError}>
-        <MuiAlert elevation={6} variant="filled" severity="error" onClose={closeError}>
-          <div dangerouslySetInnerHTML={{ __html: sanitize(snackBarError) }}></div>
-        </MuiAlert>
-      </Snackbar>}
+      {snackBarError && (
+        <Snackbar open={isOpen} autoHideDuration={5000} onClose={closeError}>
+          <MuiAlert elevation={6} variant="filled" severity="error" onClose={closeError}>
+            <div dangerouslySetInnerHTML={{ __html: sanitize(snackBarError) }}></div>
+          </MuiAlert>
+        </Snackbar>
+      )}
     </>
   );
 };
