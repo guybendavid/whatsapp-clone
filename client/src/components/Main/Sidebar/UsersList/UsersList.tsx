@@ -40,8 +40,8 @@ const UsersList = ({ users = [], searchValue, isMoreUsersToFetch, selectedUser, 
       if (node) {
         observer.current.observe(node);
       }
-      // eslint-disable-next-line
     },
+    // eslint-disable-next-line
     [users, isMoreUsersToFetch]
   );
 
