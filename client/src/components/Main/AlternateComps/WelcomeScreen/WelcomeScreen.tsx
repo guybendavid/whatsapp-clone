@@ -5,26 +5,22 @@ import { container } from "../shared-styles";
 import { Laptop as LaptopIcon } from "@material-ui/icons";
 import introImg from "images/intro-img.png";
 
-const WelcomeScreen = () => {
-  return (
-    <div className={cx(style, container)}>
-      <img className="phone-img" src={introImg} alt="intro-img" />
-      <Typography component="h1">Keep your phone connected</Typography>
-      <Typography component="p">
-        WhatsApp connects to your phone to sync messages. To reduce data
-        <br />
-        usage, connect your phone to Wi-Fi.
-      </Typography>
-      <div className="bottom-section">
-        <LaptopIcon />
-        WhatsApp is available for Windows.
-        <Link to="#">Get it here</Link>
-      </div>
+export const WelcomeScreen = () => (
+  <div className={cx(style, container)}>
+    <img className="phone-img" src={introImg} alt="intro-img" />
+    <Typography component="h1">Keep your phone connected</Typography>
+    <Typography component="p">
+      WhatsApp connects to your phone to sync messages. To reduce data
+      <br />
+      usage, connect your phone to Wi-Fi.
+    </Typography>
+    <div className="bottom-section">
+      <LaptopIcon />
+      WhatsApp is available for Windows.
+      <Link to="#">Get it here</Link>
     </div>
-  );
-};
-
-export default WelcomeScreen;
+  </div>
+);
 
 const style = css`
   background: #f8f9fa;

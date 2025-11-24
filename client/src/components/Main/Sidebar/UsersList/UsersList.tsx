@@ -16,7 +16,7 @@ type Props = {
   fetchMoreUsers: (object: { variables: { loggedInUserId: string; offset: string; limit: string } }) => void;
 };
 
-const UsersList = ({ users = [], searchValue, isMoreUsersToFetch, selectedUser, setSelectedUser, fetchMoreUsers }: Props) => {
+export const UsersList = ({ users = [], searchValue, isMoreUsersToFetch, selectedUser, setSelectedUser, fetchMoreUsers }: Props) => {
   const { loggedInUser } = getAuthData();
   const observer = useRef<IntersectionObserver | null>(null);
 
@@ -41,7 +41,7 @@ const UsersList = ({ users = [], searchValue, isMoreUsersToFetch, selectedUser, 
         observer.current.observe(node);
       }
     },
-    // eslint-disable-next-line
+
     [users, isMoreUsersToFetch]
   );
 
@@ -52,7 +52,7 @@ const UsersList = ({ users = [], searchValue, isMoreUsersToFetch, selectedUser, 
         .map((user, index) => (
           <Fragment key={index}>
             <ListItem
-              button
+              button={true}
               className={cx("list-item", selectedUser?.id === user.id && "is-selected")}
               onClick={() => setSelectedUser({ ...user })}
               ref={index === users.length - 1 ? lastUserRef : null}>
@@ -75,8 +75,6 @@ const UsersList = ({ users = [], searchValue, isMoreUsersToFetch, selectedUser, 
     </List>
   );
 };
-
-export default UsersList;
 
 const style = css`
   padding: 0 !important;

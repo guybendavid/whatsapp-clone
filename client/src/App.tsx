@@ -2,10 +2,10 @@ import { AppContextProvider } from "contexts/AppContext";
 import { BrowserRouter } from "react-router-dom";
 import { css } from "@emotion/css";
 import { useMediaQuery } from "@material-ui/core";
-import AppRouter from "AppRouter/AppRouter";
+import { AppRouterWithRouter as AppRouter } from "AppRouter/AppRouter";
 import "styles/global-styles.css";
 
-const App = () => {
+export const App = () => {
   const isUnsupportedResolution = useMediaQuery("(max-width:950px)");
 
   return isUnsupportedResolution ? (
@@ -20,8 +20,6 @@ const App = () => {
     </AppContextProvider>
   );
 };
-
-export default App;
 
 const unsupportedStyle = css`
   height: 100vh;

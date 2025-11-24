@@ -7,7 +7,7 @@ type AuthOperationResponse = {
   token: string;
 };
 
-export function handleAuth(data: AuthOperationResponse) {
+export const handleAuth = (data: AuthOperationResponse) => {
   const { token, user } = data;
 
   if (token && user) {
@@ -15,15 +15,15 @@ export function handleAuth(data: AuthOperationResponse) {
     localStorage.loggedInUser = JSON.stringify(user);
     window.location.reload();
   }
-}
+};
 
-export function getAuthData() {
+export const getAuthData = () => {
   const loggedInUser = localStorage.loggedInUser && JSON.parse(localStorage.loggedInUser);
   const isAuthenticated = Boolean(loggedInUser && localStorage.token);
   return { loggedInUser, isAuthenticated };
-}
+};
 
-export function logout() {
+export const logout = () => {
   localStorage.clear();
   window.location.reload();
-}
+};

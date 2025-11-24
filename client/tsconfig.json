@@ -1,21 +1,34 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "baseUrl": "src",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
+    "allowJs": false,
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
     "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "noFallthroughCasesInSwitch": true
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": "src",
+    "paths": {
+      "ApolloProvider": ["./ApolloProvider"],
+      "App": ["./App"],
+      "AppRouter/*": ["./AppRouter/*"],
+      "components/*": ["./components/*"],
+      "contexts/*": ["./contexts/*"],
+      "images/*": ["./images/*"],
+      "services/*": ["./services/*"],
+      "styles/*": ["./styles/*"],
+      "types/*": ["./types/*"]
+    }
   },
-  "include": ["src"]
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

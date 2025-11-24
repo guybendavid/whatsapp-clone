@@ -6,16 +6,16 @@ import { css, cx } from "@emotion/css";
 import { container } from "../shared-styles";
 import { GET_MESSAGES } from "services/graphql";
 import { addNewMessageToChat } from "services/chat-helper";
-import ChatHeader from "./ChatHeader/ChatHeader";
-import Conversation from "./Conversation/Conversation";
-import MessageCreator from "./MessageCreator/MessageCreator";
+import { ChatHeader } from "./ChatHeader/ChatHeader";
+import { Conversation } from "./Conversation/Conversation";
+import { MessageCreator } from "./MessageCreator/MessageCreator";
 
 type Props = {
   selectedUser: SidebarUser;
   newMessage?: Message;
 };
 
-const Chat = ({ selectedUser, newMessage }: Props) => {
+export const Chat = ({ selectedUser, newMessage }: Props) => {
   const chatBottomRef = useRef<HTMLHeadingElement>(null);
   const { handleServerErrors } = useContext(AppContext) as AppContextType;
 
@@ -24,24 +24,21 @@ const Chat = ({ selectedUser, newMessage }: Props) => {
     onError: (error) => handleServerErrors(error)
   });
 
-  // eslint-disable-next-line
   const messages = data?.getMessages || [];
 
   useEffect(() => {
     if (messages.length > 0) {
       chatBottomRef.current?.scrollIntoView();
     }
-    // eslint-disable-next-line
   }, [messages]);
 
   useEffect(() => {
     if (newMessage && !messages.some((message: Message) => message.id === newMessage.id)) {
-      const { recipientId, ...relevantMessageFields } = newMessage;
+      const { recipientId: _recipientId, ...relevantMessageFields } = newMessage;
       addNewMessageToChat(relevantMessageFields, client, selectedUser.id);
       selectedUser.latestMessage = { ...newMessage };
       chatBottomRef.current?.scrollIntoView();
     }
-    // eslint-disable-next-line
   }, [newMessage]);
 
   return (
@@ -52,8 +49,6 @@ const Chat = ({ selectedUser, newMessage }: Props) => {
     </div>
   );
 };
-
-export default Chat;
 
 const style = css`
   display: flex;

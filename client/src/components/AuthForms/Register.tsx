@@ -11,7 +11,7 @@ import { LockOutlined as LockOutlinedIcon } from "@material-ui/icons";
 
 const textFieldProps = { required: true, variant: "outlined", margin: "normal", fullWidth: true } as OutlinedTextFieldProps;
 
-const Register = () => {
+export const Register = () => {
   const { handleServerErrors, setSnackBarError } = useContext(AppContext) as AppContextType;
   const [formValues, setFormValues] = useState({ firstName: "", lastName: "", username: "", password: "" });
   const { firstName, lastName, username } = formValues;
@@ -54,12 +54,10 @@ const Register = () => {
           onChange={(e) => handleOnChange(e, "password")}
         />
         <Link to="/login">Already have an account?</Link>
-        <Button type="submit" fullWidth variant="contained">
+        <Button type="submit" fullWidth={true} variant="contained">
           Register
         </Button>
       </form>
     </div>
   );
 };
-
-export default Register;

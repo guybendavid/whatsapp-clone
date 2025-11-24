@@ -2,22 +2,20 @@ import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, ApolloLink, spli
 import { setContext } from "@apollo/client/link/context";
 import { WebSocketLink } from "@apollo/client/link/ws";
 import { getMainDefinition } from "@apollo/client/utilities";
-import App from "App";
+import { App } from "App";
 
 const { NODE_ENV, REACT_APP_BASE_URL } = process.env;
 const isProduction = NODE_ENV === "production";
-let httpLink: ApolloLink = new HttpLink({ uri: isProduction ? "" : `http://${REACT_APP_BASE_URL}` });
+const httpLinkBase: ApolloLink = new HttpLink({ uri: isProduction ? "" : `http://${REACT_APP_BASE_URL}` });
 
-const authLink = setContext((_, { headers }) => {
-  return {
-    headers: {
-      ...headers,
-      authorization: `Bearer ${localStorage.getItem("token")}`
-    }
-  };
-});
+const authLink = setContext((_, { headers }) => ({
+  headers: {
+    ...headers,
+    authorization: `Bearer ${localStorage.getItem("token")}`
+  }
+}));
 
-httpLink = authLink.concat(httpLink);
+const httpLink = authLink.concat(httpLinkBase);
 
 const wsLink = new WebSocketLink({
   uri: isProduction ? `wss://${window.location.host}` : `ws://${REACT_APP_BASE_URL}`,
@@ -62,7 +60,7 @@ const client = new ApolloClient({
   })
 });
 
-export default (
+export const ApolloProviderWrapper = (
   <ApolloProvider client={client}>
     <App />
   </ApolloProvider>

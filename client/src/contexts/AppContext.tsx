@@ -1,25 +1,20 @@
-import { createContext, useState, ReactNode } from "react";
+import { useState, ReactNode } from "react";
 import { ApolloError } from "@apollo/client";
 import { logout } from "services/auth";
+import { AppContext } from "./app-context";
+
+export { AppContext, AppContextType } from "./app-context";
 
 type Props = {
   children: ReactNode;
 };
 
-export type AppContextType = {
-  snackBarError: string;
-  setSnackBarError: (error: string) => void;
-  handleServerErrors: (error: ApolloError) => void;
-  clearSnackBarError: () => void;
-};
-
-export const AppContext = createContext<AppContextType | undefined>(undefined);
-
 export const AppContextProvider = ({ children }: Props) => {
   const [snackBarError, setSnackBarError] = useState("");
 
-  const handleServerErrors = (error: any) => {
-    const gqlContextErrorMessage = error.networkError?.result?.errors[0]?.message?.split("Context creation failed: ").pop();
+  const handleServerErrors = (error: ApolloError) => {
+    const networkError = error.networkError as { result?: { errors?: Array<{ message?: string }> } } | null;
+    const gqlContextErrorMessage = networkError?.result?.errors?.[0]?.message?.split("Context creation failed: ").pop();
     setSnackBarError(gqlContextErrorMessage || error.message || "Something went wrong...");
 
     if (gqlContextErrorMessage === "Unauthenticated") {

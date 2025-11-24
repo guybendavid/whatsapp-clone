@@ -15,7 +15,7 @@ type Props = {
   setSearchValue: (value: string) => void;
 };
 
-const Actions = ({ setSearchValue }: Props) => {
+export const Actions = ({ setSearchValue }: Props) => {
   const { loggedInUser } = getAuthData();
   const [searchBarIsOpen, setSearchBarIsOpen] = useState(false);
 
@@ -75,14 +75,12 @@ const DotsIcon = () => {
       <IconButton onClick={handleClick}>
         <MoreVertIcon />
       </IconButton>
-      <Menu id="main-menu" keepMounted anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+      <Menu id="main-menu" keepMounted={true} anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
         <MenuItem onClick={logout}>Logout</MenuItem>
       </Menu>
     </>
   );
 };
-
-export default Actions;
 
 const style = css`
   background: var(--gray-color);

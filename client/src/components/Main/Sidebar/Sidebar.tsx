@@ -6,8 +6,8 @@ import { getAuthData } from "services/auth";
 import { getUsersQueryVariables, GET_All_USERS_EXCEPT_LOGGED, GET_USER } from "services/graphql";
 import { displayNewMessageOnSidebar, displayNewUserOnSidebar } from "services/sidebar-helper";
 import { SidebarUser, Message } from "types/types";
-import Actions from "./Actions/Actions";
-import UsersList from "./UsersList/UsersList";
+import { Actions } from "./Actions/Actions";
+import { UsersList } from "./UsersList/UsersList";
 
 type Props = {
   newMessage?: Message;
@@ -15,7 +15,7 @@ type Props = {
   setSelectedUser: (user: SidebarUser) => void;
 };
 
-const Sidebar = ({ selectedUser, setSelectedUser, newMessage }: Props) => {
+export const Sidebar = ({ selectedUser, setSelectedUser, newMessage }: Props) => {
   const { loggedInUser } = getAuthData();
   const { handleServerErrors } = useContext(AppContext) as AppContextType;
   const [searchValue, setSearchValue] = useState("");
@@ -46,17 +46,15 @@ const Sidebar = ({ selectedUser, setSelectedUser, newMessage }: Props) => {
         getUser
       });
     }
-    // eslint-disable-next-line
   }, [newMessage]);
 
   useEffect(() => {
     if (newMessage && newUserData) {
-      const { recipientId, senderId, ...userLatestMessageProperties } = newMessage;
+      const { recipientId: _recipientId, senderId: _senderId, ...userLatestMessageProperties } = newMessage;
       const sidebarNewUser = { ...newUserData.getUser };
       sidebarNewUser.latestMessage = { ...userLatestMessageProperties };
       displayNewUserOnSidebar({ sidebarNewUser, client });
     }
-    // eslint-disable-next-line
   }, [newUserData]);
 
   return (
@@ -73,8 +71,6 @@ const Sidebar = ({ selectedUser, setSelectedUser, newMessage }: Props) => {
     </div>
   );
 };
-
-export default Sidebar;
 
 const style = css`
   display: flex;

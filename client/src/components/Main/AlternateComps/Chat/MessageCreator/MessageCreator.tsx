@@ -13,7 +13,7 @@ type Props = {
   selectedUser: SidebarUser;
 };
 
-const MessageCreator = ({ selectedUser }: Props) => {
+export const MessageCreator = ({ selectedUser }: Props) => {
   const { handleServerErrors, setSnackBarError } = useContext(AppContext) as AppContextType;
   const [message, setMessage] = useState("");
 
@@ -52,9 +52,9 @@ const MessageCreator = ({ selectedUser }: Props) => {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             className="input-base"
-            placeholder={"Type a message"}
+            placeholder="Type a message"
             inputProps={{ "aria-label": "create message" }}
-            required
+            required={true}
           />
         </div>
       </form>
@@ -64,8 +64,6 @@ const MessageCreator = ({ selectedUser }: Props) => {
     </div>
   );
 };
-
-export default MessageCreator;
 
 const style = css`
   display: flex;

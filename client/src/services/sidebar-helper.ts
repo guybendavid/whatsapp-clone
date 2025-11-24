@@ -3,7 +3,7 @@ import { Message, SidebarUser } from "types/types";
 import { getAuthData } from "./auth";
 import { getUsersQueryVariables, GET_All_USERS_EXCEPT_LOGGED } from "./graphql";
 
-type GetUser = (options?: QueryLazyOptions<Record<string, any>>) => void;
+type GetUser = (options?: QueryLazyOptions<Record<string, unknown>>) => void;
 
 type DisplayNewMessageOnSidebarData = {
   cache: InMemoryCache;
@@ -15,16 +15,16 @@ type DisplayNewMessageOnSidebarData = {
 
 type displayNewUserOnSidebarData = {
   sidebarNewUser: SidebarUser;
-  client: ApolloClient<any>;
+  client: ApolloClient<object>;
 };
 
-export function displayNewMessageOnSidebar({
+export const displayNewMessageOnSidebar = ({
   cache,
   newMessage,
   sidebarUsers = [],
   isMoreUsersToFetch,
   getUser
-}: DisplayNewMessageOnSidebarData) {
+}: DisplayNewMessageOnSidebarData) => {
   const { loggedInUser } = getAuthData();
   const { senderId, recipientId } = newMessage;
   const otherUser = sidebarUsers.find((user: SidebarUser) => user.id === senderId || user.id === recipientId);
@@ -34,17 +34,18 @@ export function displayNewMessageOnSidebar({
     cache.modify({
       id: cache.identify({ ...otherUser }),
       fields: {
-        latestMessage() {
-          return newMessage;
-        }
+        latestMessage: () => newMessage
       }
     });
-  } else if (senderId !== loggedInUser.id && !isMoreUsersToFetch) {
+    return;
+  }
+
+  if (senderId !== loggedInUser.id && !isMoreUsersToFetch) {
     getUser({ variables: { id: senderId } });
   }
-}
+};
 
-export function displayNewUserOnSidebar({ sidebarNewUser, client }: displayNewUserOnSidebarData) {
+export const displayNewUserOnSidebar = ({ sidebarNewUser, client }: displayNewUserOnSidebarData) => {
   const { loggedInUser } = getAuthData();
   const queryToUpdate = { query: GET_All_USERS_EXCEPT_LOGGED, variables: getUsersQueryVariables(loggedInUser.id as string) };
   const { getAllUsersExceptLogged } = client.readQuery(queryToUpdate);
@@ -55,4 +56,4 @@ export function displayNewUserOnSidebar({ sidebarNewUser, client }: displayNewUs
   };
 
   client.writeQuery({ ...queryToUpdate, data: { getAllUsersExceptLogged: newData } });
-}
+};

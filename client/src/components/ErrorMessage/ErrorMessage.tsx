@@ -6,7 +6,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 
 const { sanitize } = dompurify;
 
-const ErrorMessage = () => {
+export const ErrorMessage = () => {
   const { snackBarError, clearSnackBarError } = useContext(AppContext) as AppContextType;
   const [isOpen, setIsOpen] = useState(false);
 
@@ -16,8 +16,11 @@ const ErrorMessage = () => {
   };
 
   useEffect(() => {
-    snackBarError ? setIsOpen(true) : closeError();
-    // eslint-disable-next-line
+    if (snackBarError) {
+      setIsOpen(true);
+      return;
+    }
+    closeError();
   }, [snackBarError]);
 
   return (
@@ -32,5 +35,3 @@ const ErrorMessage = () => {
     </>
   );
 };
-
-export default ErrorMessage;

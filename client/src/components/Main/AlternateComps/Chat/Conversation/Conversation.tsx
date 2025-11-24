@@ -14,25 +14,23 @@ type Props = {
   chatBottomRef: RefObject<HTMLDivElement>;
 };
 
-const Conversation = ({ messages = [], chatBottomRef }: Props) => {
+export const Conversation = ({ messages = [], chatBottomRef }: Props) => {
   const { loggedInUser } = getAuthData();
 
   const firstIndexesOfSeries = useMemo(() => {
     if (messages.length === 0) return [];
     const firstMessagesOfSeries: ConversationMessage[] = [];
 
-    // eslint-disable-next-line
     const indexes = messages.map((message: ConversationMessage, index: number) => {
       if (firstMessagesOfSeries.length === 0) {
         firstMessagesOfSeries.push(message);
         return index;
-      } else {
-        const lastMessageInArr = firstMessagesOfSeries[firstMessagesOfSeries.length - 1];
+      }
+      const lastMessageInArr = firstMessagesOfSeries.at(-1);
 
-        if (message.senderId !== lastMessageInArr.senderId) {
-          firstMessagesOfSeries.push(message);
-          return index;
-        }
+      if (lastMessageInArr && message.senderId !== lastMessageInArr.senderId) {
+        firstMessagesOfSeries.push(message);
+        return index;
       }
     });
 
@@ -57,8 +55,6 @@ const Conversation = ({ messages = [], chatBottomRef }: Props) => {
     </div>
   );
 };
-
-export default Conversation;
 
 const style = css`
   scroll-behavior: smooth;

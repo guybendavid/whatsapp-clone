@@ -4,12 +4,12 @@ import { getAuthData } from "services/auth";
 import { SidebarUser, Message } from "types/types";
 import { useSubscription } from "@apollo/client";
 import { NEW_MESSAGE } from "services/graphql";
-import Sidebar from "./Sidebar/Sidebar";
-import WelcomeScreen from "./AlternateComps/WelcomeScreen/WelcomeScreen";
-import Chat from "./AlternateComps/Chat/Chat";
+import { Sidebar } from "./Sidebar/Sidebar";
+import { WelcomeScreen } from "./AlternateComps/WelcomeScreen/WelcomeScreen";
+import { Chat } from "./AlternateComps/Chat/Chat";
 import conversationImage from "images/conversation-background.jpg";
 
-const Main = () => {
+export const Main = () => {
   const [selectedUser, setSelectedUser] = useState<SidebarUser>();
   const { data: newMessageData } = useSubscription(NEW_MESSAGE);
   const newMessage = newMessageData?.newMessage;
@@ -29,7 +29,7 @@ const Main = () => {
   );
 };
 
-function isNewMessageRelatedToOpenedChat(newMessage?: Message, selectedUser?: SidebarUser) {
+const isNewMessageRelatedToOpenedChat = (newMessage?: Message, selectedUser?: SidebarUser) => {
   const { loggedInUser } = getAuthData();
 
   if (newMessage) {
@@ -37,9 +37,7 @@ function isNewMessageRelatedToOpenedChat(newMessage?: Message, selectedUser?: Si
     const { id: selectedUserId } = selectedUser as SidebarUser;
     return senderId === selectedUserId || (senderId === loggedInUser.id && recipientId === selectedUserId);
   }
-}
-
-export default Main;
+};
 
 const style = css`
   background: url(${conversationImage}); // preloading the conversation image

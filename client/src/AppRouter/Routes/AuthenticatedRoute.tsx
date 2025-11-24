@@ -9,9 +9,7 @@ type Props = {
   Component: FC;
 };
 
-const AuthenticatedRoute = ({ path, Component }: Props) => {
+export const AuthenticatedRoute = ({ path, Component }: Props) => {
   const { isAuthenticated } = getAuthData();
   return <Route path={path} render={() => (isAuthenticated ? <Component /> : <Redirect to="/login" />)} />;
 };
-
-export default AuthenticatedRoute;

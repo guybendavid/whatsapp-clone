@@ -94,10 +94,8 @@ export const NEW_MESSAGE = gql`
 
 export const getUsersSqlClauses = { offset: 0, limit: 50 };
 
-export function getUsersQueryVariables(loggedInUserId: string) {
-  return {
-    loggedInUserId,
-    offset: `${getUsersSqlClauses.offset}`,
-    limit: `${getUsersSqlClauses.limit}`
-  };
-}
+export const getUsersQueryVariables = (loggedInUserId: string) => ({
+  loggedInUserId,
+  offset: `${getUsersSqlClauses.offset}`,
+  limit: `${getUsersSqlClauses.limit}`
+});

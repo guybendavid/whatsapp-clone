@@ -9,9 +9,7 @@ type Props = {
   Component: FC<RouteComponentProps>;
 };
 
-const UnauthenticatedRoute = ({ path, Component }: Props) => {
+export const UnauthenticatedRoute = ({ path, Component }: Props) => {
   const { isAuthenticated } = getAuthData();
   return <Route path={path} render={(props) => (!isAuthenticated ? <Component {...props} /> : <Redirect to="/" />)} />;
 };
-
-export default UnauthenticatedRoute;

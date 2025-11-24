@@ -9,28 +9,24 @@ type Props = {
   selectedUser: SidebarUser;
 };
 
-const ChatHeader = ({ selectedUser }: Props) => {
-  return (
-    <div className={style}>
-      <div className="left-side">
-        <Avatar alt="avatar" src={selectedUser.image} />
-        <div className="text-wrapper">
-          <Typography className="fullname" component="span">{`${selectedUser.firstName} ${selectedUser.lastName}`}</Typography>
-          <Typography component="small">{timeDisplayer(selectedUser.latestMessage.createdAt || "")}</Typography>
-        </div>
-      </div>
-      <div>
-        {[SearchIcon, MoreVertIcon].map((Icon, index) => (
-          <IconButton key={index}>
-            <Icon />
-          </IconButton>
-        ))}
+export const ChatHeader = ({ selectedUser }: Props) => (
+  <div className={style}>
+    <div className="left-side">
+      <Avatar alt="avatar" src={selectedUser.image} />
+      <div className="text-wrapper">
+        <Typography className="fullname" component="span">{`${selectedUser.firstName} ${selectedUser.lastName}`}</Typography>
+        <Typography component="small">{timeDisplayer(selectedUser.latestMessage.createdAt || "")}</Typography>
       </div>
     </div>
-  );
-};
-
-export default ChatHeader;
+    <div>
+      {[SearchIcon, MoreVertIcon].map((Icon, index) => (
+        <IconButton key={index}>
+          <Icon />
+        </IconButton>
+      ))}
+    </div>
+  </div>
+);
 
 const style = css`
   display: flex;
