@@ -6,7 +6,10 @@
   "private": true,
   "scripts": {
     "dev": "ts-node-dev --no-notify -r dotenv/config app | pino-pretty",
-    "build": "tsc"
+    "build": "tsc",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@guybendavid/utils": "^3.0.0",
@@ -24,7 +27,9 @@
     "dotenv": "^16.5.0",
     "eslint": "^9.0.0",
     "pg": "^8.14.1",
+    "prettier": "^3.4.2",
     "ts-node-dev": "^2.0.0",
     "typescript-eslint": "^8.0.0"
   }
 }
+

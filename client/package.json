@@ -8,14 +8,13 @@
   "scripts": {
     "start": "vite preview",
     "dev": "vite",
-    "build": "npm run lint && npm run find-unimported-exports && npm run find-unimported-files && npm run format && tsc -b && vite build",
+    "build": "npm run lint && npm run find-unimported-exports && npm run find-junk && npm run format && tsc -b && vite build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "test": "npx vite-node --test tests/*.test.ts",
     "find-unimported-exports": "npx vite-node find-unimported-exports.ts",
-    "find-unimported-files": "knip",
-    "prepare": "husky"
+    "find-junk": "knip"
   },
   "dependencies": {
     "@apollo/client": "^3.3.20",
@@ -48,10 +47,8 @@
     "eslint-plugin-unicorn": "^56.0.1",
     "eslint-plugin-unused-imports": "^4.1.4",
     "glob": "^11.0.0",
-    "husky": "^9.1.7",
     "knip": "^5.61.3",
     "prettier": "^3.4.2",
-    "pretty-quick": "^4.0.0",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.19.1",
     "vite": "^6.0.7"

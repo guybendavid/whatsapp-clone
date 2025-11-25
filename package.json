@@ -12,6 +12,14 @@
     "create-dist-folder": "node -e \"require('fs').mkdirSync('dist', { recursive: true })\"",
     "build-client": "cd client && npm i && npm run build && cd .. && npx -y cpy-cli \"client/build/**\" dist/client --cwd=. --parents && node -e \"require('fs').rmSync('client/build', { recursive: true, force: true })\"",
     "build-server": "cd server && npm i && npm run build && cd .. && npx -y cpy-cli server/package.json server/package-lock.json dist --flat && (cd dist && npm i --no-audit --no-fund)",
-    "build": "npm run clean && npm run create-dist-folder && npm run build-client && npm run build-server"
+    "build": "npm run clean && npm run create-dist-folder && npm run build-client && npm run build-server",
+    "lint": "cd client && npm run lint && cd ../server && npm run lint",
+    "test": "cd client && npm test && cd ../server && npm test",
+    "format": "cd client && npm run format && cd ../server && npm run format",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "pretty-quick": "^4.0.0"
   }
 }
