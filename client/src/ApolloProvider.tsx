@@ -36,6 +36,16 @@ const splitLink = split(
   httpLink
 );
 
+const getMergedUsers = (prevResult: any, incomingResult: any) => {
+  const updatedObj = { ...incomingResult };
+
+  if (prevResult) {
+    updatedObj.users = [...prevResult.users, ...incomingResult.users];
+  }
+
+  return updatedObj;
+};
+
 const client = new ApolloClient({
   link: splitLink,
   cache: new InMemoryCache({
@@ -44,15 +54,7 @@ const client = new ApolloClient({
         fields: {
           getAllUsersExceptLogged: {
             keyArgs: false,
-            merge: (prevResult, incomingResult) => {
-              const updatedObj = { ...incomingResult };
-
-              if (prevResult) {
-                updatedObj.users = [...prevResult.users, ...incomingResult.users];
-              }
-
-              return updatedObj;
-            }
+            merge: getMergedUsers
           }
         }
       }

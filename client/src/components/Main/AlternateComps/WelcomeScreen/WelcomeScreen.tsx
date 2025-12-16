@@ -1,12 +1,12 @@
 import { css, cx } from "@emotion/css";
 import { Link } from "react-router-dom";
 import { Typography } from "@material-ui/core";
-import { container } from "../shared-styles";
+import { containerStyle } from "../shared-styles";
 import { Laptop as LaptopIcon } from "@material-ui/icons";
 import introImg from "images/intro-img.png";
 
 export const WelcomeScreen = () => (
-  <div className={cx(style, container)}>
+  <div className={cx(welcomeScreenStyle, containerStyle)}>
     <img className="phone-img" src={introImg} alt="intro-img" />
     <Typography component="h1">Keep your phone connected</Typography>
     <Typography component="p">
@@ -22,7 +22,7 @@ export const WelcomeScreen = () => (
   </div>
 );
 
-const style = css`
+const welcomeScreenStyle = css`
   background: #f8f9fa;
   display: flex;
   flex-direction: column;

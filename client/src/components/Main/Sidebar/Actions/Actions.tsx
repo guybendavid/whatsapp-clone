@@ -20,7 +20,7 @@ export const Actions = ({ setSearchValue }: Props) => {
   const [searchBarIsOpen, setSearchBarIsOpen] = useState(false);
 
   return (
-    <div className={style}>
+    <div className={chatStyle}>
       <div className="icons">
         <Avatar className="avatar" alt="avatar" src={loggedInUser.image} />
         <div>
@@ -82,7 +82,7 @@ const DotsIcon = () => {
   );
 };
 
-const style = css`
+const chatStyle = css`
   background: var(--gray-color);
   border-bottom: 1px solid var(--divider-color);
 

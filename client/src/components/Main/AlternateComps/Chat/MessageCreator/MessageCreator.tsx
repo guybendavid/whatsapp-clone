@@ -1,7 +1,7 @@
 import { useState, SyntheticEvent, useContext, useEffect } from "react";
 import { css } from "@emotion/css";
 import { baseSearchInputStyle } from "styles/reusable-css-in-js-styles";
-import { AppContext, AppContextType } from "contexts/AppContext";
+import { AppContext, type AppContextType } from "contexts/app-context";
 import { SidebarUser } from "types/types";
 import { useMutation } from "@apollo/client";
 import { SEND_MESSAGE } from "services/graphql";
@@ -40,7 +40,7 @@ export const MessageCreator = ({ selectedUser }: Props) => {
   };
 
   return (
-    <div className={style}>
+    <div className={chatStyle}>
       {[MoodIcon, AttachmentIcon].map((Icon, index) => (
         <IconButton key={index}>
           <Icon />
@@ -65,7 +65,7 @@ export const MessageCreator = ({ selectedUser }: Props) => {
   );
 };
 
-const style = css`
+const chatStyle = css`
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -1,14 +1,16 @@
+import { customRuleMap } from "./custom-eslint-rules.js";
+import type { Linter } from "eslint";
 import eslintImport from "eslint-plugin-import";
+import globals from "globals";
 import js from "@eslint/js";
-import preferArrow from "eslint-plugin-prefer-arrow";
-import unicorn from "eslint-plugin-unicorn";
-import unusedImports from "eslint-plugin-unused-imports";
 import jsxA11y from "eslint-plugin-jsx-a11y";
-import tseslint from "typescript-eslint";
+import preferArrow from "eslint-plugin-prefer-arrow";
 import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
-import type { Linter } from "eslint";
+import tseslint from "typescript-eslint";
+import unicorn from "eslint-plugin-unicorn";
+import unusedImports from "eslint-plugin-unused-imports";
 
 const eslintConfig: Linter.Config[] = [
   js.configs.recommended,
@@ -16,6 +18,8 @@ const eslintConfig: Linter.Config[] = [
   {
     files: ["**/*.{ts,tsx}"],
     languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
       parserOptions: {
         ecmaFeatures: {
           jsx: true
@@ -32,6 +36,7 @@ const eslintConfig: Linter.Config[] = [
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh
     },
+
     settings: {
       react: {
         version: "detect"
@@ -45,6 +50,20 @@ const eslintConfig: Linter.Config[] = [
             kebabCase: true,
             pascalCase: true
           }
+        }
+      ],
+
+      // To do: enable and refactor
+      "@typescript-eslint/no-magic-numbers": [
+        "off",
+        {
+          ignore: [0, 1, -1],
+          ignoreDefaultValues: true,
+          ignoreEnums: true,
+          ignoreNumericLiteralTypes: true,
+          ignoreReadonlyClassProperties: true,
+          enforceConst: true,
+          detectObjects: false
         }
       ],
 
@@ -110,8 +129,6 @@ const eslintConfig: Linter.Config[] = [
           allowExpressions: true
         }
       ],
-      "react/jsx-uses-react": "off",
-      "react/react-in-jsx-scope": "off",
       "react/hook-use-state": "error",
       "react/no-unstable-nested-components": "error",
       "react/no-invalid-html-attribute": "error",
@@ -290,7 +307,7 @@ const eslintConfig: Linter.Config[] = [
       "use-isnan": "error",
       "no-import-assign": "error",
       "no-loop-func": "error",
-      "no-undef": "off", // TypeScript handles this
+      "no-undef": "error",
       "no-unsafe-finally": "error",
       "prefer-arrow-callback": "error",
       eqeqeq: "error",
@@ -318,18 +335,81 @@ const eslintConfig: Linter.Config[] = [
     }
   },
   {
-    files: ["*.config.ts", "*.config.js", "find-unimported-exports.ts"],
+    files: ["**/*.{ts,tsx}"],
+    plugins: {
+      custom: { rules: customRuleMap }
+    },
     rules: {
-      "eslintImport/no-default-export": "off"
+      "custom/css-style-naming": ["error"],
+      "custom/container-style-naming": ["error"],
+      "custom/css-styles-at-bottom": ["error"],
+      "custom/default-imports-first": ["error"],
+      "custom/blank-line-after-setters": ["error"],
+      "custom/prefer-boolean-is-prefix": ["error"],
+      "custom/prefer-direct-function-reference": ["error"],
+      "custom/no-inline-styles": ["error"],
+      "custom/prefer-get-prefix": ["error"],
+      "custom/require-object-destructuring": ["error"],
+      "custom/no-get-prefix-for-void": ["error"],
+      "custom/no-hardcoded-strings": [
+        // To do: enable and refactor
+        "off",
+        {
+          minLength: 4,
+          ignorePatterns: ["^\\s*$", "^[a-z-]+$", "^[A-Z_]+$", "^/.*/$", "^https?://", "^[./]", "^\\d+$"]
+        }
+      ],
+      "custom/no-inline-exports": ["error"],
+      "custom/no-block-event-handlers": ["error"],
+      "custom/padding-around-multiline-statements": ["error"],
+      "custom/blank-line-before-multiline-return": "error"
+    }
+  },
+  {
+    files: [
+      "*.config.ts",
+      "*.config.js",
+      "find-unimported-exports.ts",
+      "server/**/*.ts",
+      "custom-eslint-rules.ts",
+      "client/src/ApolloProvider.tsx",
+      "client/vite.config.ts"
+    ],
+    rules: {
+      "eslintImport/no-default-export": "off",
+      // To do: enable and refactor
+      "@typescript-eslint/no-explicit-any": "off"
     }
   },
   {
     files: ["find-unimported-exports.ts", "tests/**/*.ts"],
     languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
       globals: {
         process: "readonly",
         console: "readonly"
       }
+    }
+  },
+
+  {
+    files: ["client/**/*.{ts,tsx}", "*.config.ts"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      globals: {
+        ...globals.browser,
+        ...globals.node
+      }
+    }
+  },
+  {
+    files: ["server/**/*.ts"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      globals: globals.node
     }
   },
   {
@@ -346,7 +426,16 @@ const eslintConfig: Linter.Config[] = [
     }
   },
   {
-    ignores: ["dist/**", "build/**", "node_modules/**", "vite.config.js", "vite.config.d.ts"]
+    ignores: [
+      "dist/**",
+      "build/**",
+      "client/build/**",
+      "node_modules/**",
+      "client/vite.config.js",
+      "client/vite.config.d.ts",
+      "server/**/*.js",
+      "find-unimported-exports.js"
+    ]
   }
 ];
 

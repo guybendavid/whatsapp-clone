@@ -1,9 +1,9 @@
 import { useEffect, useRef, useContext } from "react";
-import { AppContext, AppContextType } from "contexts/AppContext";
+import { AppContext, type AppContextType } from "contexts/app-context";
 import { SidebarUser, Message } from "types/types";
 import { useQuery } from "@apollo/client";
 import { css, cx } from "@emotion/css";
-import { container } from "../shared-styles";
+import { containerStyle } from "../shared-styles";
 import { GET_MESSAGES } from "services/graphql";
 import { addNewMessageToChat } from "services/chat-helper";
 import { ChatHeader } from "./ChatHeader/ChatHeader";
@@ -35,14 +35,14 @@ export const Chat = ({ selectedUser, newMessage }: Props) => {
   useEffect(() => {
     if (newMessage && !messages.some((message: Message) => message.id === newMessage.id)) {
       const { recipientId: _recipientId, ...relevantMessageFields } = newMessage;
-      addNewMessageToChat(relevantMessageFields, client, selectedUser.id);
+      addNewMessageToChat({ newMessage: relevantMessageFields, client, selectedUserId: selectedUser.id });
       selectedUser.latestMessage = { ...newMessage };
       chatBottomRef.current?.scrollIntoView();
     }
   }, [newMessage]);
 
   return (
-    <div className={cx(style, container)}>
+    <div className={cx(chatStyle, containerStyle)}>
       <ChatHeader selectedUser={selectedUser} />
       <Conversation messages={messages} chatBottomRef={chatBottomRef} />
       <MessageCreator selectedUser={selectedUser} />
@@ -50,7 +50,7 @@ export const Chat = ({ selectedUser, newMessage }: Props) => {
   );
 };
 
-const style = css`
+const chatStyle = css`
   display: flex;
   flex-direction: column;
   position: relative;

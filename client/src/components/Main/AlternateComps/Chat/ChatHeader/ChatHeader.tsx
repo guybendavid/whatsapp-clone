@@ -1,7 +1,7 @@
 import { SidebarUser } from "types/types";
 import { Avatar, Typography, IconButton } from "@material-ui/core";
 import { css } from "@emotion/css";
-import { overflowHandler } from "styles/reusable-css-in-js-styles";
+import { getOverflowStyle } from "styles/reusable-css-in-js-styles";
 import { timeDisplayer } from "@guybendavid/utils";
 import { Search as SearchIcon, MoreVert as MoreVertIcon } from "@material-ui/icons";
 
@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const ChatHeader = ({ selectedUser }: Props) => (
-  <div className={style}>
+  <div className={chatStyle}>
     <div className="left-side">
       <Avatar alt="avatar" src={selectedUser.image} />
       <div className="text-wrapper">
@@ -28,7 +28,7 @@ export const ChatHeader = ({ selectedUser }: Props) => (
   </div>
 );
 
-const style = css`
+const chatStyle = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -47,7 +47,7 @@ const style = css`
       flex-direction: column;
 
       .fullname {
-        ${overflowHandler("265px")};
+        ${getOverflowStyle("265px")};
       }
     }
   }

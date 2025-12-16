@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import { AppContext, AppContextType } from "contexts/AppContext";
+import { AppContext, type AppContextType } from "contexts/app-context";
 import dompurify from "dompurify";
 import MuiAlert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
@@ -20,6 +20,7 @@ export const ErrorMessage = () => {
       setIsOpen(true);
       return;
     }
+
     closeError();
   }, [snackBarError]);
 

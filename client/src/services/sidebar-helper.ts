@@ -37,6 +37,7 @@ export const displayNewMessageOnSidebar = ({
         latestMessage: () => newMessage
       }
     });
+
     return;
   }
 

@@ -4,7 +4,7 @@ import { getAuthData } from "services/auth";
 import { Message } from "types/types";
 import { Typography } from "@material-ui/core";
 import { timeDisplayer } from "@guybendavid/utils";
-import { verticalOverflowHandler } from "styles/reusable-css-in-js-styles";
+import { getVerticalOverflowStyle } from "styles/reusable-css-in-js-styles";
 import backgroundImage from "images/conversation-background.jpg";
 
 export type ConversationMessage = Omit<Message, "recipientId">;
@@ -26,6 +26,7 @@ export const Conversation = ({ messages = [], chatBottomRef }: Props) => {
         firstMessagesOfSeries.push(message);
         return index;
       }
+
       const lastMessageInArr = firstMessagesOfSeries.at(-1);
 
       if (lastMessageInArr && message.senderId !== lastMessageInArr.senderId) {
@@ -38,7 +39,7 @@ export const Conversation = ({ messages = [], chatBottomRef }: Props) => {
   }, [messages]);
 
   return (
-    <div className={style}>
+    <div className={chatStyle}>
       {messages.map((message, index) => (
         <div
           key={index}
@@ -56,7 +57,7 @@ export const Conversation = ({ messages = [], chatBottomRef }: Props) => {
   );
 };
 
-const style = css`
+const chatStyle = css`
   scroll-behavior: smooth;
   background: url(${backgroundImage});
   display: flex;
@@ -110,7 +111,7 @@ const style = css`
     }
 
     span {
-      ${verticalOverflowHandler(7)};
+      ${getVerticalOverflowStyle(7)};
       min-height: 25px;
     }
 

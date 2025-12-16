@@ -1,10 +1,10 @@
-import bcrypt from "bcrypt";
-import generateToken from "../../utils/generate-token";
-import { UserInputError } from "apollo-server";
+import { getTotalUsers, getUsersWithLatestMessage } from "../../db/raw-queries/users";
 import { QueryTypes } from "sequelize";
 import { sequelize, User } from "../../db/models/models-config";
 import { User as UserType, ContextUser, LatestMessage } from "../../types/types";
-import { getTotalUsers, getUsersWithLatestMessage } from "../../db/raw-queries/users";
+import { UserInputError } from "apollo-server";
+import bcrypt from "bcrypt";
+import generateToken from "../../utils/generate-token";
 // eslint-disable-next-line
 const generateImage = require("../../utils/generate-image");
 
@@ -25,7 +25,8 @@ export default {
         return { users: [], totalUsersExceptLoggedUser };
       }
 
-      const getSidebarUsersChunk = getUsersWithLatestMessage(offset, limit);
+      const getSidebarUsersChunk = getUsersWithLatestMessage({ offset, limit });
+
       const sidebarUsersChunk = await sequelize.query(getSidebarUsersChunk, {
         type: QueryTypes.SELECT,
         replacements: [id, id, id, offset, limit]

@@ -2,7 +2,7 @@ import { useRef, useCallback, Fragment } from "react";
 import { SidebarUser } from "types/types";
 import { List, ListItem, Avatar, Typography, Divider } from "@material-ui/core";
 import { css, cx } from "@emotion/css";
-import { overflowHandler } from "styles/reusable-css-in-js-styles";
+import { getOverflowStyle } from "styles/reusable-css-in-js-styles";
 import { getAuthData } from "services/auth";
 import { getUsersSqlClauses } from "services/graphql";
 import { timeDisplayer } from "@guybendavid/utils";
@@ -46,7 +46,7 @@ export const UsersList = ({ users = [], searchValue, isMoreUsersToFetch, selecte
   );
 
   return (
-    <List className={style}>
+    <List className={chatStyle}>
       {users
         .filter((user) => `${user.firstName} ${user.lastName}`.toUpperCase().includes(searchValue.toUpperCase()))
         .map((user, index) => (
@@ -76,7 +76,7 @@ export const UsersList = ({ users = [], searchValue, isMoreUsersToFetch, selecte
   );
 };
 
-const style = css`
+const chatStyle = css`
   padding: 0 !important;
   overflow-y: auto;
 
@@ -99,7 +99,7 @@ const style = css`
         align-items: center;
 
         .fullname {
-          ${overflowHandler("162px")};
+          ${getOverflowStyle("162px")};
         }
       }
 
@@ -109,7 +109,7 @@ const style = css`
         .last-message {
           font-size: 0.9rem;
           color: var(--text-color);
-          ${overflowHandler("260px")};
+          ${getOverflowStyle("260px")};
         }
       }
 

@@ -27,11 +27,25 @@ const analyzeExports = async ({ file }: { file: string }) => {
   traverse(ast, {
     ExportNamedDeclaration: (path: NodePath<ExportNamedDeclaration>) => {
       const { declaration, loc } = path.node;
-      const declarations = (declaration as { declarations?: Array<{ id: { name: string } }> })?.declarations;
+      const declarations = (declaration as { declarations?: Array<{ id: any }> })?.declarations;
       const line = loc?.start.line ?? 0;
 
       declarations?.forEach(({ id }) => {
-        exports[id.name] = { file, isUsed: false, line };
+        // Handle destructured exports: export const { User, Message } = models;
+        if (id.type === "ObjectPattern") {
+          id.properties?.forEach((prop: any) => {
+            if (prop.type === "ObjectProperty" && prop.key?.name) {
+              exports[prop.key.name] = { file, isUsed: false, line };
+            }
+          });
+
+          return;
+        }
+
+        // Handle regular exports: export const User = ...;
+        if (id.name) {
+          exports[id.name] = { file, isUsed: false, line };
+        }
       });
     }
   });
@@ -53,7 +67,7 @@ const analyzeUsage = async ({ file }: { file: string }) => {
 
 const main = async () => {
   try {
-    const files = globSync("**/*.{js,jsx,ts,tsx}", {
+    const files = globSync("{client,server,tests}/**/*.{js,jsx,ts,tsx}", {
       cwd,
       ignore: ["**/node_modules/**", "**/dist/**", "**/build/**"]
     });

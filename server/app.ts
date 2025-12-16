@@ -1,13 +1,13 @@
-import express from "express";
 import { ApolloServer as ApolloServerDev, PubSub } from "apollo-server";
 import { ApolloServer as ApolloServerProd } from "apollo-server-express";
 import { sequelize } from "./db/models/models-config";
 import http, { Server } from "http";
+import context from "./graphql/context-middleware";
+import express from "express";
 import pino from "pino";
 import path from "path";
-import resolvers from "./graphql/resolvers/resolvers-config";
 import typeDefs from "./graphql/type-definitions";
-import context from "./graphql/context-middleware";
+import resolvers from "./graphql/resolvers/resolvers-config";
 
 export const pubsub = new PubSub();
 
@@ -51,9 +51,14 @@ const connect = async ({ server, isProd }: { server: ApolloServerDev | Server; i
     const { url, subscriptionsUrl } = await (server as ApolloServerDev).listen({ port });
     logger.info(`Server ready at ${url}`);
     logger.info(`Susbscription ready at ${subscriptionsUrl}`);
-  } catch (err) {
-    logger.error(err as string);
+  } catch (error) {
+    logger.error(error as string);
   }
 };
 
-NODE_ENV === "production" ? startProductionServer() : startDevelopmentServer();
+if (NODE_ENV === "production") {
+  startProductionServer();
+  process.exit();
+}
+
+startDevelopmentServer();

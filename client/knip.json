@@ -1,8 +1,0 @@
-{
-  "$schema": "https://unpkg.com/knip@5/schema.json",
-  "entry": ["src/index.tsx", "tests/**/*.ts"],
-  "project": ["src/**/*.{ts,tsx}", "*.ts"],
-  "ignore": ["**/node_modules/**", "dist/**", "vite.config.d.ts", "vite.config.js", "eslint-plugins.d.ts"],
-  "ignoreDependencies": ["@babel/traverse", "@babel/types", "@eslint/js", "react-router"],
-  "ignoreBinaries": ["vite-node"]
-}

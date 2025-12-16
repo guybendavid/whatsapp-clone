@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { css } from "@emotion/css";
-import { AppContext, AppContextType } from "contexts/AppContext";
+import { AppContext, type AppContextType } from "contexts/app-context";
 import { useQuery, useLazyQuery, InMemoryCache } from "@apollo/client";
 import { getAuthData } from "services/auth";
 import { getUsersQueryVariables, GET_All_USERS_EXCEPT_LOGGED, GET_USER } from "services/graphql";
@@ -58,7 +58,7 @@ export const Sidebar = ({ selectedUser, setSelectedUser, newMessage }: Props) =>
   }, [newUserData]);
 
   return (
-    <div className={style}>
+    <div className={chatStyle}>
       <Actions setSearchValue={setSearchValue} />
       <UsersList
         searchValue={searchValue}
@@ -72,7 +72,7 @@ export const Sidebar = ({ selectedUser, setSelectedUser, newMessage }: Props) =>
   );
 };
 
-const style = css`
+const chatStyle = css`
   display: flex;
   flex-direction: column;
   background: white;

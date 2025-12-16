@@ -1,5 +1,6 @@
-import jwt from "jsonwebtoken";
 import { User } from "../types/types";
+import jwt from "jsonwebtoken";
+
 const { SECRET_KEY } = process.env;
 
 export default (userFields: Omit<User, "username" | "password" | "image">) => {

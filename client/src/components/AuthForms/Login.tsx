@@ -1,5 +1,5 @@
 import { useState, useContext, SyntheticEvent, ChangeEvent } from "react";
-import { AppContext, AppContextType } from "contexts/AppContext";
+import { AppContext, type AppContextType } from "contexts/app-context";
 import { Link } from "react-router-dom";
 import { authFormStyle } from "./shared-styles";
 import { handleAuth } from "services/auth";

@@ -1,13 +1,13 @@
 import { css } from "@emotion/css";
 
-export const overflowHandler = (maxWidth: string) => css`
+export const getOverflowStyle = (maxWidth: string) => css`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: ${maxWidth};
 `;
 
-export const verticalOverflowHandler = (maxLines: number) => css`
+export const getVerticalOverflowStyle = (maxLines: number) => css`
   display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;

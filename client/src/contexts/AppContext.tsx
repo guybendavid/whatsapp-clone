@@ -3,8 +3,6 @@ import { ApolloError } from "@apollo/client";
 import { logout } from "services/auth";
 import { AppContext } from "./app-context";
 
-export { AppContext, AppContextType } from "./app-context";
-
 type Props = {
   children: ReactNode;
 };

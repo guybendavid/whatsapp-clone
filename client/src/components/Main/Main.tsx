@@ -15,12 +15,12 @@ export const Main = () => {
   const newMessage = newMessageData?.newMessage;
 
   return (
-    <div className={style}>
+    <div className={chatStyle}>
       <Sidebar newMessage={newMessage} selectedUser={selectedUser} setSelectedUser={setSelectedUser} />
       {selectedUser ? (
         <Chat
           selectedUser={selectedUser}
-          newMessage={isNewMessageRelatedToOpenedChat(newMessage, selectedUser) ? newMessage : undefined}
+          newMessage={getIsNewMessageRelatedToOpenedChat(newMessage, selectedUser) ? newMessage : undefined}
         />
       ) : (
         <WelcomeScreen />
@@ -29,7 +29,7 @@ export const Main = () => {
   );
 };
 
-const isNewMessageRelatedToOpenedChat = (newMessage?: Message, selectedUser?: SidebarUser) => {
+const getIsNewMessageRelatedToOpenedChat = (newMessage?: Message, selectedUser?: SidebarUser) => {
   const { loggedInUser } = getAuthData();
 
   if (newMessage) {
@@ -39,7 +39,7 @@ const isNewMessageRelatedToOpenedChat = (newMessage?: Message, selectedUser?: Si
   }
 };
 
-const style = css`
+const chatStyle = css`
   background: url(${conversationImage}); // preloading the conversation image
   display: flex;
   height: 96vh;
