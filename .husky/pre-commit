@@ -1,4 +1,6 @@
 npx pretty-quick --staged
 npm run lint
+npx tsc --noEmit -p client/tsconfig.json
+npx tsc --noEmit -p server/tsconfig.json
 npm test
 npx prettier --check .

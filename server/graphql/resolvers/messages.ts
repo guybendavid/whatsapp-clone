@@ -1,4 +1,5 @@
-import { UserInputError, withFilter } from "apollo-server";
+import { UserInputError } from "apollo-server";
+import { withFilter } from "graphql-subscriptions";
 import { Op } from "sequelize";
 import { User, Message } from "../../db/models/models-config";
 import { SendMessagePayload, ContextUser } from "../../types/types";
@@ -43,8 +44,8 @@ export const messageResolvers = {
   Subscription: {
     newMessage: {
       subscribe: withFilter(
-        (_parent, _args, _context) => pubsub.asyncIterator("NEW_MESSAGE"),
-        ({ newMessage }, _args, { user }) => newMessage.senderId === user.id || newMessage.recipientId === user.id
+        (_parent: any, _args: any, _context: any) => pubsub.asyncIterableIterator("NEW_MESSAGE"),
+        ({ newMessage }: any, _args: any, { user }: any) => newMessage.senderId === user.id || newMessage.recipientId === user.id
       )
     }
   }

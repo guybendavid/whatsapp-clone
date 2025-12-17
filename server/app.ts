@@ -1,11 +1,14 @@
-import { ApolloServer as ApolloServerDev, PubSub } from "apollo-server";
+import { ApolloServer as ApolloServerDev } from "apollo-server";
+import { PubSub } from "graphql-subscriptions";
 import { ApolloServer as ApolloServerProd } from "apollo-server-express";
 import { getContextMiddleware } from "./graphql/context-middleware";
 import { resolversConfig } from "./graphql/resolvers/resolvers-config";
 import { sequelize } from "./db/models/models-config";
 import { typeDefs } from "./graphql/type-definitions";
-import http, { Server } from "http";
+import http, { type Server } from "http";
 import express from "express";
+import path from "path";
+import pino from "pino";
 
 export const pubsub = new PubSub();
 
@@ -25,7 +28,6 @@ const startProductionServer = () => {
   const server = new ApolloServerProd(serverConfig);
   server.applyMiddleware({ app });
   const httpServer = http.createServer(app);
-  server.installSubscriptionHandlers(httpServer);
   connect({ server: httpServer, isProd: true });
 };
 
@@ -46,9 +48,8 @@ const connect = async ({ server, isProd }: { server: ApolloServerDev | Server; i
       return;
     }
 
-    const { url, subscriptionsUrl } = await (server as ApolloServerDev).listen({ port });
+    const { url } = await (server as ApolloServerDev).listen({ port });
     logger.info(`Server ready at ${url}`);
-    logger.info(`Susbscription ready at ${subscriptionsUrl}`);
   } catch (error) {
     logger.error(error as string);
   }

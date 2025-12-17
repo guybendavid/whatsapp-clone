@@ -18,12 +18,14 @@
   "dependencies": {
     "@guybendavid/utils": "^3.0.0",
     "apollo-server": "^3.13.0",
+    "apollo-server-express": "^3.13.0",
     "bcrypt": "^5.1.1",
+    "express": "^4.22.1",
     "graphql": "^15.5.0",
+    "graphql-subscriptions": "^3.0.0",
     "jsonwebtoken": "^9.0.2",
     "pino": "^9.6.0",
     "pino-pretty": "^13.0.0",
-    "pretty-quick": "^4.2.2",
     "sequelize": "^6.37.7"
   },
   "devDependencies": {
@@ -33,7 +35,6 @@
     "eslint": "^9.0.0",
     "pg": "^8.14.1",
     "prettier": "^3.6.2",
-    "ts-node-dev": "^2.0.0",
-    "typescript-eslint": "^8.0.0"
+    "ts-node-dev": "^2.0.0"
   }
 }
