@@ -5,7 +5,7 @@
   "ignore": ["server/db/migrations/**", "server/db/seeders/**", "server/utils/generate-image.ts", "eslint-plugins.d.ts"],
   "workspaces": {
     ".": {
-      "entry": ["eslint.config.ts", "custom-eslint-rules.ts"]
+      "entry": ["eslint.config.ts"]
     },
     "client": {
       "entry": ["src/index.tsx"]
