@@ -1,16 +1,15 @@
 {
-  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "$schema": "https://unpkg.com/knip@latest/schema.json",
   "ignoreDependencies": ["@babel/types", "@eslint/js", "react-router"],
-  "ignoreBinaries": ["vite", "vite-node"],
   "workspaces": {
     ".": {
-      "entry": ["find-unimported-exports.ts!", "eslint.config.ts!", "custom-eslint-rules.ts!"]
+      "entry": ["eslint.config.ts", "custom-eslint-rules.ts"]
     },
     "client": {
-      "entry": ["src/index.tsx!"]
+      "entry": ["src/index.tsx"]
     },
     "server": {
-      "entry": ["app.ts!"]
+      "entry": ["app.ts"]
     },
     "tests": {
       "entry": ["**/*.test.ts"]

@@ -1,15 +1,9 @@
-import { RuleTester } from "eslint";
+import { baseLanguageOptions } from "../eslint-base.config.js";
 import { customRuleMap } from "../custom-eslint-rules.js";
-
-RuleTester.setDefaultConfig({
-  languageOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module"
-  }
-});
+import { RuleTester } from "eslint";
 
 const rule = customRuleMap["css-style-naming"];
-const ruleTester = new RuleTester();
+const ruleTester = new RuleTester({ languageOptions: baseLanguageOptions });
 
 ruleTester.run("css-style-naming", rule, {
   valid: [

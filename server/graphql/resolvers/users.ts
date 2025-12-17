@@ -1,16 +1,16 @@
+import { generateToken } from "../../utils/generate-token";
 import { getTotalUsers, getUsersWithLatestMessage } from "../../db/raw-queries/users";
 import { QueryTypes } from "sequelize";
 import { sequelize, User } from "../../db/models/models-config";
 import { User as UserType, ContextUser, LatestMessage } from "../../types/types";
 import { UserInputError } from "apollo-server";
 import bcrypt from "bcrypt";
-import generateToken from "../../utils/generate-token";
 // eslint-disable-next-line
 const generateImage = require("../../utils/generate-image");
 
 interface GetUsersWithLatestMessageResponse extends Omit<ContextUser, "username" | "password">, LatestMessage {}
 
-export default {
+export const userResolvers = {
   Query: {
     getAllUsersExceptLogged: async (
       _parent: any,

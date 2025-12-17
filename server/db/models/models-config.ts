@@ -1,7 +1,7 @@
-import Sequelize from "sequelize";
-import user from "./user";
-import message from "./message";
+import { createMessageModel } from "./message";
+import { createUserModel } from "./user";
 import config from "../config/config";
+import Sequelize from "sequelize";
 
 const { NODE_ENV } = process.env;
 const environmentConfig = config[NODE_ENV === "production" ? "production" : "development"];
@@ -10,8 +10,8 @@ const environmentConfig = config[NODE_ENV === "production" ? "production" : "dev
 export const sequelize = new Sequelize(environmentConfig);
 
 const models: any = {
-  User: user(sequelize, Sequelize.DataTypes),
-  Message: message(sequelize, Sequelize.DataTypes)
+  User: createUserModel(sequelize, Sequelize.DataTypes),
+  Message: createMessageModel(sequelize, Sequelize.DataTypes)
 };
 
 export const { User, Message } = models;

@@ -34,7 +34,7 @@ export const Chat = ({ selectedUser, newMessage }: Props) => {
 
   useEffect(() => {
     if (newMessage && !messages.some((message: Message) => message.id === newMessage.id)) {
-      const { recipientId: _recipientId, ...relevantMessageFields } = newMessage;
+      const { recipientId, ...relevantMessageFields } = newMessage;
       addNewMessageToChat({ newMessage: relevantMessageFields, client, selectedUserId: selectedUser.id });
       selectedUser.latestMessage = { ...newMessage };
       chatBottomRef.current?.scrollIntoView();

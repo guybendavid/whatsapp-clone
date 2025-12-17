@@ -1,7 +1,7 @@
-import { customRuleMap } from "./custom-eslint-rules.js";
+import { baseLanguageOptions } from "./eslint-base.config";
+import { customRuleMap } from "./custom-eslint-rules";
 import type { Linter } from "eslint";
 import eslintImport from "eslint-plugin-import";
-import globals from "globals";
 import js from "@eslint/js";
 import jsxA11y from "eslint-plugin-jsx-a11y";
 import preferArrow from "eslint-plugin-prefer-arrow";
@@ -17,15 +17,7 @@ const eslintConfig: Linter.Config[] = [
   ...tseslint.configs.recommended,
   {
     files: ["**/*.{ts,tsx}"],
-    languageOptions: {
-      ecmaVersion: "latest",
-      sourceType: "module",
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true
-        }
-      }
-    },
+    languageOptions: baseLanguageOptions,
     plugins: {
       "unused-imports": unusedImports,
       eslintImport,
@@ -40,6 +32,14 @@ const eslintConfig: Linter.Config[] = [
     settings: {
       react: {
         version: "detect"
+      },
+      "import/resolver": {
+        typescript: {
+          project: "./client/tsconfig.json"
+        },
+        node: {
+          paths: ["client/src"]
+        }
       }
     },
     rules: {
@@ -47,9 +47,9 @@ const eslintConfig: Linter.Config[] = [
         "error",
         {
           cases: {
-            kebabCase: true,
-            pascalCase: true
-          }
+            kebabCase: true
+          },
+          ignore: ["^components/.*/[A-Z].*\\.tsx?$"]
         }
       ],
 
@@ -183,9 +183,9 @@ const eslintConfig: Linter.Config[] = [
         "error",
         {
           vars: "all",
-          varsIgnorePattern: "^_",
           args: "after-used",
-          argsIgnorePattern: "^_"
+          destructuredArrayIgnorePattern: "^_",
+          ignoreRestSiblings: true
         }
       ],
       "no-restricted-syntax": [
@@ -200,7 +200,7 @@ const eslintConfig: Linter.Config[] = [
           message: "Use inline exports (export const/function) instead of grouped exports"
         },
         {
-          selector: "IfStatement > .alternate",
+          selector: "IfStatement[alternate]",
           message: "Avoid else - use early return instead"
         },
         {
@@ -256,6 +256,8 @@ const eslintConfig: Linter.Config[] = [
           message: "Event handlers must be single-line arrow functions or function references"
         }
       ],
+      "eslintImport/no-unresolved": "error",
+      "eslintImport/named": "error",
       "eslintImport/no-default-export": "error",
       "eslintImport/no-namespace": "error",
       "eslintImport/newline-after-import": [
@@ -268,6 +270,8 @@ const eslintConfig: Linter.Config[] = [
       "require-await": "error",
       "no-empty": "error",
       "no-debugger": "error",
+      "no-trailing-spaces": "error",
+      "no-extra-semi": "error",
       "no-throw-literal": "error",
       "no-implied-eval": "error",
       "no-empty-function": "error",
@@ -289,7 +293,6 @@ const eslintConfig: Linter.Config[] = [
       "no-unsafe-negation": "error",
       "no-empty-pattern": "error",
       "no-implicit-coercion": "error",
-      "no-lonely-if": "error",
       "no-else-return": [
         "error",
         {
@@ -307,11 +310,12 @@ const eslintConfig: Linter.Config[] = [
       "use-isnan": "error",
       "no-import-assign": "error",
       "no-loop-func": "error",
-      "no-undef": "error",
+      "no-undef": "off", // TypeScript's compiler handles undefined variables better than ESLint
       "no-unsafe-finally": "error",
       "prefer-arrow-callback": "error",
       eqeqeq: "error",
       yoda: ["error", "never"],
+      quotes: ["error", "double"],
       "object-shorthand": ["error", "always"],
       "arrow-body-style": ["error", "as-needed"],
       "padding-line-between-statements": [
@@ -330,6 +334,26 @@ const eslintConfig: Linter.Config[] = [
           blankLine: "always",
           prev: "*",
           next: "export"
+        },
+        {
+          blankLine: "always",
+          prev: "multiline-const",
+          next: "*"
+        },
+        {
+          blankLine: "always",
+          prev: "*",
+          next: "multiline-const"
+        },
+        {
+          blankLine: "always",
+          prev: "block-like",
+          next: "*"
+        },
+        {
+          blankLine: "always",
+          prev: "*",
+          next: "block-like"
         }
       ]
     }
@@ -340,17 +364,16 @@ const eslintConfig: Linter.Config[] = [
       custom: { rules: customRuleMap }
     },
     rules: {
-      "custom/css-style-naming": ["error"],
-      "custom/container-style-naming": ["error"],
-      "custom/css-styles-at-bottom": ["error"],
-      "custom/default-imports-first": ["error"],
-      "custom/blank-line-after-setters": ["error"],
-      "custom/prefer-boolean-is-prefix": ["error"],
-      "custom/prefer-direct-function-reference": ["error"],
-      "custom/no-inline-styles": ["error"],
-      "custom/prefer-get-prefix": ["error"],
-      "custom/require-object-destructuring": ["error"],
-      "custom/no-get-prefix-for-void": ["error"],
+      "custom/css-style-naming": "error",
+      "custom/container-style-naming": "error",
+      "custom/css-styles-at-bottom": "error",
+      "custom/default-imports-first": "error",
+      "custom/blank-line-after-setters": "error",
+      "custom/prefer-boolean-is-prefix": "error",
+      "custom/prefer-direct-function-reference": "error",
+      "custom/prefer-get-prefix": "error",
+      "custom/require-object-destructuring": "error",
+      "custom/no-get-prefix-for-void": "error",
       "custom/no-hardcoded-strings": [
         // To do: enable and refactor
         "off",
@@ -359,58 +382,37 @@ const eslintConfig: Linter.Config[] = [
           ignorePatterns: ["^\\s*$", "^[a-z-]+$", "^[A-Z_]+$", "^/.*/$", "^https?://", "^[./]", "^\\d+$"]
         }
       ],
-      "custom/no-inline-exports": ["error"],
-      "custom/no-block-event-handlers": ["error"],
-      "custom/padding-around-multiline-statements": ["error"],
+      "custom/no-inline-exports": "error",
+      "custom/no-block-event-handlers": "error",
+      "custom/padding-around-multiline-statements": "error",
       "custom/blank-line-before-multiline-return": "error"
     }
   },
   {
-    files: [
-      "*.config.ts",
-      "*.config.js",
-      "find-unimported-exports.ts",
-      "server/**/*.ts",
-      "custom-eslint-rules.ts",
-      "client/src/ApolloProvider.tsx",
-      "client/vite.config.ts"
-    ],
+    files: ["*.config.{ts,js}", "client/**/*.config.ts"],
     rules: {
-      "eslintImport/no-default-export": "off",
+      "eslintImport/no-default-export": "off"
+    }
+  },
+  {
+    files: ["**/models/*.ts", "**/resolvers/*.ts", "custom-eslint-rules.ts", "find-unimported-exports.ts", "client/src/ApolloProvider.tsx", "server/graphql/context-middleware.ts"],
+    rules: {
       // To do: enable and refactor
       "@typescript-eslint/no-explicit-any": "off"
     }
   },
   {
     files: ["find-unimported-exports.ts", "tests/**/*.ts"],
-    languageOptions: {
-      ecmaVersion: "latest",
-      sourceType: "module",
-      globals: {
-        process: "readonly",
-        console: "readonly"
-      }
-    }
+    languageOptions: baseLanguageOptions
   },
 
   {
     files: ["client/**/*.{ts,tsx}", "*.config.ts"],
-    languageOptions: {
-      ecmaVersion: "latest",
-      sourceType: "module",
-      globals: {
-        ...globals.browser,
-        ...globals.node
-      }
-    }
+    languageOptions: baseLanguageOptions
   },
   {
     files: ["server/**/*.ts"],
-    languageOptions: {
-      ecmaVersion: "latest",
-      sourceType: "module",
-      globals: globals.node
-    }
+    languageOptions: baseLanguageOptions
   },
   {
     // Disallow .js and .jsx files in TypeScript project
@@ -426,16 +428,22 @@ const eslintConfig: Linter.Config[] = [
     }
   },
   {
-    ignores: [
-      "dist/**",
-      "build/**",
-      "client/build/**",
-      "node_modules/**",
-      "client/vite.config.js",
-      "client/vite.config.d.ts",
-      "server/**/*.js",
-      "find-unimported-exports.js"
-    ]
+    files: ["**/resolvers/**/*.ts"],
+    rules: {
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          vars: "all",
+          args: "after-used",
+          argsIgnorePattern: "^_",
+          destructuredArrayIgnorePattern: "^_",
+          ignoreRestSiblings: true
+        }
+      ]
+    }
+  },
+  {
+    ignores: ["dist/**", "client/build/**", "**/*.config.js", "server/**/*.js"]
   }
 ];
 

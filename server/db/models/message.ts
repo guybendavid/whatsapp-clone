@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 
-export default (sequelize: Sequelize, DataTypes: any) => {
+export const createMessageModel = (sequelize: Sequelize, DataTypes: any) => {
   const Message = sequelize.define(
     "Message",
     {

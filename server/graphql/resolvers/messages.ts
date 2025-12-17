@@ -4,7 +4,7 @@ import { User, Message } from "../../db/models/models-config";
 import { SendMessagePayload, ContextUser } from "../../types/types";
 import { pubsub } from "../../app";
 
-export default {
+export const messageResolvers = {
   Query: {
     getMessages: async (_parent: any, args: { otherUserId: string }, { user }: { user: ContextUser }) => {
       const { otherUserId } = args;

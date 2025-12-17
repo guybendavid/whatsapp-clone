@@ -4,6 +4,10 @@
   "author": "Guy Ben David",
   "license": "BSD-3-Clause",
   "private": true,
+  "description": "WhatsApp clone server application",
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "scripts": {
     "dev": "ts-node-dev --no-notify -r dotenv/config app | pino-pretty",
     "build": "tsc",

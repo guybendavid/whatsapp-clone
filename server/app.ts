@@ -1,19 +1,17 @@
 import { ApolloServer as ApolloServerDev, PubSub } from "apollo-server";
 import { ApolloServer as ApolloServerProd } from "apollo-server-express";
+import { contextMiddleware } from "./graphql/context-middleware";
+import { resolversConfig } from "./graphql/resolvers/resolvers-config";
 import { sequelize } from "./db/models/models-config";
+import { typeDefs } from "./graphql/type-definitions";
 import http, { Server } from "http";
-import context from "./graphql/context-middleware";
 import express from "express";
-import pino from "pino";
-import path from "path";
-import typeDefs from "./graphql/type-definitions";
-import resolvers from "./graphql/resolvers/resolvers-config";
 
 export const pubsub = new PubSub();
 
 const { NODE_ENV, LOG_LEVEL, PORT, BASE_URL_PROD } = process.env;
 const logger = pino({ level: LOG_LEVEL || "info" });
-const serverConfig = { typeDefs, resolvers, context, subscriptions: { path: "/" } };
+const serverConfig = { typeDefs, resolvers: resolversConfig, context: contextMiddleware, subscriptions: { path: "/" } };
 const port = PORT || 4000;
 
 const startProductionServer = () => {

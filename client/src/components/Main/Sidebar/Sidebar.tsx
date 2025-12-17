@@ -50,7 +50,7 @@ export const Sidebar = ({ selectedUser, setSelectedUser, newMessage }: Props) =>
 
   useEffect(() => {
     if (newMessage && newUserData) {
-      const { recipientId: _recipientId, senderId: _senderId, ...userLatestMessageProperties } = newMessage;
+      const { recipientId, senderId, ...userLatestMessageProperties } = newMessage;
       const sidebarNewUser = { ...newUserData.getUser };
       sidebarNewUser.latestMessage = { ...userLatestMessageProperties };
       displayNewUserOnSidebar({ sidebarNewUser, client });

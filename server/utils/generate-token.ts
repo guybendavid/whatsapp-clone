@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 
 const { SECRET_KEY } = process.env;
 
-export default (userFields: Omit<User, "username" | "password" | "image">) => {
+export const generateToken = (userFields: Omit<User, "username" | "password" | "image">) => {
   if (SECRET_KEY) {
     return jwt.sign({ ...userFields }, SECRET_KEY, { expiresIn: "7 days" });
   }
