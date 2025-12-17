@@ -5,3 +5,4 @@
 /**/dist
 /**/.env
 .claude/
+**/*.tsbuildinfo

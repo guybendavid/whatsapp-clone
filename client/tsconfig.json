@@ -18,9 +18,7 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": "src",
     "paths": {
-      "ApolloProvider": ["./ApolloProvider"],
       "App": ["./App"],
-      "AppRouter/*": ["./AppRouter/*"],
       "components/*": ["./components/*"],
       "contexts/*": ["./contexts/*"],
       "images/*": ["./images/*"],
