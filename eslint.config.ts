@@ -16,6 +16,12 @@ const eslintConfig: Linter.Config[] = [
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
+    plugins: {
+      "react-hooks": reactHooks
+    },
+    rules: reactHooks.configs.recommended.rules
+  },
+  {
     files: ["**/*.{ts,tsx}"],
     languageOptions: baseLanguageOptions,
     plugins: {
@@ -25,7 +31,6 @@ const eslintConfig: Linter.Config[] = [
       "prefer-arrow": preferArrow,
       "jsx-a11y": jsxA11y,
       react,
-      "react-hooks": reactHooks,
       "react-refresh": reactRefresh
     },
 
@@ -43,16 +48,6 @@ const eslintConfig: Linter.Config[] = [
       }
     },
     rules: {
-      "unicorn/filename-case": [
-        "error",
-        {
-          cases: {
-            kebabCase: true
-          },
-          ignore: ["^components/.*/[A-Z].*\\.tsx?$"]
-        }
-      ],
-
       // To do: enable and refactor
       "@typescript-eslint/no-magic-numbers": [
         "off",
@@ -143,7 +138,6 @@ const eslintConfig: Linter.Config[] = [
           forbid: ["style"]
         }
       ],
-      "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "off",
       "react-refresh/only-export-components": ["error", { allowConstantExport: true }],
       "unicorn/no-negation-in-equality-check": "error",
@@ -184,6 +178,7 @@ const eslintConfig: Linter.Config[] = [
         {
           vars: "all",
           args: "after-used",
+          argsIgnorePattern: "^_",
           destructuredArrayIgnorePattern: "^_",
           ignoreRestSiblings: true
         }
@@ -395,7 +390,14 @@ const eslintConfig: Linter.Config[] = [
     }
   },
   {
-    files: ["**/models/*.ts", "**/resolvers/*.ts", "custom-eslint-rules.ts", "find-unimported-exports.ts", "client/src/ApolloProvider.tsx", "server/graphql/context-middleware.ts"],
+    files: [
+      "**/models/*.ts",
+      "**/resolvers/*.ts",
+      "custom-eslint-rules.ts",
+      "find-unimported-exports.ts",
+      "client/src/components/ApolloProvider.tsx",
+      "server/graphql/context-middleware.ts"
+    ],
     rules: {
       // To do: enable and refactor
       "@typescript-eslint/no-explicit-any": "off"

@@ -2,7 +2,7 @@ import { AppContextProvider } from "contexts/AppContext";
 import { BrowserRouter } from "react-router-dom";
 import { css } from "@emotion/css";
 import { useMediaQuery } from "@material-ui/core";
-import { AppRouterWithRouter as AppRouter } from "AppRouter/AppRouter";
+import { AppRouterWithRouter as AppRouter } from "components/AppRouter/AppRouter";
 import "styles/global-styles.css";
 
 export const App = () => {

@@ -4,7 +4,7 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 
 const { SECRET_KEY } = process.env;
 
-export const contextMiddleware = (context: any) => {
+export const getContextMiddleware = (context: any) => {
   if (context.req?.body) {
     const { message } = getFormValidationErrors(context.req.body.variables);
     if (message) throw new UserInputError(message);

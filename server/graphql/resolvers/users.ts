@@ -1,4 +1,4 @@
-import { generateToken } from "../../utils/generate-token";
+import { getGenerateToken } from "../../utils/generate-token";
 import { getTotalUsers, getUsersWithLatestMessage } from "../../db/raw-queries/users";
 import { QueryTypes } from "sequelize";
 import { sequelize, User } from "../../db/models/models-config";
@@ -59,7 +59,7 @@ export const userResolvers = {
       const hasedPassword = await bcrypt.hash(password as string, 6);
       const user = await User.create({ firstName, lastName, username, password: hasedPassword, image: generateImage() });
       const { password: _userPassword, ...safeUserData } = user.toJSON();
-      return { user: safeUserData, token: generateToken({ id: user.id, firstName, lastName }) };
+      return { user: safeUserData, token: getGenerateToken({ id: user.id, firstName, lastName }) };
     },
     login: async (_parent: any, args: Pick<UserType, "username" | "password">) => {
       const { username, password } = args;
@@ -76,7 +76,7 @@ export const userResolvers = {
       }
 
       const { id, firstName, lastName, image } = user;
-      return { user: { id, firstName, lastName, username, image }, token: generateToken({ id, firstName, lastName }) };
+      return { user: { id, firstName, lastName, username, image }, token: getGenerateToken({ id, firstName, lastName }) };
     }
   }
 };
