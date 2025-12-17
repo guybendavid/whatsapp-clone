@@ -1,8 +1,40 @@
-/client/.eslintcache
-/client/debug.log
-/**/node_modules
-/**/build
+# Dependencies
+node_modules/
+
+# Vite
 /**/dist
-/**/.env
+/**/build
+*.local
+
+# Debug & logs
+*.log*
+debug.log
+
+# Environment variables
+.env
+.env*.local
+
+# TypeScript
+*.tsbuildinfo
+
+# Testing
+/coverage
+
+# IDE
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Claude Code
 .claude/
-**/*.tsbuildinfo
+
+# OS
+Thumbs.db
+
+# Build cache
+.eslintcache
