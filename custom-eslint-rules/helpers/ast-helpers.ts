@@ -52,7 +52,7 @@ export const getSchemaDetector = (options: SchemaDetectorOptions = {}) => {
   };
 };
 
-export const SCHEMA_CONFIG = {
+const SCHEMA_CONFIG = {
   schemaLibraries: [],
   schemaMethods: [],
   preferGetPrefixExcludedProperties: ["create", "fix"]
