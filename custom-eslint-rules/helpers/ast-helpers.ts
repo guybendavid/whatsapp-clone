@@ -54,10 +54,14 @@ export const getSchemaDetector = (options: SchemaDetectorOptions = {}) => {
 
 export const SCHEMA_CONFIG = {
   schemaLibraries: [],
-  schemaMethods: []
+  schemaMethods: [],
+  preferGetPrefixExcludedProperties: ["create", "fix"]
 };
 
 export const getIsSchemaOrConfigProperty = getSchemaDetector(SCHEMA_CONFIG);
+
+export const getIsPreferGetPrefixExcludedProperty = (propertyName: string | null | undefined): boolean =>
+  Boolean(propertyName && SCHEMA_CONFIG.preferGetPrefixExcludedProperties?.includes(propertyName));
 
 export const getIsBlankLineBefore = (context: Rule.RuleContext, node: AnyNode): boolean => {
   const { sourceCode } = context;

@@ -1,6 +1,6 @@
 import type { Rule } from "eslint";
 import type { AnyNode } from "../helpers/ast-helpers";
-import { getIsReturn, getIsSchemaOrConfigProperty } from "../helpers/ast-helpers";
+import { getIsPreferGetPrefixExcludedProperty, getIsReturn, getIsSchemaOrConfigProperty } from "../helpers/ast-helpers";
 import { MessageTypeToText } from "../helpers/message-types";
 
 export const preferGetPrefix: Rule.RuleModule = {
@@ -56,8 +56,7 @@ export const preferGetPrefix: Rule.RuleModule = {
       Property: (node: any) => {
         if (!node.key || node.key.type !== "Identifier" || !node.value) return;
         const functionName = node.key.name;
-        // Skip ESLint API properties
-        if (functionName === "create" || functionName === "fix") return;
+        if (getIsPreferGetPrefixExcludedProperty(functionName)) return;
 
         // Skip schema/config object properties
         if (getIsSchemaOrConfigProperty(node)) return;

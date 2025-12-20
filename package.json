@@ -14,7 +14,7 @@
     "format": "prettier --write .",
     "lint": "eslint . && npx vite-node find-unimported-exports.ts && knip --no-exit-code",
     "lint:eslint-fix": "eslint . --fix",
-    "test": "node --test --import tsx tests/css-style-naming.test.ts tests/find-unimported-exports.test.ts",
+    "test": "node --test --import tsx \"tests/**/*.test.ts\"",
     "build-client": "tsc -b client/tsconfig.json && vite build --config client/vite.config.ts",
     "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\"",
     "create-dist-folder": "node -e \"require('fs').mkdirSync('dist', { recursive: true })\"",

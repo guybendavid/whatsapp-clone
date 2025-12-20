@@ -393,6 +393,12 @@ const eslintConfig: Linter.Config[] = [
     }
   },
   {
+    files: ["**/*.d.ts"],
+    rules: {
+      "eslintImport/no-default-export": "off"
+    }
+  },
+  {
     files: [
       "**/models/*.ts",
       "**/resolvers/*.ts",
