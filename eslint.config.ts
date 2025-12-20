@@ -1,5 +1,5 @@
 import { baseLanguageOptions } from "./eslint-base.config";
-import { customRuleMap } from "./custom-eslint-rules";
+import { customRuleMap } from "./custom-eslint-rules/index";
 import type { Linter } from "eslint";
 import eslintImport from "eslint-plugin-import";
 import js from "@eslint/js";
@@ -13,6 +13,9 @@ import unicorn from "eslint-plugin-unicorn";
 import unusedImports from "eslint-plugin-unused-imports";
 
 const eslintConfig: Linter.Config[] = [
+  {
+    ignores: ["custom-eslint-rules/**"]
+  },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {

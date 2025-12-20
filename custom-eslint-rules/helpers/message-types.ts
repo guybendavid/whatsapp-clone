@@ -1,0 +1,21 @@
+export const MessageTypeToText = {
+  FUNCTION_WITHOUT_PARAMETERS: "CSS styling functions without parameters should be converted to regular css variables.",
+  FUNCTION_MUST_END_WITH_STYLE: "CSS styling functions must end with 'Style'.",
+  LETTER_AFTER_GET_MUST_BE_CAPITALIZED: "Letter after 'get' must be capitalized.",
+  TEMPLATE_LITERAL_MUST_END_WITH_STYLE: "CSS template literal variables must end with 'Style'.",
+  TEMPLATE_LITERAL_CANNOT_START_WITH_GET: "CSS template literal variables cannot start with 'get'.",
+  TEMPLATE_LITERAL_CANNOT_START_WITH_CAPITAL_LETTER: "CSS template literal variables cannot start with capital letter.",
+  CONTAINER_STYLE_NAMING: "Parent/container elements should use 'containerStyle' for objects or 'getContainerStyle' for functions.",
+  CONTAINER_STYLE_RESERVED: "The names 'containerStyle' and 'getContainerStyle' are reserved for parent/container elements only.",
+  BLANK_LINE_BEFORE_MULTILINE_RETURN: "Expected blank line before multi-line return statement.",
+  BLANK_LINE_BEFORE_FUNCTION_CALL: "Expected blank line before function call following setter statements.",
+  NO_BLOCK_STATEMENTS_IN_EVENT_HANDLERS: "Block statements are not allowed in JSX event handler arrow functions.",
+  PREFER_DIRECT_FUNCTION_REFERENCE: "Use direct function reference instead of arrow function when no arguments are passed.",
+  FUNCTION_MUST_START_WITH_GET_PREFIX: "Functions that return values should start with 'get' prefix.",
+  NO_INLINE_EXPORTS: "Use export keyword before the variable/function declaration instead of inline exports.",
+  REQUIRE_OBJECT_DESTRUCTURING: "Functions with 2 or more parameters must use object destructuring.",
+  NO_GET_PREFIX_FOR_VOID_FUNCTIONS: "Void functions (functions that don't return values) should not start with 'get' prefix.",
+  NO_HARDCODED_STRINGS: "Hardcoded strings are not allowed. Use constants or localization keys instead.",
+  BOOLEAN_VARIABLE_MUST_START_WITH_IS: "Boolean variables should start with 'is' prefix.",
+  BOOLEAN_FUNCTION_MUST_START_WITH_GET_IS: "Functions that return boolean values should start with 'getIs' prefix."
+} as const;

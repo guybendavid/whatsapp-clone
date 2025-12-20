@@ -1,5 +1,5 @@
 import { baseLanguageOptions } from "../eslint-base.config.js";
-import { customRuleMap } from "../custom-eslint-rules.js";
+import { customRuleMap } from "../custom-eslint-rules/index.js";
 import { RuleTester } from "eslint";
 
 const rule = customRuleMap["css-style-naming"];
