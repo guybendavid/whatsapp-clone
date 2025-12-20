@@ -22,13 +22,13 @@ const getScriptResult = () => {
   }
 };
 
-test("find-unimported-exports detects unused exports", () => {
+test("find-unimported-exports detects unimported exports", () => {
   writeFileSync(testFixturePath, "export const unusedTestExport = 42;");
 
   try {
     const { output, exitCode } = getScriptResult();
 
-    assert.strictEqual(exitCode, 1, "Script should exit with code 1 when unused exports exist");
+    assert.strictEqual(exitCode, 1, "Script should exit with code 1 when unimported exports exist");
     assert.ok(output.includes("unusedTestExport"), "Output should contain the unused export name");
     assert.ok(output.includes("test-fixture-unused-export.ts"), "Output should contain the file name");
   } finally {
