@@ -106,7 +106,7 @@ export const noGetPrefixForVoid: Rule.RuleModule = {
         // Skip ESLint API properties
         if (functionName === "create" || functionName === "fix") return;
 
-        // Skip schema/config object properties (like Mongoose schema methods)
+        // Skip schema/config object properties
         if (getIsSchemaOrConfigProperty(node)) return;
 
         if (node.value.type === "ArrowFunctionExpression" || node.value.type === "FunctionExpression") {
