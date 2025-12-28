@@ -13,7 +13,7 @@ interface GetUsersWithLatestMessageResponse extends Omit<ContextUser, "username"
 export const userResolvers = {
   Query: {
     getAllUsersExceptLogged: async (
-      _parent: any,
+      _parent: unknown,
       args: { id: string; offset: string; limit: string },
       _context: { user: ContextUser }
     ) => {
@@ -41,14 +41,14 @@ export const userResolvers = {
 
       return { users: formattedSidebarUsersChunk, totalUsersExceptLoggedUser };
     },
-    getUser: async (_parent: any, args: { id: string }, _context: { user: ContextUser }) => {
+    getUser: async (_parent: unknown, args: { id: string }, _context: { user: ContextUser }) => {
       const { id } = args;
       const user = await User.findOne({ where: { id } });
       return user;
     }
   },
   Mutation: {
-    register: async (_parent: any, args: Omit<UserType, "id">) => {
+    register: async (_parent: unknown, args: Omit<UserType, "id">) => {
       const { firstName, lastName, username, password } = args;
       const isUserExists = await User.findOne({ where: { username } });
 
@@ -61,7 +61,7 @@ export const userResolvers = {
       const { password: _userPassword, ...safeUserData } = user.toJSON();
       return { user: safeUserData, token: getGenerateToken({ id: user.id, firstName, lastName }) };
     },
-    login: async (_parent: any, args: Pick<UserType, "username" | "password">) => {
+    login: async (_parent: unknown, args: Pick<UserType, "username" | "password">) => {
       const { username, password } = args;
       const user = await User.findOne({ where: { username } });
 

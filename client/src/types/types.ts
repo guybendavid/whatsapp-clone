@@ -1,3 +1,8 @@
+type LatestMessage = {
+  content: string;
+  createdAt: string;
+};
+
 export type User = {
   id: string;
   firstName: string;
@@ -8,10 +13,7 @@ export type User = {
 };
 
 export interface SidebarUser extends Omit<User, "username" | "password"> {
-  latestMessage: {
-    content: string | null;
-    createdAt: string | null;
-  };
+  latestMessage?: LatestMessage;
 }
 
 export type Message = {

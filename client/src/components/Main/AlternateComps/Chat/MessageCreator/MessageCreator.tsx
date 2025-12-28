@@ -1,7 +1,7 @@
-import { useState, SyntheticEvent, useContext, useEffect } from "react";
+import { useState, SyntheticEvent, useEffect } from "react";
 import { css } from "@emotion/css";
 import { baseSearchInputStyle } from "styles/reusable-css-in-js-styles";
-import { AppContext, type AppContextType } from "contexts/app-context";
+import { useAppContext } from "contexts/app-context";
 import { SidebarUser } from "types/types";
 import { useMutation } from "@apollo/client";
 import { SEND_MESSAGE } from "services/graphql";
@@ -14,7 +14,7 @@ type Props = {
 };
 
 export const MessageCreator = ({ selectedUser }: Props) => {
-  const { handleServerErrors, setSnackBarError } = useContext(AppContext) as AppContextType;
+  const { handleServerErrors, setSnackBarError } = useAppContext();
   const [message, setMessage] = useState("");
 
   useEffect(() => {

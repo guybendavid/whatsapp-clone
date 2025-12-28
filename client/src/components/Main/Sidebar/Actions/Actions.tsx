@@ -60,7 +60,7 @@ export const Actions = ({ setSearchValue }: Props) => {
 };
 
 const DotsIcon = () => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);

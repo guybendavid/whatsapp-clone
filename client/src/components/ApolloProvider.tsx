@@ -6,23 +6,23 @@ import { App } from "App";
 
 const { NODE_ENV, REACT_APP_BASE_URL } = process.env;
 const isProduction = NODE_ENV === "production";
-const httpLinkBase: ApolloLink = new HttpLink({ uri: isProduction ? "" : `http://${REACT_APP_BASE_URL}` });
+const baseHttpLink: ApolloLink = new HttpLink({ uri: isProduction ? "" : `http://${REACT_APP_BASE_URL}` });
 
 const authLink = setContext((_, { headers }) => ({
   headers: {
     ...headers,
-    authorization: `Bearer ${localStorage.getItem("token")}`
+    ...(localStorage.getItem("token") ? { authorization: `Bearer ${localStorage.getItem("token")}` } : {})
   }
 }));
 
-const httpLink = authLink.concat(httpLinkBase);
+const httpLink = authLink.concat(baseHttpLink);
 
 const wsLink = new WebSocketLink({
   uri: isProduction ? `wss://${window.location.host}` : `ws://${REACT_APP_BASE_URL}`,
   options: {
     reconnect: true,
     connectionParams: {
-      authorization: `Bearer ${localStorage.getItem("token")}`
+      ...(localStorage.getItem("token") ? { authorization: `Bearer ${localStorage.getItem("token")}` } : {})
     }
   }
 });
@@ -36,15 +36,16 @@ const splitLink = split(
   httpLink
 );
 
-const getMergedUsers = (prevResult: any, incomingResult: any) => {
-  const updatedObj = { ...incomingResult };
+type JsonPrimitive = string | number | boolean;
+type JsonValue = JsonPrimitive | JsonObject | JsonValue[];
+type JsonObject = { [key: string]: JsonValue };
 
-  if (prevResult) {
-    updatedObj.users = [...prevResult.users, ...incomingResult.users];
-  }
+type UsersMergeResult = JsonObject & { users: JsonValue[] };
 
-  return updatedObj;
-};
+const getMergedUsers = (prevResult: UsersMergeResult = { users: [] }, incomingResult: UsersMergeResult): UsersMergeResult => ({
+  ...incomingResult,
+  users: [...prevResult.users, ...incomingResult.users]
+});
 
 const client = new ApolloClient({
   link: splitLink,

@@ -1,5 +1,5 @@
-import { useState, useContext, SyntheticEvent, ChangeEvent } from "react";
-import { AppContext, type AppContextType } from "contexts/app-context";
+import { useState, SyntheticEvent, ChangeEvent } from "react";
+import { useAppContext } from "contexts/app-context";
 import { Link } from "react-router-dom";
 import { authFormStyle } from "./shared-styles";
 import { handleAuth } from "services/auth";
@@ -12,7 +12,7 @@ import { LockOutlined as LockOutlinedIcon } from "@material-ui/icons";
 const textFieldProps = { required: true, variant: "outlined", margin: "normal", fullWidth: true } as OutlinedTextFieldProps;
 
 export const Login = () => {
-  const { handleServerErrors, setSnackBarError } = useContext(AppContext) as AppContextType;
+  const { handleServerErrors, setSnackBarError } = useAppContext();
   const [formValues, setFormValues] = useState({ username: "", password: "" });
 
   const [login] = useMutation(LOGIN_USER, {

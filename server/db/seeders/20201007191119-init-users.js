@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const bcrypt = require("bcrypt");
 const generateImage = require("../../utils/generate-image.ts");
 require("dotenv").config();

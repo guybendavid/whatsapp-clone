@@ -1,6 +1,6 @@
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { css } from "@emotion/css";
-import { AppContext, type AppContextType } from "contexts/app-context";
+import { useAppContext } from "contexts/app-context";
 import { useQuery, useLazyQuery, InMemoryCache } from "@apollo/client";
 import { getAuthData } from "services/auth";
 import { getUsersQueryVariables, GET_All_USERS_EXCEPT_LOGGED, GET_USER } from "services/graphql";
@@ -17,7 +17,7 @@ type Props = {
 
 export const Sidebar = ({ selectedUser, setSelectedUser, newMessage }: Props) => {
   const { loggedInUser } = getAuthData();
-  const { handleServerErrors } = useContext(AppContext) as AppContextType;
+  const { handleServerErrors } = useAppContext();
   const [searchValue, setSearchValue] = useState("");
 
   const {

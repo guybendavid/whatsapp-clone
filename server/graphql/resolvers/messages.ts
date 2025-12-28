@@ -5,9 +5,33 @@ import { User, Message } from "../../db/models/models-config";
 import { SendMessagePayload, ContextUser } from "../../types/types";
 import { pubsub } from "../../app";
 
+type GraphQLContext = { user: ContextUser };
+
+type NewMessagePayload = {
+  newMessage: {
+    senderId: string | number;
+    recipientId: string | number;
+  };
+};
+
+const getIsRecord = (value: unknown): value is Record<string, unknown> => {
+  if (typeof value !== "object" || value === null) return false;
+  return !Array.isArray(value);
+};
+
+const getIsId = (id: unknown): id is string | number => typeof id === "string" || typeof id === "number";
+
+const getIsNewMessagePayload = (value: unknown): value is NewMessagePayload => {
+  if (!getIsRecord(value)) return false;
+  const { newMessage } = value;
+  if (!getIsRecord(newMessage)) return false;
+  const { senderId, recipientId } = newMessage;
+  return getIsId(senderId) && getIsId(recipientId);
+};
+
 export const messageResolvers = {
   Query: {
-    getMessages: async (_parent: any, args: { otherUserId: string }, { user }: { user: ContextUser }) => {
+    getMessages: async (_parent: unknown, args: { otherUserId: string }, { user }: GraphQLContext) => {
       const { otherUserId } = args;
       const otherUser = await User.findOne({ where: { id: otherUserId } });
 
@@ -29,7 +53,7 @@ export const messageResolvers = {
     }
   },
   Mutation: {
-    sendMessage: async (_parent: any, args: SendMessagePayload, { user }: { user: ContextUser }) => {
+    sendMessage: async (_parent: unknown, args: SendMessagePayload, { user }: GraphQLContext) => {
       const { recipientId, content } = args;
 
       if (recipientId.toString() === user.id.toString()) {
@@ -44,8 +68,16 @@ export const messageResolvers = {
   Subscription: {
     newMessage: {
       subscribe: withFilter(
-        (_parent: any, _args: any, _context: any) => pubsub.asyncIterableIterator("NEW_MESSAGE"),
-        ({ newMessage }: any, _args: any, { user }: any) => newMessage.senderId === user.id || newMessage.recipientId === user.id
+        (_parent: unknown, _args: unknown) => pubsub.asyncIterableIterator("NEW_MESSAGE"),
+        (payload: unknown, _args: unknown, context: GraphQLContext | undefined) => {
+          if (!context) return false;
+
+          const { user } = context;
+
+          if (!getIsNewMessagePayload(payload)) return false;
+          const { newMessage } = payload;
+          return newMessage.senderId === user.id || newMessage.recipientId === user.id;
+        }
       )
     }
   }

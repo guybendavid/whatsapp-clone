@@ -1,5 +1,5 @@
-import { useContext, useState, useEffect } from "react";
-import { AppContext, type AppContextType } from "contexts/app-context";
+import { useState, useEffect } from "react";
+import { useAppContext } from "contexts/app-context";
 import dompurify from "dompurify";
 import MuiAlert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
@@ -7,7 +7,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 const { sanitize } = dompurify;
 
 export const ErrorMessage = () => {
-  const { snackBarError, clearSnackBarError } = useContext(AppContext) as AppContextType;
+  const { snackBarError, clearSnackBarError } = useAppContext();
   const [isOpen, setIsOpen] = useState(false);
 
   const closeError = () => {

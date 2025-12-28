@@ -15,7 +15,7 @@ export const ChatHeader = ({ selectedUser }: Props) => (
       <Avatar alt="avatar" src={selectedUser.image} />
       <div className="text-wrapper">
         <Typography className="fullname" component="span">{`${selectedUser.firstName} ${selectedUser.lastName}`}</Typography>
-        <Typography component="small">{timeDisplayer(selectedUser.latestMessage.createdAt || "")}</Typography>
+        <Typography component="small">{timeDisplayer(selectedUser.latestMessage?.createdAt || "")}</Typography>
       </div>
     </div>
     <div>

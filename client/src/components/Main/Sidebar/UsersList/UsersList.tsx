@@ -37,7 +37,7 @@ export const UsersList = ({ users = [], searchValue, isMoreUsersToFetch, selecte
         }
       });
 
-      if (node) {
+      if (node && observer.current) {
         observer.current.observe(node);
       }
     },

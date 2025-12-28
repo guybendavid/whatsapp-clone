@@ -1,5 +1,5 @@
-import { useEffect, useRef, useContext } from "react";
-import { AppContext, type AppContextType } from "contexts/app-context";
+import { useEffect, useRef } from "react";
+import { useAppContext } from "contexts/app-context";
 import { SidebarUser, Message } from "types/types";
 import { useQuery } from "@apollo/client";
 import { css, cx } from "@emotion/css";
@@ -17,7 +17,7 @@ type Props = {
 
 export const Chat = ({ selectedUser, newMessage }: Props) => {
   const chatBottomRef = useRef<HTMLHeadingElement>(null);
-  const { handleServerErrors } = useContext(AppContext) as AppContextType;
+  const { handleServerErrors } = useAppContext();
 
   const { data, client } = useQuery(GET_MESSAGES, {
     variables: { otherUserId: selectedUser.id },

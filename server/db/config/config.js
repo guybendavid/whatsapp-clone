@@ -1,4 +1,3 @@
-// eslint-disable-next-line
 require("dotenv").config();
 
 const { DB, DB_USER, DB_PASSWORD, DB_PROD, DB_USER_PROD, DB_PASSWORD_PROD, DB_HOST_PROD } = process.env;

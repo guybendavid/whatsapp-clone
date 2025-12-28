@@ -13,17 +13,17 @@ export const Main = () => {
   const [selectedUser, setSelectedUser] = useState<SidebarUser>();
   const { data: newMessageData } = useSubscription(NEW_MESSAGE);
   const newMessage = newMessageData?.newMessage;
+  const isNewMessageRelatedToOpenedChat = getIsNewMessageRelatedToOpenedChat(newMessage, selectedUser);
 
   return (
     <div className={chatStyle}>
       <Sidebar newMessage={newMessage} selectedUser={selectedUser} setSelectedUser={setSelectedUser} />
-      {selectedUser ? (
-        <Chat
-          selectedUser={selectedUser}
-          newMessage={getIsNewMessageRelatedToOpenedChat(newMessage, selectedUser) ? newMessage : undefined}
-        />
-      ) : (
+      {!selectedUser ? (
         <WelcomeScreen />
+      ) : isNewMessageRelatedToOpenedChat ? (
+        <Chat selectedUser={selectedUser} newMessage={newMessage} />
+      ) : (
+        <Chat selectedUser={selectedUser} />
       )}
     </div>
   );
@@ -32,11 +32,11 @@ export const Main = () => {
 const getIsNewMessageRelatedToOpenedChat = (newMessage?: Message, selectedUser?: SidebarUser) => {
   const { loggedInUser } = getAuthData();
 
-  if (newMessage) {
-    const { senderId, recipientId } = newMessage;
-    const { id: selectedUserId } = selectedUser as SidebarUser;
-    return senderId === selectedUserId || (senderId === loggedInUser.id && recipientId === selectedUserId);
-  }
+  if (!newMessage || !selectedUser) return false;
+
+  const { senderId, recipientId } = newMessage;
+  const { id: selectedUserId } = selectedUser;
+  return senderId === selectedUserId || (senderId === loggedInUser.id && recipientId === selectedUserId);
 };
 
 const chatStyle = css`

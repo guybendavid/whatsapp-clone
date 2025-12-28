@@ -1,12 +1,9 @@
 {
   "$schema": "https://unpkg.com/knip@latest/schema.json",
-  "ignoreDependencies": ["@babel/types", "@eslint/js", "react-router", "pg"],
+  "ignoreDependencies": ["react-router", "pg"],
   "ignoreBinaries": ["vite"],
   "ignore": ["server/db/migrations/**", "server/db/seeders/**", "server/utils/generate-image.ts", "eslint-plugins.d.ts"],
   "workspaces": {
-    ".": {
-      "entry": ["eslint.config.ts"]
-    },
     "client": {
       "entry": ["src/index.tsx"]
     },
