@@ -3,13 +3,14 @@ import { useAppContext } from "contexts/app-context";
 import { Link } from "react-router-dom";
 import { authFormStyle } from "./shared-styles";
 import { handleAuth } from "services/auth";
-import { Avatar, Button, TextField, Typography, OutlinedTextFieldProps } from "@material-ui/core";
+import { Avatar, Button, TextField, Typography } from "@material-ui/core";
+import type { TextFieldProps } from "@material-ui/core/TextField";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "services/graphql";
 import { getFormValidationErrors } from "@guybendavid/utils";
 import { LockOutlined as LockOutlinedIcon } from "@material-ui/icons";
 
-const textFieldProps = { required: true, variant: "outlined", margin: "normal", fullWidth: true } as OutlinedTextFieldProps;
+const textFieldProps = { required: true, variant: "outlined", margin: "normal", fullWidth: true } as TextFieldProps;
 
 export const Login = () => {
   const { handleServerErrors, setSnackBarError } = useAppContext();

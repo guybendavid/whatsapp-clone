@@ -1,9 +1,9 @@
-import { ApolloClient, InMemoryCache, QueryLazyOptions } from "@apollo/client";
+import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { Message, SidebarUser } from "types/types";
 import { getAuthData } from "./auth";
 import { getUsersQueryVariables, GET_All_USERS_EXCEPT_LOGGED } from "./graphql";
 
-type GetUser = (options?: QueryLazyOptions<Record<string, unknown>>) => void;
+type GetUser = (options?: { variables?: Record<string, unknown> }) => void;
 
 type DisplayNewMessageOnSidebarData = {
   cache: InMemoryCache;
@@ -28,11 +28,13 @@ export const displayNewMessageOnSidebar = ({
   const { loggedInUser } = getAuthData();
   const { senderId, recipientId } = newMessage;
   const otherUser = sidebarUsers.find((user: SidebarUser) => user.id === senderId || user.id === recipientId);
-  const isOtherUserDisplayedOnSidebar = Boolean(otherUser);
 
-  if (isOtherUserDisplayedOnSidebar) {
+  if (otherUser) {
+    const otherUserId = cache.identify({ __typename: "User", id: otherUser.id });
+    if (!otherUserId) return;
+
     cache.modify({
-      id: cache.identify({ ...otherUser }),
+      id: otherUserId,
       fields: {
         latestMessage: () => newMessage
       }

@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { Route, Redirect } from "react-router";
-import { RouteComponentProps } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
+import type { RouteComponentProps } from "react-router";
 import { getAuthData } from "services/auth";
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
   Component: FC<RouteComponentProps>;
 };
 
-export const UnauthenticatedRoute = ({ path, Component }: Props) => {
+export const UnauthenticatedRoute: FC<Props> = ({ exact, path, Component }) => {
   const { isAuthenticated } = getAuthData();
-  return <Route path={path} render={(props) => (!isAuthenticated ? <Component {...props} /> : <Redirect to="/" />)} />;
+  return <Route exact={exact} path={path} render={(props) => (!isAuthenticated ? <Component {...props} /> : <Redirect to="/" />)} />;
 };

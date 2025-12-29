@@ -54,7 +54,7 @@ export const UsersList = ({ users = [], searchValue, isMoreUsersToFetch, selecte
             <ListItem
               button={true}
               className={cx("list-item", selectedUser?.id === user.id && "is-selected")}
-              onClick={() => setSelectedUser({ ...user })}
+              onClick={() => setSelectedUser(user)}
               ref={index === users.length - 1 ? lastUserRef : null}>
               <Avatar alt="avatar" src={user.image} />
               <div className="text-wrapper">
