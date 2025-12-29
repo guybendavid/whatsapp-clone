@@ -1,4 +1,5 @@
-import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, ApolloLink, split } from "@apollo/client";
+import type { ApolloLink } from "@apollo/client";
+import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, split } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { WebSocketLink } from "@apollo/client/link/ws";
 import { getMainDefinition } from "@apollo/client/utilities";

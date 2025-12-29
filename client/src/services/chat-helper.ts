@@ -1,5 +1,5 @@
-import { ApolloClient } from "@apollo/client";
-import { ConversationMessage } from "components/Main/AlternateComps/Chat/Conversation/Conversation";
+import type { ApolloClient } from "@apollo/client";
+import type { ConversationMessage } from "components/Main/AlternateComps/Chat/Conversation/Conversation";
 import { GET_MESSAGES } from "./graphql";
 
 export const addNewMessageToChat = ({

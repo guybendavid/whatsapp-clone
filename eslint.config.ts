@@ -1,7 +1,7 @@
 import { configs, getRecommendedTypeScriptConfig, getRecommendedViteReactProjectConfig } from "strictify";
 
 const clientConfig = {
-  fileGlobs: ["client/**/*.{ts,tsx}"],
+  fileGlobs: ["client/src/**/*.{ts,tsx}"],
   tsConfigPath: "./client/tsconfig.json",
   importResolverNodePaths: ["client/src"]
 };

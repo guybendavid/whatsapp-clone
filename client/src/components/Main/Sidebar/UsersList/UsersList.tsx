@@ -1,5 +1,5 @@
 import { useRef, useCallback, Fragment } from "react";
-import { SidebarUser } from "types/types";
+import type { SidebarUser } from "types/types";
 import { List, ListItem, Avatar, Typography, Divider } from "@material-ui/core";
 import { css, cx } from "@emotion/css";
 import { getOverflowStyle } from "styles/reusable-css-in-js-styles";

@@ -1,4 +1,5 @@
-import { useState, SyntheticEvent, ChangeEvent } from "react";
+import type { SyntheticEvent, ChangeEvent } from "react";
+import { useState } from "react";
 import { useAppContext } from "contexts/app-context";
 import { Link } from "react-router-dom";
 import { authFormStyle } from "./shared-styles";

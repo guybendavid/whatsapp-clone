@@ -2,7 +2,7 @@ import { getGenerateToken } from "../../utils/generate-token";
 import { getTotalUsers, getUsersWithLatestMessage } from "../../db/raw-queries/users";
 import { QueryTypes } from "sequelize";
 import { sequelize, User } from "../../db/models/models-config";
-import { User as UserType, ContextUser, LatestMessage } from "../../types/types";
+import type { User as UserType, ContextUser, LatestMessage } from "../../types/types";
 import { UserInputError } from "apollo-server";
 import bcrypt from "bcrypt";
 // eslint-disable-next-line

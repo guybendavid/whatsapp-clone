@@ -1,4 +1,4 @@
-import { FC } from "react";
+import type { FC } from "react";
 import { Route, Redirect } from "react-router-dom";
 import type { RouteComponentProps } from "react-router";
 import { getAuthData } from "services/auth";

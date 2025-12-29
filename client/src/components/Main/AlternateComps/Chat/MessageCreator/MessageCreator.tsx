@@ -1,8 +1,9 @@
-import { useState, SyntheticEvent, useEffect } from "react";
+import type { SyntheticEvent } from "react";
+import { useState, useEffect } from "react";
 import { css } from "@emotion/css";
 import { baseSearchInputStyle } from "styles/reusable-css-in-js-styles";
 import { useAppContext } from "contexts/app-context";
-import { SidebarUser } from "types/types";
+import type { SidebarUser } from "types/types";
 import { useMutation } from "@apollo/client";
 import { SEND_MESSAGE } from "services/graphql";
 import { IconButton, InputBase } from "@material-ui/core";

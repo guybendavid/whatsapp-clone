@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { css } from "@emotion/css";
 import { getAuthData } from "services/auth";
-import { SidebarUser, Message } from "types/types";
+import type { SidebarUser, Message } from "types/types";
 import { useSubscription } from "@apollo/client";
 import { NEW_MESSAGE } from "services/graphql";
 import { Sidebar } from "./Sidebar/Sidebar";

@@ -1,4 +1,5 @@
-import { useState, MouseEvent, Fragment } from "react";
+import type { MouseEvent } from "react";
+import { useState, Fragment } from "react";
 import { getAuthData, logout } from "services/auth";
 import { Avatar, IconButton, InputBase, ClickAwayListener, Menu, MenuItem } from "@material-ui/core";
 import { css, cx } from "@emotion/css";

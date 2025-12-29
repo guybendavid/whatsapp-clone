@@ -2,7 +2,7 @@ import { UserInputError } from "apollo-server";
 import { withFilter } from "graphql-subscriptions";
 import { Op } from "sequelize";
 import { User, Message } from "../../db/models/models-config";
-import { SendMessagePayload, ContextUser } from "../../types/types";
+import type { SendMessagePayload, ContextUser } from "../../types/types";
 import { pubsub } from "../../app";
 
 type GraphQLContext = { user: ContextUser };

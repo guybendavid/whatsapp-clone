@@ -1,5 +1,6 @@
-import { useState, ReactNode } from "react";
-import { ApolloError } from "@apollo/client";
+import type { ReactNode } from "react";
+import { useState } from "react";
+import type { ApolloError } from "@apollo/client";
 import { logout } from "services/auth";
 import { AppContext } from "./app-context";
 

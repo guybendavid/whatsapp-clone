@@ -1,6 +1,7 @@
 import { getFormValidationErrors } from "@guybendavid/utils";
 import { UserInputError, AuthenticationError } from "apollo-server";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import type { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 const getIsRecord = (value: unknown): value is Record<string, unknown> => {
   if (typeof value !== "object" || value === null) return false;

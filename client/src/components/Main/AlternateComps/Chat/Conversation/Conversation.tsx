@@ -1,7 +1,8 @@
-import { useMemo, RefObject } from "react";
+import type { RefObject } from "react";
+import { useMemo } from "react";
 import { css, cx } from "@emotion/css";
 import { getAuthData } from "services/auth";
-import { Message } from "types/types";
+import type { Message } from "types/types";
 import { Typography } from "@material-ui/core";
 import { timeDisplayer } from "@guybendavid/utils";
 import { getVerticalOverflowStyle } from "styles/reusable-css-in-js-styles";

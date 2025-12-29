@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { ApolloError } from "@apollo/client";
+import type { ApolloError } from "@apollo/client";
 
 type AppContextType = {
   snackBarError: string;

@@ -1,5 +1,5 @@
-import { ApolloClient, InMemoryCache } from "@apollo/client";
-import { Message, SidebarUser } from "types/types";
+import type { ApolloClient, InMemoryCache } from "@apollo/client";
+import type { Message, SidebarUser } from "types/types";
 import { getAuthData } from "./auth";
 import { getUsersQueryVariables, GET_All_USERS_EXCEPT_LOGGED } from "./graphql";
 

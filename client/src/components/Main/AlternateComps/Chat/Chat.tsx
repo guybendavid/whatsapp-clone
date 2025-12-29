@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useAppContext } from "contexts/app-context";
-import { SidebarUser, Message } from "types/types";
+import type { SidebarUser, Message } from "types/types";
 import { useQuery } from "@apollo/client";
 import { css, cx } from "@emotion/css";
 import { containerStyle } from "../shared-styles";

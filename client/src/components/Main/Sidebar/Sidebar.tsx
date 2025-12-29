@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { css } from "@emotion/css";
 import { useAppContext } from "contexts/app-context";
-import { useQuery, useLazyQuery, InMemoryCache } from "@apollo/client";
+import type { InMemoryCache } from "@apollo/client";
+import { useQuery, useLazyQuery } from "@apollo/client";
 import { getAuthData } from "services/auth";
 import { getUsersQueryVariables, GET_All_USERS_EXCEPT_LOGGED, GET_USER } from "services/graphql";
 import { displayNewMessageOnSidebar, displayNewUserOnSidebar } from "services/sidebar-helper";
-import { SidebarUser, Message } from "types/types";
+import type { SidebarUser, Message } from "types/types";
 import { Actions } from "./Actions/Actions";
 import { UsersList } from "./UsersList/UsersList";
 
