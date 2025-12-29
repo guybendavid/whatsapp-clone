@@ -63,8 +63,8 @@ export const getContextMiddleware = (context: GraphQLContextLike) => {
     if (message) throw new UserInputError(message);
   }
 
-  const rawAuthorization = context.req?.headers?.authorization ?? context.connection?.context?.authorization ?? "";
-  const operationName = context.req?.body?.operationName ?? "";
+  const rawAuthorization = context.req?.headers?.authorization || context.connection?.context?.authorization || "";
+  const operationName = context.req?.body?.operationName || "";
 
   if (["LoginUser", "RegisterUser"].includes(operationName)) {
     return context;

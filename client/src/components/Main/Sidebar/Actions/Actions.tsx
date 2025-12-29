@@ -62,21 +62,14 @@ export const Actions = ({ setSearchValue }: Props) => {
 
 const DotsIcon = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
 
   return (
     <>
       <IconButton onClick={handleClick}>
         <MoreVertIcon />
       </IconButton>
-      <Menu id="main-menu" keepMounted={true} anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+      <Menu id="main-menu" keepMounted={true} anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}>
         <MenuItem onClick={logout}>Logout</MenuItem>
       </Menu>
     </>
