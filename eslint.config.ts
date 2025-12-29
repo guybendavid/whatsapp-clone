@@ -34,7 +34,7 @@ const eslintConfig = [
   {
     files: ["server/graphql/resolvers/resolvers-config.ts"],
     rules: {
-      "strictify/prefer-get-prefix": [
+      "strictify/get-prefix": [
         "error",
         {
           configLikeVariableNamePatterns: ["^resolversConfig$"]
