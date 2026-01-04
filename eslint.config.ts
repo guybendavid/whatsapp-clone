@@ -1,4 +1,4 @@
-import { configs, getRecommendedTypeScriptConfig, getRecommendedViteReactProjectConfig } from "strictify";
+import { getStrictifyConfig } from "strictify";
 
 const clientConfig = {
   fileGlobs: ["client/src/**/*.{ts,tsx}"],
@@ -6,31 +6,29 @@ const clientConfig = {
   importResolverNodePaths: ["client/src"]
 };
 
-const [clientTypeScriptConfig, clientReactConfigs, nodeServerConfigs] = await Promise.all([
-  getRecommendedTypeScriptConfig({
-    globalsMode: "browser",
-    ...clientConfig
-  }),
-  getRecommendedViteReactProjectConfig({
-    fileGlobs: clientConfig.fileGlobs,
-    projectConfigPath: clientConfig.tsConfigPath,
-    importResolverNodePaths: clientConfig.importResolverNodePaths
-  }),
-  getRecommendedTypeScriptConfig({
-    globalsMode: "node",
-    fileGlobs: ["server/**/*.ts", "tests/**/*.ts"],
-    tsConfigPath: "./server/tsconfig.json",
-    disallowJsFiles: true,
-    disallowJsIgnoredFileGlobs: ["server/db/config/**/*.js", "server/db/migrations/**/*.js", "server/db/seeders/**/*.js"]
-  })
-]);
-
-const clientConfigs = [...clientTypeScriptConfig, ...clientReactConfigs];
-
 const eslintConfig = [
-  ...clientConfigs,
-  ...nodeServerConfigs,
-  ...configs.recommendedStyles,
+  ...(await getStrictifyConfig({
+    typeScriptOptionsList: [
+      {
+        globalsMode: "browser",
+        ...clientConfig
+      },
+      {
+        globalsMode: "node",
+        fileGlobs: ["server/**/*.ts", "tests/**/*.ts"],
+        tsConfigPath: "./server/tsconfig.json",
+        disallowJsFiles: true,
+        disallowJsIgnoredFileGlobs: ["server/db/config/**/*.js", "server/db/migrations/**/*.js", "server/db/seeders/**/*.js"]
+      }
+    ],
+    viteReactOptionsList: [
+      {
+        fileGlobs: clientConfig.fileGlobs,
+        projectConfigPath: clientConfig.tsConfigPath,
+        importResolverNodePaths: clientConfig.importResolverNodePaths
+      }
+    ]
+  })),
   {
     files: ["server/graphql/resolvers/resolvers-config.ts"],
     rules: {

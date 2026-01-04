@@ -10,10 +10,7 @@
   },
   "scripts": {
     "dev": "ts-node-dev --no-notify -r dotenv/config app | pino-pretty",
-    "build": "tsc",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier --write ."
+    "build": "tsc"
   },
   "dependencies": {
     "@guybendavid/utils": "^3.0.0",
@@ -32,9 +29,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.9",
     "dotenv": "^16.5.0",
-    "eslint": "^9.0.0",
     "pg": "^8.14.1",
-    "prettier": "^3.6.2",
     "ts-node-dev": "^2.0.0"
   }
 }

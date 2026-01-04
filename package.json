@@ -5,6 +5,10 @@
   "license": "BSD-3-Clause",
   "private": true,
   "type": "module",
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "engines": {
     "node": ">=24.0.0"
   },
