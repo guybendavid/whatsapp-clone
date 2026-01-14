@@ -69,7 +69,7 @@ export const messageResolvers = {
     newMessage: {
       subscribe: withFilter(
         (_parent: unknown, _args: unknown) => pubsub.asyncIterableIterator("NEW_MESSAGE"),
-        (payload: unknown, _args: unknown, context: GraphQLContext | undefined) => {
+        (payload: unknown, _args: unknown, context?: GraphQLContext) => {
           if (!context) return false;
 
           const { user } = context;

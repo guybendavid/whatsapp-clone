@@ -64,7 +64,7 @@ const client = new ApolloClient({
   })
 });
 
-export const ApolloProviderWrapper = (
+export const ApolloProviderWrapper = () => (
   <ApolloProvider client={client}>
     <App />
   </ApolloProvider>
