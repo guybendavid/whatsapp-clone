@@ -1,5 +1,5 @@
 import type { SyntheticEvent } from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { css } from "@emotion/css";
 import { baseSearchInputStyle } from "styles/reusable-css-in-js-styles";
 import { useAppContext } from "contexts/app-context";
@@ -17,13 +17,27 @@ type Props = {
 export const MessageCreator = ({ selectedUser }: Props) => {
   const { handleServerErrors, setSnackBarError } = useAppContext();
   const [message, setMessage] = useState("");
+  const isMountedRef = useRef(true);
+
+  useEffect(
+    () => () => {
+      if (isMountedRef.current) {
+        isMountedRef.current = false;
+      }
+    },
+    []
+  );
 
   useEffect(() => {
     setMessage("");
   }, [selectedUser]);
 
   const [sendMessage] = useMutation(SEND_MESSAGE, {
-    onCompleted: () => setMessage(""),
+    onCompleted: () => {
+      if (isMountedRef.current) {
+        setMessage("");
+      }
+    },
     onError: (error) => handleServerErrors(error)
   });
 

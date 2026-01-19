@@ -8,26 +8,26 @@
   "engines": {
     "node": ">=24.0.0"
   },
-  "scripts": {
-    "dev": "ts-node-dev --no-notify -r dotenv/config app | pino-pretty",
-    "build": "tsc"
-  },
   "dependencies": {
+    "@graphql-tools/schema": "^10.0.8",
     "@guybendavid/utils": "^3.0.0",
     "apollo-server": "^3.13.0",
     "apollo-server-express": "^3.13.0",
     "bcrypt": "^5.1.1",
     "express": "^4.22.1",
     "graphql": "^15.5.0",
+    "graphql-ws": "^5.14.3",
     "graphql-subscriptions": "^3.0.0",
     "jsonwebtoken": "^9.0.2",
     "pino": "^9.6.0",
     "pino-pretty": "^13.0.0",
-    "sequelize": "^6.37.7"
+    "sequelize": "^6.37.7",
+    "ws": "^8.18.3"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.9",
+    "@types/ws": "^8.5.12",
     "dotenv": "^16.5.0",
     "pg": "^8.14.1",
     "ts-node-dev": "^2.0.0"

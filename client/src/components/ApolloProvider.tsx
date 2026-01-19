@@ -1,13 +1,24 @@
 import type { ApolloLink } from "@apollo/client";
 import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, split } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { WebSocketLink } from "@apollo/client/link/ws";
+import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { getMainDefinition } from "@apollo/client/utilities";
+import { createClient } from "graphql-ws";
 import { App } from "App";
 
-const { NODE_ENV, REACT_APP_BASE_URL } = process.env;
-const isProduction = NODE_ENV === "production";
-const baseHttpLink: ApolloLink = new HttpLink({ uri: isProduction ? "" : `http://${REACT_APP_BASE_URL}` });
+const isProduction = import.meta.env.MODE === "production";
+const baseUrl = import.meta.env.VITE_BASE_URL || "localhost:4000";
+const httpUri = isProduction ? `${window.location.origin}/graphql` : `http://${baseUrl}`;
+
+const wsUri = (() => {
+  const url = new URL(httpUri);
+  url.protocol = url.protocol === "https:" ? "wss:" : "ws:";
+  return url.toString();
+})();
+
+const baseHttpLink: ApolloLink = new HttpLink({
+  uri: httpUri
+});
 
 const authLink = setContext((_, { headers }) => ({
   headers: {
@@ -18,15 +29,15 @@ const authLink = setContext((_, { headers }) => ({
 
 const httpLink = authLink.concat(baseHttpLink);
 
-const wsLink = new WebSocketLink({
-  uri: isProduction ? `wss://${window.location.host}` : `ws://${REACT_APP_BASE_URL}`,
-  options: {
-    reconnect: true,
-    connectionParams: {
+const wsLink = new GraphQLWsLink(
+  createClient({
+    url: wsUri,
+    lazy: false,
+    connectionParams: () => ({
       ...(localStorage.getItem("token") ? { authorization: `Bearer ${localStorage.getItem("token")}` } : {})
-    }
-  }
-});
+    })
+  })
+);
 
 const splitLink = split(
   ({ query }) => {

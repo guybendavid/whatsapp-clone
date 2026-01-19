@@ -76,7 +76,10 @@ export const messageResolvers = {
 
           if (!getIsNewMessagePayload(payload)) return false;
           const { newMessage } = payload;
-          return newMessage.senderId === user.id || newMessage.recipientId === user.id;
+          const senderIdString = String(newMessage.senderId);
+          const recipientIdString = String(newMessage.recipientId);
+          const userIdString = String(user.id);
+          return senderIdString === userIdString || recipientIdString === userIdString;
         }
       )
     }

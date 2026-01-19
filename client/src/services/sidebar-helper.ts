@@ -27,10 +27,16 @@ export const displayNewMessageOnSidebar = ({
 }: DisplayNewMessageOnSidebarData) => {
   const { loggedInUser } = getAuthData();
   const { senderId, recipientId } = newMessage;
-  const otherUser = sidebarUsers.find((user: SidebarUser) => user.id === senderId || user.id === recipientId);
+  const senderIdString = String(senderId);
+  const recipientIdString = String(recipientId);
+
+  const otherUser = sidebarUsers.find((user: SidebarUser) => {
+    const userIdString = String(user.id);
+    return userIdString === senderIdString || userIdString === recipientIdString;
+  });
 
   if (otherUser) {
-    const otherUserId = cache.identify({ __typename: "User", id: otherUser.id });
+    const otherUserId = cache.identify({ __typename: "SidebarUser", id: otherUser.id });
     if (!otherUserId) return;
 
     cache.modify({
@@ -43,8 +49,8 @@ export const displayNewMessageOnSidebar = ({
     return;
   }
 
-  if (senderId !== loggedInUser.id && !isMoreUsersToFetch) {
-    getUser({ variables: { id: senderId } });
+  if (senderIdString !== String(loggedInUser.id) && !isMoreUsersToFetch) {
+    getUser({ variables: { id: senderIdString } });
   }
 };
 

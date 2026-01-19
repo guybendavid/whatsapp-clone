@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import { useAppContext } from "contexts/app-context";
 import type { SidebarUser, Message } from "types/types";
 import { useQuery } from "@apollo/client";
@@ -13,15 +14,19 @@ import { MessageCreator } from "./MessageCreator/MessageCreator";
 type Props = {
   selectedUser: SidebarUser;
   newMessage?: Message;
+  setSelectedUser: Dispatch<SetStateAction<SidebarUser | undefined>>;
 };
 
-export const Chat = ({ selectedUser, newMessage }: Props) => {
+export const Chat = ({ selectedUser, newMessage, setSelectedUser }: Props) => {
   const chatBottomRef = useRef<HTMLHeadingElement>(null);
   const { handleServerErrors } = useAppContext();
 
-  const { data, client } = useQuery(GET_MESSAGES, {
-    variables: { otherUserId: selectedUser.id },
-    onError: (error) => handleServerErrors(error)
+  const {
+    data,
+    client,
+    error: messagesError
+  } = useQuery(GET_MESSAGES, {
+    variables: { otherUserId: selectedUser.id }
   });
 
   const messages = data?.getMessages || [];
@@ -33,10 +38,28 @@ export const Chat = ({ selectedUser, newMessage }: Props) => {
   }, [messages]);
 
   useEffect(() => {
-    if (newMessage && !messages.some((message: Message) => message.id === newMessage.id)) {
+    if (messagesError) {
+      handleServerErrors(messagesError);
+    }
+  }, [messagesError]);
+
+  useEffect(() => {
+    if (newMessage && !messages.some((message: Message) => String(message.id) === String(newMessage.id))) {
       const { recipientId, ...relevantMessageFields } = newMessage;
       addNewMessageToChat({ newMessage: relevantMessageFields, client, selectedUserId: selectedUser.id });
-      selectedUser.latestMessage = { ...newMessage };
+
+      setSelectedUser((prevSelectedUser) =>
+        prevSelectedUser && prevSelectedUser.id === selectedUser.id
+          ? {
+              ...prevSelectedUser,
+              latestMessage: {
+                content: newMessage.content,
+                createdAt: newMessage.createdAt
+              }
+            }
+          : prevSelectedUser
+      );
+
       chatBottomRef.current?.scrollIntoView();
     }
   }, [newMessage]);
