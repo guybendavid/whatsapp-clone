@@ -13,8 +13,8 @@
     "node": ">=24.0.0"
   },
   "scripts": {
-    "dev:client": "cd client && npx vite",
-    "dev:server": "cd server && npx ts-node-dev --no-notify -r dotenv/config app | npx pino-pretty",
+    "dev:client": "npm -C client run dev",
+    "dev:server": "npm -C server run dev",
     "dev": "concurrently -k -n client,server -c cyan,magenta \"npm run dev:client\" \"npm run dev:server\"",
     "start:client": "cd client && npx vite preview",
     "start:server": "node dist/app.js",
