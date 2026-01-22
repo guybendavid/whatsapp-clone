@@ -1,7 +1,8 @@
 import { UserInputError } from "apollo-server";
 import { withFilter } from "graphql-subscriptions";
-import { Op } from "sequelize";
-import { User, Message } from "../../db/models/models-config";
+import { and, asc, eq, inArray } from "drizzle-orm";
+import { db } from "../../db/connection";
+import { messages, users } from "../../db/schema";
 import type { SendMessagePayload, ContextUser } from "../../types/types";
 import { pubsub } from "../../app";
 
@@ -33,34 +34,42 @@ export const messageResolvers = {
   Query: {
     getMessages: async (_parent: unknown, args: { otherUserId: string }, { user }: GraphQLContext) => {
       const { otherUserId } = args;
-      const otherUser = await User.findOne({ where: { id: otherUserId } });
+      const otherUserIdValue = Number(otherUserId);
+      const userIdValue = Number(user.id);
+      const [otherUser] = await db.select({ id: users.id }).from(users).where(eq(users.id, otherUserIdValue)).limit(1);
 
       if (!otherUser) {
         throw new UserInputError("User not found");
       }
 
-      const ids = [user.id, otherUserId];
+      const ids = [userIdValue, otherUserIdValue];
 
-      const messages = await Message.findAll({
-        where: {
-          senderId: { [Op.in]: ids },
-          recipientId: { [Op.in]: ids }
-        },
-        order: [["createdAt", "ASC"]]
-      });
-
-      return messages;
+      return db
+        .select()
+        .from(messages)
+        .where(and(inArray(messages.senderId, ids), inArray(messages.recipientId, ids)))
+        .orderBy(asc(messages.createdAt));
     }
   },
   Mutation: {
     sendMessage: async (_parent: unknown, args: SendMessagePayload, { user }: GraphQLContext) => {
       const { recipientId, content } = args;
+      const senderIdValue = Number(user.id);
+      const recipientIdValue = Number(recipientId);
 
-      if (recipientId.toString() === user.id.toString()) {
+      if (recipientIdValue === senderIdValue) {
         throw new UserInputError("You can't message yourself");
       }
 
-      const message = await Message.create({ senderId: user.id, recipientId, content });
+      const [message] = await db
+        .insert(messages)
+        .values({ senderId: senderIdValue, recipientId: recipientIdValue, content })
+        .returning();
+
+      if (!message) {
+        throw new Error("Failed to send message");
+      }
+
       pubsub.publish("NEW_MESSAGE", { newMessage: message });
       return message;
     }

@@ -5,7 +5,7 @@ import { WebSocketServer } from "ws";
 import { useServer } from "graphql-ws/lib/use/ws";
 import { getContextMiddleware } from "./graphql/context-middleware";
 import { resolversConfig } from "./graphql/resolvers/resolvers-config";
-import { sequelize } from "./db/models/models-config";
+import { pool } from "./db/connection";
 import { typeDefs } from "./graphql/type-definitions";
 import http from "http";
 import express from "express";
@@ -43,7 +43,7 @@ const getSubscriptionContext = (connectionParams: unknown) =>
 
 const startServer = async ({ isProd }: { isProd?: boolean }) => {
   try {
-    await sequelize.authenticate();
+    await pool.query("select 1");
     logger.info("Database connected!");
 
     const app = express();

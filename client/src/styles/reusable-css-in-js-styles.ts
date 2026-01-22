@@ -9,11 +9,10 @@ export const getOverflowStyle = (maxWidth: string) => css`
 
 export const getVerticalOverflowStyle = (maxLines: number) => css`
   display: -webkit-box;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  word-break: break-all;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: ${maxLines};
+  overflow: hidden;
+  overflow-wrap: break-word;
 `;
 
 export const baseSearchInputStyle = css`
