@@ -21,9 +21,9 @@ export const Main = () => {
       {!selectedUser ? (
         <WelcomeScreen />
       ) : isNewMessageRelatedToOpenedChat ? (
-        <Chat selectedUser={selectedUser} newMessage={newMessage} />
+        <Chat selectedUser={selectedUser} newMessage={newMessage} setSelectedUser={setSelectedUser} />
       ) : (
-        <Chat selectedUser={selectedUser} />
+        <Chat selectedUser={selectedUser} setSelectedUser={setSelectedUser} />
       )}
     </div>
   );
@@ -36,7 +36,14 @@ const getIsNewMessageRelatedToOpenedChat = (newMessage?: Message, selectedUser?:
 
   const { senderId, recipientId } = newMessage;
   const { id: selectedUserId } = selectedUser;
-  return senderId === selectedUserId || (senderId === loggedInUser.id && recipientId === selectedUserId);
+  const senderIdString = String(senderId);
+  const recipientIdString = String(recipientId);
+  const selectedUserIdString = String(selectedUserId);
+  const loggedInUserIdString = String(loggedInUser.id);
+
+  return (
+    senderIdString === selectedUserIdString || (senderIdString === loggedInUserIdString && recipientIdString === selectedUserIdString)
+  );
 };
 
 const chatStyle = css`

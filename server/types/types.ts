@@ -7,11 +7,6 @@ export type User = {
   image: string;
 };
 
-export type LatestMessage = {
-  content: string;
-  createdAt: string;
-};
-
 export type SendMessagePayload = {
   senderId: string;
   recipientId: string;

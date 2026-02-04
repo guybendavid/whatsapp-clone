@@ -9,8 +9,7 @@
     },
     "server": {
       "entry": ["app.ts"],
-      "project": ["**/*.{ts,js}"],
-      "ignoreDependencies": ["pg"]
+      "project": ["**/*.{ts,js}"]
     }
   }
 }

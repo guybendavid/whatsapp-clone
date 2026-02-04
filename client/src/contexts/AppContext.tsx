@@ -12,7 +12,7 @@ export const AppContextProvider = ({ children }: Props) => {
   const [snackBarError, setSnackBarError] = useState("");
 
   const handleServerErrors = (error: ApolloError) => {
-    const networkError = error.networkError as { result?: { errors?: Array<{ message?: string }> } } | undefined;
+    const networkError = error.networkError as { result?: { errors?: { message?: string }[] } };
     const gqlContextErrorMessage = networkError?.result?.errors?.[0]?.message?.split("Context creation failed: ").pop();
     setSnackBarError(gqlContextErrorMessage || error.message || "Something went wrong...");
 

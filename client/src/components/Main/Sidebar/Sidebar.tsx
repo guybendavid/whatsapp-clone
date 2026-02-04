@@ -24,18 +24,15 @@ export const Sidebar = ({ selectedUser, setSelectedUser, newMessage }: Props) =>
   const {
     data,
     fetchMore: fetchMoreUsers,
-    client
+    client,
+    error: usersError
   } = useQuery(GET_All_USERS_EXCEPT_LOGGED, {
-    variables: getUsersQueryVariables(loggedInUser.id),
-    onError: (error) => handleServerErrors(error)
+    variables: getUsersQueryVariables(loggedInUser.id)
   });
 
   const sidebarData = data?.getAllUsersExceptLogged;
   const isMoreUsersToFetch = sidebarData?.users.length < sidebarData?.totalUsersExceptLoggedUser;
-
-  const [getUser, { data: newUserData }] = useLazyQuery(GET_USER, {
-    onError: (error) => handleServerErrors(error)
-  });
+  const [getUser, { data: newUserData, error: userError }] = useLazyQuery(GET_USER);
 
   useEffect(() => {
     if (newMessage) {
@@ -48,6 +45,18 @@ export const Sidebar = ({ selectedUser, setSelectedUser, newMessage }: Props) =>
       });
     }
   }, [newMessage]);
+
+  useEffect(() => {
+    if (usersError) {
+      handleServerErrors(usersError);
+    }
+  }, [usersError]);
+
+  useEffect(() => {
+    if (userError) {
+      handleServerErrors(userError);
+    }
+  }, [userError]);
 
   useEffect(() => {
     if (newMessage && newUserData) {

@@ -65,6 +65,13 @@ const eslintConfig = [
     }
   },
   {
+    files: ["server/utils/generate-image.ts"],
+    rules: {
+      "strictify/get-prefix": "off",
+      "eslintImport/no-default-export": "off"
+    }
+  },
+  {
     rules: {
       // To do: enable and refactor (all)
       "strictify/no-hardcoded-strings": "off",

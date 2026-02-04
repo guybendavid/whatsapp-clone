@@ -1,61 +1,89 @@
-import { ApolloServer as ApolloServerDev } from "apollo-server";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import { ApolloServer } from "apollo-server-express";
 import { PubSub } from "graphql-subscriptions";
-import { ApolloServer as ApolloServerProd } from "apollo-server-express";
+import { useServer as graphqlUseServer } from "graphql-ws/lib/use/ws";
+import { WebSocketServer } from "ws";
+import { pool } from "#root/server/db/connection";
 import { getContextMiddleware } from "#root/server/graphql/context-middleware";
 import { resolversConfig } from "#root/server/graphql/resolvers/resolvers-config";
-import { sequelize } from "#root/server/db/models/models-config";
 import { typeDefs } from "#root/server/graphql/type-definitions";
-import http, { type Server } from "http";
-import express from "express";
+import http from "http";
 import path from "path";
+import express from "express";
 import pino from "pino";
 
 export const pubsub = new PubSub();
 
 const { NODE_ENV, LOG_LEVEL, PORT, BASE_URL_PROD } = process.env;
 const logger = pino({ level: LOG_LEVEL || "info" });
-const serverConfig = { typeDefs, resolvers: resolversConfig, context: getContextMiddleware, subscriptions: { path: "/" } };
+const schema = makeExecutableSchema({ typeDefs, resolvers: resolversConfig });
+
+const serverConfig = {
+  schema,
+  context: getContextMiddleware
+};
+
 const port = PORT || 4000;
 
-const startProductionServer = () => {
-  const app = express();
-  app.use(express.static(path.join(__dirname, "client")));
+const getConnectionContext = (connectionParams: unknown) => {
+  if (typeof connectionParams !== "object" || connectionParams === null) {
+    return {};
+  }
 
-  app.get("*", (_req, res) => res.sendFile(path.resolve(__dirname, "client", "index.html")));
-
-  const server = new ApolloServerProd(serverConfig);
-  server.applyMiddleware({ app });
-  const httpServer = http.createServer(app);
-  connect({ server: httpServer, isProd: true });
+  const params = connectionParams as Record<string, unknown>;
+  return typeof params.authorization === "string" ? { authorization: params.authorization } : {};
 };
 
-const startDevelopmentServer = () => {
-  const server = new ApolloServerDev(serverConfig);
-  connect({ server });
-};
+const getSubscriptionContext = (connectionParams: unknown) =>
+  getContextMiddleware({
+    connection: {
+      context: getConnectionContext(connectionParams)
+    }
+  });
 
-const connect = async ({ server, isProd }: { server: ApolloServerDev | Server; isProd?: boolean }) => {
+const startServer = async ({ isProd }: { isProd?: boolean }) => {
   try {
-    await sequelize.authenticate();
+    await pool.query("select 1");
     logger.info("Database connected!");
 
+    const app = express();
+
     if (isProd) {
-      await server.listen(port);
+      app.use(express.static(path.join(__dirname, "client")));
+      app.get("*", (_req, res) => res.sendFile(path.resolve(__dirname, "client", "index.html")));
+    }
+
+    const httpServer = http.createServer(app);
+    const server = new ApolloServer(serverConfig);
+    await server.start();
+    server.applyMiddleware({ app, path: "/" });
+
+    const wsServer = new WebSocketServer({ server: httpServer, path: "/" });
+
+    graphqlUseServer(
+      {
+        schema,
+        context: (ctx) => getSubscriptionContext(ctx.connectionParams)
+      },
+      wsServer
+    );
+
+    if (isProd) {
+      httpServer.listen(port);
       logger.info(`Server ready at https://${BASE_URL_PROD}`);
       logger.info(`Subscriptions ready at wss://${BASE_URL_PROD}`);
       return;
     }
 
-    const { url } = await (server as ApolloServerDev).listen({ port });
-    logger.info(`Server ready at ${url}`);
+    httpServer.listen(port);
+    logger.info(`Server ready at http://localhost:${port}/`);
   } catch (error) {
     logger.error(error as string);
   }
 };
 
 if (NODE_ENV === "production") {
-  startProductionServer();
-  process.exit();
+  startServer({ isProd: true });
 }
 
-startDevelopmentServer();
+startServer({ isProd: false });

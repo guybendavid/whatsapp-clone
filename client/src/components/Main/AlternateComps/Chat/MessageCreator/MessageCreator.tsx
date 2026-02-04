@@ -1,13 +1,12 @@
-import { useState, useEffect } from "react";
-import { css } from "@emotion/css";
-import { baseSearchInputStyle } from "#root/client/styles/reusable-css-in-js-styles";
-import { useAppContext } from "#root/client/contexts/app-context";
 import { useMutation } from "@apollo/client";
-import { SEND_MESSAGE } from "#root/client/services/graphql";
-import { IconButton, InputBase } from "@material-ui/core";
+import { css } from "@emotion/css";
 import { getFormValidationErrors } from "@guybendavid/utils";
-import { Mood as MoodIcon, Attachment as AttachmentIcon, Mic as MicIcon } from "@material-ui/icons";
-import type { SyntheticEvent } from "react";
+import { IconButton, InputBase } from "@material-ui/core";
+import { Attachment as AttachmentIcon, Mic as MicIcon, Mood as MoodIcon } from "@material-ui/icons";
+import { useEffect, useRef, useState, type SyntheticEvent } from "react";
+import { useAppContext } from "#root/client/contexts/app-context";
+import { SEND_MESSAGE } from "#root/client/services/graphql";
+import { baseSearchInputStyle } from "#root/client/styles/reusable-css-in-js-styles";
 import type { SidebarUser } from "#root/client/types/types";
 
 type Props = {
@@ -17,13 +16,27 @@ type Props = {
 export const MessageCreator = ({ selectedUser }: Props) => {
   const { handleServerErrors, setSnackBarError } = useAppContext();
   const [message, setMessage] = useState("");
+  const isMountedRef = useRef(true);
+
+  useEffect(
+    () => () => {
+      if (isMountedRef.current) {
+        isMountedRef.current = false;
+      }
+    },
+    []
+  );
 
   useEffect(() => {
     setMessage("");
   }, [selectedUser]);
 
   const [sendMessage] = useMutation(SEND_MESSAGE, {
-    onCompleted: () => setMessage(""),
+    onCompleted: () => {
+      if (isMountedRef.current) {
+        setMessage("");
+      }
+    },
     onError: (error) => handleServerErrors(error)
   });
 

@@ -13,13 +13,17 @@
     "node": ">=24.0.0"
   },
   "scripts": {
-    "start": "vite preview --config client/vite.config.ts",
-    "dev": "vite --config client/vite.config.ts",
+    "dev:client": "npm -C client run dev",
+    "dev:server": "npm -C server run dev",
+    "dev": "concurrently -k -n client,server -c cyan,magenta \"npm run dev:client\" \"npm run dev:server\"",
+    "start:client": "cd client && npx vite preview",
+    "start:server": "node dist/app.js",
+    "start": "concurrently -k -n client,server -c cyan,magenta \"npm run start:client\" \"npm run start:server\"",
     "format": "prettier --write .",
     "lint": "eslint . && npx strictify unimported-exports && knip --no-exit-code",
     "lint:eslint-fix": "eslint . --fix",
     "test": "node --test --import tsx tests/**/*.test.*",
-    "build-client": "tsc -b client/tsconfig.json && vite build --config client/vite.config.ts",
+    "build-client": "cd client && npx tsc -b tsconfig.json && npx vite build",
     "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\"",
     "create-dist-folder": "node -e \"require('fs').mkdirSync('dist', { recursive: true })\"",
     "build-server": "cd server && npm i && npm run build && cd .. && npx -y cpy-cli server/package.json dist --flat && node -e \"const fs=require('fs');const path=require('path');const src=path.join('server','package-lock.json');const dest=path.join('dist','package-lock.json');if(fs.existsSync(src)) fs.copyFileSync(src,dest);\" && (cd dist && npm i --no-audit --no-fund)",
@@ -29,6 +33,7 @@
   },
   "devDependencies": {
     "@types/eslint-plugin-jsx-a11y": "^6.10.1",
+    "concurrently": "^9.1.2",
     "eslint": "^9.17.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.3",
