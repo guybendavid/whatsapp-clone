@@ -37,6 +37,7 @@ module.exports = {
     });
   },
   down: async (queryInterface, _Sequelize) => {
+    void _Sequelize;
     await queryInterface.dropTable("users");
   }
 };

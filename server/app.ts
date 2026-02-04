@@ -1,10 +1,10 @@
 import { ApolloServer as ApolloServerDev } from "apollo-server";
 import { PubSub } from "graphql-subscriptions";
 import { ApolloServer as ApolloServerProd } from "apollo-server-express";
-import { getContextMiddleware } from "./graphql/context-middleware";
-import { resolversConfig } from "./graphql/resolvers/resolvers-config";
-import { sequelize } from "./db/models/models-config";
-import { typeDefs } from "./graphql/type-definitions";
+import { getContextMiddleware } from "#root/server/graphql/context-middleware";
+import { resolversConfig } from "#root/server/graphql/resolvers/resolvers-config";
+import { sequelize } from "#root/server/db/models/models-config";
+import { typeDefs } from "#root/server/graphql/type-definitions";
 import http, { type Server } from "http";
 import express from "express";
 import path from "path";

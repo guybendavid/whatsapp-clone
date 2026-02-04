@@ -1,14 +1,14 @@
-import type { SyntheticEvent } from "react";
 import { useState, useEffect } from "react";
 import { css } from "@emotion/css";
-import { baseSearchInputStyle } from "styles/reusable-css-in-js-styles";
-import { useAppContext } from "contexts/app-context";
-import type { SidebarUser } from "types/types";
+import { baseSearchInputStyle } from "#root/client/styles/reusable-css-in-js-styles";
+import { useAppContext } from "#root/client/contexts/app-context";
 import { useMutation } from "@apollo/client";
-import { SEND_MESSAGE } from "services/graphql";
+import { SEND_MESSAGE } from "#root/client/services/graphql";
 import { IconButton, InputBase } from "@material-ui/core";
 import { getFormValidationErrors } from "@guybendavid/utils";
 import { Mood as MoodIcon, Attachment as AttachmentIcon, Mic as MicIcon } from "@material-ui/icons";
+import type { SyntheticEvent } from "react";
+import type { SidebarUser } from "#root/client/types/types";
 
 type Props = {
   selectedUser: SidebarUser;

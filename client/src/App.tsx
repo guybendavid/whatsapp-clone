@@ -1,9 +1,9 @@
-import { AppContextProvider } from "contexts/AppContext";
+import { AppContextProvider } from "#root/client/contexts/AppContext";
 import { BrowserRouter } from "react-router-dom";
 import { css } from "@emotion/css";
 import { useMediaQuery } from "@material-ui/core";
-import { AppRouterWithRouter as AppRouter } from "components/AppRouter/AppRouter";
-import "styles/global-styles.css";
+import { AppRouterWithRouter as AppRouter } from "#root/client/components/AppRouter/AppRouter";
+import "#root/client/styles/global-styles.css";
 
 export const App = () => {
   const isUnsupportedResolution = useMediaQuery("(max-width:950px)");

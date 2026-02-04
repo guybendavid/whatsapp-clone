@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useAppContext } from "contexts/app-context";
+import { useAppContext } from "#root/client/contexts/app-context";
 import dompurify from "dompurify";
 import MuiAlert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";

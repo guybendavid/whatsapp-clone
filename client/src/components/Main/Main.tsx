@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { css } from "@emotion/css";
-import { getAuthData } from "services/auth";
-import type { SidebarUser, Message } from "types/types";
+import { getAuthData } from "#root/client/services/auth";
 import { useSubscription } from "@apollo/client";
-import { NEW_MESSAGE } from "services/graphql";
-import { Sidebar } from "./Sidebar/Sidebar";
-import { WelcomeScreen } from "./AlternateComps/WelcomeScreen/WelcomeScreen";
-import { Chat } from "./AlternateComps/Chat/Chat";
-import conversationImage from "images/conversation-background.jpg";
+import { NEW_MESSAGE } from "#root/client/services/graphql";
+import { Sidebar } from "#root/client/components/Main/Sidebar/Sidebar";
+import { WelcomeScreen } from "#root/client/components/Main/AlternateComps/WelcomeScreen/WelcomeScreen";
+import { Chat } from "#root/client/components/Main/AlternateComps/Chat/Chat";
+import conversationImage from "#root/client/images/conversation-background.jpg";
+import type { SidebarUser, Message } from "#root/client/types/types";
 
 export const Main = () => {
   const [selectedUser, setSelectedUser] = useState<SidebarUser>();

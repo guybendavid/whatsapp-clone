@@ -1,12 +1,12 @@
-import type { RefObject } from "react";
 import { useMemo } from "react";
 import { css, cx } from "@emotion/css";
-import { getAuthData } from "services/auth";
-import type { Message } from "types/types";
+import { getAuthData } from "#root/client/services/auth";
 import { Typography } from "@material-ui/core";
 import { timeDisplayer } from "@guybendavid/utils";
-import { getVerticalOverflowStyle } from "styles/reusable-css-in-js-styles";
-import backgroundImage from "images/conversation-background.jpg";
+import { getVerticalOverflowStyle } from "#root/client/styles/reusable-css-in-js-styles";
+import backgroundImage from "#root/client/images/conversation-background.jpg";
+import type { RefObject } from "react";
+import type { Message } from "#root/client/types/types";
 
 export type ConversationMessage = Omit<Message, "recipientId">;
 

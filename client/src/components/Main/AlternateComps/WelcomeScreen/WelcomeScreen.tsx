@@ -1,9 +1,9 @@
 import { css, cx } from "@emotion/css";
 import { Link } from "react-router-dom";
 import { Typography } from "@material-ui/core";
-import { containerStyle } from "../shared-styles";
+import { containerStyle } from "#root/client/components/Main/AlternateComps/shared-styles";
 import { Laptop as LaptopIcon } from "@material-ui/icons";
-import introImg from "images/intro-img.png";
+import introImg from "#root/client/images/intro-img.png";
 
 export const WelcomeScreen = () => (
   <div className={cx(welcomeScreenStyle, containerStyle)}>

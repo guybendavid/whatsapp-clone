@@ -1,4 +1,4 @@
-import type { User } from "types/types";
+import type { User } from "#root/client/types/types";
 
 type AuthOperationResponseUser = Omit<User, "email" | "password">;
 

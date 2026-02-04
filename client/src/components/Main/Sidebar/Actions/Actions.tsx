@@ -1,9 +1,8 @@
-import type { MouseEvent } from "react";
 import { useState, Fragment } from "react";
-import { getAuthData, logout } from "services/auth";
+import { getAuthData, logout } from "#root/client/services/auth";
 import { Avatar, IconButton, InputBase, ClickAwayListener, Menu, MenuItem } from "@material-ui/core";
 import { css, cx } from "@emotion/css";
-import { baseSearchInputStyle } from "styles/reusable-css-in-js-styles";
+import { baseSearchInputStyle } from "#root/client/styles/reusable-css-in-js-styles";
 import {
   DonutLarge as DonutLargeIcon,
   Chat as ChatIcon,
@@ -11,6 +10,7 @@ import {
   Search as SearchIcon,
   ArrowDownward as ArrowDownwardIcon
 } from "@material-ui/icons";
+import type { MouseEvent } from "react";
 
 type Props = {
   setSearchValue: (value: string) => void;

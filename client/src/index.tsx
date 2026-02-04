@@ -1,4 +1,4 @@
 import { render } from "react-dom";
-import { ApolloProviderWrapper } from "components/ApolloProvider";
+import { ApolloProviderWrapper } from "#root/client/components/ApolloProvider";
 
 render(ApolloProviderWrapper, document.getElementById("root"));

@@ -1,10 +1,11 @@
-import { getCreateMessageModel } from "./message";
-import { getCreateUserModel } from "./user";
-import config from "../config/config";
+import { getCreateMessageModel } from "#root/server/db/models/message";
+import { getCreateUserModel } from "#root/server/db/models/user";
+import config from "#root/server/db/config/config";
 import Sequelize from "sequelize";
 
 const { NODE_ENV } = process.env;
-const environmentConfig = config[NODE_ENV === "production" ? "production" : "development"];
+const environmentKey = NODE_ENV === "production" ? "production" : "development";
+const environmentConfig = config[environmentKey];
 
 // @ts-expect-error - Config file is JavaScript
 export const sequelize = new Sequelize(environmentConfig);

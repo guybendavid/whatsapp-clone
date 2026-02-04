@@ -1,8 +1,8 @@
-import type { ReactNode } from "react";
 import { useState } from "react";
+import { logout } from "#root/client/services/auth";
+import { AppContext } from "#root/client/contexts/app-context";
+import type { ReactNode } from "react";
 import type { ApolloError } from "@apollo/client";
-import { logout } from "services/auth";
-import { AppContext } from "./app-context";
 
 type Props = {
   children: ReactNode;

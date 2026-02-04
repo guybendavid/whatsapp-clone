@@ -1,5 +1,5 @@
-import { Route, Redirect } from "react-router";
-import { getAuthData } from "services/auth";
+import { Route, Redirect } from "react-router-dom";
+import { getAuthData } from "#root/client/services/auth";
 
 export const DefaultRoute = () => {
   const { isAuthenticated } = getAuthData();

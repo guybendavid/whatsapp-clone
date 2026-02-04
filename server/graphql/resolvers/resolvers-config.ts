@@ -1,5 +1,5 @@
-import { userResolvers } from "./users";
-import { messageResolvers } from "./messages";
+import { userResolvers } from "#root/server/graphql/resolvers/users";
+import { messageResolvers } from "#root/server/graphql/resolvers/messages";
 
 type MessageParent = {
   createdAt: Date | null;

@@ -24,9 +24,14 @@
       "images/*": ["./images/*"],
       "services/*": ["./services/*"],
       "styles/*": ["./styles/*"],
-      "types/*": ["./types/*"]
+      "types/*": ["./types/*"],
+      "#root/client/*": ["./*"]
     }
   },
   "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
 }

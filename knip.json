@@ -1,17 +1,16 @@
 {
   "$schema": "https://unpkg.com/knip@latest/schema.json",
-  "ignoreDependencies": ["react-router", "pg"],
-  "ignoreBinaries": ["vite"],
   "ignore": ["server/db/migrations/**", "server/db/seeders/**", "server/utils/generate-image.ts", "eslint-plugins.d.ts"],
+  "ignoreBinaries": ["vite"],
   "workspaces": {
     "client": {
-      "entry": ["src/index.tsx"]
+      "entry": ["src/index.tsx"],
+      "project": ["src/**/*.{ts,tsx}", "src/**/*.d.ts"]
     },
     "server": {
-      "entry": ["app.ts"]
-    },
-    "tests": {
-      "entry": ["**/*.test.ts"]
+      "entry": ["app.ts"],
+      "project": ["**/*.{ts,js}"],
+      "ignoreDependencies": ["pg"]
     }
   }
 }

@@ -1,7 +1,7 @@
+import { getAuthData } from "#root/client/services/auth";
+import { getUsersQueryVariables, GET_All_USERS_EXCEPT_LOGGED } from "#root/client/services/graphql";
 import type { ApolloClient, InMemoryCache } from "@apollo/client";
-import type { Message, SidebarUser } from "types/types";
-import { getAuthData } from "./auth";
-import { getUsersQueryVariables, GET_All_USERS_EXCEPT_LOGGED } from "./graphql";
+import type { Message, SidebarUser } from "#root/client/types/types";
 
 type GetUser = (options?: { variables?: Record<string, unknown> }) => void;
 

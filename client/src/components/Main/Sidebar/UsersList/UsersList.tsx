@@ -1,11 +1,11 @@
 import { useRef, useCallback, Fragment } from "react";
-import type { SidebarUser } from "types/types";
 import { List, ListItem, Avatar, Typography, Divider } from "@material-ui/core";
 import { css, cx } from "@emotion/css";
-import { getOverflowStyle } from "styles/reusable-css-in-js-styles";
-import { getAuthData } from "services/auth";
-import { getUsersSqlClauses } from "services/graphql";
+import { getOverflowStyle } from "#root/client/styles/reusable-css-in-js-styles";
+import { getAuthData } from "#root/client/services/auth";
+import { getUsersSqlClauses } from "#root/client/services/graphql";
 import { timeDisplayer } from "@guybendavid/utils";
+import type { SidebarUser } from "#root/client/types/types";
 
 type Props = {
   users?: SidebarUser[];

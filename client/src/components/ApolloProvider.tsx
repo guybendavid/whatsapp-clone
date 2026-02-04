@@ -1,9 +1,9 @@
-import type { ApolloLink } from "@apollo/client";
 import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, split } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { WebSocketLink } from "@apollo/client/link/ws";
 import { getMainDefinition } from "@apollo/client/utilities";
-import { App } from "App";
+import { App } from "#root/client/App";
+import type { ApolloLink } from "@apollo/client";
 
 const { NODE_ENV, REACT_APP_BASE_URL } = process.env;
 const isProduction = NODE_ENV === "production";

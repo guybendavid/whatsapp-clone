@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { css } from "@emotion/css";
-import { useAppContext } from "contexts/app-context";
-import type { InMemoryCache } from "@apollo/client";
+import { useAppContext } from "#root/client/contexts/app-context";
 import { useQuery, useLazyQuery } from "@apollo/client";
-import { getAuthData } from "services/auth";
-import { getUsersQueryVariables, GET_All_USERS_EXCEPT_LOGGED, GET_USER } from "services/graphql";
-import { displayNewMessageOnSidebar, displayNewUserOnSidebar } from "services/sidebar-helper";
-import type { SidebarUser, Message } from "types/types";
-import { Actions } from "./Actions/Actions";
-import { UsersList } from "./UsersList/UsersList";
+import { getAuthData } from "#root/client/services/auth";
+import { getUsersQueryVariables, GET_All_USERS_EXCEPT_LOGGED, GET_USER } from "#root/client/services/graphql";
+import { displayNewMessageOnSidebar, displayNewUserOnSidebar } from "#root/client/services/sidebar-helper";
+import { Actions } from "#root/client/components/Main/Sidebar/Actions/Actions";
+import { UsersList } from "#root/client/components/Main/Sidebar/UsersList/UsersList";
+import type { InMemoryCache } from "@apollo/client";
+import type { SidebarUser, Message } from "#root/client/types/types";
 
 type Props = {
   newMessage?: Message;

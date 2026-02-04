@@ -1,10 +1,10 @@
-import { getGenerateToken } from "../../utils/generate-token";
-import { getTotalUsers, getUsersWithLatestMessage } from "../../db/raw-queries/users";
+import { getGenerateToken } from "#root/server/utils/generate-token";
+import { getTotalUsers, getUsersWithLatestMessage } from "#root/server/db/raw-queries/users";
 import { QueryTypes } from "sequelize";
-import { sequelize, User } from "../../db/models/models-config";
-import type { User as UserType, ContextUser, LatestMessage } from "../../types/types";
+import { sequelize, User } from "#root/server/db/models/models-config";
 import { UserInputError } from "apollo-server";
 import bcrypt from "bcrypt";
+import type { User as UserType, ContextUser, LatestMessage } from "#root/server/types/types";
 // eslint-disable-next-line
 const generateImage = require("../../utils/generate-image");
 

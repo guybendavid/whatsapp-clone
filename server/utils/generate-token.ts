@@ -1,5 +1,5 @@
-import type { User } from "../types/types";
 import jwt from "jsonwebtoken";
+import type { User } from "#root/server/types/types";
 
 const { SECRET_KEY } = process.env;
 

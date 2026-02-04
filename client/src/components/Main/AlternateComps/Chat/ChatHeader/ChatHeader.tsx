@@ -1,9 +1,9 @@
-import type { SidebarUser } from "types/types";
 import { Avatar, Typography, IconButton } from "@material-ui/core";
 import { css } from "@emotion/css";
-import { getOverflowStyle } from "styles/reusable-css-in-js-styles";
+import { getOverflowStyle } from "#root/client/styles/reusable-css-in-js-styles";
 import { timeDisplayer } from "@guybendavid/utils";
 import { Search as SearchIcon, MoreVert as MoreVertIcon } from "@material-ui/icons";
+import type { SidebarUser } from "#root/client/types/types";
 
 type Props = {
   selectedUser: SidebarUser;

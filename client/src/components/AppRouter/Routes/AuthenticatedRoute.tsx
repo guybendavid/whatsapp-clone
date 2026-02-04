@@ -1,6 +1,6 @@
+import { Route, Redirect } from "react-router-dom";
+import { getAuthData } from "#root/client/services/auth";
 import type { FC } from "react";
-import { Route, Redirect } from "react-router";
-import { getAuthData } from "services/auth";
 
 type Props = {
   exact: boolean;
