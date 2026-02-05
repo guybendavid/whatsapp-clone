@@ -1,5 +1,10 @@
+import { fileURLToPath } from "node:url";
 import { getStrictifyConfig } from "strictify";
+import path from "node:path";
 import type { StrictifyPresetConfig } from "strictify";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const clientConfig = {
   fileGlobs: ["client/src/**/*.{ts,tsx}"],
@@ -25,6 +30,13 @@ const serverPresetConfigs = [
 ] satisfies StrictifyPresetConfig<"node">[];
 
 const eslintConfig = [
+  {
+    languageOptions: {
+      parserOptions: {
+        tsconfigRootDir: __dirname
+      }
+    }
+  },
   ...(await getStrictifyConfig({
     presetConfigs: clientPresetConfigs,
     projectConfigPath: clientConfig.projectConfigPath,
@@ -44,6 +56,13 @@ const eslintConfig = [
     files: ["server/db/seeders/20201007191119-init-users.js"],
     rules: {
       "eslintImport/no-unresolved": "off"
+    }
+  },
+  {
+    files: ["server/db/config/**/*.js", "server/db/migrations/**/*.js", "server/db/seeders/**/*.js"],
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+      "@typescript-eslint/no-unused-vars": "off"
     }
   },
   {
