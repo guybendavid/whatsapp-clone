@@ -9,11 +9,13 @@ const isProduction = import.meta.env.MODE === "production";
 const baseUrl = import.meta.env.VITE_BASE_URL || "localhost:4000";
 const httpUri = isProduction ? `${window.location.origin}/graphql` : `http://${baseUrl}`;
 
-const wsUri = (() => {
-  const url = new URL(httpUri);
+const getWsUri = (uri: string) => {
+  const url = new URL(uri);
   url.protocol = url.protocol === "https:" ? "wss:" : "ws:";
   return url.toString();
-})();
+};
+
+const wsUri = getWsUri(httpUri);
 
 const baseHttpLink: ApolloLink = new HttpLink({
   uri: httpUri
