@@ -1,5 +1,5 @@
 import { getFormValidationErrors } from "@guybendavid/utils";
-import { UserInputError, AuthenticationError } from "apollo-server";
+import { GraphQLError } from "graphql";
 import jwt from "jsonwebtoken";
 import type { JwtPayload } from "jsonwebtoken";
 
@@ -20,7 +20,9 @@ const getSecretKey = (): string => {
 
 const getJwtPayloadOrThrow = (value: unknown): JwtPayload => {
   if (!getIsRecord(value)) {
-    throw new AuthenticationError("Unauthenticated");
+    throw new GraphQLError("Unauthenticated", {
+      extensions: { code: "UNAUTHENTICATED" }
+    });
   }
 
   return value as JwtPayload;
@@ -60,7 +62,12 @@ export const getContextMiddleware = (context: GraphQLContextLike) => {
   if (context.req?.body) {
     const variables = getIsRecord(context.req.body.variables) ? context.req.body.variables : {};
     const { message } = getFormValidationErrors(variables);
-    if (message) throw new UserInputError(message);
+
+    if (message) {
+      throw new GraphQLError(message, {
+        extensions: { code: "BAD_USER_INPUT" }
+      });
+    }
   }
 
   const rawAuthorization = context.req?.headers?.authorization || context.connection?.context?.authorization || "";
@@ -73,7 +80,9 @@ export const getContextMiddleware = (context: GraphQLContextLike) => {
   const token = getBearerToken(rawAuthorization);
 
   if (!token) {
-    throw new AuthenticationError("Unauthenticated");
+    throw new GraphQLError("Unauthenticated", {
+      extensions: { code: "UNAUTHENTICATED" }
+    });
   }
 
   try {
@@ -81,7 +90,9 @@ export const getContextMiddleware = (context: GraphQLContextLike) => {
     const { iat: _iat, exp: _exp, ...relevantUserFields } = decodedToken;
     context.user = { ...relevantUserFields };
   } catch {
-    throw new AuthenticationError("Unauthenticated");
+    throw new GraphQLError("Unauthenticated", {
+      extensions: { code: "UNAUTHENTICATED" }
+    });
   }
 
   return context;

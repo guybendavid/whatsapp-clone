@@ -1,5 +1,5 @@
-import { UserInputError } from "apollo-server";
 import { eq, sql } from "drizzle-orm";
+import { GraphQLError } from "graphql";
 import { db } from "#root/server/db/connection";
 import { users } from "#root/server/db/schema";
 import { getGenerateToken } from "#root/server/utils/generate-token";
@@ -76,7 +76,9 @@ export const userResolvers = {
       const [existingUser] = await db.select({ id: users.id }).from(users).where(eq(users.username, username)).limit(1);
 
       if (existingUser) {
-        throw new UserInputError("Username already exists");
+        throw new GraphQLError("Username already exists", {
+          extensions: { code: "BAD_USER_INPUT" }
+        });
       }
 
       const hasedPassword = await bcrypt.hash(password as string, 6);
@@ -98,13 +100,17 @@ export const userResolvers = {
       const [user] = await db.select().from(users).where(eq(users.username, username)).limit(1);
 
       if (!user) {
-        throw new UserInputError("User not found");
+        throw new GraphQLError("User not found", {
+          extensions: { code: "BAD_USER_INPUT" }
+        });
       }
 
       const correctPassword = await bcrypt.compare(password as string, user.password);
 
       if (!correctPassword) {
-        throw new UserInputError("Password is incorrect");
+        throw new GraphQLError("Password is incorrect", {
+          extensions: { code: "BAD_USER_INPUT" }
+        });
       }
 
       const { id, firstName, lastName, image } = user;

@@ -1,5 +1,7 @@
+import { ApolloServer } from "@apollo/server";
+import { expressMiddleware } from "@apollo/server/express4";
+import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import { makeExecutableSchema } from "@graphql-tools/schema";
-import { ApolloServer } from "apollo-server-express";
 import { PubSub } from "graphql-subscriptions";
 import { useServer as graphqlUseServer } from "graphql-ws/lib/use/ws";
 import { WebSocketServer } from "ws";
@@ -17,12 +19,6 @@ export const pubsub = new PubSub();
 const { NODE_ENV, LOG_LEVEL, PORT, BASE_URL_PROD } = process.env;
 const logger = pino({ level: LOG_LEVEL || "info" });
 const schema = makeExecutableSchema({ typeDefs, resolvers: resolversConfig });
-
-const serverConfig = {
-  schema,
-  context: getContextMiddleware
-};
-
 const port = PORT || 4000;
 
 const getConnectionContext = (connectionParams: unknown) => {
@@ -54,9 +50,21 @@ const startServer = async ({ isProd }: { isProd?: boolean }) => {
     }
 
     const httpServer = http.createServer(app);
-    const server = new ApolloServer(serverConfig);
+
+    const server = new ApolloServer({
+      schema,
+      plugins: [ApolloServerPluginDrainHttpServer({ httpServer })]
+    });
+
     await server.start();
-    server.applyMiddleware({ app, path: "/" });
+
+    app.use(
+      "/",
+      express.json(),
+      expressMiddleware(server, {
+        context: async ({ req }) => getContextMiddleware({ req })
+      })
+    );
 
     const wsServer = new WebSocketServer({ server: httpServer, path: "/" });
 

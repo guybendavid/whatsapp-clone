@@ -1,5 +1,5 @@
-import { UserInputError } from "apollo-server";
 import { and, asc, eq, inArray } from "drizzle-orm";
+import { GraphQLError } from "graphql";
 import { withFilter } from "graphql-subscriptions";
 import { pubsub } from "#root/server/app";
 import { db } from "#root/server/db/connection";
@@ -39,7 +39,9 @@ export const messageResolvers = {
       const [otherUser] = await db.select({ id: users.id }).from(users).where(eq(users.id, otherUserIdValue)).limit(1);
 
       if (!otherUser) {
-        throw new UserInputError("User not found");
+        throw new GraphQLError("User not found", {
+          extensions: { code: "BAD_USER_INPUT" }
+        });
       }
 
       const ids = [userIdValue, otherUserIdValue];
@@ -58,7 +60,9 @@ export const messageResolvers = {
       const recipientIdValue = Number(recipientId);
 
       if (recipientIdValue === senderIdValue) {
-        throw new UserInputError("You can't message yourself");
+        throw new GraphQLError("You can't message yourself", {
+          extensions: { code: "BAD_USER_INPUT" }
+        });
       }
 
       const [message] = await db

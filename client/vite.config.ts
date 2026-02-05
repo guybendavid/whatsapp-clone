@@ -18,7 +18,29 @@ export default defineConfig({
     outDir: "build",
     rollupOptions: {
       output: {
-        manualChunks: (id) => (id.includes("node_modules") ? "vendor" : null)
+        manualChunks: (id) => {
+          if (!id.includes("node_modules")) {
+            return null;
+          }
+
+          if (id.includes("react")) {
+            return "react";
+          }
+
+          if (["@apollo/client", "graphql"].some((needle) => id.includes(needle))) {
+            return "graphql";
+          }
+
+          if (id.includes("@material-ui")) {
+            return "mui";
+          }
+
+          if (id.includes("@emotion")) {
+            return "emotion";
+          }
+
+          return "vendor";
+        }
       }
     }
   }
