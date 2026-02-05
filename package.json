@@ -26,7 +26,7 @@
     "build-client": "cd client && npx tsc -b tsconfig.json && npx vite build",
     "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\"",
     "create-dist-folder": "node -e \"require('fs').mkdirSync('dist', { recursive: true })\"",
-    "build-server": "cd server && npm i && npm run build && cd .. && npx -y cpy-cli server/package.json dist --flat && node -e \"const fs=require('fs');const path=require('path');const src=path.join('server','package-lock.json');const dest=path.join('dist','package-lock.json');if(fs.existsSync(src)) fs.copyFileSync(src,dest);\" && (cd dist && npm i --no-audit --no-fund)",
+    "build-server": "cd server && npm run build && cd .. && npx -y cpy-cli server/package.json dist --flat && node -e \"const fs=require('fs');const path=require('path');const src=path.join('server','package-lock.json');const dest=path.join('dist','package-lock.json');if(fs.existsSync(src)) fs.copyFileSync(src,dest);\" && (cd dist && npm i --no-audit --no-fund)",
     "build": "npm run clean && npm run create-dist-folder && npm run build-client && npx -y cpy-cli \"client/build/**\" dist/client --cwd=. --parents && node -e \"require('fs').rmSync('client/build', { recursive: true, force: true })\" && npm run build-server",
     "prepare": "husky",
     "validate": "npm run lint && npm run test && npx prettier --check ."

@@ -1,7 +1,8 @@
 import { ApolloServer } from "@apollo/server";
-import { expressMiddleware } from "@apollo/server/express4";
+import { expressMiddleware } from "@as-integrations/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import { makeExecutableSchema } from "@graphql-tools/schema";
+import express, { type Request, type Response } from "express";
 import { PubSub } from "graphql-subscriptions";
 import { useServer as graphqlUseServer } from "graphql-ws/lib/use/ws";
 import { WebSocketServer } from "ws";
@@ -11,7 +12,6 @@ import { resolversConfig } from "#root/server/graphql/resolvers/resolvers-config
 import { typeDefs } from "#root/server/graphql/type-definitions";
 import http from "http";
 import path from "path";
-import express from "express";
 import pino from "pino";
 
 export const pubsub = new PubSub();
@@ -46,7 +46,7 @@ const startServer = async ({ isProd }: { isProd?: boolean }) => {
 
     if (isProd) {
       app.use(express.static(path.join(__dirname, "client")));
-      app.get("*", (_req, res) => res.sendFile(path.resolve(__dirname, "client", "index.html")));
+      app.get("*", (_req: Request, res: Response) => res.sendFile(path.resolve(__dirname, "client", "index.html")));
     }
 
     const httpServer = http.createServer(app);
@@ -62,7 +62,7 @@ const startServer = async ({ isProd }: { isProd?: boolean }) => {
       "/",
       express.json(),
       expressMiddleware(server, {
-        context: async ({ req }) => getContextMiddleware({ req })
+        context: async ({ req }: { req: Request }) => getContextMiddleware({ req })
       })
     );
 
