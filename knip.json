@@ -1,6 +1,6 @@
 {
   "$schema": "https://unpkg.com/knip@latest/schema.json",
-  "ignore": ["server/db/migrations/**", "server/db/seeders/**", "server/utils/generate-image.ts", "eslint-plugins.d.ts"],
+  "ignore": ["server/db/migrations-drizzle/**", "server/utils/generate-image.ts"],
   "ignoreBinaries": ["vite"],
   "workspaces": {
     "client": {
@@ -8,7 +8,6 @@
       "project": ["src/**/*.{ts,tsx}", "src/**/*.d.ts"]
     },
     "server": {
-      "entry": ["app.ts"],
       "project": ["**/*.{ts,js}"]
     }
   }

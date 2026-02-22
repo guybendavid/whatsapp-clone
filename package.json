@@ -20,8 +20,9 @@
     "start:server": "node dist/app.js",
     "start": "concurrently -k -n client,server -c cyan,magenta \"npm run start:client\" \"npm run start:server\"",
     "format": "prettier --write .",
-    "lint": "eslint . && npx strictify unimported-exports && knip --no-exit-code",
+    "lint": "eslint . && npx strictify unimported-exports && knip --no-exit-code && npm run --silent knip:validate-paths",
     "lint:eslint-fix": "eslint . --fix",
+    "knip:validate-paths": "npx strictify validate-knip-paths",
     "test": "node --test --import tsx tests/**/*.test.*",
     "build-client": "cd client && npx tsc -b tsconfig.json && npx vite build",
     "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\"",
@@ -50,5 +51,6 @@
   },
   "imports": {
     "#root/*": "./*"
-  }
+  },
+  "prettier": "strictify/prettier"
 }

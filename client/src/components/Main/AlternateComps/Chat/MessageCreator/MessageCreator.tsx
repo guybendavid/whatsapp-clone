@@ -4,7 +4,7 @@ import { getFormValidationErrors } from "@guybendavid/utils";
 import { IconButton, InputBase } from "@material-ui/core";
 import { Attachment as AttachmentIcon, Mic as MicIcon, Mood as MoodIcon } from "@material-ui/icons";
 import { useEffect, useRef, useState, type SyntheticEvent } from "react";
-import { useAppContext } from "#root/client/contexts/app-context";
+import { useAppStore } from "#root/client/stores/app-store";
 import { SEND_MESSAGE } from "#root/client/services/graphql";
 import { baseSearchInputStyle } from "#root/client/styles/reusable-css-in-js-styles";
 import type { SidebarUser } from "#root/client/types/types";
@@ -14,7 +14,7 @@ type Props = {
 };
 
 export const MessageCreator = ({ selectedUser }: Props) => {
-  const { handleServerErrors, setSnackBarError } = useAppContext();
+  const { handleServerErrors, setSnackBarError } = useAppStore((state) => state);
   const [message, setMessage] = useState("");
   const isMountedRef = useRef(true);
 

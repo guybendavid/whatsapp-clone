@@ -3,8 +3,8 @@ import { GraphQLError } from "graphql";
 import { db } from "#root/server/db/connection";
 import { users } from "#root/server/db/schema";
 import { getGenerateToken } from "#root/server/utils/generate-token";
+import { getGeneratedImage } from "#root/server/utils/generate-image";
 import bcrypt from "bcrypt";
-import generateImage from "#root/server/utils/generate-image";
 import type { ContextUser, User as UserType } from "#root/server/types/types";
 
 type SidebarUserRow = Record<string, unknown> &
@@ -85,7 +85,7 @@ export const userResolvers = {
 
       const [user] = await db
         .insert(users)
-        .values({ firstName, lastName, username, password: hasedPassword, image: generateImage() })
+        .values({ firstName, lastName, username, password: hasedPassword, image: getGeneratedImage() })
         .returning();
 
       if (!user) {

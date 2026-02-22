@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAppContext } from "#root/client/contexts/app-context";
+import { useAppStore } from "#root/client/stores/app-store";
 import { Link } from "react-router-dom";
 import { authFormStyle } from "#root/client/components/AuthForms/shared-styles";
 import { handleAuth } from "#root/client/services/auth";
@@ -14,7 +14,7 @@ import type { TextFieldProps } from "@material-ui/core/TextField";
 const textFieldProps = { required: true, variant: "outlined", margin: "normal", fullWidth: true } as TextFieldProps;
 
 export const Register = () => {
-  const { handleServerErrors, setSnackBarError } = useAppContext();
+  const { handleServerErrors, setSnackBarError } = useAppStore((state) => state);
   const [formValues, setFormValues] = useState({ firstName: "", lastName: "", username: "", password: "" });
   const { firstName, lastName, username } = formValues;
 

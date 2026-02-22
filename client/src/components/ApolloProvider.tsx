@@ -1,9 +1,12 @@
-import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, split, type ApolloLink } from "@apollo/client";
+import { ApolloClient, ApolloError, InMemoryCache, ApolloProvider, HttpLink, split, type ApolloLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import { onError } from "@apollo/client/link/error";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { createClient } from "graphql-ws";
+import { useMemo } from "react";
 import { App } from "#root/client/App";
+import { useAppStore } from "#root/client/stores/app-store";
 
 const isProduction = import.meta.env.MODE === "production";
 const baseUrl = import.meta.env.VITE_BASE_URL || "localhost:4000";
@@ -60,24 +63,41 @@ const getMergedUsers = (prevResult: UsersMergeResult = { users: [] }, incomingRe
   users: [...prevResult.users, ...incomingResult.users]
 });
 
-const client = new ApolloClient({
-  link: splitLink,
-  cache: new InMemoryCache({
-    typePolicies: {
-      Query: {
-        fields: {
-          getAllUsersExceptLogged: {
-            keyArgs: false,
-            merge: getMergedUsers
+export const ApolloProviderWrapper = () => {
+  const handleServerErrors = useAppStore((state) => state.handleServerErrors);
+
+  const client = useMemo(() => {
+    const errorLink = onError(({ graphQLErrors, networkError }) => {
+      if (!graphQLErrors && !networkError) return;
+
+      handleServerErrors(
+        new ApolloError({
+          graphQLErrors: graphQLErrors || [],
+          networkError
+        })
+      );
+    });
+
+    return new ApolloClient({
+      link: errorLink.concat(splitLink),
+      cache: new InMemoryCache({
+        typePolicies: {
+          Query: {
+            fields: {
+              getAllUsersExceptLogged: {
+                keyArgs: false,
+                merge: getMergedUsers
+              }
+            }
           }
         }
-      }
-    }
-  })
-});
+      })
+    });
+  }, [handleServerErrors]);
 
-export const ApolloProviderWrapper = () => (
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>
-);
+  return (
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
+  );
+};

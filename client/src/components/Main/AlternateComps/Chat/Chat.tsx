@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { css, cx } from "@emotion/css";
 import { useEffect, useRef, type Dispatch, type SetStateAction } from "react";
-import { useAppContext } from "#root/client/contexts/app-context";
+import { useAppStore } from "#root/client/stores/app-store";
 import { containerStyle } from "#root/client/components/Main/AlternateComps/shared-styles";
 import { GET_MESSAGES } from "#root/client/services/graphql";
 import { addNewMessageToChat } from "#root/client/services/chat-helper";
@@ -18,7 +18,7 @@ type Props = {
 
 export const Chat = ({ selectedUser, newMessage, setSelectedUser }: Props) => {
   const chatBottomRef = useRef<HTMLHeadingElement>(null);
-  const { handleServerErrors } = useAppContext();
+  const { handleServerErrors } = useAppStore((state) => state);
 
   const {
     data,

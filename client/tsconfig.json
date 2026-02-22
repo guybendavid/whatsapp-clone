@@ -20,9 +20,9 @@
     "paths": {
       "App": ["./App"],
       "components/*": ["./components/*"],
-      "contexts/*": ["./contexts/*"],
       "images/*": ["./images/*"],
       "services/*": ["./services/*"],
+      "stores/*": ["./stores/*"],
       "styles/*": ["./styles/*"],
       "types/*": ["./types/*"],
       "#root/client/*": ["./*"]

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useAppContext } from "#root/client/contexts/app-context";
+import { useAppStore } from "#root/client/stores/app-store";
 import dompurify from "dompurify";
 import MuiAlert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
@@ -7,7 +7,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 const { sanitize } = dompurify;
 
 export const ErrorMessage = () => {
-  const { snackBarError, clearSnackBarError } = useAppContext();
+  const { snackBarError, clearSnackBarError } = useAppStore((state) => state);
   const [isOpen, setIsOpen] = useState(false);
 
   const closeError = () => {

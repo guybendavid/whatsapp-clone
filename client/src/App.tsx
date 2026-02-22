@@ -1,4 +1,3 @@
-import { AppContextProvider } from "#root/client/contexts/AppContext";
 import { BrowserRouter } from "react-router-dom";
 import { css } from "@emotion/css";
 import { useMediaQuery } from "@material-ui/core";
@@ -13,11 +12,9 @@ export const App = () => {
       <h1>Sorry, this resolution is not supported yet &#128577;</h1>
     </div>
   ) : (
-    <AppContextProvider>
-      <BrowserRouter>
-        <AppRouter />
-      </BrowserRouter>
-    </AppContextProvider>
+    <BrowserRouter>
+      <AppRouter />
+    </BrowserRouter>
   );
 };
 
