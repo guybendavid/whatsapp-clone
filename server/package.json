@@ -16,7 +16,7 @@
     "jsonwebtoken": "^9.0.2",
     "pino": "^9.6.0",
     "pino-pretty": "^13.0.0",
-    "sequelize": "^6.37.7"
+    "sequelize": "^6.37.8"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
