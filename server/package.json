@@ -13,14 +13,14 @@
     "apollo-server": "^3.13.0",
     "bcrypt": "^6.0.0",
     "graphql": "^15.5.0",
-    "jsonwebtoken": "^9.0.2",
+    "jsonwebtoken": "^9.0.3",
     "pino": "^9.6.0",
     "pino-pretty": "^13.0.0",
     "sequelize": "^6.37.7"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
-    "@types/jsonwebtoken": "^9.0.9",
+    "@types/jsonwebtoken": "^9.0.10",
     "dotenv": "^16.5.0",
     "pg": "^8.14.1",
     "ts-node-dev": "^2.0.0"
